@@ -14,6 +14,6 @@
         string name = Console.ReadLine();
         Console.WriteLine(name + ", welcome to my console application");
     }
-    static partial void Welcome7157();
+    static partial void Welcome();
    
 }
