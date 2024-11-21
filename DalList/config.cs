@@ -1,17 +1,21 @@
 ﻿namespace Dal;
 
-internal static class config
+internal static class Config
 {
-    internal const int startCourseId = 1000;
-    private static int nextCourseId = startCourseId;
-    internal static int NextCourseId { get => nextCourseId++; }
-
+    internal const int startStudentCallId = 1000;
+    private static int nextStudentCallId = startStudentCallId;
+    internal static int NextStudentCallId { get => nextStudentCallId++; }
+    internal const int startAssignmentId = 1000;
+    private static int nextAssignmentId = startAssignmentId;
+    internal static int NextAssignmentId { get => nextAssignmentId++; }
     internal static DateTime Clock { get; set; } = DateTime.Now;
 
     internal static void Reset()
     {
-        nextCourseId = startCourseId;
+        nextStudentCallId = startStudentCallId;
+        nextAssignmentId = startAssignmentId;
         Clock = DateTime.Now;
+
     }
 
 
