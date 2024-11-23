@@ -1,6 +1,4 @@
-﻿
-
-using DalApi;
+﻿using DalApi;
 
 namespace Dal;
 
