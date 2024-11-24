@@ -13,25 +13,37 @@ internal class Program
     private static IConfig? s_dalConfig = new ConfigImplementation();
     private static void displayMainMenu()
     {
+        Console.WriteLine("Select an action from the main menu:");
+        Console.WriteLine("1. Exit the main menu");
+        Console.WriteLine("2. Display submenu for Tutors");
+        Console.WriteLine("3. Display submenu for Student Calls");
+        Console.WriteLine("4. Display submenu for Assignments");
+        Console.WriteLine("5. Initialize data (call the Initialization.Do method)");
+        Console.WriteLine("6. Display all data in the database (for all entities)");
+        Console.WriteLine("7. Display submenu for Configuration");
+        Console.WriteLine("8. Reset the database and configuration data");
+        Console.WriteLine("Select the appropriate number from the options above:");
+
+
         mainMenu option = (mainMenu)int.Parse(Console.ReadLine());
         switch (option)
         {
-            case mainMenu.EXIT: 
+            case mainMenu.EXIT:
                 return;
             case mainMenu.DISPLAY_TUTORS:
-                displayTutorsMenu(); 
+                displayEntityMenu("Tutor");
                 break;
             case mainMenu.DISPLAY_STUDENT_CALLS:
-                displayStudentCallsMenu(); 
+                displayEntityMenu("StudentCall");
                 break;
             case mainMenu.DISPLAY_ASSIGNMENT:
-                displayAssignmentMenu(); 
+                displayEntityMenu("Assignment");
                 break;
             case mainMenu.INITIALIZATION:
                 Initialization.Do(s_dalTutor, s_dalStudentCall, s_dalAssignment, s_dalConfig);
                 break;
-            case mainMenu.DISPLAY_ALL_DATA: 
-                displayAllDataMenu(); 
+            case mainMenu.DISPLAY_ALL_DATA:
+                displayAllDataMenu();
                 break;
             case mainMenu.DISPLAY_CONFIG:
                 displayConfigMenu();
@@ -43,36 +55,28 @@ internal class Program
         }
 
     }
-    private static void displayTutorsMenu() {
-    
-    
-    }
-    private static void displayAssignmentMenu() { }
-    private static void displayStudentCallsMenu() { }
-    private static void displayConfigMenu() { }
-    private static void displayAllDataMenu() { }
 
-    private static void reset()
+    private static void displayEntityMenu(string entity)
     {
-        Console.WriteLine("בחר את המתודה שברצונך לבצע:");
-        Console.WriteLine("1. יציאה מתת-תפריט");
-        Console.WriteLine("2. הוספת אובייקט חדש (Create)");
-        Console.WriteLine("3. תצוגת אובייקט עפ מזהה(Read)");
-    
-        Console.WriteLine("4. תצוגת רשימת כל האובייקטים (ReadAll)");
-        Console.WriteLine("5. עדכון אובייקט (Update)");
-        Console.WriteLine("6. מחיקת אובייקט (Delete)");
-        Console.WriteLine("7. מחיקת כל האובייקטים (DeleteAll)");
+        Console.WriteLine("Select the method you want to perform:");
+        Console.WriteLine("1. Exit the submenu");
+        Console.WriteLine("2. Add a new object (Create)");
+        Console.WriteLine("3. Display an object by ID (Read)");
+        Console.WriteLine("4. Display a list of all objects (ReadAll)");
+        Console.WriteLine("5. Update an object (Update)");
+        Console.WriteLine("6. Delete an object (Delete)");
+        Console.WriteLine("7. Delete all objects (DeleteAll)");
+
+
         subMenue option = (subMenue)int.Parse(Console.ReadLine());
-        switch (option) {
+
+        switch (option)
+        {
             case subMenue.EXIT: // יציאה מתת-תפריט
                 return;
 
-            case subMenue.CREATE: // הוספת אובייקט חדש (CREATE)
-                Console.WriteLine("הוסף אובייקט חדש:");
-                // הוסף אובייקט חדש מטיפוס Tutor לדוגמה
-                s_dalTutor.Create(new Tutor { Id = 1, Name = "Tutor Name" });
-                Console.WriteLine("אובייקט נוצר בהצלחה.");
+            case subMenue.CREATE:
+                createObject(entity);
                 break;
 
             case subMenue.READ: // תצוגת אובייקט ע"פ מזהה (READ)
@@ -93,7 +97,7 @@ internal class Program
             case subMenue.UPDATE: // עדכון אובייקט (UPDATE)
                 Console.WriteLine("הזן מזהה לעדכון:");
                 int idToUpdate = int.Parse(Console.ReadLine());
-                s_dalTutor.Update(new Tutor { Id = idToUpdate, Name = "Updated Tutor" });
+                s_dalTutor.Update(new Tutor { Id = idToUpdate });
                 Console.WriteLine("האובייקט עודכן בהצלחה.");
                 break;
 
@@ -112,15 +116,43 @@ internal class Program
             default:
                 Console.WriteLine("בחר אפשרות חוקית.");
                 break;
-
         }
+
+        
+
+    }
+
+    private static void createObject(string entity)
+    {
+        Console.WriteLine($"Create an {entity}");
+
+        switch (entity)
+        {
+            case "Tutor":
+                Console.WriteLine("Enter please: Id,FullName,CellNumber,Email,Email,Password,CurrentAddress, Latitude,Longitude,role,Active,Distance,DistanceType");
+                break;
+            case "StusentCall":
+
+                break;
+            case "Assignment":
+
+                break;
+        }
+    }
+
+    private static void displayConfigMenu() { }
+    private static void displayAllDataMenu() { }
+
+    private static void reset()
+    {
+
     }
 
     private static void Main(string[] args)
     {
         try
         {
-
+            displayMainMenu();
         }
         catch (Exception ex)
         {
