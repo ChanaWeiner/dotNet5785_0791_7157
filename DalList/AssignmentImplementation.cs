@@ -3,7 +3,7 @@ using DO;
 
 namespace Dal;
 
-internal class AssignmentImplementation : IAssignment
+public class AssignmentImplementation : IAssignment
 {
     public void Create(Assignment item)
     {

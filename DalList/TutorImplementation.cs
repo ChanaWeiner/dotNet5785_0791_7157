@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Dal;
 
-internal class TutorImplementation : ITutor
+public class TutorImplementation : ITutor
 {
     public void Create(Tutor item)
     {

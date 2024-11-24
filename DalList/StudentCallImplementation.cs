@@ -3,7 +3,7 @@ using DO;
 
 namespace Dal;
 
-internal class StudentCallImplementation : IStudentCall
+public class StudentCallImplementation : IStudentCall
 {
     public void Create(StudentCall item)
     {
