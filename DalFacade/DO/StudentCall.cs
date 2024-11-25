@@ -3,7 +3,7 @@
 public record StudentCall
 (
     int Id,
-    Subjects subject,
+    Subjects Subject,
     string Description,
     string FullAddress,
     string FullName,

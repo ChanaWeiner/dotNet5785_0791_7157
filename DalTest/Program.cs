@@ -119,189 +119,190 @@ internal class Program
     }
     private static void createOrUpdateObject(string entity,bool isCreate)
     {
-        //    if (isCreate)
-        //        Console.WriteLine($"Create an {entity}");
-        //    else
-        //        Console.WriteLine($"Update an {entity} enter null in fields you don't want to change");
-        //    int id;
-        //    string fullName, cellNumber, email, password, currentAddress;
-        //    double latitude, longitude;
-        //    switch (entity)
-        //    {
-        //        case "Tutor":
-        //            Console.WriteLine("Enter the following details:");
+        if (isCreate)
+            Console.WriteLine($"Create an {entity}");
+        else
+            Console.WriteLine($"Update an {entity} enter null in fields you don't want to change");
+        int id;
+        string fullName, cellNumber, email, password, currentAddress;
+        double latitude, longitude;
+        switch (entity)
+        {
+            case "Tutor":
+                Console.WriteLine("Enter the following details:");
 
-        //            Console.Write("Id: ");
-        //            id = int.Parse(Console.ReadLine());
-        //            var tutor = s_dalTutor.Read(id);
-        //            Console.Write("Full Name: ");
-        //            fullName= Console.ReadLine();
-        //            Console.Write("Cell Number: ");
-        //            cellNumber = Console.ReadLine();
+                Console.Write("Id: ");
+                id = int.Parse(Console.ReadLine());
+             
+                Console.Write("Full Name: ");
+                fullName = Console.ReadLine();
+                Console.Write("Cell Number: ");
+                cellNumber = Console.ReadLine();
 
-        //            Console.Write("Email: ");
-        //            email = Console.ReadLine();
+                Console.Write("Email: ");
+                email = Console.ReadLine();
 
-        //            Console.Write("Password: ");
-        //            password = Console.ReadLine();
+                Console.Write("Password: ");
+                password = Console.ReadLine();
 
-        //            Console.Write("Current Address: ");
-        //            currentAddress = Console.ReadLine();
+                Console.Write("Current Address: ");
+                currentAddress = Console.ReadLine();
 
-        //            Console.Write("Latitude: ");
-        //            latitude = double.Parse(Console.ReadLine());
+                Console.Write("Latitude: ");
+                latitude = double.Parse(Console.ReadLine());
 
-        //            Console.Write("Longitude: ");
-        //            longitude = double.Parse(Console.ReadLine());
+                Console.Write("Longitude: ");
+                longitude = double.Parse(Console.ReadLine());
 
-        //            Console.Write("Role: ");
-        //            Role role = (Role)int.Parse(Console.ReadLine());
+                Console.Write("Role: ");
+                Role role = (Role)int.Parse(Console.ReadLine());
 
-        //            Console.Write("Active (true/false): ");
-        //            bool isActive = bool.Parse(Console.ReadLine());
+                Console.Write("Active (true/false): ");
+                bool isActive = bool.Parse(Console.ReadLine());
 
-        //            Console.Write("Distance: ");
-        //            double distance = double.Parse(Console.ReadLine());
+                Console.Write("Distance: ");
+                double distance = double.Parse(Console.ReadLine());
 
-        //            Console.Write("Distance Type: ");
-        //            DistanceType distanceType = (DistanceType)int.Parse(Console.ReadLine());
-        //            if(tutor==null)
-        //                s_dalTutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, isActive, distance, distanceType));
-        //            else
-        //            {
-        //                var updateEntity = tutor with
-        //                {
-        //                    FullName = fullName ?? tutor.FullName,
-        //                    CellNumber = cellNumber ?? tutor.CellNumber,
-        //                    Email = email ?? tutor.Email,
-        //                    Password = password ?? tutor.Password,
-        //                    CurrentAddress = currentAddress ?? tutor.CurrentAddress,
-        //                    Latitude = latitude==null ? latitude: tutor.Latitude,
-        //                    Longitude = longitude==null ? longitude: tutor.Longitude,
-        //                    Role = role==null ? role: tutor.Role,
-        //                    IsActive = isActive==null ? isActive: tutor.IsActive,
-        //                    Distance = distance ?? tutor.Distance,
-        //                    DistanceType = distanceType==null ? distanceType: tutor.DistanceType
-        //                };
-        //                s_dalTutor!.Update(updateEntity);
-        //            }
-        //            break;
-        //        case "StusentCall":   
-        //            Console.WriteLine("Enter the following details:");
-        //            IStudentCall studentCall;
-        //            if (!isCreate)
-        //            {
-        //                Console.Write("Id: ");
-        //                id = int.Parse(Console.ReadLine());
-        //                studentCall=s_dalStudentCall.Read(id);
+                Console.Write("Distance Type: ");
+                DistanceType distanceType = (DistanceType)int.Parse(Console.ReadLine());
+                if (isCreate)
+                    s_dalTutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, isActive, distance, distanceType));
+                else
+                {
+                    var tutor = s_dalTutor.Read(id);
+                    var updateEntity = tutor with
+                    {
+                        FullName = fullName ?? tutor.FullName,
+                        CellNumber = cellNumber ?? tutor.CellNumber,
+                        Email = email ?? tutor.Email,
+                        Password = password ?? tutor.Password,
+                        CurrentAddress = currentAddress ?? tutor.CurrentAddress,
+                        Latitude = latitude != 0 ? latitude : tutor.Latitude,
+                        Longitude = longitude != 0 ? longitude : tutor.Longitude,
+                        Role = role >0 ? role : tutor.Role,
+                        Active = isActive!=null?isActive:tutor.Active,
+                        Distance = distance != 0 ? distance : tutor.Distance,
+                        DistanceType = distanceType >0 ? distanceType : tutor.DistanceType
+                    };
+                    s_dalTutor!.Update(updateEntity);
+                }
+                break;
+            case "StusentCall":
+                Console.WriteLine("Enter the following details:");
+                IStudentCall studentCall;
+                if (!isCreate)
+                {
+                    Console.Write("Id: ");
+                    id = int.Parse(Console.ReadLine());
+                    studentCall = (IStudentCall)s_dalStudentCall.Read(id);
 
-        //            }
+                }
 
 
-        //            Console.WriteLine("Subject (choose one of the following: Math, Science, History, Literature, Art): ");
-        //            Subjects subject = (Subjects)Enum.Parse(typeof(Subjects), Console.ReadLine(), true);
+                Console.WriteLine("Subject (choose one of the following: Math, Science, History, Literature, Art): ");
+                Subjects subject = (Subjects)Enum.Parse(typeof(Subjects), Console.ReadLine(), true);
 
-        //            Console.Write("Description: ");
-        //            string description = Console.ReadLine();
+                Console.Write("Description: ");
+                string description = Console.ReadLine();
 
-        //            Console.Write("Full Address: ");
-        //            string fullAddress = Console.ReadLine();
+                Console.Write("Full Address: ");
+                string fullAddress = Console.ReadLine();
 
-        //            Console.Write("Full Name: ");
-        //            fullName = Console.ReadLine();
+                Console.Write("Full Name: ");
+                fullName = Console.ReadLine();
 
-        //            Console.Write("Cell Number: ");
-        //            cellNumber = Console.ReadLine();
+                Console.Write("Cell Number: ");
+                cellNumber = Console.ReadLine();
 
-        //            Console.Write("Email: ");
-        //            email = Console.ReadLine();
+                Console.Write("Email: ");
+                email = Console.ReadLine();
 
-        //            Console.Write("Latitude: ");
-        //            latitude = double.Parse(Console.ReadLine());
+                Console.Write("Latitude: ");
+                latitude = double.Parse(Console.ReadLine());
 
-        //            Console.Write("Longitude: ");
-        //            longitude = double.Parse(Console.ReadLine());
+                Console.Write("Longitude: ");
+                longitude = double.Parse(Console.ReadLine());
 
-        //            Console.Write("Open Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
-        //            string openTimeInput = Console.ReadLine();
-        //            DateTime? openTime = string.IsNullOrWhiteSpace(openTimeInput)
-        //                ? (DateTime?)null
-        //                : DateTime.Parse(openTimeInput);
+                Console.Write("Open Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
+                string openTimeInput = Console.ReadLine();
+                DateTime? openTime = string.IsNullOrWhiteSpace(openTimeInput)
+                    ? (DateTime?)null
+                    : DateTime.Parse(openTimeInput);
 
-        //            Console.Write("Final Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
-        //            string finalTimeInput = Console.ReadLine();
-        //            DateTime? finalTime = string.IsNullOrWhiteSpace(finalTimeInput)
-        //                ? (DateTime?)null
-        //                : DateTime.Parse(finalTimeInput);
-        //            s_dalStudentCall!.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
-        //            if (isCreate)
-        //            {
-        //                s_dalStudentCall.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email,
-        //                    latitude, longitude, openTime, finalTime));
-        //            }
-        //            else
-        //            {
-        //                var updateStudentCall = studentCall with
-        //                {
-        //                    Subject = subject ?? studentCall.Subject,
-        //                    Description = description ?? studentCall.Description,
-        //                    FullAddress = fullAddress ?? studentCall.FullAddress,
-        //                    FullName = fullName ?? studentCall.FullName,
-        //                    CellNumber = cellNumber ?? studentCall.CellNumber,
-        //                    Email = email ?? studentCall.Email,
-        //                    Latitude = latitude ?? studentCall.Latitude,
-        //                    Longitude = longitude ?? studentCall.Longitude,
-        //                    OpenTime = openTime ?? studentCall.OpenTime,
-        //                    FinalTime = finalTime ?? studentCall.FinalTime
-        //                };
-        //                s_dalStudentCall.Update(updateStudentCall);
-        //            }
-        //            break;
-        //        case "Assignment":
-        //            Console.WriteLine("Enter the following details:");
-        //            IAssignment assignment;
-        //            if (!isCreate)
-        //            {
-        //                Console.Write("Id: ");
-        //                id = int.Parse(Console.ReadLine());
-        //                assignment = s_dalAssignment.Read(id);
-        //            }
-        //            Console.Write("Student Call Id: ");
-        //            int studentCallId = int.Parse(Console.ReadLine());
+                Console.Write("Final Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
+                string finalTimeInput = Console.ReadLine();
+                DateTime? finalTime = string.IsNullOrWhiteSpace(finalTimeInput)
+                    ? (DateTime?)null
+                    : DateTime.Parse(finalTimeInput);
+                s_dalStudentCall!.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
+                if (isCreate)
+                {
+                    s_dalStudentCall.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email,
+                        latitude, longitude, openTime, finalTime));
+                }
+                else
+                {
+                    var updateStudentCall = studentCall with
+                    {
+                        Subject = subject==null ? subject: studentCall.Subject,
+                        Description = description ?? studentCall.Description,
+                        FullAddress = fullAddress ?? studentCall.FullAddress,
+                        FullName = fullName ?? studentCall.FullName,
+                        CellNumber = cellNumber ?? studentCall.CellNumber,
+                        Email = email ?? studentCall.Email,
+                        Latitude = latitude ?? studentCall.Latitude,
+                        Longitude = longitude ?? studentCall.Longitude,
+                        OpenTime = openTime ?? studentCall.OpenTime,
+                        FinalTime = finalTime ?? studentCall.FinalTime
+                    };
+                    s_dalStudentCall.Update(updateStudentCall);
+                }
+                break;
+            case "Assignment":
+                Console.WriteLine("Enter the following details:");
+                IAssignment assignment;
+                if (!isCreate)
+                {
+                    Console.Write("Id: ");
+                    id = int.Parse(Console.ReadLine());
+                    assignment = s_dalAssignment.Read(id);
+                }
+                Console.Write("Student Call Id: ");
+                int studentCallId = int.Parse(Console.ReadLine());
 
-        //            Console.Write("Tutor Id: ");
-        //            int tutorId = int.Parse(Console.ReadLine());
+                Console.Write("Tutor Id: ");
+                int tutorId = int.Parse(Console.ReadLine());
 
-        //            Console.Write("Entry Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
-        //            string entryTimeInput = Console.ReadLine();
-        //            DateTime? entryTime = string.IsNullOrWhiteSpace(entryTimeInput)
-        //                ? (DateTime?)null
-        //                : DateTime.Parse(entryTimeInput);
+                Console.Write("Entry Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
+                string entryTimeInput = Console.ReadLine();
+                DateTime? entryTime = string.IsNullOrWhiteSpace(entryTimeInput)
+                    ? (DateTime?)null
+                    : DateTime.Parse(entryTimeInput);
 
-        //            Console.Write("End Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
-        //            string endTimeInput = Console.ReadLine();
-        //            DateTime? endTime = string.IsNullOrWhiteSpace(endTimeInput)
-        //                ? (DateTime?)null
-        //                : DateTime.Parse(endTimeInput);
-        //            s_dalAssignment!.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
+                Console.Write("End Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
+                string endTimeInput = Console.ReadLine();
+                DateTime? endTime = string.IsNullOrWhiteSpace(endTimeInput)
+                    ? (DateTime?)null
+                    : DateTime.Parse(endTimeInput);
+                s_dalAssignment!.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
 
-        //            if (isCreate)
-        //            {
-        //                s_dalAssignment.Create(new Assignment(0, studentCallId ?? 0, tutorId ?? 0, entryTime, endTime, 0));
-        //            }
-        //            else
-        //            {
-        //                var updateAssignment = assignment with
-        //                {
-        //                    StudentCallId = studentCallId ?? assignment.StudentCallId,
-        //                    TutorId = tutorId ?? assignment.TutorId,
-        //                    EntryTime = entryTime ?? assignment.EntryTime,
-        //                    EndTime = endTime ?? assignment.EndTime
-        //                };
-        //                s_dalAssignment.Update(updateAssignment);
-        //            }
-        //            break;
-        //    }
+                if (isCreate)
+                {
+                    s_dalAssignment.Create(new Assignment(0, studentCallId ?? 0, tutorId ?? 0, entryTime, endTime, 0));
+                }
+                else
+                {
+                    var updateAssignment = assignment with
+                    {
+                        StudentCallId = studentCallId ?? assignment.StudentCallId,
+                        TutorId = tutorId ?? assignment.TutorId,
+                        EntryTime = entryTime ?? assignment.EntryTime,
+                        EndTime = endTime ?? assignment.EndTime
+                    };
+                    s_dalAssignment.Update(updateAssignment);
+                }
+                break;
+        }
     }
     //private static void createOrUpdateObject(string entity, bool isCreate)
     //{
