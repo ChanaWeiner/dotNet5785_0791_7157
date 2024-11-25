@@ -15,7 +15,6 @@ internal static class Config
         nextStudentCallId = startStudentCallId;
         nextAssignmentId = startAssignmentId;
         Clock = DateTime.Now;
-
     }
 
 

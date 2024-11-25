@@ -10,7 +10,7 @@ public record Tutor(
     string CurrentAddress,
     double Latitude,
     double Longitude,
-    Role role,
+    Role Role,
     bool Active,
     double Distance,
     DistanceType DistanceType

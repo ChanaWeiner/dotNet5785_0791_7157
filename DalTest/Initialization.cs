@@ -20,7 +20,7 @@ public static class Initialization
         const int MIN_ID = 200000000;
         const int MAX_ID = 400000000;
 
-        for (int i = 0; i < 10; i++) // ניצור 10 מדריכים
+        for (int i = 0; i < 15; i++) // ניצור 10 מדריכים
         {
             int id;
             do
@@ -58,7 +58,7 @@ public static class Initialization
         string[] firstNames = { "Noa", "Itai", "Maya", "Amit", "Eden", "Omer", "Roni", "Tal", "Shai", "Yael" };
         string[] lastNames = { "Levi", "Cohen", "Mizrahi", "Peretz", "Sharabi", "Azoulay", "Hazan", "Katz", "Berger", "Shaked" };
 
-        for (int i = 0; i < 15; i++) // ניצור 15 קריאות שירות
+        for (int i = 0; i < 50; i++) // ניצור 50 קריאות שירות
         {
             // הפקת נתונים רנדומליים
             int numSubject = s_rand.Next(Enum.GetValues(typeof(Subjects)).Length);
@@ -91,10 +91,10 @@ public static class Initialization
             throw new Exception("Cannot initialize assignments: no student calls or tutors available.");
 
         // ניצור 10 משימות
-        for (int i = 0; i < Math.Min(studentCalls.Count, tutors.Count); i++)
+        for (int i = 0; i < 155; i++)
         {
             // בחירת קריאה רנדומלית ומדריך רנדומלי
-            StudentCall studentCall = studentCalls[s_rand.Next(studentCalls.Count)];
+            StudentCall studentCall = studentCalls[s_rand.Next(studentCalls.Count-15)];
             Tutor tutor = tutors[s_rand.Next(tutors.Count)];
 
             // בדיקה אם כבר קיימת משימה עם קריאה זו ומדריך זה
@@ -102,7 +102,8 @@ public static class Initialization
             DateTime? endTime = s_rand.Next(0, 2) == 1 ? entryTime.AddHours(s_rand.Next(1, 48)) : null; // זמן סיום רנדומלי
 
             // סטטוס טיפול: אם זמן סיום קיים, נבחר "טופל", אחרת "בתהליך"
-            EndOfTreatment status = endTime.HasValue ? EndOfTreatment.TREATED : EndOfTreatment.EXPIRED;
+            EndOfTreatment status = i < 50 ? EndOfTreatment.TREATED : (i < 100 ? EndOfTreatment.SELF_CANCEL :(i<150? EndOfTreatment.MANAGER_CANCEL:EndOfTreatment.EXPIRED));
+
 
             // יצירת האובייקט והוספתו דרך הממשק
             s_dalAssignment!.Create(new Assignment(0, studentCall.Id, tutor.Id, entryTime, endTime, status));
@@ -114,8 +115,9 @@ public static class Initialization
         s_dalTutor = dalTutors ?? throw new NullReferenceException("DAL object can not be null!");
         s_dalStudentCall = dalStudentCalls ?? throw new NullReferenceException("DAL object can not be null!");
         s_dalAssignment = dalAssignments ?? throw new NullReferenceException("DAL object can not be null!");
+        s_dalConfig = dalConfig;
         Console.WriteLine("Reset Configuration values and List values...");
-        s_dalConfig.Reset();
+        s_dalConfig!.Reset();
         s_dalStudentCall.DeleteAll();
         s_dalStudentCall.DeleteAll();
         s_dalAssignment.DeleteAll();
