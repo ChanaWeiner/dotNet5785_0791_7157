@@ -244,11 +244,11 @@ internal class Program
                 DateTime? finalTime = string.IsNullOrWhiteSpace(finalTimeInput)
                     ? (DateTime?)null
                     : DateTime.Parse(finalTimeInput);
-                s_dalStudentCall!.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
+                s_dalStudentCall!.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, (DateTime)openTime, finalTime));
                 if (isCreate)
                 {
                     s_dalStudentCall.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email,
-                        latitude, longitude, openTime, finalTime));
+                        latitude, longitude, (DateTime)openTime, finalTime));
                 }
                 else
                 {
