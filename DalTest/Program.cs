@@ -16,102 +16,119 @@ internal class Program
     {
         while (true)
         {
-            Console.WriteLine("Select an action from the main menu:");
-            Console.WriteLine("1. Exit the main menu");
-            Console.WriteLine("2. Display submenu for Tutors");
-            Console.WriteLine("3. Display submenu for Student Calls");
-            Console.WriteLine("4. Display submenu for Assignments");
-            Console.WriteLine("5. Initialize data (call the Initialization.Do method)");
-            Console.WriteLine("6. Display all data in the database (for all entities)");
-            Console.WriteLine("7. Display submenu for Configuration");
-            Console.WriteLine("8. Reset the database and configuration data");
-            Console.WriteLine("Select the appropriate number from the options above:");
-
-            mainMenu option = (mainMenu)int.Parse(Console.ReadLine());
-
-            switch (option)
+            try
             {
-                case mainMenu.EXIT:
-                    return;
-                case mainMenu.DISPLAY_TUTORS:
-                    displayEntityMenu("Tutor");
-                    break;
-                case mainMenu.DISPLAY_STUDENT_CALLS:
-                    displayEntityMenu("StudentCall");
-                    break;
-                case mainMenu.DISPLAY_ASSIGNMENT:
-                    displayEntityMenu("Assignment");
-                    break;
-                case mainMenu.INITIALIZATION:
-                    Initialization.Do(s_dalTutor, s_dalStudentCall, s_dalAssignment, s_dalConfig);
-                    break;
-                case mainMenu.DISPLAY_ALL_DATA:
-                    displayAllDataMenu();
-                    break;
-                case mainMenu.DISPLAY_CONFIG:
-                    displayConfigMenu();
-                    break;
-                case mainMenu.RESET:
-                    s_dalTutor!.DeleteAll();
-                    s_dalAssignment!.DeleteAll();
-                    s_dalConfig!.Reset();
-                    s_dalStudentCall!.DeleteAll();
-                    break;
 
+                Console.WriteLine("Select an action from the main menu:");
+                Console.WriteLine("1. Exit the main menu");
+                Console.WriteLine("2. Display submenu for Tutors");
+                Console.WriteLine("3. Display submenu for Student Calls");
+                Console.WriteLine("4. Display submenu for Assignments");
+                Console.WriteLine("5. Initialize data (call the Initialization.Do method)");
+                Console.WriteLine("6. Display all data in the database (for all entities)");
+                Console.WriteLine("7. Display submenu for Configuration");
+                Console.WriteLine("8. Reset the database and configuration data");
+                Console.WriteLine("Select the appropriate number from the options above:");
+
+                mainMenu option = (mainMenu)int.Parse(Console.ReadLine());
+
+                switch (option)
+                {
+                    case mainMenu.EXIT:
+                        return;
+                    case mainMenu.DISPLAY_TUTORS:
+                        displayEntityMenu("Tutor");
+                        break;
+                    case mainMenu.DISPLAY_STUDENT_CALLS:
+                        displayEntityMenu("StudentCall");
+                        break;
+                    case mainMenu.DISPLAY_ASSIGNMENT:
+                        displayEntityMenu("Assignment");
+                        break;
+                    case mainMenu.INITIALIZATION:
+                        Initialization.Do(s_dalTutor, s_dalStudentCall, s_dalAssignment, s_dalConfig);
+                        break;
+                    case mainMenu.DISPLAY_ALL_DATA:
+                        displayAllDataMenu();
+                        break;
+                    case mainMenu.DISPLAY_CONFIG:
+                        displayConfigMenu();
+                        break;
+                    case mainMenu.RESET:
+                        s_dalTutor!.DeleteAll();
+                        s_dalAssignment!.DeleteAll();
+                        s_dalConfig!.Reset();
+                        s_dalStudentCall!.DeleteAll();
+                        break;
+
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
     }
     private static void displayEntityMenu(string entity)
     {
+
         while (true)
         {
-            Console.WriteLine("Select the method you want to perform:");
-            Console.WriteLine("1. Exit the submenu");
-            Console.WriteLine("2. Add a new object (Create)");
-            Console.WriteLine("3. Display an object by ID (Read)");
-            Console.WriteLine("4. Display a list of all objects (ReadAll)");
-            Console.WriteLine("5. Update an object (Update)");
-            Console.WriteLine("6. Delete an object (Delete)");
-            Console.WriteLine("7. Delete all objects (DeleteAll)");
-
-            subMenue option = (subMenue)int.Parse(Console.ReadLine());
-
-            switch (option)
+            try
             {
-                case subMenue.EXIT: // יציאה מתת-תפריט
-                    return;
+                Console.WriteLine("Select the method you want to perform:");
+                Console.WriteLine("1. Exit the submenu");
+                Console.WriteLine("2. Add a new object (Create)");
+                Console.WriteLine("3. Display an object by ID (Read)");
+                Console.WriteLine("4. Display a list of all objects (ReadAll)");
+                Console.WriteLine("5. Update an object (Update)");
+                Console.WriteLine("6. Delete an object (Delete)");
+                Console.WriteLine("7. Delete all objects (DeleteAll)");
 
-                case subMenue.CREATE:
-                    createOrUpdateObject(entity,true);
-                    break;
+                subMenue option = (subMenue)int.Parse(Console.ReadLine());
 
-                case subMenue.READ: // תצוגת אובייקט ע"פ מזהה (READ)
-                    readEntityById(entity);
-                    break;
+                switch (option)
+                {
+                    case subMenue.EXIT: // יציאה מתת-תפריט
+                        return;
 
-                case subMenue.READ_ALL: // תצוגת כל האובייקטים (READ_ALL)
-                    readAllEntities(entity);
-                    break;
+                    case subMenue.CREATE:
+                        createOrUpdateObject(entity, true);
+                        break;
 
-                case subMenue.UPDATE: // עדכון אובייקט (UPDATE)
-                    createOrUpdateObject(entity,false);
-                    break;
+                    case subMenue.READ: // תצוגת אובייקט ע"פ מזהה (READ)
+                        readEntityById(entity);
+                        break;
 
-                case subMenue.DELETE: // מחיקת אובייקט (DELETE)
-                    deleteEntity(entity);
-                    break;
+                    case subMenue.READ_ALL: // תצוגת כל האובייקטים (READ_ALL)
+                        readAllEntities(entity);
+                        break;
 
-                case subMenue.DELETE_ALL: // מחיקת כל האובייקטים (DELETE_ALL)
-                    deleteAllEntities(entity);
-                    break;
+                    case subMenue.UPDATE: // עדכון אובייקט (UPDATE)
+                        createOrUpdateObject(entity, false);
+                        break;
 
-                default:
-                    Console.WriteLine("choose validate choise.");
-                    break;
+                    case subMenue.DELETE: // מחיקת אובייקט (DELETE)
+                        deleteEntity(entity);
+                        break;
+
+                    case subMenue.DELETE_ALL: // מחיקת כל האובייקטים (DELETE_ALL)
+                        deleteAllEntities(entity);
+                        break;
+
+                    default:
+                        Console.WriteLine("choose validate choise.");
+                        break;
+                }
             }
+            catch (Exception e) { Console.WriteLine(e.Message); }
         }
+
+
+
     }
-    private static void createOrUpdateObject(string entity,bool isCreate)
+    private static void createOrUpdateObject(string entity, bool isCreate)
     {
         if (isCreate)
             Console.WriteLine($"Create an {entity}");
@@ -127,7 +144,7 @@ internal class Program
 
                 Console.Write("Id: ");
                 id = int.Parse(Console.ReadLine());
-             
+
                 Console.Write("Full Name: ");
                 fullName = Console.ReadLine();
                 Console.Write("Cell Number: ");
@@ -173,10 +190,10 @@ internal class Program
                         CurrentAddress = currentAddress ?? tutor.CurrentAddress,
                         Latitude = latitude != 0 ? latitude : tutor.Latitude,
                         Longitude = longitude != 0 ? longitude : tutor.Longitude,
-                        Role = role >0 ? role : tutor.Role,
-                        Active = isActive!=null?isActive:tutor.Active,
+                        Role = role > 0 ? role : tutor.Role,
+                        Active = isActive != null ? isActive : tutor.Active,
                         Distance = distance != 0 ? distance : tutor.Distance,
-                        DistanceType = distanceType >0 ? distanceType : tutor.DistanceType
+                        DistanceType = distanceType > 0 ? distanceType : tutor.DistanceType
                     };
                     s_dalTutor!.Update(updateEntity);
                 }
@@ -184,7 +201,7 @@ internal class Program
             case "StusentCall":
                 Console.WriteLine("Enter the following details:");
 
-                StudentCall? studentCall=null;
+                StudentCall? studentCall = null;
                 if (!isCreate)
                 {
                     Console.Write("Id: ");
@@ -237,14 +254,14 @@ internal class Program
                 {
                     var updateStudentCall = studentCall with
                     {
-                        Subject = subject!=null ? subject: studentCall.Subject,
+                        Subject = subject != null ? subject : studentCall.Subject,
                         Description = description ?? studentCall.Description,
                         FullAddress = fullAddress ?? studentCall.FullAddress,
                         FullName = fullName ?? studentCall.FullName,
                         CellNumber = cellNumber ?? studentCall.CellNumber,
                         Email = email ?? studentCall.Email,
-                        Latitude = latitude!=null? latitude : studentCall.Latitude,
-                        Longitude = longitude != null ? longitude: studentCall.Longitude,
+                        Latitude = latitude != null ? latitude : studentCall.Latitude,
+                        Longitude = longitude != null ? longitude : studentCall.Longitude,
                         OpenTime = openTime ?? studentCall.OpenTime,
                         FinalTime = finalTime ?? studentCall.FinalTime
                     };
@@ -253,7 +270,7 @@ internal class Program
                 break;
             case "Assignment":
                 Console.WriteLine("Enter the following details:");
-                Assignment? assignment=null;
+                Assignment? assignment = null;
                 if (!isCreate)
                 {
                     Console.Write("Id: ");
@@ -277,6 +294,7 @@ internal class Program
                 DateTime? endTime = string.IsNullOrWhiteSpace(endTimeInput)
                     ? (DateTime?)null
                     : DateTime.Parse(endTimeInput);
+
                 s_dalAssignment!.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
 
                 if (isCreate)
@@ -287,8 +305,8 @@ internal class Program
                 {
                     var updateAssignment = assignment with
                     {
-                        StudentCallId = studentCallId!=null? studentCallId : assignment.StudentCallId,
-                        TutorId = tutorId!=null ? tutorId: assignment.TutorId,
+                        StudentCallId = studentCallId != null ? studentCallId : assignment.StudentCallId,
+                        TutorId = tutorId != null ? tutorId : assignment.TutorId,
                         EntryTime = entryTime ?? assignment.EntryTime,
                         EndTime = endTime ?? assignment.EndTime
                     };
@@ -372,12 +390,8 @@ internal class Program
                     break;
                 case configSubMenu.SET_CONFIG_VARIABLE:
                     Console.WriteLine("Setting the time");
-                    string setTimeInput = Console.ReadLine();
-                    DateTime? setTime = string.IsNullOrWhiteSpace(setTimeInput)
-                       ? (DateTime?)null
-                       : DateTime.Parse(setTimeInput);
-                    if (setTime != null)
-                        s_dalConfig!.Clock = (DateTime)setTime;
+                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime setTime)) throw new FormatException("Date is invalid!");
+                    s_dalConfig!.Clock = (DateTime)setTime;
                     break;
                 case configSubMenu.DISPLAY_VALUE:
                     Console.WriteLine(s_dalConfig!.Clock);
