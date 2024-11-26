@@ -2,16 +2,19 @@
 using DalApi;
 using DalTest;
 using DO;
+using System.Diagnostics;
 
 internal class Program
 {
     enum mainMenu { EXIT = 1, DISPLAY_TUTORS, DISPLAY_STUDENT_CALLS, DISPLAY_ASSIGNMENT, INITIALIZATION, DISPLAY_ALL_DATA, DISPLAY_CONFIG, RESET };
     enum subMenue { EXIT = 1, CREATE, READ, READ_ALL, UPDATE, DELETE, DELETE_ALL };
     enum configSubMenu { EXIT = 1, PROMOTE_MINUTE, PROMOTE_HOUR, DISPLAY_TIME, SET_CONFIG_VARIABLE, DISPLAY_VALUE, RESET }
-    private static ITutor? s_dalTutor = new TutorImplementation();
-    private static IStudentCall? s_dalStudentCall = new StudentCallImplementation();
-    private static IAssignment? s_dalAssignment = new AssignmentImplementation();
-    private static IConfig? s_dalConfig = new ConfigImplementation();
+    //private static ITutor? s_dal.Tutor = new TutorImplementation();
+    //private static IStudentCall? s_dal.StudentCall = new StudentCallImplementation();
+    //private static IAssignment? s_dal.Assignment = new AssignmentImplementation();
+    //private static IConfig? s_dal.Config = new ConfigImplementation();
+    static readonly IDal s_dal = new DalList(); //stage 2
+
     private static void displayMainMenu()
     {
         while (true)
@@ -46,7 +49,7 @@ internal class Program
                         displayEntityMenu("Assignment");
                         break;
                     case mainMenu.INITIALIZATION:
-                        Initialization.Do(s_dalTutor, s_dalStudentCall, s_dalAssignment, s_dalConfig);
+                        Initialization.Do(s_dal);
                         break;
                     case mainMenu.DISPLAY_ALL_DATA:
                         displayAllDataMenu();
@@ -55,10 +58,10 @@ internal class Program
                         displayConfigMenu();
                         break;
                     case mainMenu.RESET:
-                        s_dalTutor!.DeleteAll();
-                        s_dalAssignment!.DeleteAll();
-                        s_dalConfig!.Reset();
-                        s_dalStudentCall!.DeleteAll();
+                        s_dal.Tutor!.DeleteAll();
+                        s_dal.Assignment!.DeleteAll();
+                        s_dal.Config!.Reset();
+                        s_dal.StudentCall!.DeleteAll();
                         break;
 
                 }
@@ -177,10 +180,10 @@ internal class Program
                 Console.Write("Distance Type: ");
                 DistanceType distanceType = (DistanceType)int.Parse(Console.ReadLine());
                 if (isCreate)
-                    s_dalTutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, isActive, distance, distanceType));
+                    s_dal.Tutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, isActive, distance, distanceType));
                 else
                 {
-                    var tutor = s_dalTutor.Read(id);
+                    var tutor = s_dal.Tutor.Read(id);
                     var updateEntity = tutor with
                     {
                         FullName = fullName ?? tutor.FullName,
@@ -195,7 +198,7 @@ internal class Program
                         Distance = distance != 0 ? distance : tutor.Distance,
                         DistanceType = distanceType > 0 ? distanceType : tutor.DistanceType
                     };
-                    s_dalTutor!.Update(updateEntity);
+                    s_dal.Tutor!.Update(updateEntity);
                 }
                 break;
             case "StusentCall":
@@ -206,7 +209,7 @@ internal class Program
                 {
                     Console.Write("Id: ");
                     id = int.Parse(Console.ReadLine());
-                    studentCall = (StudentCall)s_dalStudentCall.Read(id);
+                    studentCall = (StudentCall)s_dal.StudentCall.Read(id);
                 }
 
                 Console.WriteLine("Subject (choose one of the following: Math, Science, History, Literature, Art): ");
@@ -244,10 +247,10 @@ internal class Program
                 DateTime? finalTime = string.IsNullOrWhiteSpace(finalTimeInput)
                     ? (DateTime?)null
                     : DateTime.Parse(finalTimeInput);
-                s_dalStudentCall!.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, (DateTime)openTime, finalTime));
+                s_dal.StudentCall!.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, (DateTime)openTime, finalTime));
                 if (isCreate)
                 {
-                    s_dalStudentCall.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email,
+                    s_dal.StudentCall.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email,
                         latitude, longitude, (DateTime)openTime, finalTime));
                 }
                 else
@@ -265,7 +268,7 @@ internal class Program
                         OpenTime = openTime ?? studentCall.OpenTime,
                         FinalTime = finalTime ?? studentCall.FinalTime
                     };
-                    s_dalStudentCall.Update(updateStudentCall);
+                    s_dal.StudentCall.Update(updateStudentCall);
                 }
                 break;
             case "Assignment":
@@ -275,7 +278,7 @@ internal class Program
                 {
                     Console.Write("Id: ");
                     id = int.Parse(Console.ReadLine());
-                    assignment = s_dalAssignment.Read(id);
+                    assignment = s_dal.Assignment.Read(id);
                 }
                 Console.Write("Student Call Id: ");
                 int studentCallId = int.Parse(Console.ReadLine());
@@ -295,11 +298,11 @@ internal class Program
                     ? (DateTime?)null
                     : DateTime.Parse(endTimeInput);
 
-                s_dalAssignment!.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
+                s_dal.Assignment!.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
 
                 if (isCreate)
                 {
-                    s_dalAssignment.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
+                    s_dal.Assignment.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
                 }
                 else
                 {
@@ -310,7 +313,7 @@ internal class Program
                         EntryTime = entryTime ?? assignment.EntryTime,
                         EndTime = endTime ?? assignment.EndTime
                     };
-                    s_dalAssignment.Update(updateAssignment);
+                    s_dal.Assignment.Update(updateAssignment);
                 }
                 break;
         }
@@ -324,15 +327,15 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                var tutor = s_dalTutor!.Read(id);
+                var tutor = s_dal.Tutor!.Read(id);
                 Console.WriteLine(tutor);
                 break;
             case "StusentCall":
-                var studentCall = s_dalStudentCall!.Read(id);
+                var studentCall = s_dal.StudentCall!.Read(id);
                 Console.WriteLine(studentCall);
                 break;
             case "Assignment":
-                var assignment = s_dalAssignment!.Read(id);
+                var assignment = s_dal.Assignment!.Read(id);
                 Console.WriteLine(assignment);
                 break;
         }
@@ -342,15 +345,15 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                var tutors = s_dalTutor!.ReadAll();
+                var tutors = s_dal.Tutor!.ReadAll();
                 tutors.ForEach(x => Console.WriteLine(x));
                 break;
             case "StudentCall":
-                var studentCalls = s_dalStudentCall!.ReadAll();
+                var studentCalls = s_dal.StudentCall!.ReadAll();
                 studentCalls.ForEach(x => Console.WriteLine(x));
                 break;
             case "Assignment":
-                var assignments = s_dalAssignment!.ReadAll();
+                var assignments = s_dal.Assignment!.ReadAll();
                 assignments.ForEach(x => Console.WriteLine(x));
                 break;
         }
@@ -380,25 +383,25 @@ internal class Program
                 case configSubMenu.EXIT:
                     return;
                 case configSubMenu.PROMOTE_MINUTE:
-                    s_dalConfig!.Clock = s_dalConfig.Clock.AddMinutes(1);
+                    s_dal.Config!.Clock = s_dal.Config.Clock.AddMinutes(1);
                     break;
                 case configSubMenu.PROMOTE_HOUR:
-                    s_dalConfig!.Clock = s_dalConfig.Clock.AddHours(1);
+                    s_dal.Config!.Clock = s_dal.Config.Clock.AddHours(1);
                     break;
                 case configSubMenu.DISPLAY_TIME:
-                    Console.WriteLine($"Current time: {s_dalConfig!.Clock}");
+                    Console.WriteLine($"Current time: {s_dal.Config!.Clock}");
                     break;
                 case configSubMenu.SET_CONFIG_VARIABLE:
                     Console.WriteLine("Setting the time");
                     if (!DateTime.TryParse(Console.ReadLine(), out DateTime setTime)) throw new FormatException("Date is invalid!");
-                    s_dalConfig!.Clock = (DateTime)setTime;
+                    s_dal.Config!.Clock = (DateTime)setTime;
                     break;
                 case configSubMenu.DISPLAY_VALUE:
-                    Console.WriteLine(s_dalConfig!.Clock);
+                    Console.WriteLine(s_dal.Config!.Clock);
                     break;
                 case configSubMenu.RESET:
                     Console.WriteLine("Resetting configuration...");
-                    s_dalConfig!.Reset();
+                    s_dal.Config!.Reset();
                     break;
             }
         }
@@ -409,13 +412,13 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                s_dalTutor!.DeleteAll();
+                s_dal.Tutor!.DeleteAll();
                 break;
             case "StudentCall":
-                s_dalStudentCall!.DeleteAll();
+                s_dal.StudentCall!.DeleteAll();
                 break;
             case "Assignment":
-                s_dalAssignment!.DeleteAll();
+                s_dal.Assignment!.DeleteAll();
                 break;
         }
 
@@ -428,13 +431,13 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                s_dalTutor!.Delete(id);
+                s_dal.Tutor!.Delete(id);
                 break;
             case "StusentCall":
-                s_dalStudentCall!.Delete(id);
+                s_dal.StudentCall!.Delete(id);
                 break;
             case "Assignment":
-                s_dalAssignment!.Delete(id);
+                s_dal.Assignment!.Delete(id);
                 break;
         }
     }

@@ -3,7 +3,7 @@ using DO;
 
 namespace Dal;
 
-public class StudentCallImplementation : IStudentCall
+internal class StudentCallImplementation : IStudentCall
 {
     public void Create(StudentCall item)
     {
@@ -28,7 +28,7 @@ public class StudentCallImplementation : IStudentCall
 
     public StudentCall? Read(int id)
     {
-        return DataSource.StudentCalls.Find(x => x.Id == id);
+        return DataSource.StudentCalls.FirstOrDefault(x => x.Id == id);
     }
 
     public List<StudentCall> ReadAll()

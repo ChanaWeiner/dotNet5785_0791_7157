@@ -3,7 +3,7 @@ using DO;
 
 namespace Dal;
 
-public class AssignmentImplementation : IAssignment
+internal class AssignmentImplementation : IAssignment
 {
     public void Create(Assignment item)
     {
@@ -28,7 +28,7 @@ public class AssignmentImplementation : IAssignment
 
     public Assignment? Read(int id)
     {
-        return DataSource.Assignments.Find(x => x.Id == id);
+        return DataSource.Assignments.FirstOrDefault(x => x.Id == id);
     }
 
     public List<Assignment> ReadAll()

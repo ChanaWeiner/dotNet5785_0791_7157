@@ -4,10 +4,12 @@ namespace DalTest;
 
 public static class Initialization
 {
-    private static ITutor? s_dalTutor; //stage 1
-    private static IStudentCall? s_dalStudentCall;
-    private static IAssignment? s_dalAssignment; //stage 1
-    private static IConfig? s_dalConfig; //stage 1
+    private static IDal? s_dal; //stage 2
+
+    //private static ITutor? s_dalTutor; //stage 1
+    //private static IStudentCall? s_dalStudentCall;
+    //private static IAssignment? s_dalAssignment; //stage 1
+    //private static IConfig? s_dalConfig; //stage 1
     private static readonly Random s_rand = new();
 
 
@@ -27,7 +29,7 @@ public static class Initialization
             {
                 id = s_rand.Next(MIN_ID, MAX_ID); // ת.ז רנדומלי
             }
-            while (s_dalTutor!.Read(id) != null); // ווידוא שהמדריך לא קיים כבר ברשימה
+            while (s_dal!.Tutor.Read(id) != null); // ווידוא שהמדריך לא קיים כבר ברשימה
 
             string fullName = $"{firstNames[s_rand.Next(firstNames.Length)]} {lastNames[s_rand.Next(lastNames.Length)]}";
             string cellNumber = $"05{s_rand.Next(0, 10)}-{s_rand.Next(1000000, 9999999)}";
@@ -42,7 +44,7 @@ public static class Initialization
             DistanceType distanceType = (DistanceType)s_rand.Next(3); // DistanceType רנדומלי
 
             // יצירת האובייקט והוספתו דרך הממשק
-            s_dalTutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, active, distance, distanceType));
+            s_dal!.Tutor.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, active, distance, distanceType));
         }
     }
 
@@ -72,11 +74,11 @@ public static class Initialization
             double longitude = s_rand.NextDouble() * 360 - 180; // טווח בין -180 ל-180
 
             // יצירת זמן פתיחה וסגירה רנדומליים
-            DateTime openTime = s_dalConfig!.Clock.AddDays(-s_rand.Next(1, 365)); // רנדומלי עד שנה אחורה
+            DateTime openTime = s_dal!.Config.Clock.AddDays(-s_rand.Next(1, 365)); // רנדומלי עד שנה אחורה
             DateTime? finalTime = s_rand.Next(0, 2) == 1 ? openTime.AddHours(s_rand.Next(1, 48)) : null; // רנדומלי אם הקריאה נסגרה
 
             // יצירת האובייקט והוספתו דרך הממשק
-            s_dalStudentCall!.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
+            s_dal!.StudentCall.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
         }
     }
 
@@ -84,8 +86,8 @@ public static class Initialization
     private static void createAssignments()
     {
         // קבלת כל הקריאות והחונכים הקיימים
-        List<StudentCall> studentCalls = s_dalStudentCall!.ReadAll();
-        List<Tutor> tutors = s_dalTutor!.ReadAll();
+        List<StudentCall> studentCalls = s_dal!.StudentCall.ReadAll();
+        List<Tutor> tutors = s_dal!.Tutor.ReadAll();
 
         if (studentCalls.Count == 0 || tutors.Count == 0)
             throw new Exception("Cannot initialize assignments: no student calls or tutors available.");
@@ -98,7 +100,7 @@ public static class Initialization
             Tutor tutor = tutors[s_rand.Next(tutors.Count)];
 
             // בדיקה אם כבר קיימת משימה עם קריאה זו ומדריך זה
-            DateTime entryTime = s_dalConfig!.Clock.AddDays(-s_rand.Next(1, 30)); // זמן כניסה רנדומלי עד חודש אחורה
+            DateTime entryTime = s_dal!.Config.Clock.AddDays(-s_rand.Next(1, 30)); // זמן כניסה רנדומלי עד חודש אחורה
             DateTime? endTime = s_rand.Next(0, 2) == 1 ? entryTime.AddHours(s_rand.Next(1, 48)) : null; // זמן סיום רנדומלי
 
             // סטטוס טיפול: אם זמן סיום קיים, נבחר "טופל", אחרת "בתהליך"
@@ -106,21 +108,24 @@ public static class Initialization
 
 
             // יצירת האובייקט והוספתו דרך הממשק
-            s_dalAssignment!.Create(new Assignment(0, studentCall.Id, tutor.Id, entryTime, endTime, status));
+            s_dal!.Assignment.Create(new Assignment(0, studentCall.Id, tutor.Id, entryTime, endTime, status));
         }
     }
 
-    public static void Do( ITutor? dalTutors, IStudentCall? dalStudentCalls, IAssignment? dalAssignments, IConfig? dalConfig)
+    public static void Do( IDal dal)
     {
-        s_dalTutor = dalTutors ?? throw new NullReferenceException("DAL object can not be null!");
-        s_dalStudentCall = dalStudentCalls ?? throw new NullReferenceException("DAL object can not be null!");
-        s_dalAssignment = dalAssignments ?? throw new NullReferenceException("DAL object can not be null!");
-        s_dalConfig = dalConfig;
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
+        s_dal!.ResetDB();
+
+        //s_dal!.Tutor = dalTutors ?? throw new NullReferenceException("DAL object can not be null!");
+        //s_dal.StudentCall = dalStudentCalls ?? throw new NullReferenceException("DAL object can not be null!");
+        //s_dalAssignment = dalAssignments ?? throw new NullReferenceException("DAL object can not be null!");
+        //s_dalConfig = dalConfig;
         Console.WriteLine("Reset Configuration values and List values...");
-        s_dalConfig!.Reset();
-        s_dalStudentCall.DeleteAll();
-        s_dalStudentCall.DeleteAll();
-        s_dalAssignment.DeleteAll();
+        //s_dalConfig!.Reset();
+        //s_dalStudentCall.DeleteAll();
+        //s_dalStudentCall.DeleteAll();
+        //s_dalAssignment.DeleteAll();
         Console.WriteLine("Initializing All lists ...");
         createTutors();
         createStudentCalls();

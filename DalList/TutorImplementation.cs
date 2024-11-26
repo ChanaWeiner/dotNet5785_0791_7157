@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Dal;
 
-public class TutorImplementation : ITutor
+internal class TutorImplementation : ITutor
 {
     public void Create(Tutor item)
     {
@@ -29,13 +29,15 @@ public class TutorImplementation : ITutor
 
     public Tutor? Read(int id)
     {
-        return DataSource.Tutors.Find(x => x.Id == id);
+        return DataSource.Tutors.FirstOrDefault(x => x.Id == id);
     }
 
     public List<Tutor> ReadAll()
     {
         return new List<Tutor>(DataSource.Tutors);
     }
+
+
 
     public void Update(Tutor item)
     {
