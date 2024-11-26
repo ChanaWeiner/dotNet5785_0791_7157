@@ -17,7 +17,7 @@ internal class StudentCallImplementation : IStudentCall
     {
         StudentCall studentCall = Read(id);
         if (studentCall == null)
-            throw new Exception($"Student call with ID={id} is not exists");
+            throw new DalDoesNotExistException($"Student call with ID={id} is not exists");
         DataSource.StudentCalls.Remove(studentCall);
     }
 
@@ -30,17 +30,30 @@ internal class StudentCallImplementation : IStudentCall
     {
         return DataSource.StudentCalls.FirstOrDefault(x => x.Id == id);
     }
-
-    public List<StudentCall> ReadAll()
+    public StudentCall? Read(Func<StudentCall, bool> filter)
     {
-        return new List<StudentCall>(DataSource.StudentCalls);
+        return (DataSource.StudentCalls).FirstOrDefault(filter);
+    }
+    public IEnumerable<StudentCall> ReadAll(Func<StudentCall, bool>? filter = null)
+    {
+        if (filter != null)
+        {
+            return from item in DataSource.StudentCalls
+                   where filter(item)
+                   select item;
+        }
+        else
+        {
+            return from item in DataSource.StudentCalls
+                   select item;
+        }
     }
 
     public void Update(StudentCall item)
     {
         StudentCall studentCall = Read(item.Id);
         if (studentCall == null)
-            throw new Exception($"An object of type student call with such an {item.Id} does not exist");
+            throw new DalDoesNotExistException($"An object of type student call with such an {item.Id} does not exist");
         Delete(item.Id);
         Create(item);
     }

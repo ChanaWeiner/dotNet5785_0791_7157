@@ -86,8 +86,8 @@ public static class Initialization
     private static void createAssignments()
     {
         // קבלת כל הקריאות והחונכים הקיימים
-        List<StudentCall> studentCalls = s_dal!.StudentCall.ReadAll();
-        List<Tutor> tutors = s_dal!.Tutor.ReadAll();
+        List<StudentCall> studentCalls = s_dal!.StudentCall.ReadAll().ToList();
+        List<Tutor> tutors = s_dal!.Tutor.ReadAll().ToList();
 
         if (studentCalls.Count == 0 || tutors.Count == 0)
             throw new Exception("Cannot initialize assignments: no student calls or tutors available.");

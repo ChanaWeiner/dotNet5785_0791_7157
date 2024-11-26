@@ -17,7 +17,7 @@ internal class AssignmentImplementation : IAssignment
     {
         Assignment assignment = Read(id);
         if (assignment == null)
-            throw new Exception($"Student call with ID={id} is not exists");
+            throw new DalDoesNotExistException($"Student call with ID={id} is not exists");
         DataSource.Assignments.Remove(assignment);
     }
 
@@ -30,17 +30,30 @@ internal class AssignmentImplementation : IAssignment
     {
         return DataSource.Assignments.FirstOrDefault(x => x.Id == id);
     }
-
-    public List<Assignment> ReadAll()
+    public Assignment? Read(Func<Assignment, bool> filter)
     {
-        return new List<Assignment>(DataSource.Assignments);
+        return (DataSource.Assignments).FirstOrDefault(filter);
+    }
+    public IEnumerable<Assignment> ReadAll(Func<Assignment, bool>? filter = null)
+    {
+        if (filter != null)
+        {
+            return from item in DataSource.Assignments
+                   where filter(item)
+                   select item;
+        }
+        else
+        {
+            return from item in DataSource.Assignments
+                   select item;
+        }
     }
 
     public void Update(Assignment item)
     {
         Assignment assignment = Read(item.Id);
         if (assignment == null)
-            throw new Exception($"An object of type assignment with such an {item.Id} does not exist");
+            throw new DalDoesNotExistException($"An object of type assignment with such an {item.Id} does not exist");
         Delete(item.Id);
         Create(item);
     }

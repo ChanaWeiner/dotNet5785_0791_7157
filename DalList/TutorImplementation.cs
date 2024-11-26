@@ -9,7 +9,7 @@ internal class TutorImplementation : ITutor
     public void Create(Tutor item)
     {
         if (Read(item.Id) is not null)
-            throw new Exception($"Tutor with ID={item.Id} already exists");
+            throw new DalAlreadyExistsException($"Tutor with ID={item.Id} already exists");
         DataSource.Tutors.Add(item);
     }
 
@@ -17,7 +17,7 @@ internal class TutorImplementation : ITutor
     {
         Tutor tutor = Read(id);
         if (tutor == null)
-            throw new Exception($"Tutor with ID={id} is not exists");
+            throw new DalDoesNotExistException($"Tutor with ID={id} is not exists");
         DataSource.Tutors.Remove(tutor);
     }
 
@@ -32,18 +32,24 @@ internal class TutorImplementation : ITutor
         return DataSource.Tutors.FirstOrDefault(x => x.Id == id);
     }
 
-    public List<Tutor> ReadAll()
+    public Tutor? Read(Func<Tutor, bool> filter)
     {
-        return new List<Tutor>(DataSource.Tutors);
+        return (DataSource.Tutors).FirstOrDefault(filter);
     }
 
+    public IEnumerable<Tutor> ReadAll(Func<Tutor, bool>? filter = null)
+    {
+        return filter == null
+            ? new List<Tutor>(DataSource.Tutors)
+            : new List<Tutor>(DataSource.Tutors.Where(filter));
+    }
 
 
     public void Update(Tutor item)
     {
         Tutor tutor = Read(item.Id);
         if (tutor == null)
-            throw new Exception($"An object of type Tutor with such an {item.Id} does not exist");
+            throw new DalDoesNotExistException($"An object of type Tutor with such an {item.Id} does not exist");
         Delete(item.Id);
         Create(item);
     }

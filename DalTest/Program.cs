@@ -345,15 +345,15 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                var tutors = s_dal.Tutor!.ReadAll();
+                var tutors = s_dal.Tutor!.ReadAll().ToList();
                 tutors.ForEach(x => Console.WriteLine(x));
                 break;
             case "StudentCall":
-                var studentCalls = s_dal.StudentCall!.ReadAll();
+                var studentCalls = s_dal.StudentCall!.ReadAll().ToList();
                 studentCalls.ForEach(x => Console.WriteLine(x));
                 break;
             case "Assignment":
-                var assignments = s_dal.Assignment!.ReadAll();
+                var assignments = s_dal.Assignment!.ReadAll().ToList();
                 assignments.ForEach(x => Console.WriteLine(x));
                 break;
         }
@@ -393,7 +393,7 @@ internal class Program
                     break;
                 case configSubMenu.SET_CONFIG_VARIABLE:
                     Console.WriteLine("Setting the time");
-                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime setTime)) throw new FormatException("Date is invalid!");
+                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime setTime)) throw new DalDateFormatWorngException("Date is invalid!");
                     s_dal.Config!.Clock = (DateTime)setTime;
                     break;
                 case configSubMenu.DISPLAY_VALUE:
