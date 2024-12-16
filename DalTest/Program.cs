@@ -13,7 +13,8 @@ internal class Program
     //private static IStudentCall? s_dal.StudentCall = new StudentCallImplementation();
     //private static IAssignment? s_dal.Assignment = new AssignmentImplementation();
     //private static IConfig? s_dal.Config = new ConfigImplementation();
-    static readonly IDal s_dal = new DalList(); //stage 2
+    //static readonly IDal s_dal = new DalList(); //stage 2
+    static readonly IDal s_dal = new DalXml(); //stage 3
 
     private static void displayMainMenu()
     {

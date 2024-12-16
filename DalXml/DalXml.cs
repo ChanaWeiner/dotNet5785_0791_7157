@@ -1,10 +1,12 @@
-﻿namespace Dal;
+﻿
+
 using DalApi;
 
+namespace Dal;
 
-sealed public class DalList : IDal
-
+sealed public class DalXml : IDal
 {
+
     public IStudentCall StudentCall { get; } = new StudentCallImplementation();
     public IAssignment Assignment { get; } = new AssignmentImplementation();
     public ITutor Tutor { get; } = new TutorImplementation();

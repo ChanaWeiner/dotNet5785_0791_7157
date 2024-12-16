@@ -21,14 +21,39 @@ internal class AssignmentImplementation : IAssignment
             
         
     }
-    
+    static XElement GetXElement(Assignment assignment)
+    {
+        var elements = new List<XElement>();
+
+        if (assignment.Id != 0)
+            elements.Add(new XElement("Id", assignment.Id));
+
+        if (assignment.StudentCallId!=0)
+            elements.Add(new XElement("StudentCallId", assignment.StudentCallId));
+
+        if (assignment.TutorId != 0)
+            elements.Add(new XElement("TutorId", assignment.TutorId));
+
+        if (assignment.EntryTime != null)
+            elements.Add(new XElement("EntryTime", assignment.EntryTime));
+
+        if (assignment.EndTime != null)
+            elements.Add(new XElement("EndTime", assignment.EndTime));
+
+        if (assignment.EndOfTreatment != null)
+            elements.Add(new XElement("EndOfTreatment", assignment.EndOfTreatment.ToString()));
+
+        return new XElement("Assignment", elements);
+    }
+
     public void Create(Assignment item)
     {
         XElement? assignmentElements = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
         int id = Config.NextAssignmentId;
         Assignment copy = item with { Id = id };
-        assignmentElements.Add(copy);
 
+        assignmentElements.Add(GetXElement(copy));
+        XMLTools.SaveListToXMLElement(assignmentElements, Config.s_assignments_xml);
     }
 
     public void Delete(int id)
@@ -55,7 +80,8 @@ internal class AssignmentImplementation : IAssignment
     {
         XElement assignmentElements = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
         assignmentElements.RemoveAll();
-       
+        XMLTools.SaveListToXMLElement(assignmentElements, Config.s_assignments_xml);
+
     }
 
     public Assignment? Read(int id)
