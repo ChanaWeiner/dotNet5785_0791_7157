@@ -13,7 +13,7 @@ public static class Initialization
     private static readonly Random s_rand = new();
 
     /// Creates random tutors and adds them to the DAL.
-    private static void createTutors()
+    private static void CreateTutors()
     {
         string[] firstNames = { "Dani", "Eli", "Yair", "Ariela", "Dina", "Shira", "Rivka", "David", "Moshe", "Tamar" };
         string[] lastNames = { "Levy", "Amar", "Cohen", "Levin", "Klein", "Israelof", "Mizrahi", "Peretz", "Azoulay", "Sharabi" };
@@ -37,7 +37,7 @@ public static class Initialization
             string currentAddress = $"Street {s_rand.Next(1, 100)}, City {s_rand.Next(1, 20)}";
             double latitude = s_rand.NextDouble() * 180 - 90;
             double longitude = s_rand.NextDouble() * 360 - 180;
-            Role role = (i == 0) ? Role.MANEGAR : (Role)s_rand.Next(2);
+            Role role = (i == 0) ? Role.Manager : (Role)s_rand.Next(2);
             bool active = s_rand.Next(0, 2) == 1;
             double distance = s_rand.NextDouble() * 20;
             DistanceType distanceType = (DistanceType)s_rand.Next(3);
@@ -47,7 +47,7 @@ public static class Initialization
     }
 
     /// Creates random student calls and adds them to the DAL.
-    private static void createStudentCalls()
+    private static void CreateStudentCalls()
     {
         string[] subjects = { "English", "Math", "Grammer", "Programming", "History" };
         string[] addresses = { "123 Main St, City A", "45 Elm St, City B", "678 Pine Rd, City C", "89 Maple Ave, City D" };
@@ -74,7 +74,7 @@ public static class Initialization
     }
 
     /// Creates random assignments for student calls and tutors, and adds them to the DAL.
-    private static void createAssignments()
+    private static void CreateAssignments()
     {
         List<StudentCall> studentCalls = s_dal!.StudentCall.ReadAll().ToList();
         List<Tutor> tutors = s_dal!.Tutor.ReadAll().ToList();
@@ -90,7 +90,7 @@ public static class Initialization
             DateTime entryTime = s_dal!.Config.Clock.AddDays(-s_rand.Next(1, 30));
             DateTime? endTime = s_rand.Next(0, 2) == 1 ? entryTime.AddHours(s_rand.Next(1, 48)) : null;
 
-            EndOfTreatment status = i < 50 ? EndOfTreatment.TREATED : (i < 100 ? EndOfTreatment.SELF_CANCEL : (i < 150 ? EndOfTreatment.MANAGER_CANCEL : EndOfTreatment.EXPIRED));
+            EndOfTreatment status = i < 50 ? EndOfTreatment.Treated : (i < 100 ? EndOfTreatment.SelfCancel : (i < 150 ? EndOfTreatment.ManagerCancel : EndOfTreatment.Expired));
 
             s_dal!.Assignment.Create(new Assignment(0, studentCall.Id, tutor.Id, entryTime, endTime, status));
         }
@@ -113,8 +113,8 @@ public static class Initialization
         //s_dalStudentCall.DeleteAll();
         //s_dalAssignment.DeleteAll();
         Console.WriteLine("Initializing All lists ...");
-        createTutors();
-        createStudentCalls();
-        createAssignments();
+        CreateTutors();
+        CreateStudentCalls();
+        CreateAssignments();
     }
 }

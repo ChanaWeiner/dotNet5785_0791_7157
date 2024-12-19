@@ -6,23 +6,25 @@ using System.Diagnostics;
 
 internal class Program
 {
-    enum mainMenu { EXIT = 1, DISPLAY_TUTORS, DISPLAY_STUDENT_CALLS, DISPLAY_ASSIGNMENT, INITIALIZATION, DISPLAY_ALL_DATA, DISPLAY_CONFIG, RESET };
-    enum subMenue { EXIT = 1, CREATE, READ, READ_ALL, UPDATE, DELETE, DELETE_ALL };
-    enum configSubMenu { EXIT = 1, PROMOTE_MINUTE, PROMOTE_HOUR, DISPLAY_TIME, SET_CONFIG_VARIABLE, DISPLAY_VALUE, RESET }
-    //private static ITutor? s_dal.Tutor = new TutorImplementation();
-    //private static IStudentCall? s_dal.StudentCall = new StudentCallImplementation();
-    //private static IAssignment? s_dal.Assignment = new AssignmentImplementation();
-    //private static IConfig? s_dal.Config = new ConfigImplementation();
-    //static readonly IDal s_dal = new DalList(); //stage 2
-    static readonly IDal s_dal = new DalXml(); //stage 3
+    /// Enum for main menu
+    enum MainMenu { Exit = 1, DisplayTutors, DisplayStudentCalls, DisplayAssignment, Initialization, DisplayAllData, DisplayConfig, Reset }
 
-    private static void displayMainMenu()
+    /// Enum for sub-menu
+    enum SubMenu { Exit = 1, Create, Read, ReadAll, Update, Delete, DeleteAll }
+
+    /// Enum for configuration sub-menu
+    enum ConfigSubMenu { Exit = 1, PromoteMinute, PromoteHour, DisplayTime, SetConfigVariable, DisplayValue, Reset }
+
+    /// Data Access Layer instance
+    static readonly IDal DataAccessLayer = new DalXml(); // stage 3
+
+    /// Displays the main menu and handles user input
+    private static void DisplayMainMenu()
     {
         while (true)
         {
             try
             {
-
                 Console.WriteLine("Select an action from the main menu:");
                 Console.WriteLine("1. Exit the main menu");
                 Console.WriteLine("2. Display submenu for Tutors");
@@ -34,49 +36,48 @@ internal class Program
                 Console.WriteLine("8. Reset the database and configuration data");
                 Console.WriteLine("Select the appropriate number from the options above:");
 
-                mainMenu option = (mainMenu)int.Parse(Console.ReadLine());
+                MainMenu option = (MainMenu)int.Parse(Console.ReadLine());
 
                 switch (option)
                 {
-                    case mainMenu.EXIT:
+                    case MainMenu.Exit:
                         return;
-                    case mainMenu.DISPLAY_TUTORS:
-                        displayEntityMenu("Tutor");
+                    case MainMenu.DisplayTutors:
+                        DisplayEntityMenu("Tutor");
                         break;
-                    case mainMenu.DISPLAY_STUDENT_CALLS:
-                        displayEntityMenu("StudentCall");
+                    case MainMenu.DisplayStudentCalls:
+                        DisplayEntityMenu("StudentCall");
                         break;
-                    case mainMenu.DISPLAY_ASSIGNMENT:
-                        displayEntityMenu("Assignment");
+                    case MainMenu.DisplayAssignment:
+                        DisplayEntityMenu("Assignment");
                         break;
-                    case mainMenu.INITIALIZATION:
-                        Initialization.Do(s_dal);
+                    case MainMenu.Initialization:
+                        Initialization.Do(DataAccessLayer);
                         break;
-                    case mainMenu.DISPLAY_ALL_DATA:
-                        displayAllDataMenu();
+                    case MainMenu.DisplayAllData:
+                        DisplayAllDataMenu();
                         break;
-                    case mainMenu.DISPLAY_CONFIG:
-                        displayConfigMenu();
+                    case MainMenu.DisplayConfig:
+                        DisplayConfigMenu();
                         break;
-                    case mainMenu.RESET:
-                        s_dal.Tutor!.DeleteAll();
-                        s_dal.Assignment!.DeleteAll();
-                        s_dal.Config!.Reset();
-                        s_dal.StudentCall!.DeleteAll();
+                    case MainMenu.Reset:
+                        DataAccessLayer.Tutor!.DeleteAll();
+                        DataAccessLayer.Assignment!.DeleteAll();
+                        DataAccessLayer.Config!.Reset();
+                        DataAccessLayer.StudentCall!.DeleteAll();
                         break;
-
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-
         }
     }
-    private static void displayEntityMenu(string entity)
-    {
 
+    /// Displays the entity-specific menu and handles user actions
+    private static void DisplayEntityMenu(string entity)
+    {
         while (true)
         {
             try
@@ -90,57 +91,50 @@ internal class Program
                 Console.WriteLine("6. Delete an object (Delete)");
                 Console.WriteLine("7. Delete all objects (DeleteAll)");
 
-                subMenue option = (subMenue)int.Parse(Console.ReadLine());
+                SubMenu option = (SubMenu)int.Parse(Console.ReadLine());
 
                 switch (option)
                 {
-                    case subMenue.EXIT: // יציאה מתת-תפריט
+                    case SubMenu.Exit:
                         return;
-
-                    case subMenue.CREATE:
-                        createOrUpdateObject(entity, true);
+                    case SubMenu.Create:
+                        CreateOrUpdateObject(entity, true);
                         break;
-
-                    case subMenue.READ: // תצוגת אובייקט ע"פ מזהה (READ)
-                        readEntityById(entity);
+                    case SubMenu.Read:
+                        ReadEntityById(entity);
                         break;
-
-                    case subMenue.READ_ALL: // תצוגת כל האובייקטים (READ_ALL)
-                        readAllEntities(entity);
+                    case SubMenu.ReadAll:
+                        ReadAllEntities(entity);
                         break;
-
-                    case subMenue.UPDATE: // עדכון אובייקט (UPDATE)
-                        createOrUpdateObject(entity, false);
+                    case SubMenu.Update:
+                        CreateOrUpdateObject(entity, false);
                         break;
-
-                    case subMenue.DELETE: // מחיקת אובייקט (DELETE)
-                        deleteEntity(entity);
+                    case SubMenu.Delete:
+                        DeleteEntity(entity);
                         break;
-
-                    case subMenue.DELETE_ALL: // מחיקת כל האובייקטים (DELETE_ALL)
-                        deleteAllEntities(entity);
-                        break;
-
-                    default:
-                        Console.WriteLine("choose validate choise.");
+                    case SubMenu.DeleteAll:
+                        DeleteAllEntities(entity);
                         break;
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
         }
-
-
-
     }
-    private static void createOrUpdateObject(string entity, bool isCreate)
+
+    /// Creates or updates an object based on the specified entity type
+    private static void CreateOrUpdateObject(string entity, bool isCreate)
     {
         if (isCreate)
             Console.WriteLine($"Create an {entity}");
         else
             Console.WriteLine($"Update an {entity} enter null in fields you don't want to change");
+
         int id;
-        string fullName, cellNumber, email, password, currentAddress;
+        string fullName, cellNumber, email, password, currentAddress, description, fullAddress;
         double latitude, longitude;
+        DateTime openTime;
+        DateTime? finalTime;
+
         switch (entity)
         {
             case "Tutor":
@@ -181,10 +175,10 @@ internal class Program
                 Console.Write("Distance Type: ");
                 DistanceType distanceType = (DistanceType)int.Parse(Console.ReadLine());
                 if (isCreate)
-                    s_dal.Tutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, isActive, distance, distanceType));
+                    DataAccessLayer.Tutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, isActive, distance, distanceType));
                 else
                 {
-                    var tutor = s_dal.Tutor.Read(id);
+                    var tutor = DataAccessLayer.Tutor.Read(id);
                     var updateEntity = tutor with
                     {
                         FullName = fullName ?? tutor.FullName,
@@ -199,28 +193,23 @@ internal class Program
                         Distance = distance != 0 ? distance : tutor.Distance,
                         DistanceType = distanceType > 0 ? distanceType : tutor.DistanceType
                     };
-                    s_dal.Tutor!.Update(updateEntity);
+                    DataAccessLayer.Tutor!.Update(updateEntity);
                 }
                 break;
-            case "StusentCall":
+            case "StudentCall":
                 Console.WriteLine("Enter the following details:");
 
-                StudentCall? studentCall = null;
-                if (!isCreate)
-                {
-                    Console.Write("Id: ");
-                    id = int.Parse(Console.ReadLine());
-                    studentCall = (StudentCall)s_dal.StudentCall.Read(id);
-                }
+                Console.Write("Id: ");
+                id = int.Parse(Console.ReadLine());
 
-                Console.WriteLine("Subject (choose one of the following: Math, Science, History, Literature, Art): ");
-                Subjects subject = (Subjects)Enum.Parse(typeof(Subjects), Console.ReadLine(), true);
+                Console.Write("Subject: ");
+                Subjects subject = (Subjects)int.Parse(Console.ReadLine());
 
                 Console.Write("Description: ");
-                string description = Console.ReadLine();
+                description = Console.ReadLine();
 
                 Console.Write("Full Address: ");
-                string fullAddress = Console.ReadLine();
+                fullAddress = Console.ReadLine();
 
                 Console.Write("Full Name: ");
                 fullName = Console.ReadLine();
@@ -237,135 +226,135 @@ internal class Program
                 Console.Write("Longitude: ");
                 longitude = double.Parse(Console.ReadLine());
 
-                Console.Write("Open Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
-                string openTimeInput = Console.ReadLine();
-                DateTime? openTime = string.IsNullOrWhiteSpace(openTimeInput)
-                    ? (DateTime?)null
-                    : DateTime.Parse(openTimeInput);
+                Console.Write("Open Time (format: yyyy-MM-dd HH:mm:ss): ");
+                openTime = DateTime.Parse(Console.ReadLine());
 
-                Console.Write("Final Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
+                Console.Write("Final Time (format: yyyy-MM-dd HH:mm:ss) (optional, enter null if no final time): ");
                 string finalTimeInput = Console.ReadLine();
-                DateTime? finalTime = string.IsNullOrWhiteSpace(finalTimeInput)
-                    ? (DateTime?)null
-                    : DateTime.Parse(finalTimeInput);
-                s_dal.StudentCall!.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, (DateTime)openTime, finalTime));
+                finalTime = string.IsNullOrEmpty(finalTimeInput) ? (DateTime?)null : DateTime.Parse(finalTimeInput);
+
                 if (isCreate)
                 {
-                    s_dal.StudentCall.Create(new StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email,
-                        latitude, longitude, (DateTime)openTime, finalTime));
+                    DataAccessLayer.StudentCall!.Create(new StudentCall(id, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
                 }
                 else
                 {
-                    var updateStudentCall = studentCall with
+                    var studentCall = DataAccessLayer.StudentCall.Read(id);
+                    var updatedStudentCall = studentCall with
                     {
-                        Subject = subject != null ? subject : studentCall.Subject,
+                        Subject = subject != 0 ? subject : studentCall.Subject,
                         Description = description ?? studentCall.Description,
                         FullAddress = fullAddress ?? studentCall.FullAddress,
                         FullName = fullName ?? studentCall.FullName,
                         CellNumber = cellNumber ?? studentCall.CellNumber,
                         Email = email ?? studentCall.Email,
-                        Latitude = latitude != null ? latitude : studentCall.Latitude,
-                        Longitude = longitude != null ? longitude : studentCall.Longitude,
-                        OpenTime = openTime ?? studentCall.OpenTime,
+                        Latitude = latitude != 0 ? latitude : studentCall.Latitude,
+                        Longitude = longitude != 0 ? longitude : studentCall.Longitude,
+                        OpenTime = openTime != DateTime.MinValue ? openTime : studentCall.OpenTime,
                         FinalTime = finalTime ?? studentCall.FinalTime
                     };
-                    s_dal.StudentCall.Update(updateStudentCall);
+                    DataAccessLayer.StudentCall.Update(updatedStudentCall);
                 }
                 break;
+
             case "Assignment":
                 Console.WriteLine("Enter the following details:");
-                Assignment? assignment = null;
-                if (!isCreate)
-                {
-                    Console.Write("Id: ");
-                    id = int.Parse(Console.ReadLine());
-                    assignment = s_dal.Assignment.Read(id);
-                }
-                Console.Write("Student Call Id: ");
+
+                Console.Write("Id: ");
+                id = int.Parse(Console.ReadLine());
+
+                Console.Write("StudentCallId: ");
                 int studentCallId = int.Parse(Console.ReadLine());
 
-                Console.Write("Tutor Id: ");
+                Console.Write("TutorId: ");
                 int tutorId = int.Parse(Console.ReadLine());
 
-                Console.Write("Entry Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
+                Console.Write("Entry Time (format: yyyy-MM-dd HH:mm:ss) (optional, enter null if no entry time): ");
                 string entryTimeInput = Console.ReadLine();
-                DateTime? entryTime = string.IsNullOrWhiteSpace(entryTimeInput)
-                    ? (DateTime?)null
-                    : DateTime.Parse(entryTimeInput);
+                DateTime? entryTime = string.IsNullOrEmpty(entryTimeInput) ? (DateTime?)null : DateTime.Parse(entryTimeInput);
 
-                Console.Write("End Time (format: yyyy-MM-dd HH:mm, or leave empty): ");
+                Console.Write("End Time (format: yyyy-MM-dd HH:mm:ss) (optional, enter null if no end time): ");
                 string endTimeInput = Console.ReadLine();
-                DateTime? endTime = string.IsNullOrWhiteSpace(endTimeInput)
-                    ? (DateTime?)null
-                    : DateTime.Parse(endTimeInput);
+                DateTime? endTime = string.IsNullOrEmpty(endTimeInput) ? (DateTime?)null : DateTime.Parse(endTimeInput);
 
-                s_dal.Assignment!.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
+                Console.Write("End Of Treatment (0 for None, 1 for Finished, 2 for Cancelled): ");
+                EndOfTreatment endOfTreatment = (EndOfTreatment)int.Parse(Console.ReadLine());
 
                 if (isCreate)
                 {
-                    s_dal.Assignment.Create(new Assignment(0, studentCallId, tutorId, entryTime, endTime, 0));
+                    DataAccessLayer.Assignment!.Create(new Assignment(id, studentCallId, tutorId, entryTime, endTime, endOfTreatment));
                 }
                 else
                 {
-                    var updateAssignment = assignment with
+                    var assignment = DataAccessLayer.Assignment.Read(id);
+                    var updatedAssignment = assignment with
                     {
-                        StudentCallId = studentCallId != null ? studentCallId : assignment.StudentCallId,
-                        TutorId = tutorId != null ? tutorId : assignment.TutorId,
+                        StudentCallId = studentCallId != 0 ? studentCallId : assignment.StudentCallId,
+                        TutorId = tutorId != 0 ? tutorId : assignment.TutorId,
                         EntryTime = entryTime ?? assignment.EntryTime,
-                        EndTime = endTime ?? assignment.EndTime
+                        EndTime = endTime ?? assignment.EndTime,
+                        EndOfTreatment = endOfTreatment != 0 ? endOfTreatment : assignment.EndOfTreatment
                     };
-                    s_dal.Assignment.Update(updateAssignment);
+                    DataAccessLayer.Assignment.Update(updatedAssignment);
                 }
                 break;
         }
     }
 
-    private static void readEntityById(string entity)
+
+    /// Reads an object by ID
+    private static void ReadEntityById(string entity)
     {
-        Console.WriteLine("enter id:");
+        Console.WriteLine("Enter id:");
         int id = int.Parse(Console.ReadLine());
 
         switch (entity)
         {
             case "Tutor":
-                var tutor = s_dal.Tutor!.Read(id);
+                var tutor = DataAccessLayer.Tutor!.Read(id);
                 Console.WriteLine(tutor);
                 break;
-            case "StusentCall":
-                var studentCall = s_dal.StudentCall!.Read(id);
+            case "StudentCall":
+                var studentCall = DataAccessLayer.StudentCall!.Read(id);
                 Console.WriteLine(studentCall);
                 break;
             case "Assignment":
-                var assignment = s_dal.Assignment!.Read(id);
+                var assignment = DataAccessLayer.Assignment!.Read(id);
                 Console.WriteLine(assignment);
                 break;
         }
     }
-    private static void readAllEntities(string entity)
+
+    /// Reads and prints all entities of a specified type from the database
+    private static void ReadAllEntities(string entity)
     {
         switch (entity)
         {
             case "Tutor":
-                var tutors = s_dal.Tutor!.ReadAll().ToList();
+                var tutors = DataAccessLayer.Tutor!.ReadAll().ToList();
                 tutors.ForEach(x => Console.WriteLine(x));
                 break;
             case "StudentCall":
-                var studentCalls = s_dal.StudentCall!.ReadAll().ToList();
+                var studentCalls = DataAccessLayer.StudentCall!.ReadAll().ToList();
                 studentCalls.ForEach(x => Console.WriteLine(x));
                 break;
             case "Assignment":
-                var assignments = s_dal.Assignment!.ReadAll().ToList();
+                var assignments = DataAccessLayer.Assignment!.ReadAll().ToList();
                 assignments.ForEach(x => Console.WriteLine(x));
                 break;
         }
     }
-    private static void displayAllDataMenu()
+
+    /// Displays all data by reading and printing all entities from the database
+    private static void DisplayAllDataMenu()
     {
-        readAllEntities("Tutor");
-        readAllEntities("StudentCall");
-        readAllEntities("Assignment");
+        ReadAllEntities("Tutor");
+        ReadAllEntities("StudentCall");
+        ReadAllEntities("Assignment");
     }
-    private static void displayConfigMenu()
+
+    /// Handles configuration options such as modifying the system clock and displaying/resetting configuration values
+    private static void DisplayConfigMenu()
     {
         while (true)
         {
@@ -377,77 +366,91 @@ internal class Program
             Console.WriteLine("5. Set a new value for a specific configuration variable");
             Console.WriteLine("6. Display the current value of a specific configuration variable");
             Console.WriteLine("7. Reset all configuration values");
-            configSubMenu option = (configSubMenu)int.Parse(Console.ReadLine());
+            Console.WriteLine("8. Display the current value of RiskRange");
+            Console.WriteLine("9. Set a new value for RiskRange");
+            ConfigSubMenu option = (ConfigSubMenu)int.Parse(Console.ReadLine());
 
             switch (option)
             {
-                case configSubMenu.EXIT:
+                case ConfigSubMenu.Exit:
                     return;
-                case configSubMenu.PROMOTE_MINUTE:
-                    s_dal.Config!.Clock = s_dal.Config.Clock.AddMinutes(1);
+                case ConfigSubMenu.PromoteMinute:
+                    DataAccessLayer.Config!.Clock = DataAccessLayer.Config.Clock.AddMinutes(1);
                     break;
-                case configSubMenu.PROMOTE_HOUR:
-                    s_dal.Config!.Clock = s_dal.Config.Clock.AddHours(1);
+                case ConfigSubMenu.PromoteHour:
+                    DataAccessLayer.Config!.Clock = DataAccessLayer.Config.Clock.AddHours(1);
                     break;
-                case configSubMenu.DISPLAY_TIME:
-                    Console.WriteLine($"Current time: {s_dal.Config!.Clock}");
+                case ConfigSubMenu.DisplayTime:
+                    Console.WriteLine($"Current time: {DataAccessLayer.Config!.Clock}");
                     break;
-                case configSubMenu.SET_CONFIG_VARIABLE:
+                case ConfigSubMenu.SetConfigVariable:
                     Console.WriteLine("Setting the time");
                     if (!DateTime.TryParse(Console.ReadLine(), out DateTime setTime)) throw new DalDateFormatWorngException("Date is invalid!");
-                    s_dal.Config!.Clock = (DateTime)setTime;
+                    DataAccessLayer.Config!.Clock = setTime;
                     break;
-                case configSubMenu.DISPLAY_VALUE:
-                    Console.WriteLine(s_dal.Config!.Clock);
+                case ConfigSubMenu.DisplayValue:
+                    Console.WriteLine($"Current Clock Value: {DataAccessLayer.Config!.Clock}");
                     break;
-                case configSubMenu.RESET:
+                case ConfigSubMenu.Reset:
                     Console.WriteLine("Resetting configuration...");
-                    s_dal.Config!.Reset();
+                    DataAccessLayer.Config!.Reset();
+                    break;
+                case (ConfigSubMenu)8:
+                    Console.WriteLine($"Current RiskRange: {DataAccessLayer.Config!.RiskTimeSpan}");
+                    break;
+                case (ConfigSubMenu)9:
+                    Console.WriteLine("Enter a new value for RiskRange (format: hh:mm:ss):");
+                    if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan newRiskRange))
+                        throw new DalDateFormatWorngException("Invalid time format!");
+                    DataAccessLayer.Config.RiskTimeSpan = newRiskRange;
                     break;
             }
         }
     }
-    private static void deleteAllEntities(string entity)
-    {
 
+    /// Deletes all entities of a specified type from the database
+    private static void DeleteAllEntities(string entity)
+    {
         switch (entity)
         {
             case "Tutor":
-                s_dal.Tutor!.DeleteAll();
+                DataAccessLayer.Tutor!.DeleteAll();
                 break;
             case "StudentCall":
-                s_dal.StudentCall!.DeleteAll();
+                DataAccessLayer.StudentCall!.DeleteAll();
                 break;
             case "Assignment":
-                s_dal.Assignment!.DeleteAll();
+                DataAccessLayer.Assignment!.DeleteAll();
                 break;
         }
-
     }
-    private static void deleteEntity(string entity)
+
+    /// Deletes a specific entity of a specified type based on its ID
+    private static void DeleteEntity(string entity)
     {
-        Console.WriteLine("enter id:");
+        Console.WriteLine("Enter id:");
         int id = int.Parse(Console.ReadLine());
 
         switch (entity)
         {
             case "Tutor":
-                s_dal.Tutor!.Delete(id);
+                DataAccessLayer.Tutor!.Delete(id);
                 break;
-            case "StusentCall":
-                s_dal.StudentCall!.Delete(id);
+            case "StudentCall":
+                DataAccessLayer.StudentCall!.Delete(id);
                 break;
             case "Assignment":
-                s_dal.Assignment!.Delete(id);
+                DataAccessLayer.Assignment!.Delete(id);
                 break;
         }
     }
 
+    /// Entry point of the program; displays the main menu and handles exceptions
     private static void Main(string[] args)
     {
         try
         {
-            displayMainMenu();
+            DisplayMainMenu();
         }
         catch (Exception ex)
         {

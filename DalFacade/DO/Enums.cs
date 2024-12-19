@@ -1,7 +1,5 @@
 ﻿namespace DO;
-public enum Role { MASTER_TUTOR , BEGINER_TUTOR, MANEGAR};
-public enum DistanceType { AIR,WALKING,DRIVING};
-public enum Subjects { 
-    ENGLISH,MATH,GRAMMER,PROGRAMMING,HISTORY
-}
-public enum EndOfTreatment { TREATED,SELF_CANCEL,MANAGER_CANCEL,EXPIRED};
+public enum Role { MasterTutor, BeginnerTutor, Manager };
+public enum DistanceType { Air, Walking, Driving };
+public enum Subjects { English, Math, Grammar, Programming, History }
+public enum EndOfTreatment { Treated, SelfCancel, ManagerCancel, Expired };

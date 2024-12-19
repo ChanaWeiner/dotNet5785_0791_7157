@@ -8,7 +8,7 @@ public class DalAlreadyExistsException : Exception
 {
     public DalAlreadyExistsException(string? message) : base(message) { }
 }
-public class DalDateFormatWorngException : FormatException //הוספת זריקת שגיאה עבור הזנת תאריך בפורמט שגוי
+public class DalDateFormatWorngException : FormatException 
 {
     public DalDateFormatWorngException(string? message) : base(message) { }
 }

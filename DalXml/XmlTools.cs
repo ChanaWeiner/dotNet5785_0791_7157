@@ -113,6 +113,25 @@ static class XMLTools
         root.Element(elemName)?.SetValue((elemVal).ToString());
         XMLTools.SaveListToXMLElement(root, xmlFileName);
     }
+
+    public static TimeSpan GetConfigTimeSpanVal(string xmlFileName, string elemName)
+    {
+        XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
+        TimeSpan ts = root.ToTimeSpanNullable(elemName) ?? throw new FormatException($"can't convert: {xmlFileName}, {elemName}");
+        return ts;
+    }
+
+    // שמירת ערך מסוג TimeSpan
+    public static void SetConfigTimeSpanVal(string xmlFileName, string elemName, TimeSpan elemVal)
+    {
+        XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
+        root.Element(elemName)?.SetValue(elemVal.ToString());
+        XMLTools.SaveListToXMLElement(root, xmlFileName);
+    }
+
+    // הרחבה לקריאת TimeSpan
+    public static TimeSpan? ToTimeSpanNullable(this XElement element, string name) =>
+        TimeSpan.TryParse((string?)element.Element(name), out var result) ? (TimeSpan?)result : null;
     #endregion
 
 

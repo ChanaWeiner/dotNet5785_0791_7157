@@ -21,11 +21,15 @@ internal static class Config
     /// The current clock time.
     internal static DateTime Clock { get; set; } = DateTime.Now;
 
+    /// The current risk time span, initialized to zero.
+    internal static TimeSpan RiskTimeSpan{ get; set; }= TimeSpan.Zero;
+
     /// Resets the student call and assignment IDs, and the clock.
     internal static void Reset()
     {
         nextStudentCallId = startStudentCallId;
         nextAssignmentId = startAssignmentId;
         Clock = DateTime.Now;
+        RiskTimeSpan=TimeSpan.Zero;
     }
 }

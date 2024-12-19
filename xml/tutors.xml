@@ -1,213 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTutor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Tutor>
-    <Id>289578254</Id>
-    <FullName>David Azoulay</FullName>
-    <CellNumber>054-6769346</CellNumber>
-    <Email>david.azoulay@example.com</Email>
-    <Password>Pass254!</Password>
-    <CurrentAddress>Street 13, City 13</CurrentAddress>
-    <Latitude>69.37146439490789</Latitude>
-    <Longitude>-39.118643640372824</Longitude>
-    <Role>MANEGAR</Role>
+    <Id>238420485</Id>
+    <FullName>Dani Mizrahi</FullName>
+    <CellNumber>053-4598726</CellNumber>
+    <Email>dani.mizrahi@example.com</Email>
+    <Password>Pass485!</Password>
+    <CurrentAddress>Street 96, City 12</CurrentAddress>
+    <Latitude>-0.6928687680882888</Latitude>
+    <Longitude>68.61900033222278</Longitude>
+    <Role>Manager</Role>
     <Active>false</Active>
-    <Distance>18.241719751067514</Distance>
-    <DistanceType>WALKING</DistanceType>
+    <Distance>13.19545077870738</Distance>
+    <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>241834456</Id>
+    <Id>266804123</Id>
+    <FullName>Moshe Sharabi</FullName>
+    <CellNumber>055-9735659</CellNumber>
+    <Email>moshe.sharabi@example.com</Email>
+    <Password>Pass123!</Password>
+    <CurrentAddress>Street 14, City 2</CurrentAddress>
+    <Latitude>24.84512936977187</Latitude>
+    <Longitude>81.14803181865722</Longitude>
+    <Role>MasterTutor</Role>
+    <Active>true</Active>
+    <Distance>18.799394465639626</Distance>
+    <DistanceType>Walking</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>350997435</Id>
+    <FullName>Ariela Azoulay</FullName>
+    <CellNumber>052-2148633</CellNumber>
+    <Email>ariela.azoulay@example.com</Email>
+    <Password>Pass435!</Password>
+    <CurrentAddress>Street 43, City 10</CurrentAddress>
+    <Latitude>-27.23261395444215</Latitude>
+    <Longitude>-126.51141921230453</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>14.798264608297005</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>272172738</Id>
     <FullName>Dani Levy</FullName>
-    <CellNumber>052-1984573</CellNumber>
+    <CellNumber>055-1346040</CellNumber>
     <Email>dani.levy@example.com</Email>
-    <Password>Pass456!</Password>
-    <CurrentAddress>Street 23, City 11</CurrentAddress>
-    <Latitude>-39.58529869220069</Latitude>
-    <Longitude>124.78173908241041</Longitude>
-    <Role>BEGINER_TUTOR</Role>
-    <Active>true</Active>
-    <Distance>12.440776246589067</Distance>
-    <DistanceType>AIR</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>262959568</Id>
-    <FullName>Dani Israelof</FullName>
-    <CellNumber>056-4972864</CellNumber>
-    <Email>dani.israelof@example.com</Email>
-    <Password>Pass568!</Password>
-    <CurrentAddress>Street 60, City 14</CurrentAddress>
-    <Latitude>-16.57268652058164</Latitude>
-    <Longitude>-167.11593187571404</Longitude>
-    <Role>BEGINER_TUTOR</Role>
+    <Password>Pass738!</Password>
+    <CurrentAddress>Street 72, City 5</CurrentAddress>
+    <Latitude>-84.35567820362607</Latitude>
+    <Longitude>-155.94432908753114</Longitude>
+    <Role>BeginnerTutor</Role>
     <Active>false</Active>
-    <Distance>7.79757690662618</Distance>
-    <DistanceType>AIR</DistanceType>
+    <Distance>9.218607499558537</Distance>
+    <DistanceType>Driving</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>291477805</Id>
-    <FullName>Shira Mizrahi</FullName>
-    <CellNumber>059-6512686</CellNumber>
-    <Email>shira.mizrahi@example.com</Email>
-    <Password>Pass805!</Password>
-    <CurrentAddress>Street 92, City 18</CurrentAddress>
-    <Latitude>64.79603499472714</Latitude>
-    <Longitude>95.78074163176154</Longitude>
-    <Role>MASTER_TUTOR</Role>
+    <Id>353765384</Id>
+    <FullName>Yair Cohen</FullName>
+    <CellNumber>052-1451502</CellNumber>
+    <Email>yair.cohen@example.com</Email>
+    <Password>Pass384!</Password>
+    <CurrentAddress>Street 81, City 9</CurrentAddress>
+    <Latitude>-33.82057900541005</Latitude>
+    <Longitude>175.55263198041115</Longitude>
+    <Role>BeginnerTutor</Role>
     <Active>false</Active>
-    <Distance>3.428067155580423</Distance>
-    <DistanceType>WALKING</DistanceType>
+    <Distance>9.446755575137287</Distance>
+    <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>226530780</Id>
-    <FullName>Rivka Amar</FullName>
-    <CellNumber>054-2326406</CellNumber>
-    <Email>rivka.amar@example.com</Email>
-    <Password>Pass780!</Password>
-    <CurrentAddress>Street 75, City 10</CurrentAddress>
-    <Latitude>-89.83742909679856</Latitude>
-    <Longitude>126.34564081883894</Longitude>
-    <Role>MASTER_TUTOR</Role>
+    <Id>281982413</Id>
+    <FullName>Dina Peretz</FullName>
+    <CellNumber>053-2004826</CellNumber>
+    <Email>dina.peretz@example.com</Email>
+    <Password>Pass413!</Password>
+    <CurrentAddress>Street 11, City 4</CurrentAddress>
+    <Latitude>-89.18202272559054</Latitude>
+    <Longitude>14.127344015035362</Longitude>
+    <Role>MasterTutor</Role>
     <Active>true</Active>
-    <Distance>15.802647607361385</Distance>
-    <DistanceType>WALKING</DistanceType>
+    <Distance>12.56983941579586</Distance>
+    <DistanceType>Walking</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>235318368</Id>
-    <FullName>Yair Levin</FullName>
-    <CellNumber>057-2376711</CellNumber>
-    <Email>yair.levin@example.com</Email>
-    <Password>Pass368!</Password>
-    <CurrentAddress>Street 82, City 2</CurrentAddress>
-    <Latitude>-47.293612154347706</Latitude>
-    <Longitude>173.5121650480413</Longitude>
-    <Role>MASTER_TUTOR</Role>
+    <Id>372201862</Id>
+    <FullName>Eli Klein</FullName>
+    <CellNumber>058-9389551</CellNumber>
+    <Email>eli.klein@example.com</Email>
+    <Password>Pass862!</Password>
+    <CurrentAddress>Street 78, City 1</CurrentAddress>
+    <Latitude>39.147644939114485</Latitude>
+    <Longitude>74.11811695343889</Longitude>
+    <Role>MasterTutor</Role>
     <Active>true</Active>
-    <Distance>0.9947904891367765</Distance>
-    <DistanceType>WALKING</DistanceType>
+    <Distance>15.659591398678767</Distance>
+    <DistanceType>Walking</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>307731885</Id>
-    <FullName>Dani Sharabi</FullName>
-    <CellNumber>053-4158996</CellNumber>
-    <Email>dani.sharabi@example.com</Email>
-    <Password>Pass885!</Password>
-    <CurrentAddress>Street 52, City 5</CurrentAddress>
-    <Latitude>-83.96899543097337</Latitude>
-    <Longitude>-23.74935056142408</Longitude>
-    <Role>BEGINER_TUTOR</Role>
+    <Id>206876874</Id>
+    <FullName>Tamar Levin</FullName>
+    <CellNumber>058-3744289</CellNumber>
+    <Email>tamar.levin@example.com</Email>
+    <Password>Pass874!</Password>
+    <CurrentAddress>Street 81, City 7</CurrentAddress>
+    <Latitude>-19.95833744089248</Latitude>
+    <Longitude>13.4151945929965</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>14.787561906269746</Distance>
+    <DistanceType>Walking</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>321584868</Id>
+    <FullName>Rivka Levin</FullName>
+    <CellNumber>051-3109022</CellNumber>
+    <Email>rivka.levin@example.com</Email>
+    <Password>Pass868!</Password>
+    <CurrentAddress>Street 67, City 15</CurrentAddress>
+    <Latitude>2.206598982269824</Latitude>
+    <Longitude>99.18359934302862</Longitude>
+    <Role>MasterTutor</Role>
     <Active>false</Active>
-    <Distance>19.44287886529128</Distance>
-    <DistanceType>AIR</DistanceType>
+    <Distance>5.786325329381475</Distance>
+    <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>244454865</Id>
-    <FullName>Rivka Azoulay</FullName>
-    <CellNumber>056-2319677</CellNumber>
-    <Email>rivka.azoulay@example.com</Email>
-    <Password>Pass865!</Password>
-    <CurrentAddress>Street 14, City 15</CurrentAddress>
-    <Latitude>-19.258522235901708</Latitude>
-    <Longitude>44.53900189492299</Longitude>
-    <Role>MASTER_TUTOR</Role>
+    <Id>271847351</Id>
+    <FullName>David Peretz</FullName>
+    <CellNumber>055-5562701</CellNumber>
+    <Email>david.peretz@example.com</Email>
+    <Password>Pass351!</Password>
+    <CurrentAddress>Street 27, City 18</CurrentAddress>
+    <Latitude>-54.07283076963816</Latitude>
+    <Longitude>-38.502519832315016</Longitude>
+    <Role>MasterTutor</Role>
     <Active>true</Active>
-    <Distance>7.518848578326381</Distance>
-    <DistanceType>DRIVING</DistanceType>
+    <Distance>12.34897739964535</Distance>
+    <DistanceType>Walking</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>213735602</Id>
-    <FullName>Dani Levin</FullName>
-    <CellNumber>056-7826572</CellNumber>
-    <Email>dani.levin@example.com</Email>
-    <Password>Pass602!</Password>
-    <CurrentAddress>Street 15, City 15</CurrentAddress>
-    <Latitude>-71.1985160065892</Latitude>
-    <Longitude>49.39838339211917</Longitude>
-    <Role>BEGINER_TUTOR</Role>
+    <Id>343586172</Id>
+    <FullName>Dina Cohen</FullName>
+    <CellNumber>050-7163631</CellNumber>
+    <Email>dina.cohen@example.com</Email>
+    <Password>Pass172!</Password>
+    <CurrentAddress>Street 28, City 15</CurrentAddress>
+    <Latitude>-65.4099009459058</Latitude>
+    <Longitude>-146.57874819274107</Longitude>
+    <Role>MasterTutor</Role>
     <Active>true</Active>
-    <Distance>1.352581697656341</Distance>
-    <DistanceType>DRIVING</DistanceType>
+    <Distance>14.192640283678234</Distance>
+    <DistanceType>Driving</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>396941968</Id>
-    <FullName>Tamar Klein</FullName>
-    <CellNumber>052-8036034</CellNumber>
-    <Email>tamar.klein@example.com</Email>
-    <Password>Pass968!</Password>
-    <CurrentAddress>Street 47, City 2</CurrentAddress>
-    <Latitude>-6.9567976433436485</Latitude>
-    <Longitude>70.11130878545657</Longitude>
-    <Role>MASTER_TUTOR</Role>
+    <Id>274303481</Id>
+    <FullName>Dina Mizrahi</FullName>
+    <CellNumber>059-3484952</CellNumber>
+    <Email>dina.mizrahi@example.com</Email>
+    <Password>Pass481!</Password>
+    <CurrentAddress>Street 14, City 7</CurrentAddress>
+    <Latitude>-14.006945235430052</Latitude>
+    <Longitude>53.09253584868463</Longitude>
+    <Role>BeginnerTutor</Role>
     <Active>true</Active>
-    <Distance>13.50117040496444</Distance>
-    <DistanceType>WALKING</DistanceType>
+    <Distance>14.155782292542405</Distance>
+    <DistanceType>Driving</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>307037158</Id>
-    <FullName>David Amar</FullName>
-    <CellNumber>054-1562594</CellNumber>
-    <Email>david.amar@example.com</Email>
-    <Password>Pass158!</Password>
-    <CurrentAddress>Street 92, City 12</CurrentAddress>
-    <Latitude>-24.589329161539027</Latitude>
-    <Longitude>-5.918301211244142</Longitude>
-    <Role>BEGINER_TUTOR</Role>
+    <Id>233402182</Id>
+    <FullName>Rivka Mizrahi</FullName>
+    <CellNumber>052-9056835</CellNumber>
+    <Email>rivka.mizrahi@example.com</Email>
+    <Password>Pass182!</Password>
+    <CurrentAddress>Street 47, City 15</CurrentAddress>
+    <Latitude>-3.676086625978371</Latitude>
+    <Longitude>-80.10522306107421</Longitude>
+    <Role>BeginnerTutor</Role>
     <Active>true</Active>
-    <Distance>8.106910595238135</Distance>
-    <DistanceType>DRIVING</DistanceType>
+    <Distance>13.557564878096631</Distance>
+    <DistanceType>Driving</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>352965100</Id>
-    <FullName>Eli Cohen</FullName>
-    <CellNumber>050-1041180</CellNumber>
-    <Email>eli.cohen@example.com</Email>
-    <Password>Pass100!</Password>
-    <CurrentAddress>Street 23, City 1</CurrentAddress>
-    <Latitude>74.90015895458276</Latitude>
-    <Longitude>-85.19052574328633</Longitude>
-    <Role>MASTER_TUTOR</Role>
+    <Id>258188578</Id>
+    <FullName>Tamar Levy</FullName>
+    <CellNumber>058-8736542</CellNumber>
+    <Email>tamar.levy@example.com</Email>
+    <Password>Pass578!</Password>
+    <CurrentAddress>Street 54, City 11</CurrentAddress>
+    <Latitude>-1.855032425999383</Latitude>
+    <Longitude>3.2092834969512865</Longitude>
+    <Role>MasterTutor</Role>
+    <Active>true</Active>
+    <Distance>13.319975665625975</Distance>
+    <DistanceType>Driving</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>357136460</Id>
+    <FullName>Dani Cohen</FullName>
+    <CellNumber>059-3457762</CellNumber>
+    <Email>dani.cohen@example.com</Email>
+    <Password>Pass460!</Password>
+    <CurrentAddress>Street 30, City 3</CurrentAddress>
+    <Latitude>80.53523908834225</Latitude>
+    <Longitude>-106.1573116086244</Longitude>
+    <Role>MasterTutor</Role>
     <Active>false</Active>
-    <Distance>13.75857930946609</Distance>
-    <DistanceType>WALKING</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>331821165</Id>
-    <FullName>Tamar Azoulay</FullName>
-    <CellNumber>051-2238631</CellNumber>
-    <Email>tamar.azoulay@example.com</Email>
-    <Password>Pass165!</Password>
-    <CurrentAddress>Street 76, City 1</CurrentAddress>
-    <Latitude>50.775365762137824</Latitude>
-    <Longitude>-16.873780577893456</Longitude>
-    <Role>MASTER_TUTOR</Role>
-    <Active>true</Active>
-    <Distance>6.047961160055091</Distance>
-    <DistanceType>WALKING</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>322953046</Id>
-    <FullName>Rivka Azoulay</FullName>
-    <CellNumber>057-9132350</CellNumber>
-    <Email>rivka.azoulay@example.com</Email>
-    <Password>Pass46!</Password>
-    <CurrentAddress>Street 81, City 10</CurrentAddress>
-    <Latitude>-3.125283100475812</Latitude>
-    <Longitude>147.2851820223604</Longitude>
-    <Role>MASTER_TUTOR</Role>
-    <Active>false</Active>
-    <Distance>6.958155632655323</Distance>
-    <DistanceType>DRIVING</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>339550016</Id>
-    <FullName>David Israelof</FullName>
-    <CellNumber>055-7789107</CellNumber>
-    <Email>david.israelof@example.com</Email>
-    <Password>Pass16!</Password>
-    <CurrentAddress>Street 91, City 18</CurrentAddress>
-    <Latitude>-38.16989654843808</Latitude>
-    <Longitude>-84.1339540644792</Longitude>
-    <Role>BEGINER_TUTOR</Role>
-    <Active>false</Active>
-    <Distance>19.750301325453933</Distance>
-    <DistanceType>WALKING</DistanceType>
+    <Distance>14.065455578000643</Distance>
+    <DistanceType>Driving</DistanceType>
   </Tutor>
 </ArrayOfTutor>

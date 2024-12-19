@@ -10,6 +10,14 @@ internal class ConfigImplementation : IConfig
         get => Config.Clock;
         set => Config.Clock = value;
     }
+    /// Gets or sets the current risk time span.
+    public TimeSpan RiskTimeSpan
+    { 
+        get => Config.RiskTimeSpan; 
+        set => Config.RiskTimeSpan = value; 
+    }
+
+
 
     /// Resets the configuration values to their default states.
     public void Reset()
