@@ -2,1161 +2,1151 @@
 <assignments.xml>
   <Assignment>
     <Id>1000</Id>
-    <StudentCallId>1033</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-12-11T00:48:28</EntryTime>
+    <StudentCallId>1003</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-11-26T09:06:09</EntryTime>
+    <EndTime>2024-11-28T06:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1001</Id>
-    <StudentCallId>1025</StudentCallId>
-    <TutorId>258188578</TutorId>
-    <EntryTime>2024-11-30T00:48:28</EntryTime>
-    <EndTime>2024-11-30T04:48:28</EndTime>
+    <StudentCallId>1006</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-07T09:06:09</EntryTime>
+    <EndTime>2024-12-08T22:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1002</Id>
-    <StudentCallId>1014</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
-    <EndTime>2024-12-06T05:48:28</EndTime>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-09T09:06:09</EntryTime>
+    <EndTime>2024-12-10T16:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1003</Id>
-    <StudentCallId>1009</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-07T09:06:09</EntryTime>
+    <EndTime>2024-12-09T08:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1004</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-18T00:48:28</EntryTime>
-    <EndTime>2024-12-19T21:48:28</EndTime>
+    <StudentCallId>1008</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
+    <EndTime>2024-12-08T18:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1005</Id>
-    <StudentCallId>1022</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-02T00:48:28</EntryTime>
+    <StudentCallId>1032</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-12-07T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1006</Id>
-    <StudentCallId>1004</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-12-02T00:48:28</EntryTime>
-    <EndTime>2024-12-03T23:48:28</EndTime>
+    <StudentCallId>1031</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-11-28T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1007</Id>
-    <StudentCallId>1016</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-11-27T00:48:28</EntryTime>
-    <EndTime>2024-11-28T00:48:28</EndTime>
+    <StudentCallId>1005</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-11-30T09:06:09</EntryTime>
+    <EndTime>2024-12-01T04:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1008</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-08T00:48:28</EntryTime>
-    <EndTime>2024-12-09T03:48:28</EndTime>
+    <StudentCallId>1028</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-01T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1009</Id>
-    <StudentCallId>1022</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
-    <EndTime>2024-12-05T01:48:28</EndTime>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-18T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1010</Id>
-    <StudentCallId>1023</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-07T00:48:28</EntryTime>
-    <EndTime>2024-12-08T09:48:28</EndTime>
+    <StudentCallId>1025</StudentCallId>
+    <TutorId>269194508</TutorId>
+    <EntryTime>2024-12-09T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1011</Id>
-    <StudentCallId>1024</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-12-02T00:48:28</EntryTime>
+    <StudentCallId>1008</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-22T09:06:09</EntryTime>
+    <EndTime>2024-12-22T21:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1012</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-12-13T00:48:28</EntryTime>
-    <EndTime>2024-12-13T11:48:28</EndTime>
+    <StudentCallId>1017</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-11-26T09:06:09</EntryTime>
+    <EndTime>2024-11-26T19:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1013</Id>
     <StudentCallId>1003</StudentCallId>
-    <TutorId>321584868</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-23T09:06:09</EntryTime>
+    <EndTime>2024-12-23T10:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1014</Id>
-    <StudentCallId>1016</StudentCallId>
-    <TutorId>321584868</TutorId>
-    <EntryTime>2024-12-06T00:48:28</EntryTime>
-    <EndTime>2024-12-07T07:48:28</EndTime>
+    <StudentCallId>1009</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-21T09:06:09</EntryTime>
+    <EndTime>2024-12-23T03:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1015</Id>
-    <StudentCallId>1011</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-11-25T00:48:28</EntryTime>
+    <StudentCallId>1003</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-20T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1016</Id>
-    <StudentCallId>1021</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-11-25T00:48:28</EntryTime>
-    <EndTime>2024-11-25T13:48:28</EndTime>
+    <StudentCallId>1028</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-12-12T09:06:09</EntryTime>
+    <EndTime>2024-12-13T06:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1017</Id>
-    <StudentCallId>1015</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-11-27T00:48:28</EntryTime>
+    <StudentCallId>1030</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-17T09:06:09</EntryTime>
+    <EndTime>2024-12-18T13:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1018</Id>
-    <StudentCallId>1002</StudentCallId>
-    <TutorId>321584868</TutorId>
-    <EntryTime>2024-12-16T00:48:28</EntryTime>
-    <EndTime>2024-12-17T07:48:28</EndTime>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-11T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1019</Id>
-    <StudentCallId>1031</StudentCallId>
-    <TutorId>233402182</TutorId>
-    <EntryTime>2024-12-10T00:48:28</EntryTime>
+    <StudentCallId>1026</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-11T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1020</Id>
-    <StudentCallId>1002</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-12-06T00:48:28</EntryTime>
+    <StudentCallId>1004</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-11T09:06:09</EntryTime>
+    <EndTime>2024-12-12T15:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1021</Id>
-    <StudentCallId>1001</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-11-23T00:48:28</EntryTime>
+    <StudentCallId>1011</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-17T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1022</Id>
-    <StudentCallId>1028</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-12-16T00:48:28</EntryTime>
-    <EndTime>2024-12-16T18:48:28</EndTime>
+    <StudentCallId>1014</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-10T09:06:09</EntryTime>
+    <EndTime>2024-12-11T20:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1023</Id>
-    <StudentCallId>1015</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-12T00:48:28</EntryTime>
-    <EndTime>2024-12-13T07:48:28</EndTime>
+    <StudentCallId>1009</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1024</Id>
-    <StudentCallId>1019</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-23T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1025</Id>
-    <StudentCallId>1029</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-11-25T00:48:28</EntryTime>
-    <EndTime>2024-11-26T07:48:28</EndTime>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-11-28T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1026</Id>
-    <StudentCallId>1005</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-12-06T00:48:28</EntryTime>
-    <EndTime>2024-12-07T16:48:28</EndTime>
+    <StudentCallId>1032</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-04T09:06:09</EntryTime>
+    <EndTime>2024-12-05T09:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1027</Id>
-    <StudentCallId>1029</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-11T00:48:28</EntryTime>
+    <StudentCallId>1011</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-02T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1028</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-12-08T00:48:28</EntryTime>
+    <StudentCallId>1020</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-03T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1029</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-11-28T00:48:28</EntryTime>
+    <StudentCallId>1034</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-11-30T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1030</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-03T00:48:28</EntryTime>
+    <StudentCallId>1015</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-16T09:06:09</EntryTime>
+    <EndTime>2024-12-17T19:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1031</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
-    <EndTime>2024-11-26T21:48:28</EndTime>
+    <StudentCallId>1022</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-10T09:06:09</EntryTime>
+    <EndTime>2024-12-10T20:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1032</Id>
-    <StudentCallId>1002</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
-    <EndTime>2024-12-05T01:48:28</EndTime>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-12-04T09:06:09</EntryTime>
+    <EndTime>2024-12-04T10:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1033</Id>
-    <StudentCallId>1010</StudentCallId>
-    <TutorId>258188578</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
+    <StudentCallId>1020</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1034</Id>
-    <StudentCallId>1008</StudentCallId>
-    <TutorId>321584868</TutorId>
-    <EntryTime>2024-12-12T00:48:28</EntryTime>
+    <StudentCallId>1027</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1035</Id>
-    <StudentCallId>1031</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-08T00:48:28</EntryTime>
+    <StudentCallId>1002</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-11-26T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1036</Id>
-    <StudentCallId>1000</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-11-22T00:48:28</EntryTime>
+    <StudentCallId>1013</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-19T09:06:09</EntryTime>
+    <EndTime>2024-12-19T10:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1037</Id>
-    <StudentCallId>1023</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-06T00:48:28</EntryTime>
+    <StudentCallId>1028</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-02T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1038</Id>
-    <StudentCallId>1018</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-11-28T00:48:28</EntryTime>
+    <StudentCallId>1010</StudentCallId>
+    <TutorId>274423482</TutorId>
+    <EntryTime>2024-12-22T09:06:09</EntryTime>
+    <EndTime>2024-12-23T20:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1039</Id>
-    <StudentCallId>1031</StudentCallId>
-    <TutorId>258188578</TutorId>
-    <EntryTime>2024-12-13T00:48:28</EntryTime>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-09T09:06:09</EntryTime>
+    <EndTime>2024-12-10T03:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1040</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>233402182</TutorId>
-    <EntryTime>2024-11-30T00:48:28</EntryTime>
+    <StudentCallId>1033</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-19T09:06:09</EntryTime>
+    <EndTime>2024-12-20T11:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1041</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-12-03T00:48:28</EntryTime>
-    <EndTime>2024-12-04T17:48:28</EndTime>
+    <StudentCallId>1026</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-11T09:06:09</EntryTime>
+    <EndTime>2024-12-12T20:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1042</Id>
-    <StudentCallId>1005</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-09T00:48:28</EntryTime>
-    <EndTime>2024-12-10T00:48:28</EndTime>
+    <StudentCallId>1006</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-02T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1043</Id>
-    <StudentCallId>1011</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-11-24T00:48:28</EntryTime>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-12-05T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1044</Id>
-    <StudentCallId>1025</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-09T00:48:28</EntryTime>
-    <EndTime>2024-12-10T23:48:28</EndTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-21T09:06:09</EntryTime>
+    <EndTime>2024-12-22T12:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1045</Id>
-    <StudentCallId>1003</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-12-01T00:48:28</EntryTime>
-    <EndTime>2024-12-02T08:48:28</EndTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-05T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1046</Id>
     <StudentCallId>1024</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-11-25T00:48:28</EntryTime>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
+    <EndTime>2024-12-09T12:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1047</Id>
-    <StudentCallId>1014</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-12-17T00:48:28</EntryTime>
+    <StudentCallId>1005</StudentCallId>
+    <TutorId>296662386</TutorId>
+    <EntryTime>2024-12-04T09:06:09</EntryTime>
+    <EndTime>2024-12-05T14:06:09</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1048</Id>
-    <StudentCallId>1004</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-12-07T00:48:28</EntryTime>
+    <StudentCallId>1033</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-12-17T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1049</Id>
-    <StudentCallId>1022</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-11-28T00:48:28</EntryTime>
-    <EndTime>2024-11-28T21:48:28</EndTime>
+    <StudentCallId>1025</StudentCallId>
+    <TutorId>274423482</TutorId>
+    <EntryTime>2024-12-01T09:06:09</EntryTime>
     <EndOfTreatment>Treated</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1050</Id>
-    <StudentCallId>1009</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-11-25T00:48:28</EntryTime>
-    <EndTime>2024-11-26T17:48:28</EndTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-03T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1051</Id>
-    <StudentCallId>1010</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-11T00:48:28</EntryTime>
+    <StudentCallId>1030</StudentCallId>
+    <TutorId>283661288</TutorId>
+    <EntryTime>2024-12-19T09:06:09</EntryTime>
+    <EndTime>2024-12-20T03:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1052</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-12-15T00:48:28</EntryTime>
-    <EndTime>2024-12-15T08:48:28</EndTime>
+    <StudentCallId>1001</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-11-28T09:06:09</EntryTime>
+    <EndTime>2024-11-29T16:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1053</Id>
-    <StudentCallId>1011</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-11-24T00:48:28</EntryTime>
+    <StudentCallId>1032</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-11-26T09:06:09</EntryTime>
+    <EndTime>2024-11-26T15:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1054</Id>
-    <StudentCallId>1025</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-11-30T00:48:28</EntryTime>
-    <EndTime>2024-12-01T05:48:28</EndTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>274423482</TutorId>
+    <EntryTime>2024-12-02T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1055</Id>
-    <StudentCallId>1015</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-11-24T00:48:28</EntryTime>
-    <EndTime>2024-11-25T14:48:28</EndTime>
+    <StudentCallId>1001</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
+    <EndTime>2024-12-10T06:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1056</Id>
-    <StudentCallId>1005</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-11-30T00:48:28</EntryTime>
-    <EndTime>2024-11-30T17:48:28</EndTime>
+    <StudentCallId>1024</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-11T09:06:09</EntryTime>
+    <EndTime>2024-12-11T23:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1057</Id>
-    <StudentCallId>1009</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
+    <StudentCallId>1006</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-15T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1058</Id>
-    <StudentCallId>1027</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-12-06T00:48:28</EntryTime>
-    <EndTime>2024-12-07T14:48:28</EndTime>
+    <StudentCallId>1016</StudentCallId>
+    <TutorId>324602638</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1059</Id>
-    <StudentCallId>1032</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>283661288</TutorId>
+    <EntryTime>2024-12-12T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1060</Id>
-    <StudentCallId>1013</StudentCallId>
-    <TutorId>258188578</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
+    <StudentCallId>1003</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-11-25T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1061</Id>
-    <StudentCallId>1021</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-13T00:48:28</EntryTime>
+    <StudentCallId>1028</StudentCallId>
+    <TutorId>296662386</TutorId>
+    <EntryTime>2024-11-29T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1062</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-11-21T00:48:28</EntryTime>
+    <StudentCallId>1025</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-17T09:06:09</EntryTime>
+    <EndTime>2024-12-17T23:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1063</Id>
-    <StudentCallId>1031</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-12-02T00:48:28</EntryTime>
+    <StudentCallId>1005</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-12-12T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1064</Id>
-    <StudentCallId>1014</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-11-30T00:48:28</EntryTime>
-    <EndTime>2024-12-01T16:48:28</EndTime>
+    <StudentCallId>1002</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-20T09:06:09</EntryTime>
+    <EndTime>2024-12-21T08:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1065</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-16T00:48:28</EntryTime>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-21T09:06:09</EntryTime>
+    <EndTime>2024-12-22T18:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1066</Id>
-    <StudentCallId>1034</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-12-13T00:48:28</EntryTime>
+    <StudentCallId>1033</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-12T09:06:09</EntryTime>
+    <EndTime>2024-12-12T22:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1067</Id>
-    <StudentCallId>1022</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-12-16T00:48:28</EntryTime>
-    <EndTime>2024-12-17T20:48:28</EndTime>
+    <StudentCallId>1025</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-11-28T09:06:09</EntryTime>
+    <EndTime>2024-11-29T18:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1068</Id>
-    <StudentCallId>1008</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-11T00:48:28</EntryTime>
+    <StudentCallId>1020</StudentCallId>
+    <TutorId>296662386</TutorId>
+    <EntryTime>2024-12-21T09:06:09</EntryTime>
+    <EndTime>2024-12-21T19:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1069</Id>
-    <StudentCallId>1003</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-11-25T00:48:28</EntryTime>
-    <EndTime>2024-11-25T13:48:28</EndTime>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-11-28T09:06:09</EntryTime>
+    <EndTime>2024-11-29T05:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1070</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-11-28T00:48:28</EntryTime>
+    <StudentCallId>1010</StudentCallId>
+    <TutorId>274423482</TutorId>
+    <EntryTime>2024-12-22T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1071</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
-    <EndTime>2024-12-05T21:48:28</EndTime>
+    <StudentCallId>1033</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-16T09:06:09</EntryTime>
+    <EndTime>2024-12-16T11:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1072</Id>
-    <StudentCallId>1008</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-12-09T00:48:28</EntryTime>
+    <StudentCallId>1007</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-09T09:06:09</EntryTime>
+    <EndTime>2024-12-10T18:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1073</Id>
-    <StudentCallId>1024</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-11-24T00:48:28</EntryTime>
+    <StudentCallId>1019</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-05T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1074</Id>
-    <StudentCallId>1033</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-12-17T00:48:28</EntryTime>
+    <StudentCallId>1027</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-13T09:06:09</EntryTime>
+    <EndTime>2024-12-14T19:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1075</Id>
-    <StudentCallId>1033</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
-    <EndTime>2024-11-27T10:48:28</EndTime>
+    <StudentCallId>1009</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1076</Id>
-    <StudentCallId>1020</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-11-27T00:48:28</EntryTime>
-    <EndTime>2024-11-28T17:48:28</EndTime>
+    <StudentCallId>1001</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-12-21T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1077</Id>
-    <StudentCallId>1031</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-08T00:48:28</EntryTime>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-14T09:06:09</EntryTime>
+    <EndTime>2024-12-15T17:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1078</Id>
-    <StudentCallId>1016</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-11-22T00:48:28</EntryTime>
+    <StudentCallId>1017</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-19T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1079</Id>
-    <StudentCallId>1003</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-12-01T00:48:28</EntryTime>
+    <StudentCallId>1016</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-11-29T09:06:09</EntryTime>
+    <EndTime>2024-11-29T22:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1080</Id>
-    <StudentCallId>1023</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-11-30T00:48:28</EntryTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>242564013</TutorId>
+    <EntryTime>2024-12-01T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1081</Id>
-    <StudentCallId>1000</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-11-22T00:48:28</EntryTime>
-    <EndTime>2024-11-23T17:48:28</EndTime>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>296662386</TutorId>
+    <EntryTime>2024-12-07T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1082</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>321584868</TutorId>
-    <EntryTime>2024-12-19T00:48:28</EntryTime>
-    <EndTime>2024-12-19T12:48:28</EndTime>
+    <StudentCallId>1010</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-12-03T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1083</Id>
-    <StudentCallId>1018</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
+    <StudentCallId>1009</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-20T09:06:09</EntryTime>
+    <EndTime>2024-12-21T19:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1084</Id>
-    <StudentCallId>1007</StudentCallId>
-    <TutorId>233402182</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
+    <StudentCallId>1029</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-21T09:06:09</EntryTime>
+    <EndTime>2024-12-21T14:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1085</Id>
-    <StudentCallId>1024</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
-    <EndTime>2024-12-05T08:48:28</EndTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-11-29T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1086</Id>
-    <StudentCallId>1034</StudentCallId>
-    <TutorId>258188578</TutorId>
-    <EntryTime>2024-12-16T00:48:28</EntryTime>
+    <StudentCallId>1001</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-08T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1087</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
-    <EndTime>2024-12-05T02:48:28</EndTime>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-11-27T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1088</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-12-02T00:48:28</EntryTime>
-    <EndTime>2024-12-02T16:48:28</EndTime>
+    <StudentCallId>1033</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-12T09:06:09</EntryTime>
+    <EndTime>2024-12-12T13:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1089</Id>
-    <StudentCallId>1006</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
-    <EndTime>2024-12-05T01:48:28</EndTime>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-12-10T09:06:09</EntryTime>
+    <EndTime>2024-12-11T06:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1090</Id>
-    <StudentCallId>1019</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-12-07T00:48:28</EntryTime>
+    <StudentCallId>1027</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-13T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1091</Id>
-    <StudentCallId>1001</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-12-01T00:48:28</EntryTime>
-    <EndTime>2024-12-02T19:48:28</EndTime>
+    <StudentCallId>1023</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-07T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1092</Id>
-    <StudentCallId>1027</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-12-07T00:48:28</EntryTime>
+    <StudentCallId>1015</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-10T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1093</Id>
-    <StudentCallId>1015</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-11-22T00:48:28</EntryTime>
-    <EndTime>2024-11-23T17:48:28</EndTime>
+    <StudentCallId>1029</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-02T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1094</Id>
-    <StudentCallId>1011</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-12-07T00:48:28</EntryTime>
-    <EndTime>2024-12-08T17:48:28</EndTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-11-26T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1095</Id>
-    <StudentCallId>1004</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-11-21T00:48:28</EntryTime>
-    <EndTime>2024-11-22T06:48:28</EndTime>
+    <StudentCallId>1010</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-11-28T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1096</Id>
     <StudentCallId>1033</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-11-27T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1097</Id>
-    <StudentCallId>1021</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-12-18T00:48:28</EntryTime>
-    <EndTime>2024-12-18T23:48:28</EndTime>
+    <StudentCallId>1022</StudentCallId>
+    <TutorId>296662386</TutorId>
+    <EntryTime>2024-12-16T09:06:09</EntryTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1098</Id>
-    <StudentCallId>1014</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-11-24T00:48:28</EntryTime>
-    <EndTime>2024-11-24T04:48:28</EndTime>
+    <StudentCallId>1011</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-18T09:06:09</EntryTime>
+    <EndTime>2024-12-19T18:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1099</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
-    <EndTime>2024-11-26T09:48:28</EndTime>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-11-25T09:06:09</EntryTime>
+    <EndTime>2024-11-25T12:06:09</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1100</Id>
-    <StudentCallId>1015</StudentCallId>
-    <TutorId>233402182</TutorId>
-    <EntryTime>2024-11-21T00:48:28</EntryTime>
+    <StudentCallId>1020</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-23T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1101</Id>
-    <StudentCallId>1031</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-09T00:48:28</EntryTime>
+    <StudentCallId>1020</StudentCallId>
+    <TutorId>324602638</TutorId>
+    <EntryTime>2024-12-16T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1102</Id>
-    <StudentCallId>1029</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-16T00:48:28</EntryTime>
+    <StudentCallId>1033</StudentCallId>
+    <TutorId>274423482</TutorId>
+    <EntryTime>2024-11-29T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1103</Id>
-    <StudentCallId>1021</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-11-27T00:48:28</EntryTime>
-    <EndTime>2024-11-28T10:48:28</EndTime>
+    <StudentCallId>1004</StudentCallId>
+    <TutorId>274423482</TutorId>
+    <EntryTime>2024-12-11T09:06:09</EntryTime>
+    <EndTime>2024-12-13T01:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1104</Id>
-    <StudentCallId>1029</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-12-18T00:48:28</EntryTime>
-    <EndTime>2024-12-18T03:48:28</EndTime>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-12-09T09:06:09</EntryTime>
+    <EndTime>2024-12-11T05:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1105</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-12-17T00:48:28</EntryTime>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>324602638</TutorId>
+    <EntryTime>2024-11-30T09:06:09</EntryTime>
+    <EndTime>2024-11-30T20:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1106</Id>
-    <StudentCallId>1008</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-11-21T00:48:28</EntryTime>
-    <EndTime>2024-11-22T06:48:28</EndTime>
+    <StudentCallId>1007</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-05T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1107</Id>
-    <StudentCallId>1022</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-14T00:48:28</EntryTime>
-    <EndTime>2024-12-15T04:48:28</EndTime>
+    <StudentCallId>1031</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-09T09:06:09</EntryTime>
+    <EndTime>2024-12-11T04:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1108</Id>
-    <StudentCallId>1010</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
-    <EndTime>2024-12-05T13:48:28</EndTime>
+    <StudentCallId>1029</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-11-29T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1109</Id>
-    <StudentCallId>1010</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-12T00:48:28</EntryTime>
-    <EndTime>2024-12-13T01:48:28</EndTime>
+    <StudentCallId>1004</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-03T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1110</Id>
-    <StudentCallId>1034</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-12-01T00:48:28</EntryTime>
+    <StudentCallId>1008</StudentCallId>
+    <TutorId>269194508</TutorId>
+    <EntryTime>2024-12-05T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1111</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-14T00:48:28</EntryTime>
+    <StudentCallId>1006</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-12-14T09:06:09</EntryTime>
+    <EndTime>2024-12-14T23:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1112</Id>
-    <StudentCallId>1028</StudentCallId>
-    <TutorId>233402182</TutorId>
-    <EntryTime>2024-11-29T00:48:28</EntryTime>
-    <EndTime>2024-11-29T04:48:28</EndTime>
+    <StudentCallId>1020</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-11-27T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1113</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-12-15T00:48:28</EntryTime>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-11-25T09:06:09</EntryTime>
+    <EndTime>2024-11-27T06:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1114</Id>
-    <StudentCallId>1034</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-12-16T00:48:28</EntryTime>
-    <EndTime>2024-12-17T19:48:28</EndTime>
+    <StudentCallId>1024</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-16T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1115</Id>
-    <StudentCallId>1015</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-02T00:48:28</EntryTime>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-12-05T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1116</Id>
-    <StudentCallId>1005</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-12-14T00:48:28</EntryTime>
+    <StudentCallId>1008</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-06T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1117</Id>
-    <StudentCallId>1007</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-11-29T00:48:28</EntryTime>
-    <EndTime>2024-11-30T00:48:28</EndTime>
+    <StudentCallId>1022</StudentCallId>
+    <TutorId>269194508</TutorId>
+    <EntryTime>2024-12-14T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1118</Id>
-    <StudentCallId>1001</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-18T00:48:28</EntryTime>
-    <EndTime>2024-12-19T13:48:28</EndTime>
+    <StudentCallId>1002</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-21T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1119</Id>
-    <StudentCallId>1022</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-16T00:48:28</EntryTime>
+    <StudentCallId>1015</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-17T09:06:09</EntryTime>
+    <EndTime>2024-12-18T23:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1120</Id>
-    <StudentCallId>1012</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-12-11T00:48:28</EntryTime>
+    <StudentCallId>1016</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-11-26T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1121</Id>
-    <StudentCallId>1011</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-13T00:48:28</EntryTime>
+    <StudentCallId>1033</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-17T09:06:09</EntryTime>
+    <EndTime>2024-12-17T20:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1122</Id>
-    <StudentCallId>1011</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-12-01T00:48:28</EntryTime>
-    <EndTime>2024-12-01T13:48:28</EndTime>
+    <StudentCallId>1025</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-11-29T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1123</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-19T00:48:28</EntryTime>
+    <StudentCallId>1007</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-02T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1124</Id>
-    <StudentCallId>1009</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
-    <EndTime>2024-12-06T02:48:28</EndTime>
+    <StudentCallId>1029</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-15T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1125</Id>
-    <StudentCallId>1003</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
+    <StudentCallId>1029</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-12-09T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1126</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>258188578</TutorId>
-    <EntryTime>2024-11-27T00:48:28</EntryTime>
+    <StudentCallId>1007</StudentCallId>
+    <TutorId>324602638</TutorId>
+    <EntryTime>2024-12-07T09:06:09</EntryTime>
+    <EndTime>2024-12-08T12:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1127</Id>
-    <StudentCallId>1013</StudentCallId>
-    <TutorId>353765384</TutorId>
-    <EntryTime>2024-11-22T00:48:28</EntryTime>
-    <EndTime>2024-11-22T20:48:28</EndTime>
+    <StudentCallId>1034</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-18T09:06:09</EntryTime>
+    <EndTime>2024-12-18T19:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1128</Id>
-    <StudentCallId>1006</StudentCallId>
-    <TutorId>233402182</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>390816859</TutorId>
+    <EntryTime>2024-12-23T09:06:09</EntryTime>
+    <EndTime>2024-12-24T04:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1129</Id>
-    <StudentCallId>1034</StudentCallId>
-    <TutorId>372201862</TutorId>
-    <EntryTime>2024-12-05T00:48:28</EntryTime>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>283661288</TutorId>
+    <EntryTime>2024-12-10T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1130</Id>
-    <StudentCallId>1011</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-12-01T00:48:28</EntryTime>
-    <EndTime>2024-12-02T01:48:28</EndTime>
+    <StudentCallId>1005</StudentCallId>
+    <TutorId>330154681</TutorId>
+    <EntryTime>2024-12-14T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1131</Id>
-    <StudentCallId>1016</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-12-18T00:48:28</EntryTime>
-    <EndTime>2024-12-19T17:48:28</EndTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>269194508</TutorId>
+    <EntryTime>2024-12-14T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1132</Id>
-    <StudentCallId>1022</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-13T00:48:28</EntryTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-12-15T09:06:09</EntryTime>
+    <EndTime>2024-12-15T11:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1133</Id>
-    <StudentCallId>1010</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-11-29T00:48:28</EntryTime>
-    <EndTime>2024-11-29T14:48:28</EndTime>
+    <StudentCallId>1001</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-11T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1134</Id>
     <StudentCallId>1024</StudentCallId>
-    <TutorId>233402182</TutorId>
-    <EntryTime>2024-11-29T00:48:28</EntryTime>
-    <EndTime>2024-11-29T09:48:28</EndTime>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-03T09:06:09</EntryTime>
+    <EndTime>2024-12-03T17:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1135</Id>
-    <StudentCallId>1019</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-12-09T00:48:28</EntryTime>
+    <StudentCallId>1015</StudentCallId>
+    <TutorId>283661288</TutorId>
+    <EntryTime>2024-11-26T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1136</Id>
-    <StudentCallId>1027</StudentCallId>
-    <TutorId>343586172</TutorId>
-    <EntryTime>2024-12-14T00:48:28</EntryTime>
+    <StudentCallId>1026</StudentCallId>
+    <TutorId>302030989</TutorId>
+    <EntryTime>2024-11-30T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1137</Id>
-    <StudentCallId>1018</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
+    <StudentCallId>1014</StudentCallId>
+    <TutorId>283661288</TutorId>
+    <EntryTime>2024-12-10T09:06:09</EntryTime>
+    <EndTime>2024-12-12T05:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1138</Id>
-    <StudentCallId>1004</StudentCallId>
-    <TutorId>258188578</TutorId>
-    <EntryTime>2024-12-04T00:48:28</EntryTime>
-    <EndTime>2024-12-04T18:48:28</EndTime>
+    <StudentCallId>1002</StudentCallId>
+    <TutorId>319831787</TutorId>
+    <EntryTime>2024-11-29T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1139</Id>
-    <StudentCallId>1030</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-12-02T00:48:28</EntryTime>
+    <StudentCallId>1004</StudentCallId>
+    <TutorId>283661288</TutorId>
+    <EntryTime>2024-12-10T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1140</Id>
-    <StudentCallId>1032</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-12-02T00:48:28</EntryTime>
-    <EndTime>2024-12-02T11:48:28</EndTime>
+    <StudentCallId>1015</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-12-14T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1141</Id>
-    <StudentCallId>1016</StudentCallId>
-    <TutorId>321584868</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
+    <StudentCallId>1018</StudentCallId>
+    <TutorId>283661288</TutorId>
+    <EntryTime>2024-12-11T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1142</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>321584868</TutorId>
-    <EntryTime>2024-12-18T00:48:28</EntryTime>
-    <EndTime>2024-12-19T05:48:28</EndTime>
+    <StudentCallId>1011</StudentCallId>
+    <TutorId>269194508</TutorId>
+    <EntryTime>2024-11-26T09:06:09</EntryTime>
+    <EndTime>2024-11-28T00:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1143</Id>
-    <StudentCallId>1000</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-12-09T00:48:28</EntryTime>
+    <StudentCallId>1020</StudentCallId>
+    <TutorId>360923953</TutorId>
+    <EntryTime>2024-12-18T09:06:09</EntryTime>
+    <EndTime>2024-12-18T16:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1144</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-12-15T00:48:28</EntryTime>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>274423482</TutorId>
+    <EntryTime>2024-12-16T09:06:09</EntryTime>
+    <EndTime>2024-12-17T05:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1145</Id>
-    <StudentCallId>1003</StudentCallId>
-    <TutorId>271847351</TutorId>
-    <EntryTime>2024-12-12T00:48:28</EntryTime>
+    <StudentCallId>1004</StudentCallId>
+    <TutorId>269194508</TutorId>
+    <EntryTime>2024-12-20T09:06:09</EntryTime>
+    <EndTime>2024-12-20T23:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1146</Id>
-    <StudentCallId>1024</StudentCallId>
-    <TutorId>238420485</TutorId>
-    <EntryTime>2024-11-26T00:48:28</EntryTime>
+    <StudentCallId>1002</StudentCallId>
+    <TutorId>201530644</TutorId>
+    <EntryTime>2024-12-16T09:06:09</EntryTime>
+    <EndTime>2024-12-17T04:06:09</EndTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1147</Id>
-    <StudentCallId>1009</StudentCallId>
-    <TutorId>266804123</TutorId>
-    <EntryTime>2024-11-28T00:48:28</EntryTime>
+    <StudentCallId>1025</StudentCallId>
+    <TutorId>296662386</TutorId>
+    <EntryTime>2024-12-22T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1148</Id>
-    <StudentCallId>1006</StudentCallId>
-    <TutorId>206876874</TutorId>
-    <EntryTime>2024-11-22T00:48:28</EntryTime>
-    <EndTime>2024-11-23T04:48:28</EndTime>
-    <EndOfTreatment>ManagerCancel</EndOfTreatment>
-  </Assignment>
-  <Assignment>
-    <Id>1149</Id>
-    <StudentCallId>1028</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-11-21T00:48:28</EntryTime>
-    <EndTime>2024-11-21T11:48:28</EndTime>
+    <StudentCallId>1003</StudentCallId>
+    <TutorId>272927799</TutorId>
+    <EntryTime>2024-12-09T09:06:09</EntryTime>
     <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1150</Id>
-    <StudentCallId>1023</StudentCallId>
-    <TutorId>274303481</TutorId>
-    <EntryTime>2024-12-11T00:48:28</EntryTime>
+    <StudentCallId>1003</StudentCallId>
+    <TutorId>240536900</TutorId>
+    <EntryTime>2024-12-21T09:06:09</EntryTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1151</Id>
-    <StudentCallId>1017</StudentCallId>
-    <TutorId>281982413</TutorId>
-    <EntryTime>2024-11-22T00:48:28</EntryTime>
-    <EndTime>2024-11-23T18:48:28</EndTime>
-    <EndOfTreatment>Expired</EndOfTreatment>
-  </Assignment>
-  <Assignment>
-    <Id>1152</Id>
-    <StudentCallId>1010</StudentCallId>
-    <TutorId>272172738</TutorId>
-    <EntryTime>2024-12-09T00:48:28</EntryTime>
-    <EndTime>2024-12-10T19:48:28</EndTime>
-    <EndOfTreatment>Expired</EndOfTreatment>
-  </Assignment>
-  <Assignment>
-    <Id>1153</Id>
-    <StudentCallId>1026</StudentCallId>
-    <TutorId>350997435</TutorId>
-    <EntryTime>2024-12-18T00:48:28</EntryTime>
-    <EndTime>2024-12-19T00:48:28</EndTime>
+    <StudentCallId>1025</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-22T09:06:09</EntryTime>
+    <EndTime>2024-12-24T01:06:09</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1154</Id>
-    <StudentCallId>1011</StudentCallId>
-    <TutorId>357136460</TutorId>
-    <EntryTime>2024-12-09T00:48:28</EntryTime>
-    <EndTime>2024-12-10T05:48:28</EndTime>
+    <StudentCallId>1007</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-15T09:06:09</EntryTime>
     <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1152</Id>
+    <StudentCallId>1025</StudentCallId>
+    <TutorId>222862330</TutorId>
+    <EntryTime>2024-12-23T09:01:47</EntryTime>
+    <EndTime>2024-12-23T09:01:48</EndTime>
+    <EndOfTreatment>SelfCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1149</Id>
+    <StudentCallId>1032</StudentCallId>
+    <TutorId>296662386</TutorId>
+    <EntryTime>2024-12-23T09:01:47</EntryTime>
+    <EndTime>2024-12-23T09:01:48</EndTime>
+    <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
 </assignments.xml>

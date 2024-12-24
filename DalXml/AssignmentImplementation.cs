@@ -65,7 +65,7 @@ internal class AssignmentImplementation : IAssignment
 
         XElement? assignmentElement = assignmentElements
             .Elements("Assignment")
-            .FirstOrDefault(el => (int)el.Element("ID") == id);
+            .FirstOrDefault(el => (int)el.Element("Id") == id);
 
         if (assignmentElement == null)
             throw new DalDoesNotExistException($"Assignment with ID={id} does not exist");
@@ -122,7 +122,14 @@ internal class AssignmentImplementation : IAssignment
         Assignment assignment = Read(item.Id);
         if (assignment == null)
             throw new DalDoesNotExistException($"An object of type assignment with such an {item.Id} does not exist");
+
         Delete(item.Id); // Deletes the old assignment.
-        Create(item); // Creates the updated assignment.
+
+        XElement? assignmentElements = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
+        Assignment copy = item with { Id = item.Id }; // Creates a copy of the object with the new ID.
+
+        assignmentElements.Add(GetXElement(copy));
+        XMLTools.SaveListToXMLElement(assignmentElements, Config.s_assignments_xml);
+
     }
 }
