@@ -99,10 +99,8 @@ public static class Initialization
     /// Initializes the DAL and populates the data with random values.
     public static void Do(IDal dal)
     {
-        
         s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
         s_dal!.ResetDB();
-
         //s_dal!.Tutor = dalTutors ?? throw new NullReferenceException("DAL object can not be null!");
         //s_dal.StudentCall = dalStudentCalls ?? throw new NullReferenceException("DAL object can not be null!");
         //s_dalAssignment = dalAssignments ?? throw new NullReferenceException("DAL object can not be null!");

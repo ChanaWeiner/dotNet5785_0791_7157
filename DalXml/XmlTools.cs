@@ -134,7 +134,6 @@ static class XMLTools
         TimeSpan.TryParse((string?)element.Element(name), out var result) ? (TimeSpan?)result : null;
     #endregion
 
-
     #region ExtensionFuctions
     public static T? ToEnumNullable<T>(this XElement element, string name) where T : struct, Enum =>
         Enum.TryParse<T>((string?)element.Element(name), out var result) ? (T?)result : null;

@@ -6,5 +6,4 @@ public interface IConfig
     TimeSpan RiskTimeSpan { get; set; }
 
     void Reset();
-
 }

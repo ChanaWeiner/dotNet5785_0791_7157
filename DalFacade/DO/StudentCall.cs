@@ -13,9 +13,7 @@ public record StudentCall
     double Longitude,
     DateTime OpenTime,
     DateTime? FinalTime
-
  )
-
 {
     public StudentCall() : this(0, 0, "", "", "", "", "", 0, 0, DateTime.Now, null) { }
 }

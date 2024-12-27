@@ -38,7 +38,6 @@ internal static class Config
         set => XMLTools.SetConfigDateVal(s_data_config_xml, "Clock", value);
     }
 
-    
     /// Gets or sets the risk time span for assignments.
     /// This value represents the time span during which assignments are considered at risk.
     internal static TimeSpan RiskTimeSpan
@@ -47,7 +46,6 @@ internal static class Config
         set => XMLTools.SetConfigTimeSpanVal(s_data_config_xml, "RiskTimeSpan", value);
     }
     
-
     /// Resets all configuration values to their default settings.
     /// - Resets the next assignment ID to 1000.
     /// - Resets the next student call ID to 1000.

@@ -2,7 +2,6 @@
 namespace DalApi;
 
 public interface ICrud<T> where T : class
-
 {
     void Create(T item);
     T ? Read(int id); //Reads entity object by its ID 
@@ -11,5 +10,4 @@ public interface ICrud<T> where T : class
     void Delete(int id); //Deletes an object by its Id
     void DeleteAll(); //Delete all entity objects
     T? Read(Func<T, bool> filter); // stage 2
-
 }

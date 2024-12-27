@@ -142,36 +142,26 @@ internal class Program
 
                 Console.Write("Id: ");
                 id = int.Parse(Console.ReadLine());
-
                 Console.Write("Full Name: ");
                 fullName = Console.ReadLine();
                 Console.Write("Cell Number: ");
                 cellNumber = Console.ReadLine();
-
                 Console.Write("Email: ");
                 email = Console.ReadLine();
-
                 Console.Write("Password: ");
                 password = Console.ReadLine();
-
                 Console.Write("Current Address: ");
                 currentAddress = Console.ReadLine();
-
                 Console.Write("Latitude: ");
                 latitude = double.Parse(Console.ReadLine());
-
                 Console.Write("Longitude: ");
                 longitude = double.Parse(Console.ReadLine());
-
                 Console.Write("Role: ");
                 Role role = (Role)int.Parse(Console.ReadLine());
-
                 Console.Write("Active (true/false): ");
                 bool isActive = bool.Parse(Console.ReadLine());
-
                 Console.Write("Distance: ");
                 double distance = double.Parse(Console.ReadLine());
-
                 Console.Write("Distance Type: ");
                 DistanceType distanceType = (DistanceType)int.Parse(Console.ReadLine());
                 if (isCreate)
@@ -198,37 +188,26 @@ internal class Program
                 break;
             case "StudentCall":
                 Console.WriteLine("Enter the following details:");
-
                 Console.Write("Id: ");
                 id = int.Parse(Console.ReadLine());
-
                 Console.Write("Subject: ");
                 Subjects subject = (Subjects)int.Parse(Console.ReadLine());
-
                 Console.Write("Description: ");
                 description = Console.ReadLine();
-
                 Console.Write("Full Address: ");
                 fullAddress = Console.ReadLine();
-
                 Console.Write("Full Name: ");
                 fullName = Console.ReadLine();
-
                 Console.Write("Cell Number: ");
                 cellNumber = Console.ReadLine();
-
                 Console.Write("Email: ");
                 email = Console.ReadLine();
-
                 Console.Write("Latitude: ");
                 latitude = double.Parse(Console.ReadLine());
-
                 Console.Write("Longitude: ");
                 longitude = double.Parse(Console.ReadLine());
-
                 Console.Write("Open Time (format: yyyy-MM-dd HH:mm:ss): ");
                 openTime = DateTime.Parse(Console.ReadLine());
-
                 Console.Write("Final Time (format: yyyy-MM-dd HH:mm:ss) (optional, enter null if no final time): ");
                 string finalTimeInput = Console.ReadLine();
                 finalTime = string.IsNullOrEmpty(finalTimeInput) ? (DateTime?)null : DateTime.Parse(finalTimeInput);
@@ -259,24 +238,18 @@ internal class Program
 
             case "Assignment":
                 Console.WriteLine("Enter the following details:");
-
                 Console.Write("Id: ");
                 id = int.Parse(Console.ReadLine());
-
                 Console.Write("StudentCallId: ");
                 int studentCallId = int.Parse(Console.ReadLine());
-
                 Console.Write("TutorId: ");
                 int tutorId = int.Parse(Console.ReadLine());
-
                 Console.Write("Entry Time (format: yyyy-MM-dd HH:mm:ss) (optional, enter null if no entry time): ");
                 string entryTimeInput = Console.ReadLine();
                 DateTime? entryTime = string.IsNullOrEmpty(entryTimeInput) ? (DateTime?)null : DateTime.Parse(entryTimeInput);
-
                 Console.Write("End Time (format: yyyy-MM-dd HH:mm:ss) (optional, enter null if no end time): ");
                 string endTimeInput = Console.ReadLine();
                 DateTime? endTime = string.IsNullOrEmpty(endTimeInput) ? (DateTime?)null : DateTime.Parse(endTimeInput);
-
                 Console.Write("End Of Treatment (0 for None, 1 for Finished, 2 for Cancelled): ");
                 EndOfTreatment endOfTreatment = (EndOfTreatment)int.Parse(Console.ReadLine());
 
@@ -300,7 +273,6 @@ internal class Program
                 break;
         }
     }
-
 
     /// Reads an object by ID
     private static void ReadEntityById(string entity)

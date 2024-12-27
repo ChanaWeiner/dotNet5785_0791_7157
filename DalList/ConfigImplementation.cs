@@ -1,5 +1,4 @@
 ﻿using DalApi;
-
 namespace Dal;
 
 internal class ConfigImplementation : IConfig
@@ -16,8 +15,6 @@ internal class ConfigImplementation : IConfig
         get => Config.RiskTimeSpan; 
         set => Config.RiskTimeSpan = value; 
     }
-
-
 
     /// Resets the configuration values to their default states.
     public void Reset()
