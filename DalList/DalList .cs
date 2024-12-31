@@ -1,8 +1,12 @@
 ﻿namespace Dal;
 using DalApi;
 
-sealed public class DalList : IDal
+sealed internal class DalList : IDal
 {
+
+    public static IDal Instance { get; } = new DalList();
+    private DalList() { }
+
     /// Provides functionality for managing student calls.
     public IStudentCall StudentCall { get; } = new StudentCallImplementation();
 

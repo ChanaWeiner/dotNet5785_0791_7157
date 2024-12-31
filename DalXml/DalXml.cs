@@ -1,8 +1,12 @@
 ﻿using DalApi;
+using System.Diagnostics;
 namespace Dal;
 
-sealed public class DalXml : IDal
+sealed internal class DalXml : IDal
 {
+    public static IDal Instance { get; } = new DalXml();
+    private DalXml() { }
+
     // Access to student call operations.
     public IStudentCall StudentCall { get; } = new StudentCallImplementation();
 

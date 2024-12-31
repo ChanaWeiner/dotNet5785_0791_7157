@@ -2,6 +2,7 @@
 using DalApi;
 using DalTest;
 using DO;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 
 internal class Program
@@ -16,7 +17,10 @@ internal class Program
     enum ConfigSubMenu { Exit = 1, PromoteMinute, PromoteHour, DisplayTime, SetConfigVariable, DisplayValue, Reset }
 
     /// Data Access Layer instance
-    static readonly IDal DataAccessLayer = new DalXml(); // stage 3
+    //static readonly IDal s_dal = new DalXml(); // stage 3
+    static readonly IDal s_dal = Factory.Get; //stage 4
+
+
 
     /// Displays the main menu and handles user input
     private static void DisplayMainMenu()
@@ -52,7 +56,7 @@ internal class Program
                         DisplayEntityMenu("Assignment");
                         break;
                     case MainMenu.Initialization:
-                        Initialization.Do(DataAccessLayer);
+                        Initialization.Do();
                         break;
                     case MainMenu.DisplayAllData:
                         DisplayAllDataMenu();
@@ -61,10 +65,10 @@ internal class Program
                         DisplayConfigMenu();
                         break;
                     case MainMenu.Reset:
-                        DataAccessLayer.Tutor!.DeleteAll();
-                        DataAccessLayer.Assignment!.DeleteAll();
-                        DataAccessLayer.Config!.Reset();
-                        DataAccessLayer.StudentCall!.DeleteAll();
+                        s_dal.Tutor!.DeleteAll();
+                        s_dal.Assignment!.DeleteAll();
+                        s_dal.Config!.Reset();
+                        s_dal.StudentCall!.DeleteAll();
                         break;
                 }
             }
@@ -165,10 +169,10 @@ internal class Program
                 Console.Write("Distance Type: ");
                 DistanceType distanceType = (DistanceType)int.Parse(Console.ReadLine());
                 if (isCreate)
-                    DataAccessLayer.Tutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, isActive, distance, distanceType));
+                    s_dal.Tutor!.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, isActive, distance, distanceType));
                 else
                 {
-                    var tutor = DataAccessLayer.Tutor.Read(id);
+                    var tutor = s_dal.Tutor.Read(id);
                     var updateEntity = tutor with
                     {
                         FullName = fullName ?? tutor.FullName,
@@ -183,7 +187,7 @@ internal class Program
                         Distance = distance != 0 ? distance : tutor.Distance,
                         DistanceType = distanceType > 0 ? distanceType : tutor.DistanceType
                     };
-                    DataAccessLayer.Tutor!.Update(updateEntity);
+                    s_dal.Tutor!.Update(updateEntity);
                 }
                 break;
             case "StudentCall":
@@ -214,11 +218,11 @@ internal class Program
 
                 if (isCreate)
                 {
-                    DataAccessLayer.StudentCall!.Create(new StudentCall(id, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
+                    s_dal.StudentCall!.Create(new StudentCall(id, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
                 }
                 else
                 {
-                    var studentCall = DataAccessLayer.StudentCall.Read(id);
+                    var studentCall = s_dal.StudentCall.Read(id);
                     var updatedStudentCall = studentCall with
                     {
                         Subject = subject != 0 ? subject : studentCall.Subject,
@@ -232,7 +236,7 @@ internal class Program
                         OpenTime = openTime != DateTime.MinValue ? openTime : studentCall.OpenTime,
                         FinalTime = finalTime ?? studentCall.FinalTime
                     };
-                    DataAccessLayer.StudentCall.Update(updatedStudentCall);
+                    s_dal.StudentCall.Update(updatedStudentCall);
                 }
                 break;
 
@@ -255,11 +259,11 @@ internal class Program
 
                 if (isCreate)
                 {
-                    DataAccessLayer.Assignment!.Create(new Assignment(id, studentCallId, tutorId, entryTime, endTime, endOfTreatment));
+                    s_dal.Assignment!.Create(new Assignment(id, studentCallId, tutorId, entryTime, endTime, endOfTreatment));
                 }
                 else
                 {
-                    var assignment = DataAccessLayer.Assignment.Read(id);
+                    var assignment = s_dal.Assignment.Read(id);
                     var updatedAssignment = assignment with
                     {
                         StudentCallId = studentCallId != 0 ? studentCallId : assignment.StudentCallId,
@@ -268,7 +272,7 @@ internal class Program
                         EndTime = endTime ?? assignment.EndTime,
                         EndOfTreatment = endOfTreatment != 0 ? endOfTreatment : assignment.EndOfTreatment
                     };
-                    DataAccessLayer.Assignment.Update(updatedAssignment);
+                    s_dal.Assignment.Update(updatedAssignment);
                 }
                 break;
         }
@@ -283,15 +287,15 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                var tutor = DataAccessLayer.Tutor!.Read(id);
+                var tutor = s_dal.Tutor!.Read(id);
                 Console.WriteLine(tutor);
                 break;
             case "StudentCall":
-                var studentCall = DataAccessLayer.StudentCall!.Read(id);
+                var studentCall = s_dal.StudentCall!.Read(id);
                 Console.WriteLine(studentCall);
                 break;
             case "Assignment":
-                var assignment = DataAccessLayer.Assignment!.Read(id);
+                var assignment = s_dal.Assignment!.Read(id);
                 Console.WriteLine(assignment);
                 break;
         }
@@ -303,15 +307,15 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                var tutors = DataAccessLayer.Tutor!.ReadAll().ToList();
+                var tutors = s_dal.Tutor!.ReadAll().ToList();
                 tutors.ForEach(x => Console.WriteLine(x));
                 break;
             case "StudentCall":
-                var studentCalls = DataAccessLayer.StudentCall!.ReadAll().ToList();
+                var studentCalls = s_dal.StudentCall!.ReadAll().ToList();
                 studentCalls.ForEach(x => Console.WriteLine(x));
                 break;
             case "Assignment":
-                var assignments = DataAccessLayer.Assignment!.ReadAll().ToList();
+                var assignments = s_dal.Assignment!.ReadAll().ToList();
                 assignments.ForEach(x => Console.WriteLine(x));
                 break;
         }
@@ -347,34 +351,34 @@ internal class Program
                 case ConfigSubMenu.Exit:
                     return;
                 case ConfigSubMenu.PromoteMinute:
-                    DataAccessLayer.Config!.Clock = DataAccessLayer.Config.Clock.AddMinutes(1);
+                    s_dal.Config!.Clock = s_dal.Config.Clock.AddMinutes(1);
                     break;
                 case ConfigSubMenu.PromoteHour:
-                    DataAccessLayer.Config!.Clock = DataAccessLayer.Config.Clock.AddHours(1);
+                    s_dal.Config!.Clock = s_dal.Config.Clock.AddHours(1);
                     break;
                 case ConfigSubMenu.DisplayTime:
-                    Console.WriteLine($"Current time: {DataAccessLayer.Config!.Clock}");
+                    Console.WriteLine($"Current time: {s_dal.Config!.Clock}");
                     break;
                 case ConfigSubMenu.SetConfigVariable:
                     Console.WriteLine("Setting the time");
                     if (!DateTime.TryParse(Console.ReadLine(), out DateTime setTime)) throw new DalDateFormatWorngException("Date is invalid!");
-                    DataAccessLayer.Config!.Clock = setTime;
+                    s_dal.Config!.Clock = setTime;
                     break;
                 case ConfigSubMenu.DisplayValue:
-                    Console.WriteLine($"Current Clock Value: {DataAccessLayer.Config!.Clock}");
+                    Console.WriteLine($"Current Clock Value: {s_dal.Config!.Clock}");
                     break;
                 case ConfigSubMenu.Reset:
                     Console.WriteLine("Resetting configuration...");
-                    DataAccessLayer.Config!.Reset();
+                    s_dal.Config!.Reset();
                     break;
                 case (ConfigSubMenu)8:
-                    Console.WriteLine($"Current RiskRange: {DataAccessLayer.Config!.RiskTimeSpan}");
+                    Console.WriteLine($"Current RiskRange: {s_dal.Config!.RiskTimeSpan}");
                     break;
                 case (ConfigSubMenu)9:
                     Console.WriteLine("Enter a new value for RiskRange (format: hh:mm:ss):");
                     if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan newRiskRange))
                         throw new DalDateFormatWorngException("Invalid time format!");
-                    DataAccessLayer.Config.RiskTimeSpan = newRiskRange;
+                    s_dal.Config.RiskTimeSpan = newRiskRange;
                     break;
             }
         }
@@ -386,13 +390,13 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                DataAccessLayer.Tutor!.DeleteAll();
+                s_dal.Tutor!.DeleteAll();
                 break;
             case "StudentCall":
-                DataAccessLayer.StudentCall!.DeleteAll();
+                s_dal.StudentCall!.DeleteAll();
                 break;
             case "Assignment":
-                DataAccessLayer.Assignment!.DeleteAll();
+                s_dal.Assignment!.DeleteAll();
                 break;
         }
     }
@@ -406,13 +410,13 @@ internal class Program
         switch (entity)
         {
             case "Tutor":
-                DataAccessLayer.Tutor!.Delete(id);
+                s_dal.Tutor!.Delete(id);
                 break;
             case "StudentCall":
-                DataAccessLayer.StudentCall!.Delete(id);
+                s_dal.StudentCall!.Delete(id);
                 break;
             case "Assignment":
-                DataAccessLayer.Assignment!.Delete(id);
+                s_dal.Assignment!.Delete(id);
                 break;
         }
     }
