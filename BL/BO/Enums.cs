@@ -3,3 +3,24 @@ public enum Role { MasterTutor, BeginnerTutor, Manager };
 public enum DistanceType { Air, Walking, Driving };
 public enum Subjects { English, Math, Grammar, Programming, History }
 public enum EndOfTreatment { Treated, SelfCancel, ManagerCancel, Expired };
+public enum CallStatus {InProgress, InProgressAtRisk }
+
+public enum CallType
+{
+    None, // When no call is being handled
+    Technical,
+    Medical,
+    Assistance
+}
+// ENUM for sorting tutors
+public enum TutorSortField
+{
+    Id, // Sort by Tutor ID
+    FullName, // Sort by Full Name
+    IsActive, // Sort by Active Status
+    TotalHandledCalls, // Sort by Total Handled Calls
+    TotalCancelledCalls, // Sort by Total Cancelled Calls
+    TotalExpiredCalls, // Sort by Total Expired Calls
+    CurrentCallId, // Sort by Current Call ID (if any)
+    CurrentCallType // Sort by Type of Current Call being handled
+}
