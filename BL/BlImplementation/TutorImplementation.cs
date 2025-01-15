@@ -1,17 +1,18 @@
 ﻿
-using BlApi;
-using DalApi;
+using BO;
 using Helpers;
 using System;
 
 namespace BlImplementation;
 
-internal class TutorImplementation : ITutor
+internal class TutorImplementation : BlApi.ITutor
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
     public void Create(BO.Tutor tutor)
     {
-        DO.Tutor doTutor = new(tutor.Id, tutor.FullName, tutor.CellNumber, tutor.Email, tutor.Password, tutor.CurrentAddress, tutor.Latitude, tutor.Longitude, tutor.role, tutor.Active, tutor.Distance, tutor.DistanceType);
+        DO.Tutor doTutor = new(tutor.Id, tutor.FullName, tutor.CellNumber, tutor.Email, tutor.Password, 
+            tutor.CurrentAddress, tutor.Latitude, tutor.Longitude, (DO.Role)tutor.Role,
+            tutor.Active, tutor.Distance, (DO.DistanceType)tutor.DistanceType);
 
         try
         {
@@ -36,32 +37,33 @@ internal class TutorImplementation : ITutor
     public BO.Tutor Read(int id)
     {
         var doTutor = _dal.Tutor.Read(id) ?? throw new BO.BlDoesNotExistException($"Student with ID={id} does Not exist");
-        return new()
-        {
-            Id = id,
-            FullName = doTutor.FullName,
-            CellNumber = doTutor.CellNumber,
-            Email = doTutor.Email,
-            Password = doTutor.Password,
-            CurrentAddress = doTutor.CurrentAddress,
-            Latitude = doTutor.Latitude,
-            Longitude = doTutor.Longitude,
-            Role = doTutor.role,
-            Active = doTutor.Active,
-            Distance = doTutor.Distance,
-            DistanceType = doTutor.DistanceType
-        };
+        return TutorManager.ConvertToBO(doTutor);
 
     }
 
     public IEnumerable<BO.TutorInList> SortTutorsInList(bool isActive, BO.TutorSortField sortField)
     {
-        IEnumerable<BO.TutorInList> tutorInLists = _dal.;
-
+        IEnumerable<BO.TutorInList> tutorInLists = null;
+        try
+        {
+            List<DO.Tutor> doTutors = (List<DO.Tutor>)_dal.Tutor.ReadAll((DO.Tutor tutor) => tutor.Active == isActive);
+            TutorManager.SortByField<DO.Tutor>(doTutors, sortField.ToString());
+            return (List<BO.TutorInList>)doTutors.Select(doTutor => TutorManager.ConvertToBO(doTutor));
+        }
+        catch (Exception ex) {
+            throw new Exception();
+        }
     }
 
-    public void Update(int id, BO.Tutor tutor)
+    public void Update(int id, BO.Tutor boTutor)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _dal.Tutor.Update(id,TutorManager.ConvertToDO(boTutor));
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlAlreadyExistsException($"Student with ID={boTutor.Id} already exists", ex);
+        }
     }
 }
