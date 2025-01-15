@@ -1,10 +1,13 @@
 ﻿
-using BO;
 
 namespace BlApi;
 
 public interface ITutor
 {
-    public Role GetRole(string name,string password);
-    public (bool isActive,Enum )
+    public BO.Role GetRole(string name,string password);
+    public IEnumerable<BO.TutorInList> SortTutorsInList(bool isActive, BO.TutorSortField sortField);
+    public BO.Tutor Read(int id);
+    public void Update(int id, BO.Tutor tutor);
+    public void Delete(int id);
+    public void Create(BO.Tutor tutor);
 }

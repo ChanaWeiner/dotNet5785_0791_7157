@@ -24,3 +24,54 @@ public enum TutorSortField
     CurrentCallId, // Sort by Current Call ID (if any)
     CurrentCallType // Sort by Type of Current Call being handled
 }
+
+public enum StudentCallField
+{
+    Id,              
+    CallId,          
+    CallType,        
+    OpeningTime,     
+    RemainingTime,   
+    LastVolunteerName,
+    CompletionTime,  
+    Status,          
+    TotalAssignments 
+}
+
+
+// עבור OpenCallInList
+public enum OpenCallField
+{
+    Id,                   
+    CallType,             
+    Description,          
+    FullAddress,        
+    OpeningTime,
+    MaxCompletionTime, 
+    DistanceFromVolunteer
+}
+
+// עבור ClosedCallInList
+public enum ClosedCallField
+{
+    Id,                   
+    CallType,            
+    FullAddress,          
+    OpeningTime,          
+    AssignmentTime,       
+    ActualEndTime,      
+    EndType
+}
+
+public enum TimeUnit
+{
+    Minute,
+    Hour,
+    Day,
+    Month,
+    Year
+}
+
+
+
+
