@@ -13,42 +13,19 @@ internal class TutorManager
             item.GetType().GetProperty(fieldName)?.GetValue(item)).ToList();
     }
 
-    internal static BO.Tutor ConvertToBO(DO.Tutor doTutor)
+    internal static List<BO.TutorInList> GetTutorsInList()
     {
-        return new BO.Tutor
-        {
-            Id = doTutor.Id,
-            FullName = doTutor.FullName,
-            CellNumber = doTutor.CellNumber,
-            Email = doTutor.Email,
-            Password = doTutor.Password,
-            CurrentAddress = doTutor.CurrentAddress,
-            Latitude = doTutor.Latitude,
-            Longitude = doTutor.Longitude,
-            Role = (BO.Role)doTutor.Role,
-            Active = doTutor.Active,
-            Distance = doTutor.Distance,
-            DistanceType = (BO.DistanceType)doTutor.DistanceType
-        };
+        List <BO.TutorInList> list = null;
+        return list;
     }
 
-    internal static DO.Tutor ConvertToDO(BO.Tutor boTutor)
+    internal static double GetDistance()
     {
-        return new DO.Tutor
-        {
-            Id = boTutor.Id,
-            FullName = boTutor.FullName,
-            CellNumber = boTutor.CellNumber,
-            Email = boTutor.Email,
-            Password = boTutor.Password,
-            CurrentAddress = boTutor.CurrentAddress,
-            Latitude = boTutor.Latitude,
-            Longitude = boTutor.Longitude,
-            Role = (DO.Role)boTutor.Role,
-            Active = boTutor.Active,
-            Distance = boTutor.Distance,
-            DistanceType = (DO.DistanceType)boTutor.DistanceType
-        };
+        return 0.0;
     }
 
+    internal static BO.CallStatus GetCallStatus(DO.StudentCall studentCall)
+    {
+        return BO.CallStatus.InProgress;
+    }
 }

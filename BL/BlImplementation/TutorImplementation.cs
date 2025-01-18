@@ -8,11 +8,11 @@ namespace BlImplementation;
 internal class TutorImplementation : BlApi.ITutor
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
-    public void Create(BO.Tutor tutor)
+    public void Create(BO.Tutor boTutor)
     {
-        DO.Tutor doTutor = new(tutor.Id, tutor.FullName, tutor.CellNumber, tutor.Email, tutor.Password, 
-            tutor.CurrentAddress, tutor.Latitude, tutor.Longitude, (DO.Role)tutor.Role,
-            tutor.Active, tutor.Distance, (DO.DistanceType)tutor.DistanceType);
+        DO.Tutor doTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password, 
+            boTutor.CurrentAddress, boTutor.Latitude, boTutor.Longitude, (DO.Role)boTutor.Role,
+            boTutor.Active, boTutor.Distance, (DO.DistanceType)boTutor.DistanceType);
 
         try
         {
@@ -37,8 +37,39 @@ internal class TutorImplementation : BlApi.ITutor
     public BO.Tutor Read(int id)
     {
         var doTutor = _dal.Tutor.Read(id) ?? throw new BO.BlDoesNotExistException($"Student with ID={id} does Not exist");
-        return TutorManager.ConvertToBO(doTutor);
+        var doAssignment=_dal.Assignment.Read((DO.Assignment assignment)=>assignment.TutorId==doTutor.id) ?? throw new BO.BlDoesNotExistException($"Student with ID={id} does Not exist");
+        var doStudentCall=_dal.StudentCall.Read(doAssignment.StudentCallId) ?? throw new BO.BlDoesNotExistException($"Student with ID={id} does Not exist");
+        var status= TutorManager.GetCallStatus(doStudentCall);
+        double distance = TutorManager.GetDistance(doTutor,doStudentCall);
+        return new()
+        {
+            Id = id,
+            FullName = doTutor.FullName,
+            CellNumber = doTutor.CellNumber,
+            Email = doTutor.Email,
+            Password = doTutor.Password,
+            CurrentAddress = doTutor.CurrentAddress,
+            Latitude = doTutor.Latitude,
+            Longitude = doTutor.Longitude,
+            Role = doTutor.Role,
+            Active = doTutor.Active,
+            Distance = doTutor.Distance,
+            DistanceType = doTutor.DistanceType,
+            CurrentCallInProgress = new()
+            {
+                Id = doTutor.Id,
+                CallId = doStudentCall.Id,
+                Subject = (Subjects)doStudentCall.Subject,
+                Description = doStudentCall.Description,
+                FullAddress = doStudentCall.FullAddress,
+                OpenTime = doStudentCall.OpenTime,
+                MaxEndTime = doStudentCall.FinalTime,
+                EntryTime = doAssignment.EntryTime,
+                Distance = distance,
+                Status = status,
 
+            }
+        };
     }
 
     public IEnumerable<BO.TutorInList> SortTutorsInList(bool isActive, BO.TutorSortField sortField)
@@ -46,9 +77,8 @@ internal class TutorImplementation : BlApi.ITutor
         IEnumerable<BO.TutorInList> tutorInLists = null;
         try
         {
-            List<DO.Tutor> doTutors = (List<DO.Tutor>)_dal.Tutor.ReadAll((DO.Tutor tutor) => tutor.Active == isActive);
-            TutorManager.SortByField<DO.Tutor>(doTutors, sortField.ToString());
-            return (List<BO.TutorInList>)doTutors.Select(doTutor => TutorManager.ConvertToBO(doTutor));
+            List<BO.TutorInList> tutorsInList = TutorManager.GetTutorsInList();
+            return TutorManager.SortByField<BO.TutorInList>(tutorsInList, sortField.ToString());
         }
         catch (Exception ex) {
             throw new Exception();
@@ -57,13 +87,16 @@ internal class TutorImplementation : BlApi.ITutor
 
     public void Update(int id, BO.Tutor boTutor)
     {
+        DO.Tutor doTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password,
+            boTutor.CurrentAddress, boTutor.Latitude, boTutor.Longitude, (DO.Role)boTutor.Role,
+            boTutor.Active, boTutor.Distance, (DO.DistanceType)boTutor.DistanceType);
         try
         {
-            _dal.Tutor.Update(id,TutorManager.ConvertToDO(boTutor));
+            _dal.Tutor.Update(doTutor);
         }
         catch (Exception ex)
         {
-            throw new BO.BlAlreadyExistsException($"Student with ID={boTutor.Id} already exists", ex);
+            throw new Exception();
         }
     }
 }
