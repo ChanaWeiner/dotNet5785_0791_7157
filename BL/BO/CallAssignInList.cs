@@ -2,11 +2,11 @@
 
 public class CallAssignInList
 {
-    // Volunteer ID
-    public int? VolunteerId { get; set; } 
+    // Tutor ID
+    public int? TutorId { get; set; } 
 
-    // Volunteer name
-    public string? VolunteerName { get; set; } 
+    // Tutor name
+    public string? TutorName { get; set; } 
 
     // Time when the call was assigned
     public DateTime AssignmentTime { get; set; } 

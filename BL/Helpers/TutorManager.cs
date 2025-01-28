@@ -12,11 +12,7 @@ namespace Helpers;
 internal class TutorManager
 {
     private static IDal s_dal = Factory.Get; //stage 4
-    internal static List<T> SortByField<T>(List<T> list, string fieldName) where T : class
-    {
-        return list.OrderBy(item =>
-            item.GetType().GetProperty(fieldName)?.GetValue(item)).ToList();
-    }
+   
 
     internal static List<BO.TutorInList> GetTutorsInList(bool?isActive)
     {

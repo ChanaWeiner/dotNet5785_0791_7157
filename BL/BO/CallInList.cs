@@ -20,7 +20,7 @@ public class CallInList
     public TimeSpan? RemainingTime { get; set; }
 
     // Last volunteer name assigned to the call
-    public string? LastVolunteerName { get; set; }
+    public string? LastTutorName { get; set; }
 
     // Total time taken to complete the call
     public TimeSpan? CompletionTime { get; set; }

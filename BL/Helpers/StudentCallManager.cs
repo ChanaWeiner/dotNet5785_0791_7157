@@ -1,26 +1,28 @@
 ﻿
 
+using BlApi;
 using BlImplementation;
 using BO;
 using DalApi;
+using DO;
 
 namespace Helpers;
 
 internal class StudentCallManager
 {
     private static IDal s_dal = Factory.Get; //stage 4
-
-    internal static BO.CallStatus GetCallStatus(DO.StudentCall studentCall)
+    private static IAdmin manager = new AdminImplementation();
+    internal static BO.CallInProgressStatus GetCallStatus(DO.StudentCall studentCall)
     {
         DateTime? FinalTime = studentCall.FinalTime;
-        DateTime clock = AdminImplementation.GetSystemClock();
-        TimeSpan? range = AdminImplementation.GetRiskTimeRange();
+        DateTime clock = ClockManager.Now;
+        TimeSpan? range = manager.GetRiskTimeRange();
         if (FinalTime - clock <= range)
         {
-            return BO.CallStatus.InProgressAtRisk;
+            return BO.CallInProgressStatus.InProgressAtRisk;
 
         }
-        return BO.CallStatus.InProgress;
+        return BO.CallInProgressStatus.InProgress;
     }
     internal static List<BO.CallInList> GetCallInList(BO.StudentCallField? filterField, object filterValue)
     {
@@ -41,45 +43,81 @@ internal class StudentCallManager
         return callInList;
     }
 
-    private static BO.CallInList ConvertFromDoToBo(DO.StudentCall tutorCall)
+    private static BO.CallInList ConvertFromDoToBo(DO.StudentCall studentCall)
     {
-        // תחילת המיפוי
-        var boCall = new BO.CallInList
+        // מציאת ההקצאה האחרונה עבור הקריאה
+        var lastAssignment = s_dal.Assignment
+            .ReadAll(a => a.StudentCallId == studentCall.Id)
+            .OrderByDescending(a => a.EntryTime)
+            .FirstOrDefault();
+
+        // חישוב זמן מקסימלי לסיום הקריאה
+        var maxCompletionTime = studentCall.OpenTime.AddHours(2); // לדוגמה, זמן מקסימלי להשלמת קריאה הוא 2 שעות
+
+        // חישוב סטטוס הקריאה
+        var status = CalculateCallStatus(studentCall, lastAssignment, maxCompletionTime);
+
+        // חישוב סך ההקצאות לקריאה
+        var totalAssignments = s_dal.Assignment
+            .ReadAll(a => a.StudentCallId == studentCall.Id)
+            .Count();
+
+        // מיפוי האובייקט
+        return new BO.CallInList
         {
-            // מזהה הקצאה
-            Id = null,  // בהנחה שב-StudentCall אין שדה AssignmentId ישירות, ולכן נניח שצריך להשאיר את זה null (לפי ההסבר שלך)
-
-            // מזהה קריאה (CallId) מקבל ערך מ-StudentCall
-            CallId = tutorCall.Id,
-
-            // סוג הקריאה - מיפוי לפי סוג הקריאה ב-DO
-            CallType = tutorCall.Subject,
-
-            // זמן פתיחה של הקריאה
-            OpeningTime = tutorCall.OpenTime,
-
-            // זמן שנותר להשלמת הקריאה - חישוב הזמן הנותר עד המועד הסיום, אם יש (בהנחה שיש לך משתנים כמו maxTimeCompletion)
-            RemainingTime = tutorCall.FinalTime.HasValue
-                ? tutorCall.FinalTime.Value - DateTime.Now
-                : (TimeSpan?)null, // אם אין תאריך סיום, נחזיר null
-
-            // שם המתנדב האחרון שהוקצה לקריאה - במקרה שאין הקצאה עדיין (Assignment לא נמצא), זה null
-            LastVolunteerName = GetLastVolunteerName(tutorCall.Id),
-
-            // זמן סיום הטיפול - חישוב זמן ההשלמה, אם הקריאה כבר סויימה
-            CompletionTime = tutorCall.FinalTime.HasValue
-                ? tutorCall.FinalTime.Value - tutorCall.OpenTime
-                : (TimeSpan?)null,
-
-            // סטטוס הקריאה - לפי המאפיינים שהוזכרו (כגון טווח זמן סיכון או האם קריאה פתוחה/בטיפול/סגורה)
-            Status = CalculateCallStatus(tutorCall.Id),
-
-            // סך ההקצאות לקריאה - ניתן לחשב לפי כמות ההקצאות שנעשו לקריאה זו ב-DO.Assignment
-            TotalAssignments = GetTotalAssignmentsForCall(tutorCall.Id)
+            Id = lastAssignment?.Id, // מזהה ישות ההקצאה האחרונה (אם קיימת)
+            CallId = studentCall.Id, // מזהה ישות הקריאה
+            Subject = (BO.Subjects)studentCall.Subject, // סוג הקריאה (ENUM)
+            OpeningTime = studentCall.OpenTime, // זמן פתיחה
+            RemainingTime = studentCall.FinalTime.HasValue
+                ? studentCall.FinalTime.Value - ClockManager.Now // זמן שנותר לסיום
+                : maxCompletionTime - ClockManager.Now, // או זמן מקסימלי
+            LastTutorName = lastAssignment != null
+                ? GetTutorName(lastAssignment.TutorId) // שם המתנדב האחרון
+                : null, // או null אם אין הקצאה
+            CompletionTime = studentCall.FinalTime.HasValue
+                ? studentCall.FinalTime.Value - studentCall.OpenTime // זמן השלמת הטיפול
+                : (TimeSpan?)null, // או null אם לא הושלם
+            Status = status, // סטטוס הקריאה
+            TotalAssignments = totalAssignments // סך כל ההקצאות לקריאה זו
         };
-
-        return boCall;
     }
 
+    private static string GetTutorName(int tutorId)
+    {
+        var tutor = s_dal.Tutor.Read(tutorId);
+        return tutor != null ? tutor.FullName : "Unknown";
+    }
+    internal static CallStatus CalculateCallStatus(DO.StudentCall studentCall, DO.Assignment? lastAssignment, DateTime maxCompletionTime)
+    {
+        if (studentCall.FinalTime.HasValue)
+        {
+            return lastAssignment?.EndOfTreatment switch
+            {
+                DO.EndOfTreatment.Treated => CallStatus.Closed,
+                DO.EndOfTreatment.SelfCancel => CallStatus.Open,
+                DO.EndOfTreatment.ManagerCancel => CallStatus.Open,
+                DO.EndOfTreatment.Expired => CallStatus.Expired,
+                _ => CallStatus.Open
+            };
+        }
 
+        if (ClockManager.Now >= maxCompletionTime)
+        {
+            return CallStatus.Expired;
+        }
+
+        if (lastAssignment != null)
+        {
+            return DateTime.Now >= maxCompletionTime.AddMinutes(-30) // טווח זמן סיכון
+           ? CallStatus.TreatingInRisk
+           : CallStatus.InTreatment;
+        }
+
+        return DateTime.Now >= maxCompletionTime.AddMinutes(-30) // טווח זמן סיכון
+            ? CallStatus.OpenInRisk
+            : CallStatus.Open;
+    }
+
+   
 }
