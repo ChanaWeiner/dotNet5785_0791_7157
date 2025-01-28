@@ -25,7 +25,7 @@ public class TutorInList
     public int? CurrentCallId { get; set; }
 
     // Type of the current call being handled
-    public CallType CurrentCallType { get; set; }
+    public Subjects CurrentSubject { get; set; }
 }
 
 

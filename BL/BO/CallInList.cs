@@ -11,7 +11,7 @@ public class CallInList
     public int CallId { get; set; }
 
     // Type of the call
-    public Subjects CallType { get; set; }
+    public Subjects Subject { get; set; }
 
     // Opening time of the call
     public DateTime OpeningTime { get; set; }

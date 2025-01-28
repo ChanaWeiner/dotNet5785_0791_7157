@@ -1,6 +1,11 @@
 ﻿
 
+using BlImplementation;
+using BO;
 using DalApi;
+using DO;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Helpers;
 
@@ -13,19 +18,143 @@ internal class TutorManager
             item.GetType().GetProperty(fieldName)?.GetValue(item)).ToList();
     }
 
-    internal static List<BO.TutorInList> GetTutorsInList()
+    internal static List<BO.TutorInList> GetTutorsInList(bool?isActive)
     {
-        List <BO.TutorInList> list = null;
-        return list;
+        List<DO.Tutor> doTutor = s_dal.Tutor.ReadAll((DO.Tutor tutor)=> (isActive==null || tutor.Active==isActive)).ToList()
+            ?? throw new Exception($"Student with ID= does Not exist");
+        List <BO.TutorInList> tutorInList = doTutor.Select(ConvertFromDoToBo).ToList();
+        return tutorInList;
     }
 
-    internal static double GetDistance()
+    private static BO.TutorInList ConvertFromDoToBo(DO.Tutor tutor)
     {
-        return 0.0;
+        var assignments = s_dal.Assignment.ReadAll();
+        var currenCallId = s_dal.Assignment.ReadAll(a => a.TutorId == tutor.Id && a.EndTime == null)
+                .Select(a => a.StudentCallId)
+                .FirstOrDefault();
+        return new BO.TutorInList
+        {
+            Id = tutor.Id,
+            FullName = tutor.FullName,
+            IsActive = tutor.Active,
+
+            // Calculating total handled calls (where EndOfTreatment is "Handled")
+            TotalHandledCalls = assignments.Count(a => a.TutorId == tutor.Id && a.EndOfTreatment == DO.EndOfTreatment.Treated),
+
+            // Calculating total canceled calls (where EndOfTreatment is "Canceled")
+            TotalCancelledCalls = assignments.Count(a => a.TutorId == tutor.Id &&( a.EndOfTreatment == DO.EndOfTreatment.ManagerCancel||
+            a.EndOfTreatment == DO.EndOfTreatment.SelfCancel)),
+
+            // Calculating total expired calls (where EndOfTreatment is "Expired")
+            TotalExpiredCalls = assignments.Count(a => a.TutorId == tutor.Id && a.EndOfTreatment == DO.EndOfTreatment.Expired),
+
+            // Current call ID and type
+            CurrentCallId = currenCallId,
+
+            CurrentSubject = (BO.Subjects)s_dal.StudentCall.Read((DO.StudentCall studentCall)=> studentCall.Id== currenCallId)!.Subject
+        };
     }
 
-    internal static BO.CallStatus GetCallStatus(DO.StudentCall studentCall)
+
+    internal static double GetDistance(DO.Tutor tutor,DO.StudentCall studentCall)
     {
-        return BO.CallStatus.InProgress;
+        return Math.Sqrt(Math.Pow(tutor.Latitude-studentCall.Latitude,2)+ Math.Pow(tutor.Longitude - studentCall.Longitude, 2));
+    }
+
+    internal static void Validation(BO.Tutor boTutor)
+    {
+        // ID validation
+        if (!IsValidId(boTutor.Id))
+            throw new ArgumentOutOfRangeException(nameof(boTutor.Id), $"ID {boTutor.Id} is invalid.");
+
+        // Full name validation
+        if (string.IsNullOrWhiteSpace(boTutor.FullName) || boTutor.FullName.Length < 2 || boTutor.FullName.Length > 100)
+            throw new ArgumentException($"Full name '{boTutor.FullName}' must be between 2 and 100 characters.", nameof(boTutor.FullName));
+
+        // Phone number validation
+        if (!IsValidPhoneNumber(boTutor.CellNumber))
+            throw new FormatException($"Phone number '{boTutor.CellNumber}' is invalid.");
+
+        // Email validation
+        if (!IsValidEmail(boTutor.Email))
+            throw new FormatException($"Email address '{boTutor.Email}' is invalid.");
+
+        // Password validation (if provided)
+        if (!string.IsNullOrEmpty(boTutor.Password) && boTutor.Password.Length < 8)
+            throw new ArgumentException($"Password must be at least 8 characters long.", nameof(boTutor.Password));
+
+        // Coordinates validation
+        if (!IsValidCoordinates(boTutor.CurrentAddress))
+            throw new ArgumentException($"Coordinates are invalid: Latitude={boTutor.Latitude}, Longitude={boTutor.Longitude}.");
+
+        // Address validation (if provided)
+        if (!string.IsNullOrEmpty(boTutor.CurrentAddress) && boTutor.CurrentAddress.Length < 5)
+            throw new ArgumentException($"Address '{boTutor.CurrentAddress}' must be at least 5 characters long.", nameof(boTutor.CurrentAddress));
+
+        // Role (Enum) validation
+        if (!Enum.IsDefined(typeof(BO.Role), boTutor.Role))
+            throw new InvalidEnumArgumentException(nameof(boTutor.Role), (int)boTutor.Role, typeof(BO.Role));
+
+        // Distance validation
+        if (boTutor.Distance < 0)
+            throw new ArgumentOutOfRangeException(nameof(boTutor.Distance), $"Distance {boTutor.Distance} must be a non-negative value.");
+
+        // DistanceType (Enum) validation
+        if (!Enum.IsDefined(typeof(BO.DistanceType), boTutor.DistanceType))
+            throw new InvalidEnumArgumentException(nameof(boTutor.DistanceType), (int)boTutor.DistanceType, typeof(BO.DistanceType));
+    }
+
+    private static bool IsValidId(int id)
+    {
+        if (id <= 0)
+            return false;
+
+        string idString = id.ToString();
+        if (idString.Length != 9)
+            return false;
+
+        // חישוב ספרת ביקורת
+        int sum = 0;
+        for (int i = 0; i < idString.Length; i++)
+        {
+            int digit = int.Parse(idString[i].ToString());
+            digit *= (i % 2) + 1;
+            if (digit > 9) digit -= 9;
+            sum += digit;
+        }
+
+        return sum % 10 == 0;
+    }
+
+    private static bool IsValidPhoneNumber(string phoneNumber)
+    {
+        if (string.IsNullOrWhiteSpace(phoneNumber))
+            return false;
+
+        // בדיקת פורמט של מספר טלפון
+        string phonePattern = @"^(\+972|0)([23489]|5[0-9])\d{7}$";
+        return Regex.IsMatch(phoneNumber, phonePattern);
+    }
+
+    private static bool IsValidEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        // בדיקת פורמט של אימייל
+        string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        return Regex.IsMatch(email, emailPattern);
+    }
+
+
+    private static bool IsValidCoordinates(string address)
+    {
+        if (string.IsNullOrWhiteSpace(address))
+            return false;
+
+        // בדיקה פשוטה האם הכתובת מכילה קואורדינטות
+        // במקרה אמיתי, נשתמש ב-API של גוגל או שירות דומה כדי לבדוק אם הכתובת אמיתית
+        string coordinatePattern = @"^-?\d{1,3}\.\d+,\s*-?\d{1,3}\.\d+$";
+        return Regex.IsMatch(address, coordinatePattern);
     }
 }

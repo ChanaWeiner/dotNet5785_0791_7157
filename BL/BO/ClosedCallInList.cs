@@ -7,7 +7,7 @@ public class ClosedCallInList
     public int Id { get; set; } 
 
     // Type of the call
-    public CallType CallType { get; set; } 
+    public Subjects Subject { get; set; } 
 
     // Full address of the call
     public string FullAddress { get; set; }

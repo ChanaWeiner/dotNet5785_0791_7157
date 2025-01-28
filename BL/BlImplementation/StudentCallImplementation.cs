@@ -21,11 +21,18 @@ internal class StudentCallImplementation : IStudentCall
 
     public int[] GetCallsByStatus()
     {
-        throw new NotImplementedException();
+        var calls = _dal.StudentCall.ReadAll();
+        int[] subjectCountsArray = calls
+     .GroupBy(c => c.Subject)
+     .Select(g => g.Count())
+     .ToArray();
+        return subjectCountsArray;
     }
 
-    public IEnumerable<BO.CallInList> GetCallsList(BO.StudentCallField? filterField, object filterValue, BO.StudentCallField? sortField)
+    public IEnumerable<BO.CallInList> GetCallsList(BO.StudentCallField? filterField, object filterValue, BO.StudentCallField sortField=BO.StudentCallField.Id)
     {
+
+
         throw new NotImplementedException();
     }
 

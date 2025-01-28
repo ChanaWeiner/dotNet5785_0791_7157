@@ -5,13 +5,6 @@ public enum Subjects { English, Math, Grammar, Programming, History }
 public enum EndOfTreatment { Treated, SelfCancel, ManagerCancel, Expired };
 public enum CallStatus {InProgress, InProgressAtRisk }
 
-public enum CallType
-{
-    None, // When no call is being handled
-    Technical,
-    Medical,
-    Assistance
-}
 // ENUM for sorting tutors
 public enum TutorSortField
 {
