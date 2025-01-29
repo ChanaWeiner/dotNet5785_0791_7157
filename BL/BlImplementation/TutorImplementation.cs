@@ -29,9 +29,9 @@ internal class TutorImplementation : BlApi.ITutor
         throw new NotImplementedException();
     }
 
-    public BO.Role GetRole(string name, string password)
+    public BO.Role LogIn(string name, string password)
     {
-        throw new NotImplementedException();
+        var doTutor=_dal.Tutor.Read((DO.Tutor tutor)=>)
     }
 
     public BO.Tutor Read(int id)
@@ -67,7 +67,6 @@ internal class TutorImplementation : BlApi.ITutor
                 EntryTime = doAssignment.EntryTime,
                 Distance = distance,
                 Status = status,
-
             }
         };
     }
