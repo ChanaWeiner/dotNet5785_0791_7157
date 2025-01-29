@@ -12,7 +12,7 @@ internal class TutorImplementation : BlApi.ITutor
     {
         try
         {
-        TutorManager.Validation(boTutor);
+        TutorManager.Validation(ref boTutor);
 
         }
         catch(Exception error)
@@ -111,7 +111,7 @@ internal class TutorImplementation : BlApi.ITutor
 
     public IEnumerable<BO.TutorInList> SortTutorsInList(bool ?isActive, BO.TutorSortField ?sortField=BO.TutorSortField.Id)
     {
-        IEnumerable<BO.TutorInList> tutorInLists = null;
+        IEnumerable<BO.TutorInList> tutorInLists;
         try
         {
             List<BO.TutorInList> tutorsInList = TutorManager.GetTutorsInList(isActive);
@@ -128,7 +128,7 @@ internal class TutorImplementation : BlApi.ITutor
     {
         try
         {
-            TutorManager.Validation(boTutor);
+            TutorManager.Validation(ref boTutor);
 
         }
         catch (Exception error)

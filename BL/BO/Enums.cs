@@ -3,8 +3,7 @@ public enum Role { MasterTutor, BeginnerTutor, Manager };
 public enum DistanceType { Air, Walking, Driving };
 public enum Subjects { English, Math, Grammar, Programming, History }
 public enum EndOfTreatment { Treated, SelfCancel, ManagerCancel, Expired };
-public enum CallInProgressStatus { InProgress, InProgressAtRisk }
-public enum CallStatus { Open, InTreatment, Closed, Expired,OpenInRisk,TreatingInRisk }
+public enum CallStatus { Open, InProgress, Closed, Expired,OpenInRisk, InProgressAtRisk }
 
 // ENUM for sorting tutors
 public enum TutorSortField

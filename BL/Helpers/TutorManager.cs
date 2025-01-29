@@ -57,7 +57,7 @@ internal class TutorManager
         return Math.Sqrt(Math.Pow(tutor.Latitude-studentCall.Latitude,2)+ Math.Pow(tutor.Longitude - studentCall.Longitude, 2));
     }
 
-    internal static void Validation(BO.Tutor boTutor)
+    internal static void Validation(ref BO.Tutor boTutor)
     {
         // ID validation
         if (!IsValidId(boTutor.Id))
@@ -80,9 +80,10 @@ internal class TutorManager
             throw new ArgumentException($"Password must be at least 8 characters long.", nameof(boTutor.Password));
 
         // Coordinates validation
-        if (!IsValidCoordinates(boTutor.CurrentAddress))
+        if (!Tools.IsValidAddress(boTutor.CurrentAddress!, out double latitude, out double longitude))
             throw new ArgumentException($"Coordinates are invalid: Latitude={boTutor.Latitude}, Longitude={boTutor.Longitude}.");
-
+        boTutor.Latitude = latitude;
+        boTutor.Longitude = longitude;
         // Address validation (if provided)
         if (!string.IsNullOrEmpty(boTutor.CurrentAddress) && boTutor.CurrentAddress.Length < 5)
             throw new ArgumentException($"Address '{boTutor.CurrentAddress}' must be at least 5 characters long.", nameof(boTutor.CurrentAddress));
@@ -142,15 +143,4 @@ internal class TutorManager
         return Regex.IsMatch(email, emailPattern);
     }
 
-
-    private static bool IsValidCoordinates(string address)
-    {
-        if (string.IsNullOrWhiteSpace(address))
-            return false;
-
-        // בדיקה פשוטה האם הכתובת מכילה קואורדינטות
-        // במקרה אמיתי, נשתמש ב-API של גוגל או שירות דומה כדי לבדוק אם הכתובת אמיתית
-        string coordinatePattern = @"^-?\d{1,3}\.\d+,\s*-?\d{1,3}\.\d+$";
-        return Regex.IsMatch(address, coordinatePattern);
-    }
 }

@@ -6,8 +6,8 @@ public record Assignment(
     int TutorId,
     DateTime?EntryTime,
     DateTime?EndTime,
-    EndOfTreatment EndOfTreatment
+    EndOfTreatment? EndOfTreatment
 )
 {
-    public Assignment() : this(0, 0, 0, null, null, 0) { }
+    public Assignment() : this(0, 0, 0, null, null, null) { }
 }

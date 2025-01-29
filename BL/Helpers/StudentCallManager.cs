@@ -12,17 +12,17 @@ internal class StudentCallManager
 {
     private static IDal s_dal = Factory.Get; //stage 4
     private static IAdmin manager = new AdminImplementation();
-    internal static BO.CallInProgressStatus GetCallStatus(DO.StudentCall studentCall)
+    internal static BO.CallStatus GetCallStatus(DO.StudentCall studentCall)
     {
         DateTime? FinalTime = studentCall.FinalTime;
         DateTime clock = ClockManager.Now;
         TimeSpan? range = manager.GetRiskTimeRange();
         if (FinalTime - clock <= range)
         {
-            return BO.CallInProgressStatus.InProgressAtRisk;
+            return BO.CallStatus.InProgressAtRisk;
 
         }
-        return BO.CallInProgressStatus.InProgress;
+        return BO.CallStatus.InProgress;
     }
     internal static List<BO.CallInList> GetCallInList(BO.StudentCallField? filterField, object filterValue)
     {
@@ -45,17 +45,17 @@ internal class StudentCallManager
 
     private static BO.CallInList ConvertFromDoToBo(DO.StudentCall studentCall)
     {
-        // מציאת ההקצאה האחרונה עבור הקריאה
-        var lastAssignment = s_dal.Assignment
-            .ReadAll(a => a.StudentCallId == studentCall.Id)
-            .OrderByDescending(a => a.EntryTime)
-            .FirstOrDefault();
-
-        // חישוב זמן מקסימלי לסיום הקריאה
         var maxCompletionTime = studentCall.OpenTime.AddHours(2); // לדוגמה, זמן מקסימלי להשלמת קריאה הוא 2 שעות
 
+        // מציאת ההקצאה האחרונה עבור הקריאה
+
+        var lastAssignment = s_dal.Assignment
+          .ReadAll(a => a.StudentCallId == studentCall.Id)
+          .OrderByDescending(a => a.EntryTime)
+          .FirstOrDefault();
+
         // חישוב סטטוס הקריאה
-        var status = CalculateCallStatus(studentCall, lastAssignment, maxCompletionTime);
+        var status = CalculateCallStatus(studentCall);
 
         // חישוב סך ההקצאות לקריאה
         var totalAssignments = s_dal.Assignment
@@ -88,8 +88,13 @@ internal class StudentCallManager
         var tutor = s_dal.Tutor.Read(tutorId);
         return tutor != null ? tutor.FullName : "Unknown";
     }
-    internal static CallStatus CalculateCallStatus(DO.StudentCall studentCall, DO.Assignment? lastAssignment, DateTime maxCompletionTime)
+    internal static CallStatus CalculateCallStatus(DO.StudentCall studentCall)
     {
+        var maxCompletionTime = studentCall.OpenTime.AddHours(2); // לדוגמה, זמן מקסימלי להשלמת קריאה הוא 2 שעות
+        var lastAssignment = s_dal.Assignment
+           .ReadAll(a => a.StudentCallId == studentCall.Id)
+           .OrderByDescending(a => a.EntryTime)
+           .FirstOrDefault();
         if (studentCall.FinalTime.HasValue)
         {
             return lastAssignment?.EndOfTreatment switch
@@ -110,8 +115,8 @@ internal class StudentCallManager
         if (lastAssignment != null)
         {
             return DateTime.Now >= maxCompletionTime.AddMinutes(-30) // טווח זמן סיכון
-           ? CallStatus.TreatingInRisk
-           : CallStatus.InTreatment;
+           ? CallStatus.InProgressAtRisk
+           : CallStatus.InProgress;
         }
 
         return DateTime.Now >= maxCompletionTime.AddMinutes(-30) // טווח זמן סיכון
@@ -121,6 +126,17 @@ internal class StudentCallManager
 
     internal static void Validation(BO.StudentCall call)
     {
-        throw new NotImplementedException();
+        // בדיקת תקינות ערכים
+        if (call.OpenTime >= call.FinalTime)
+            throw new ArgumentException("זמן פתיחה חייב להיות קטן מזמן הסיום");
+
+        if (!Tools.IsValidAddress(call.FullAddress, out double latitude, out double longitude))
+            throw new ArgumentException("כתובת לא תקינה");
+
+        call.Latitude = latitude;
+        call.Longitude = longitude;
     }
+
+    
+
 }

@@ -33,5 +33,5 @@ public class CallInProgress
     public double Distance { get; set; }
 
     /// Status of the call in progress.
-    public CallInProgressStatus Status { get; set; }
+    public CallStatus Status { get; set; }
 }
