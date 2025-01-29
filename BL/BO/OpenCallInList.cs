@@ -5,10 +5,11 @@ namespace BO;
 public class OpenCallInList
 {
     // Sequential ID of the call entity
-    public int Id { get; set; } 
+    public int Id { get; set; }
 
     // Type of the call
-    public CallType CallType { get; set; }
+    public Subjects Subject { get; set; }
+
 
     // Description of the call
     public string? Description { get; set; } 

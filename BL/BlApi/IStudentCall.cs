@@ -3,7 +3,7 @@
 public interface IStudentCall
 {
     public int[] GetCallsByStatus();
-    public IEnumerable<BO.CallInList> GetCallsList(BO.StudentCallField? filterField, object filterValue, BO.StudentCallField? sortField);
+    public IEnumerable<BO.CallInList> GetCallsList(BO.StudentCallField? filterField, object filterValue, BO.StudentCallField sortField = BO.StudentCallField.Id)
     public BO.StudentCall Read(int callId);
     public void Update(BO.StudentCall call);
     public void Delete(int callId);
