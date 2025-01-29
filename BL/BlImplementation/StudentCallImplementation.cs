@@ -4,6 +4,7 @@ using DalApi;
 using DO;
 using Helpers;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlImplementation;
 internal class StudentCallImplementation : BlApi.IStudentCall
@@ -16,12 +17,45 @@ internal class StudentCallImplementation : BlApi.IStudentCall
 
     public void Create(BO.StudentCall call)
     {
-        throw new NotImplementedException();
+        try
+        {
+            StudentCallManager.Validation(call);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        DO.StudentCall studentCall = new(call.Id, (DO.Subjects)call.Subject, call.Description, call.FullAddress, call.FullName, "", "", call.Latitude, call.Longitude, call.OpenTime, call.FinalTime);
+        try
+        {
+            _dal.StudentCall.Create(studentCall);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 
     public void Delete(int callId)
     {
-        throw new NotImplementedException();
+        var doCall = _dal.StudentCall.Read(callId);
+        if (doCall != null)
+        {
+            throw new Exception();
+        }
+        var callAssignments = _dal.Assignment.ReadAll((DO.Assignment a) => a.StudentCallId == callId);
+        if (StudentCallManager.CalculateCallStatus(doCall,,) != BO.CallStatus.Open)
+            throw new Exception();
+        if (callAssignments.Count() > 0)
+            throw new Exception();
+        try
+        {
+            _dal.StudentCall.Delete(callId);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 
     public int[] GetCallsByStatus()
@@ -45,7 +79,6 @@ internal class StudentCallImplementation : BlApi.IStudentCall
         catch (Exception ex)
         {
             throw ex;
-
         }
     }
 
@@ -62,17 +95,17 @@ internal class StudentCallImplementation : BlApi.IStudentCall
     public BO.StudentCall Read(int callId)
     {
 
-        var doStudentCall=_dal.StudentCall.Read(callId)??throw new Exception();
-        var doAssignments=_dal.Assignment.ReadAll((DO.Assignment a)=>a.StudentCallId==callId);
+        var doStudentCall = _dal.StudentCall.Read(callId) ?? throw new Exception();
+        var doAssignments = _dal.Assignment.ReadAll((DO.Assignment a) => a.StudentCallId == callId);
         var firstAssignment = doAssignments.FirstOrDefault();
         var maxCompletionTime = doStudentCall.OpenTime.AddHours(2); // לדוגמה, זמן מקסימלי להשלמת קריאה הוא 2 שעות
         List<CallAssignInList> CallsAssignInList = doAssignments.Select((DO.Assignment a) => new BO.CallAssignInList()
         {
-            TutorId=a.TutorId,
-            TutorName=_dal.Tutor.Read((DO.Tutor t)=>t.Id==a.TutorId)!.FullName,
-            AssignmentTime = (DateTime)a.EntryTime,
-            ActualEndTime=(DateTime)a.EndTime,
-            EndType=(BO.EndOfTreatment)a.EndOfTreatment
+            TutorId = a.TutorId,
+            TutorName = _dal.Tutor.Read((DO.Tutor t) => t.Id == a.TutorId)!.FullName,
+            AssignmentTime = (DateTime)a.EntryTime!,
+            ActualEndTime = a.EndTime,
+            EndType = (BO.EndOfTreatment)a.EndOfTreatment
 
         }).ToList();
         return new BO.StudentCall
@@ -90,12 +123,28 @@ internal class StudentCallImplementation : BlApi.IStudentCall
             CallsAssignInList = CallsAssignInList
 
         };
-       
+
     }
 
     public void Update(BO.StudentCall call)
     {
-        throw new NotImplementedException();
+        try
+        {
+            StudentCallManager.Validation(call);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        DO.StudentCall studentCall = new(call.Id, (DO.Subjects)call.Subject, call.Description, call.FullAddress, call.FullName, "", "", call.Latitude, call.Longitude, call.OpenTime, call.FinalTime);
+        try
+        {
+            _dal.StudentCall.Update(studentCall);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 
     public void UpdateTreatmentCancellation(int tutorId, int assignmentId)

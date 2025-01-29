@@ -119,5 +119,8 @@ internal class StudentCallManager
             : CallStatus.Open;
     }
 
-   
+    internal static void Validation(BO.StudentCall call)
+    {
+        throw new NotImplementedException();
+    }
 }
