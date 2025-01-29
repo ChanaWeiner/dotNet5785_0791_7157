@@ -137,6 +137,18 @@ internal class StudentCallManager
         call.Longitude = longitude;
     }
 
-    
+    internal static void PeriodicStudentCallsUpdates(DateTime oldClock, DateTime newClock)
+    {
+                throw new NotImplementedException();
 
+    }
+    internal static void updateStatusCalls()
+    {
+        var calls = s_dal.StudentCall.ReadAll(c => c.FinalTime > ClockManager.Now);
+        foreach (var call in calls)
+        {
+            var callAssignments = s_dal.Assignment.ReadAll();
+        }
+
+    }
 }
