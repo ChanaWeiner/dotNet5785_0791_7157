@@ -112,7 +112,7 @@ internal class StudentCallImplementation : BlApi.IStudentCall
                 Subject = (BO.Subjects)c.Subject,
                 FullAddress = c.FullAddress,
                 OpeningTime = c.OpenTime,
-                AssignmentTime = a.EntryTime ?? c.OpenTime,
+                AssignmentTime = a.EntryTime,
                 ActualEndTime = a.EndTime,
                 EndType = (BO.EndOfTreatment)a.EndOfTreatment
             });
@@ -216,7 +216,7 @@ internal class StudentCallImplementation : BlApi.IStudentCall
             throw e;
         }
 
-        if (assignment.TutorId != tutorId && tutorId != managerId())
+        if (assignment.TutorId != tutorId && Tools.IsManagerId(tutorId))
             throw new Exception();
 
         if (assignment!.EndOfTreatment!=null)

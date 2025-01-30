@@ -2,15 +2,13 @@
 
 using BlApi;
 using BlImplementation;
-using BO;
 using DalApi;
-using DO;
 
 namespace Helpers;
 
 internal class StudentCallManager
 {
-    private static IDal s_dal = Factory.Get; //stage 4
+    private static IDal s_dal = DalApi.Factory.Get; //stage 4
     private static IAdmin manager = new AdminImplementation();
     internal static BO.CallStatus GetCallStatus(DO.StudentCall studentCall)
     {
@@ -88,7 +86,7 @@ internal class StudentCallManager
         var tutor = s_dal.Tutor.Read(tutorId);
         return tutor != null ? tutor.FullName : "Unknown";
     }
-    internal static CallStatus CalculateCallStatus(DO.StudentCall studentCall)
+    internal static BO.CallStatus CalculateCallStatus(DO.StudentCall studentCall)
     {
         var maxCompletionTime = studentCall.OpenTime.AddHours(2); // לדוגמה, זמן מקסימלי להשלמת קריאה הוא 2 שעות
         var lastAssignment = s_dal.Assignment
@@ -99,29 +97,29 @@ internal class StudentCallManager
         {
             return lastAssignment?.EndOfTreatment switch
             {
-                DO.EndOfTreatment.Treated => CallStatus.Closed,
-                DO.EndOfTreatment.SelfCancel => CallStatus.Open,
-                DO.EndOfTreatment.ManagerCancel => CallStatus.Open,
-                DO.EndOfTreatment.Expired => CallStatus.Expired,
-                _ => CallStatus.Open
+                DO.EndOfTreatment.Treated => BO.CallStatus.Closed,
+                DO.EndOfTreatment.SelfCancel => BO.CallStatus.Open,
+                DO.EndOfTreatment.ManagerCancel => BO.CallStatus.Open,
+                DO.EndOfTreatment.Expired => BO.CallStatus.Expired,
+                _ => BO.CallStatus.Open
             };
         }
 
         if (ClockManager.Now >= maxCompletionTime)
         {
-            return CallStatus.Expired;
+            return BO.CallStatus.Expired;
         }
 
         if (lastAssignment != null)
         {
             return DateTime.Now >= maxCompletionTime.AddMinutes(-30) // טווח זמן סיכון
-           ? CallStatus.InProgressAtRisk
-           : CallStatus.InProgress;
+           ? BO.CallStatus.InProgressAtRisk
+           : BO.CallStatus.InProgress;
         }
 
         return DateTime.Now >= maxCompletionTime.AddMinutes(-30) // טווח זמן סיכון
-            ? CallStatus.OpenInRisk
-            : CallStatus.Open;
+            ? BO.CallStatus.OpenInRisk
+            : BO.CallStatus.Open;
     }
 
     internal static void Validation(BO.StudentCall call)
@@ -130,11 +128,14 @@ internal class StudentCallManager
         if (call.OpenTime >= call.FinalTime)
             throw new ArgumentException("זמן פתיחה חייב להיות קטן מזמן הסיום");
 
-        if (!Tools.IsValidAddress(call.FullAddress, out double latitude, out double longitude))
-            throw new ArgumentException("כתובת לא תקינה");
-
-        call.Latitude = latitude;
-        call.Longitude = longitude;
+        try
+        {
+            (call.Latitude, call.Longitude) = Tools.GetCoordinates(call.FullAddress!);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     internal static void PeriodicStudentCallsUpdates(DateTime oldClock, DateTime newClock)
@@ -147,7 +148,12 @@ internal class StudentCallManager
         var calls = s_dal.StudentCall.ReadAll(c => c.FinalTime > ClockManager.Now);
         foreach (var call in calls)
         {
-            var callAssignments = s_dal.Assignment.ReadAll();
+            var callAssignments = s_dal.Assignment.ReadAll(a=>a.StudentCallId==call.Id);
+            foreach (var callAssignment in callAssignments)
+            {
+                var updateAssignment=callAssignment with { EndOfTreatment= DO.EndOfTreatment.Expired };
+                s_dal.Assignment.Update(updateAssignment);
+            }
         }
 
     }

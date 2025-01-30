@@ -1,4 +1,6 @@
 ﻿
+using Helpers;
+
 namespace BO;
 
 public class ClosedCallInList
@@ -23,4 +25,6 @@ public class ClosedCallInList
 
     // Type of end handling for the call
     public EndOfTreatment? EndType { get; set; }
+    public override string ToString() => Tools.ToStringProperty(this);
+
 }

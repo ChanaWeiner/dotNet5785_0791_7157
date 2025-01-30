@@ -15,7 +15,7 @@ internal class AssignmentImplementation : IAssignment
             Id = a.ToIntNullable("Id") ?? throw new FormatException("can't convert id"),
             StudentCallId = (int?)a.Element("StudentCallId") ?? 0,
             TutorId = (int?)a.Element("TutorId") ?? 0,
-            EntryTime = (DateTime?)a.Element("EntryTime") ?? null,
+            EntryTime = (DateTime)a.Element("EntryTime"),
             EndTime = (DateTime?)a.Element("EndTime") ?? null,
             EndOfTreatment = Enum.TryParse(a.Element("EndOfTreatment")?.Value, out EndOfTreatment result) ? result : 0
         };

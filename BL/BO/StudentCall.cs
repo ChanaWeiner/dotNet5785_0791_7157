@@ -1,4 +1,6 @@
 ﻿
+using Helpers;
+
 namespace BO;
 
 public class StudentCall
@@ -16,4 +18,6 @@ public class StudentCall
     public DateTime? FinalTime { get; set; }
     public CallStatus Status { get; set; }
     public List<BO.CallAssignInList> CallsAssignInList { get; set; }= new List<BO.CallAssignInList>();
+    public override string ToString() => Tools.ToStringProperty(this);
+
 }

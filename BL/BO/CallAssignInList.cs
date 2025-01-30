@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using Helpers;
+
+namespace BO;
 
 public class CallAssignInList
 {
@@ -15,5 +17,7 @@ public class CallAssignInList
     public DateTime? ActualEndTime { get; set; }
 
     // Type of end handling for the call
-    public EndOfTreatment? EndType { get; set; } 
+    public EndOfTreatment? EndType { get; set; }
+    public override string ToString() => Tools.ToStringProperty(this);
+
 }

@@ -60,7 +60,7 @@ internal class TutorImplementation : ITutor
     {
         Tutor tutor = Read(item.Id);
         if (tutor == null)
-            throw new DalDoesNotExistException($"An object of type Tutor with such an {item.Id} does not exist++");
+            throw new DalDoesNotExistException($"An object of type Tutor with such an {item.Id} does not exist");
         Delete(item.Id);
         Create(item);
     }

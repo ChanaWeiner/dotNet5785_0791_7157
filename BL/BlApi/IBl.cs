@@ -5,7 +5,7 @@ namespace BlApi;
 public interface IBl
 {
     ITutor Tutor { get; }
-    IStudentCall Student { get; }
+    IStudentCall StudentCall { get; }
     IAdmin Admin { get; }
 
 }

@@ -259,7 +259,7 @@ internal class Program
 
                 if (isCreate)
                 {
-                    s_dal.Assignment!.Create(new Assignment(id, studentCallId, tutorId, entryTime, endTime, endOfTreatment));
+                    s_dal.Assignment!.Create(new Assignment(id, studentCallId, tutorId, (DateTime)entryTime, endTime, endOfTreatment));
                 }
                 else
                 {

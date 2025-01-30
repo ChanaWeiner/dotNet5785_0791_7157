@@ -1,4 +1,6 @@
 ﻿
+using Helpers;
+
 namespace BO;
 
 public class TutorInList
@@ -26,6 +28,8 @@ public class TutorInList
 
     // Type of the current call being handled
     public Subjects CurrentSubject { get; set; }
+    public override string ToString() => Tools.ToStringProperty(this);
+
 }
 
 

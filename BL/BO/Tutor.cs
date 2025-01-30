@@ -1,4 +1,4 @@
-﻿//using Helpers;
+﻿using Helpers;
 namespace BO;
 
 public class Tutor
@@ -17,22 +17,17 @@ public class Tutor
     public DistanceType DistanceType { get; set; }
 
     // Total calls handled by the tutor
-    public int TotalCallsHandled { get; private set; }
+    public int TotalCallsHandled { get; set; }
 
-    // Total calls in the allocation entity for the tutor with "Handled" status
-    public int TotalCallsHandledStatus { get; private set; }
-
-    // Total calls canceled by the tutor
-    public int TotalCallsCanceled { get; private set; }
 
     // Total calls in the allocation entity for the tutor with "Self Cancellation" status
-    public int TotalCallsSelfCanceled { get; private set; }
+    public int TotalCallsSelfCanceled { get; set; }
 
     // Total calls selected for handling that expired
-    public int TotalCallsExpired { get; private set; }
+    public int TotalCallsExpired { get; set; }
 
     // Call currently in progress for the tutor
     public BO.CallInProgress? CurrentCallInProgress { get; set; }
 
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => Tools.ToStringProperty(this);
 }

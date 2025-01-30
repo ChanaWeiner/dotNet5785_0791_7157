@@ -1,4 +1,5 @@
 ﻿//using Helpers;
+using Helpers;
 using Microsoft.VisualBasic;
 
 namespace BO; 
@@ -34,4 +35,6 @@ public class CallInProgress
 
     /// Status of the call in progress.
     public CallStatus Status { get; set; }
+    public override string ToString() => Tools.ToStringProperty(this);
+
 }

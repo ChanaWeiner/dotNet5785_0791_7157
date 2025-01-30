@@ -37,12 +37,13 @@ internal static class ClockManager //stage 4
         //for example, Periodic students' updates:
         //Go through all students to update properties that are affected by the clock update
         //(students becomes not active after 5 years etc.)
-        
-        StudentCallManager.PeriodicStudentCallsUpdates(oldClock, newClock); //stage 4
+
+        //StudentCallManager.PeriodicStudentCallsUpdates(oldClock, newClock); //stage 4
+        StudentCallManager.updateStatusCalls();
         //etc ...
 
         //Calling all the observers of clock update
-        ClockUpdatedObservers?.Invoke(); //prepared for stage 5
+        //ClockUpdatedObservers?.Invoke(); //prepared for stage 5
     }
     #endregion Stage 4
 
@@ -94,7 +95,7 @@ internal static class ClockManager //stage 4
             //TO_DO:
             //Add calls here to any logic simulation that was required in stage 7
             //for example: course registration simulation
-            StudentManager.SimulateCourseRegistrationAndGrade(); //stage 7
+            //StudentCManager.SimulateCourseRegistrationAndGrade(); //stage 7
 
             //etc...
             #endregion Stage 7

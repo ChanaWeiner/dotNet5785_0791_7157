@@ -1,5 +1,7 @@
 ﻿
 
+using Helpers;
+
 namespace BO;
 
 public class CallInList
@@ -30,6 +32,8 @@ public class CallInList
 
     // Total assignments made for the call
     public int TotalAssignments { get; set; } // Cannot be null, total count of assignments in DO.Assignment for the current call
+    public override string ToString() => Tools.ToStringProperty(this);
+
 }
 
 

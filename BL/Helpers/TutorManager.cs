@@ -6,6 +6,8 @@ using DalApi;
 using DO;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using BCrypt.Net;
+
 
 namespace Helpers;
 
@@ -13,7 +15,6 @@ internal class TutorManager
 {
     private static IDal s_dal = Factory.Get; //stage 4
    
-
     internal static List<BO.TutorInList> GetTutorsInList(bool?isActive)
     {
         List<DO.Tutor> doTutor = s_dal.Tutor.ReadAll((DO.Tutor tutor)=> (isActive==null || tutor.Active==isActive)).ToList()
@@ -51,12 +52,16 @@ internal class TutorManager
         };
     }
 
-
-    internal static double GetDistance(DO.Tutor tutor,DO.StudentCall studentCall)
+    internal static int countCallsByEndStatus(int tutorId, BO.EndOfTreatment endStatus)
     {
-        return Math.Sqrt(Math.Pow(tutor.Latitude-studentCall.Latitude,2)+ Math.Pow(tutor.Longitude - studentCall.Longitude, 2));
+        return s_dal.Assignment.ReadAll(a =>
+            a.TutorId == tutorId && a.EndOfTreatment!=null && (BO.EndOfTreatment)a.EndOfTreatment == endStatus
+        ).Select(a=>a.StudentCallId)
+        .Distinct()
+        .Count();
     }
 
+    #region validation
     internal static void Validation(ref BO.Tutor boTutor)
     {
         // ID validation
@@ -76,14 +81,18 @@ internal class TutorManager
             throw new FormatException($"Email address '{boTutor.Email}' is invalid.");
 
         // Password validation (if provided)
-        if (!string.IsNullOrEmpty(boTutor.Password) && boTutor.Password.Length < 8)
-            throw new ArgumentException($"Password must be at least 8 characters long.", nameof(boTutor.Password));
 
-        // Coordinates validation
-        if (!Tools.IsValidAddress(boTutor.CurrentAddress!, out double latitude, out double longitude))
-            throw new ArgumentException($"Coordinates are invalid: Latitude={boTutor.Latitude}, Longitude={boTutor.Longitude}.");
-        boTutor.Latitude = latitude;
-        boTutor.Longitude = longitude;
+        if (!IsValidPassword(boTutor.Password))
+            throw new ArgumentException("Password is not strong enough");
+        try
+        {
+            (boTutor.Latitude, boTutor.Longitude) = Tools.GetCoordinates(boTutor.CurrentAddress!);
+        }
+        catch(Exception ex) 
+        {
+            throw ex;
+        }
+
         // Address validation (if provided)
         if (!string.IsNullOrEmpty(boTutor.CurrentAddress) && boTutor.CurrentAddress.Length < 5)
             throw new ArgumentException($"Address '{boTutor.CurrentAddress}' must be at least 5 characters long.", nameof(boTutor.CurrentAddress));
@@ -99,6 +108,20 @@ internal class TutorManager
         // DistanceType (Enum) validation
         if (!Enum.IsDefined(typeof(BO.DistanceType), boTutor.DistanceType))
             throw new InvalidEnumArgumentException(nameof(boTutor.DistanceType), (int)boTutor.DistanceType, typeof(BO.DistanceType));
+    
+    }
+
+    private static bool IsValidPassword(string password)
+    {
+        if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
+            return false;
+
+        bool hasUpper = password.Any(char.IsUpper);
+        bool hasLower = password.Any(char.IsLower);
+        bool hasDigit = password.Any(char.IsDigit);
+        bool hasSpecial = password.Any(ch => !char.IsLetterOrDigit(ch));
+
+        return hasUpper && hasLower && hasDigit && hasSpecial;
     }
 
     private static bool IsValidId(int id)
@@ -141,6 +164,18 @@ internal class TutorManager
         // בדיקת פורמט של אימייל
         string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         return Regex.IsMatch(email, emailPattern);
+    }
+
+
+    #endregion
+    public static string HashPassword(string password)
+    {
+        return BCrypt.Net.BCrypt.HashPassword(password);
+    }
+
+    public static bool VerifyPassword(string password, string hashedPassword)
+    {
+        return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
     }
 
 }
