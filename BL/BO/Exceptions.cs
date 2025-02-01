@@ -30,3 +30,9 @@ public class BlValidationException : Exception
 {
     public BlValidationException(string? message) : base(message) { }
 }
+
+[Serializable]
+public class BlCanNotAssignCall : Exception
+{
+    public BlCanNotAssignCall(string? message) : base(message) { }
+}

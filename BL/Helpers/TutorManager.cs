@@ -13,17 +13,9 @@ namespace Helpers;
 
 internal class TutorManager
 {
-    private static IDal s_dal = Factory.Get; //stage 4
-   
-    internal static List<BO.TutorInList> GetTutorsInList(bool?isActive)
-    {
-        List<DO.Tutor> doTutor = s_dal.Tutor.ReadAll((DO.Tutor tutor)=> (isActive==null || tutor.Active==isActive)).ToList()
-            ?? throw new Exception($"Student with ID= does Not exist");
-        List <BO.TutorInList> tutorInList = doTutor.Select(ConvertFromDoToBo).ToList();
-        return tutorInList;
-    }
+    private static IDal s_dal = Factory.Get;
 
-    private static BO.TutorInList ConvertFromDoToBo(DO.Tutor tutor)
+    internal static BO.TutorInList ConvertFromDoToBo(DO.Tutor tutor)
     {
         var assignments = s_dal.Assignment.ReadAll();
         var currenCallId = s_dal.Assignment.ReadAll(a => a.TutorId == tutor.Id && a.EndTime == null)
@@ -52,7 +44,7 @@ internal class TutorManager
         };
     }
 
-    internal static int countCallsByEndStatus(int tutorId, BO.EndOfTreatment endStatus)
+    internal static int CountCallsByEndStatus(int tutorId, BO.EndOfTreatment endStatus)
     {
         return s_dal.Assignment.ReadAll(a =>
             a.TutorId == tutorId && a.EndOfTreatment!=null && (BO.EndOfTreatment)a.EndOfTreatment == endStatus
@@ -66,11 +58,11 @@ internal class TutorManager
     {
         // ID validation
         if (!IsValidId(boTutor.Id))
-            throw new ArgumentOutOfRangeException(nameof(boTutor.Id), $"ID {boTutor.Id} is invalid.");
+            throw new BO.BlValidationException($"ID {boTutor.Id} is invalid.");
 
         // Full name validation
         if (string.IsNullOrWhiteSpace(boTutor.FullName) || boTutor.FullName.Length < 2 || boTutor.FullName.Length > 100)
-            throw new ArgumentException($"Full name '{boTutor.FullName}' must be between 2 and 100 characters.", nameof(boTutor.FullName));
+            throw new BO.BlValidationException($"Full name '{boTutor.FullName}' must be between 2 and 100 characters.");
 
         // Phone number validation
         if (!IsValidPhoneNumber(boTutor.CellNumber))
@@ -83,32 +75,27 @@ internal class TutorManager
         // Password validation (if provided)
 
         if (!IsValidPassword(boTutor.Password))
-            throw new ArgumentException("Password is not strong enough");
+            throw new BO.BlValidationException("Password is not strong enough");
         try
         {
             (boTutor.Latitude, boTutor.Longitude) = Tools.GetCoordinates(boTutor.CurrentAddress!);
         }
-        catch(Exception ex) 
+        catch (Exception ex) 
         {
             throw ex;
         }
 
-        // Address validation (if provided)
-        if (!string.IsNullOrEmpty(boTutor.CurrentAddress) && boTutor.CurrentAddress.Length < 5)
-            throw new ArgumentException($"Address '{boTutor.CurrentAddress}' must be at least 5 characters long.", nameof(boTutor.CurrentAddress));
-
         // Role (Enum) validation
         if (!Enum.IsDefined(typeof(BO.Role), boTutor.Role))
-            throw new InvalidEnumArgumentException(nameof(boTutor.Role), (int)boTutor.Role, typeof(BO.Role));
+            throw new BO.BlValidationException($"Role - This option: '{boTutor.Role}' is not defind");
 
         // Distance validation
         if (boTutor.Distance < 0)
-            throw new ArgumentOutOfRangeException(nameof(boTutor.Distance), $"Distance {boTutor.Distance} must be a non-negative value.");
+            throw new BO.BlValidationException($"Distance {boTutor.Distance} must be a non-negative value.");
 
         // DistanceType (Enum) validation
         if (!Enum.IsDefined(typeof(BO.DistanceType), boTutor.DistanceType))
-            throw new InvalidEnumArgumentException(nameof(boTutor.DistanceType), (int)boTutor.DistanceType, typeof(BO.DistanceType));
-    
+            throw new BO.BlValidationException($"DistanceType - This option: '{boTutor.DistanceType}' is not defind");
     }
 
     private static bool IsValidPassword(string password)
@@ -168,14 +155,9 @@ internal class TutorManager
 
 
     #endregion
-    public static string HashPassword(string password)
-    {
-        return BCrypt.Net.BCrypt.HashPassword(password);
-    }
+    
+    public static string HashPassword(string password)=> BCrypt.Net.BCrypt.HashPassword(password);
 
-    public static bool VerifyPassword(string password, string hashedPassword)
-    {
-        return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
-    }
+    public static bool VerifyPassword(string password, string hashedPassword)=> BCrypt.Net.BCrypt.Verify(password, hashedPassword);
 
 }

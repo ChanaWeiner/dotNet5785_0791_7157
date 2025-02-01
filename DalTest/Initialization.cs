@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using BCrypt;
 
 namespace DalTest;
 
@@ -42,7 +43,7 @@ public static class Initialization
             double distance = s_rand.NextDouble() * 20;
             DistanceType distanceType = (DistanceType)s_rand.Next(3);
 
-            s_dal!.Tutor.Create(new Tutor(id, fullName, cellNumber, email, password, currentAddress, latitude, longitude, role, active, distance, distanceType));
+            s_dal!.Tutor.Create(new Tutor(id, fullName, cellNumber, email, BCrypt.Net.BCrypt.HashPassword(password), currentAddress, latitude, longitude, role, active, distance, distanceType));
         }
     }
 

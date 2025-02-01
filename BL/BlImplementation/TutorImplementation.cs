@@ -1,4 +1,5 @@
 ﻿
+using DalApi;
 using DO;
 using Helpers;
 using System;
@@ -15,7 +16,7 @@ internal class TutorImplementation : BlApi.ITutor
         {
             TutorManager.Validation(ref boTutor);
         }
-        catch (Exception error)
+        catch (BO.BlValidationException error)
         {
             throw error;
         }
@@ -40,11 +41,9 @@ internal class TutorImplementation : BlApi.ITutor
         if (assignments.Count > 0)
         {
             throw new BO.BlCanNotBeDeletedException($"Tutor with ID={id} has assignment/s ,he can't be deleted");
-
         }
         try
         {
-
             _dal.Tutor.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
@@ -55,10 +54,10 @@ internal class TutorImplementation : BlApi.ITutor
 
     public BO.Role LogIn(int id, string password)
     {
-        DO.Tutor doTutor= _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id) ??
+        DO.Tutor doTutor = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id) ??
             throw new BO.BlDoesNotExistException($"Tutor with ID={id} does Not exist");
-       
-        if (TutorManager.VerifyPassword(password,doTutor.Password ) )
+
+        if (TutorManager.VerifyPassword(password, doTutor.Password))
         {
             throw new BO.BlValidationException($"Password isn't correct");
         }
@@ -67,18 +66,17 @@ internal class TutorImplementation : BlApi.ITutor
 
     public BO.Tutor Read(int id)
     {
-
         var doTutor = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id) ??
        throw new BO.BlDoesNotExistException($"Tutor with ID={id} does Not exist");
-        var doAssignment =  _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime != null) ;
-        var doStudentCall =  _dal.StudentCall.Read(doAssignment.StudentCallId) ;
-        BO.CallStatus? status=null;
-        double distance=0.0;
-        if (doStudentCall != null)
+        var doAssignment = _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime != null);
+        BO.CallStatus? status = null;
+        double distance = 0.0;
+        DO.StudentCall doStudentCall = null;
+        if (doAssignment != null)
         {
-             status = StudentCallManager.GetCallStatus(doStudentCall);
-             distance = Tools.CalculateDistance(id, doStudentCall.Latitude, doStudentCall.Longitude);
-
+            doStudentCall = _dal.StudentCall.Read(doAssignment.StudentCallId);
+            status = StudentCallManager.GetCallStatus(doStudentCall);
+            distance = Tools.CalculateDistance(id, doStudentCall.Latitude, doStudentCall.Longitude);
         }
 
         return new()
@@ -95,9 +93,9 @@ internal class TutorImplementation : BlApi.ITutor
             Active = doTutor.Active,
             Distance = doTutor.Distance,
             DistanceType = (BO.DistanceType)doTutor.DistanceType,
-            TotalCallsSelfCanceled = TutorManager.countCallsByEndStatus(id, BO.EndOfTreatment.SelfCancel),
-            TotalCallsHandled = TutorManager.countCallsByEndStatus(id, BO.EndOfTreatment.Treated),
-            TotalCallsExpired = TutorManager.countCallsByEndStatus(id, BO.EndOfTreatment.Expired),
+            TotalCallsSelfCanceled = TutorManager.CountCallsByEndStatus(id, BO.EndOfTreatment.SelfCancel),
+            TotalCallsHandled = TutorManager.CountCallsByEndStatus(id, BO.EndOfTreatment.Treated),
+            TotalCallsExpired = TutorManager.CountCallsByEndStatus(id, BO.EndOfTreatment.Expired),
             CurrentCallInProgress = doAssignment != null ? new BO.CallInProgress()
             {
                 Id = doTutor.Id,
@@ -116,16 +114,9 @@ internal class TutorImplementation : BlApi.ITutor
 
     public IEnumerable<BO.TutorInList> SortTutorsInList(bool? isActive, BO.TutorSortField? sortField = BO.TutorSortField.Id)
     {
-        IEnumerable<BO.TutorInList> tutorInLists;
-        try
-        {
-            List<BO.TutorInList> tutorsInList = TutorManager.GetTutorsInList(isActive);
-            return Tools.SortByField<BO.TutorInList>(tutorsInList, sortField.ToString());
-        }
-        catch (Exception ex)
-        {
-            throw new Exception();
-        }
+        List<DO.Tutor> doTutor = _dal.Tutor.ReadAll((DO.Tutor tutor) => (isActive == null || tutor.Active == isActive)).ToList();
+        List<BO.TutorInList> tutorsInList = doTutor.Select(TutorManager.ConvertFromDoToBo).ToList();
+        return Tools.SortByField(tutorsInList, sortField.ToString());
     }
 
     public void Update(int id, BO.Tutor boTutor)
@@ -133,9 +124,8 @@ internal class TutorImplementation : BlApi.ITutor
         try
         {
             TutorManager.Validation(ref boTutor);
-
         }
-        catch (Exception error)
+        catch (BO.BlValidationException error)
         {
             throw error;
         }
@@ -143,7 +133,7 @@ internal class TutorImplementation : BlApi.ITutor
 
         if (id != boTutor.Id || isManager)
         {
-            throw new Exception();
+            throw new BO.BlValidationException("You are not authorized to update the tutor.");
         }
         DO.Tutor doTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password,
             boTutor.CurrentAddress, boTutor.Latitude, boTutor.Longitude, (DO.Role)boTutor.Role,

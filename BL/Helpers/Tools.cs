@@ -11,8 +11,7 @@ namespace Helpers;
 
 static internal class Tools
 {
-    private static IDal s_dal = Factory.Get; //stage 4
-
+    private static IDal s_dal = Factory.Get;
 
     internal static string ToStringProperty<T>(this T obj)
     {
@@ -44,6 +43,7 @@ static internal class Tools
         return list.OrderBy(item =>
             item.GetType().GetProperty(fieldName)?.GetValue(item)).ToList();
     }
+
     internal static bool IsManagerId(int tutorId)
     {
         return s_dal.Tutor.Read(tutorId).Role == DO.Role.Manager;
@@ -54,7 +54,7 @@ static internal class Tools
     {
         var tutor = s_dal.Tutor.Read(volunteerId);
         if (tutor == null)
-            throw new Exception($"Volunteer with ID {volunteerId} not found");
+            throw new BO.BlDoesNotExistException($"Tutor with ID {volunteerId} not found");
 
         return GetDistance(tutor.Latitude, tutor.Longitude, callLat, callLong);
     }
@@ -83,7 +83,7 @@ static internal class Tools
     {
         if (string.IsNullOrWhiteSpace(address))
         {
-            throw new ArgumentException("הכתובת אינה תקינה");
+            throw new BO.BlValidationException("The address is invalid.");
         }
 
         string url = $"https://geocode.maps.co/search?q={Uri.EscapeDataString(address)}&api_key=679a8da6c01a6853187846vomb04142";
@@ -93,32 +93,25 @@ static internal class Tools
             using (WebClient client = new WebClient())
             {
                 string response = client.DownloadString(url);
-                //Console.WriteLine("Response from server: " + response); // הדפסה לבדיקה
 
                 var result = JsonSerializer.Deserialize<GeocodeResponse[]>(response);
-                Console.WriteLine(result.ToString()); // הדפסה לבדיקה
-
-
 
                 if (result == null || result.Length == 0)
                 {
-                    throw new Exception("לא נמצאו קואורדינטות לכתובת זו");
+                    throw new BO.BlValidationException("The address is invalid.");
                 }
 
                 double latitude = double.Parse(result[0].Latitude);
                 double longitude = double.Parse(result[0].Longitude);
 
-                Console.WriteLine($"נבחרה הכתובת: {result[0].DisplayName}");
                 return (latitude, longitude);
             }
         }
         catch (Exception ex)
         {
-            throw new Exception("שגיאה בעת שליפת קואורדינטות: " + ex.Message);
+            throw new Exception("Error retrieving coordinates" + ex.Message);
         }
     }
-
- 
 
     private class GeocodeResponse
     {

@@ -8,35 +8,49 @@ class Program
     // Initialize the BL interface through the Factory class
     static readonly IBl s_bl = BlApi.Factory.Get();
 
+    enum MainMenu { TutorManagement = 1, CallManagement, SystemManagement, Exit };
+    enum CallMenuChoice
+    {
+        GetCallsByStatus = 1, GetCallsList, ReadCall, UpdateCall, DeleteCall, CreateCall,
+        GetClosedCallsForTutor, GetOpenCallsForTutor, UpdateTreatmentCompletion,
+        UpdateTreatmentCancellation, AssignCallToTutor, Exit
+    };
+    enum TutorMenuChoice { CreateTutor = 1, ReadTutor, UpdateTutor, DeleteTutor, SortTutors, LogIn, Exit }
+
+    enum AdminMenuChoice { GetSystemClock = 1, AdvanceSystemClock, GetRiskTimeRange, SetRiskTimeRange, ResetDatabase, InitializeDatabase, Exit }
     static void Main(string[] args)
     {
-        // Main loop displaying the main menu to the user
         bool exit = false;
         while (!exit)
         {
-            
-            Console.WriteLine("Select the service entity:");
-            Console.WriteLine("1. Tutor Management");
-            Console.WriteLine("2. Call Management");
-            Console.WriteLine("3. System Management");
-            Console.WriteLine("4. Exit");
-            Console.Write("Enter choice: ");
-
-            var choice = Console.ReadLine();
-
-            switch (choice)
+            try
             {
-                case "1":
-                    TutorMenu(); break; // Go to Tutor Management Menu
-                case "2":
-                    StudentCallMenu(); break; // Go to Call Management Menu
-                case "3":
-                    AdminMenu(); break; // Go to System Management Menu
-                case "4":
-                    exit = true; break; // Exit the application
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                Console.WriteLine("Main Menu:");
+                int i = 1;
+                foreach (var option in Enum.GetValues(typeof(MainMenu)))
+                    Console.WriteLine(i++ + ". " + option);
+                Console.Write("Enter choice: ");
+
+                MainMenu choice = (MainMenu)int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case MainMenu.TutorManagement:
+                        TutorMenu(); break; // Go to Tutor Management Menu
+                    case MainMenu.CallManagement:
+                        StudentCallMenu(); break; // Go to Call Management Menu
+                    case MainMenu.SystemManagement:
+                        AdminMenu(); break; // Go to System Management Menu
+                    case MainMenu.Exit:
+                        exit = true; break; // Exit the application
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: ", ex.Message);
             }
         }
     }
@@ -47,43 +61,61 @@ class Program
         bool exit = false;
         while (!exit)
         {
-            
-            Console.WriteLine("Tutor Management Menu:");
-            Console.WriteLine("1. Read Tutor");
-            Console.WriteLine("2. Update Tutor");
-            Console.WriteLine("3. Delete Tutor");
-            Console.WriteLine("4. Exit");
-            Console.Write("Enter choice: ");
-
-            var choice = Console.ReadLine();
-
-            switch (choice)
+            try
             {
-                case "1":
-                    ReadTutor(); break;
-                case "2":
-                    UpdateTutor(); break;
-                case "3":
-                    DeleteTutor(); break;
-                case "4":
-                    exit = true; break;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                Console.WriteLine("Tutor Management Menu");
+                int i = 1;
+                foreach (var option in Enum.GetValues(typeof(TutorMenuChoice)))
+                    Console.WriteLine(i++ + ". " + option);
+                Console.Write("Enter choice: ");
+
+                TutorMenuChoice choice = (TutorMenuChoice)int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case TutorMenuChoice.CreateTutor:
+                        CreateTutor();
+                        break;
+                    case TutorMenuChoice.ReadTutor:
+                        ReadEntity(id => s_bl.Tutor.Read(id));
+                        break;
+                    case TutorMenuChoice.UpdateTutor:
+                        UpdateTutor();
+                        break;
+                    case TutorMenuChoice.DeleteTutor:
+                        DeleteEntity<BO.Tutor>(id => s_bl.Tutor.Delete(id));
+                        break;
+                    case TutorMenuChoice.SortTutors:
+                        SortTutors();
+                        break;
+                    case TutorMenuChoice.LogIn:
+                        LogIn();
+                        break;
+                    case TutorMenuChoice.Exit:
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
     }
 
-    // Read Tutor details
-    private static void ReadTutor()
+    private static void LogIn()
     {
-        Console.Write("Enter Tutor ID: ");
+        Console.Write("Enter Your ID: ");
         if (int.TryParse(Console.ReadLine(), out int tutorId))
         {
+            Console.Write("Enter Your Password: ");
+            string password = Console.ReadLine();
             try
             {
-                BO.Tutor tutor = s_bl.Tutor.Read(tutorId);
-                Console.WriteLine(tutor);
+                var tutorRole = s_bl.Tutor.LogIn(tutorId, password);
+                Console.WriteLine(tutorRole.ToString());
             }
             catch (Exception ex)
             {
@@ -93,6 +125,94 @@ class Program
         else
         {
             Console.WriteLine("Invalid Tutor ID.");
+        }
+    }
+
+    private static void SortTutors()
+    {
+        Console.Write("Sort filter: Is Active (true/false): ");
+        if (!bool.TryParse(Console.ReadLine(), out bool isActive))
+            Console.WriteLine("Invalid input");
+
+        Console.WriteLine("Sort field: (Id, FullName, IsActive, TotalHandledCalls, TotalCancelledCalls, TotalExpiredCalls, CurrentCallId, CurrentCallType)");
+        if (!Enum.TryParse(Console.ReadLine(), out TutorSortField sortField))
+            Console.WriteLine("Invalid input");
+
+        var tutorsInList = s_bl.Tutor.SortTutorsInList(isActive, sortField);
+        Console.WriteLine(string.Join("\n-----\n", tutorsInList));
+    }
+
+    private static void CreateTutor()
+    {
+        Console.Write("Enter id: ");
+        int.TryParse(Console.ReadLine(), out int id);
+
+        Console.Write("Enter  name: ");
+        string? name = Console.ReadLine();
+
+        Console.Write("Enter  cell number: ");
+        string cellNumber = Console.ReadLine();
+
+        Console.Write("Enter  email: ");
+        string email = Console.ReadLine();
+
+        Console.Write("Enter  password: ");
+        string? password = Console.ReadLine();
+
+        Console.Write("Enter  current address: ");
+        string? currentAddress = Console.ReadLine();
+
+        //Console.Write("Enter latitude: ");
+        //double.TryParse(Console.ReadLine(), out double latitude);
+
+        //Console.Write("Enter longitude: ");
+        //double.TryParse(Console.ReadLine(), out double longitude);
+
+        Console.Write("Enter role (MasterTutor, BeginnerTutor, Manager): ");
+        Enum.TryParse(Console.ReadLine(), out BO.Role role);
+
+        Console.Write("Is Active (true/false): ");
+        bool.TryParse(Console.ReadLine(), out bool active);
+
+        Console.Write("Enter distance: ");
+        double.TryParse(Console.ReadLine(), out double distance);
+
+        Console.Write("Enter distance type (Air, Walking, Driving): ");
+        Enum.TryParse(Console.ReadLine(), out DistanceType distanceType);
+
+        var newTutor = new BO.Tutor
+        {
+            Id = id,
+            FullName = name,
+            CellNumber = cellNumber,
+            Email = email,
+            Password = password,
+            CurrentAddress = currentAddress,
+            //Latitude = latitude,
+            //Longitude = longitude,
+            Role = role,
+            Active = active,
+            Distance = distance,
+            DistanceType = distanceType
+        };
+
+        s_bl.Tutor.Create(newTutor);
+        Console.WriteLine("Tutor created successfully.");
+
+    }
+
+    // Read Tutor details
+    private static void ReadEntity<T>(Func<int, T> readEntity)
+    {
+        Console.Write("Enter entity ID: ");
+        if (int.TryParse(Console.ReadLine(), out int entityId))
+        {
+            T entity = readEntity(entityId);
+            Console.WriteLine(entity);
+        }
+        else
+        {
+            Console.WriteLine("Invalid Entity ID.");
         }
     }
 
@@ -105,25 +225,54 @@ class Program
             Console.Write("Enter new name: ");
             string? name = Console.ReadLine();
 
+            Console.Write("Enter new cell number: ");
+            string cellNumber = Console.ReadLine();
+
+            Console.Write("Enter new email: ");
+            string email = Console.ReadLine();
+
             Console.Write("Enter new password: ");
             string? password = Console.ReadLine();
+
+            Console.Write("Enter new current address: ");
+            string? currentAddress = Console.ReadLine();
+
+            //Console.Write("Enter latitude: ");
+            //double.TryParse(Console.ReadLine(), out double latitude);
+
+            //Console.Write("Enter longitude: ");
+            //double.TryParse(Console.ReadLine(), out double longitude);
+
+            Console.Write("Enter role (MasterTutor, BeginnerTutor, Manager): ");
+            Enum.TryParse(Console.ReadLine(), out Role role);
+
+            Console.Write("Is Active (true/false): ");
+            bool.TryParse(Console.ReadLine(), out bool active);
+
+            Console.Write("Enter distance: ");
+            double.TryParse(Console.ReadLine(), out double distance);
+
+            Console.Write("Enter distance type (Air, Walking, Driving): ");
+            Enum.TryParse(Console.ReadLine(), out DistanceType distanceType);
 
             var tutor = new BO.Tutor
             {
                 Id = tutorId,
                 FullName = name,
-                Password = password
+                CellNumber = cellNumber,
+                Email = email,
+                Password = password,
+                CurrentAddress = currentAddress,
+                //Latitude = latitude,
+                //Longitude = longitude,
+                Role = role,
+                Active = active,
+                Distance = distance,
+                DistanceType = distanceType
             };
 
-            try
-            {
-                s_bl.Tutor.Update(tutorId, tutor);
-                Console.WriteLine("Tutor updated successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+            s_bl.Tutor.Update(tutorId, tutor);
+            Console.WriteLine("Tutor updated successfully.");
         }
         else
         {
@@ -132,24 +281,17 @@ class Program
     }
 
     // Delete Tutor details
-    private static void DeleteTutor()
+    private static void DeleteEntity<T>(Action<int> delete)
     {
-        Console.Write("Enter Tutor ID for deletion: ");
-        if (int.TryParse(Console.ReadLine(), out int tutorId))
+        Console.Write("Enter entity ID for deletion: ");
+        if (int.TryParse(Console.ReadLine(), out int entityId))
         {
-            try
-            {
-                s_bl.Tutor.Delete(tutorId);
-                Console.WriteLine("Tutor deleted successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+            delete(entityId);
+            Console.WriteLine("Entity deleted successfully.");
         }
         else
         {
-            Console.WriteLine("Invalid Tutor ID.");
+            Console.WriteLine("Invalid Entity ID.");
         }
     }
 
@@ -159,106 +301,367 @@ class Program
         bool exit = false;
         while (!exit)
         {
-            
-            Console.WriteLine("Call Management Menu:");
-            Console.WriteLine("1. Read Call");
-            Console.WriteLine("2. Update Call");
-            Console.WriteLine("3. Delete Call");
-            Console.WriteLine("4. Exit");
-            Console.Write("Enter choice: ");
-
-            var choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    ReadStudentCall(); break;
-                case "2":
-                    UpdateStudentCall(); break;
-                case "3":
-                    DeleteStudentCall(); break;
-                case "4":
-                    exit = true; break;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
-            }
-        }
-    }
-
-    // Read Call details
-    private static void ReadStudentCall()
-    {
-        Console.Write("Enter Call ID: ");
-        if (int.TryParse(Console.ReadLine(), out int callId))
-        {
             try
             {
-                var call = s_bl.StudentCall.Read(callId);
-                Console.WriteLine(call);
+                Console.WriteLine("Call Management Menu");
+                int i = 1;
+                foreach (var option in Enum.GetValues(typeof(CallMenuChoice)))
+                    Console.WriteLine(i++ + ". " + option);
+                Console.Write("Enter choice: ");
+
+                if (!Enum.TryParse(Console.ReadLine(), true, out CallMenuChoice choice) && Enum.IsDefined(typeof(CallMenuChoice), choice))
+                    Console.WriteLine("Invalid choice");
+
+                switch (choice)
+                {
+                    case CallMenuChoice.GetCallsByStatus:
+                        GetCallsByStatus();
+                        break;
+                    case CallMenuChoice.GetCallsList:
+                        GetCallsList();
+                        break;
+                    case CallMenuChoice.ReadCall:
+                        ReadEntity(id => s_bl.StudentCall.Read(id));
+                        break;
+                    case CallMenuChoice.UpdateCall:
+                        UpdateCall();
+                        break;
+                    case CallMenuChoice.DeleteCall:
+                        DeleteEntity<BO.StudentCall>(id => s_bl.StudentCall.Delete(id));
+                        break;
+                    case CallMenuChoice.CreateCall:
+                        CreateCall();
+                        break;
+                    case CallMenuChoice.GetClosedCallsForTutor:
+                        GetCallsForTutor<ClosedCallField, ClosedCallInList>((tutorId, filterField, sortField) => s_bl.StudentCall.GetClosedCallsForTutor(tutorId, filterField, sortField));
+                        break;
+                    case CallMenuChoice.GetOpenCallsForTutor:
+                        GetCallsForTutor<OpenCallField, OpenCallInList>((tutorId, filterField, sortField) => s_bl.StudentCall.GetOpenCallsForTutor(tutorId, filterField, sortField));
+                        break;
+                    case CallMenuChoice.UpdateTreatmentCompletion:
+                        UpdateTreatment((callId, assignmentId) => s_bl.StudentCall.UpdateTreatmentCompletion(callId, assignmentId));
+                        break;
+                    case CallMenuChoice.UpdateTreatmentCancellation:
+                        UpdateTreatment((callId, assignmentId) => s_bl.StudentCall.UpdateTreatmentCancellation(callId, assignmentId));
+                        break;
+                    case CallMenuChoice.AssignCallToTutor:
+                        AssignCallToTutor();
+                        break;
+                    case CallMenuChoice.Exit:
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine(ex.ToString());
             }
-        }
-        else
-        {
-            Console.WriteLine("Invalid Call ID.");
         }
     }
 
-    // Update Call details
-    private static void UpdateStudentCall()
+    static void GetCallsByStatus()
+    {
+        int[] calls = s_bl.StudentCall.GetCallsByStatus();
+        Console.WriteLine(string.Join(", ", calls));
+    }
+
+    static void GetCallsList()
+    {
+        Console.Write("Filter field: (0-Id, CallId, CallType, OpeningTime, RemainingTime, LastVolunteerName, CompletionTime, Status, TotalAssignments)");
+        if (!Enum.TryParse(Console.ReadLine(), out StudentCallField filterField))
+        {
+            Console.WriteLine("Invalid input");
+            return;
+        }
+
+        Console.Write("Filter value:");
+        object filterValue = Console.ReadLine();
+
+        Console.WriteLine("Sort field: (0-Id, CallId, CallType, OpeningTime, RemainingTime, LastVolunteerName, CompletionTime, Status, TotalAssignments");
+        if (!Enum.TryParse(Console.ReadLine(), out StudentCallField sortField))
+        {
+            Console.WriteLine("Invalid input");
+            return;
+        }
+
+        var calls = s_bl.StudentCall.GetCallsList(filterField, filterValue, sortField);
+        foreach (var call in calls)
+        {
+            Console.WriteLine(call);
+            Console.WriteLine("---------------");
+        }
+    }
+
+    static void UpdateCall()
     {
         Console.Write("Enter Call ID for update: ");
-        if (int.TryParse(Console.ReadLine(), out int callId))
-        {
-            Console.Write("Enter new address: ");
-            string newAddress = Console.ReadLine();
-
-            var call = new BO.StudentCall
-            {
-                Id = callId,
-                FullAddress = newAddress
-            };
-
-            try
-            {
-                s_bl.StudentCall.Update(call);
-                Console.WriteLine("Call updated successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-        }
-        else
+        if (!int.TryParse(Console.ReadLine(), out int callId))
         {
             Console.WriteLine("Invalid Call ID.");
+            return;
+        }
+
+        Console.Write("Enter new Subject (e.g., Math, Science, etc.): ");
+        string subjectInput = Console.ReadLine();
+        if (!Enum.TryParse(subjectInput, true, out Subjects subject))
+        {
+            Console.WriteLine("Invalid subject.");
+            return;
+        }
+
+        Console.Write("Enter new Description: ");
+        string description = Console.ReadLine();
+
+        Console.Write("Enter new Full Address: ");
+        string fullAddress = Console.ReadLine();
+
+        Console.Write("Enter new Full Name: ");
+        string fullName = Console.ReadLine();
+
+        Console.Write("Enter new Cell Number: ");
+        string cellNumber = Console.ReadLine();
+
+        Console.Write("Enter new Email: ");
+        string email = Console.ReadLine();
+
+        Console.Write("Enter new Latitude: ");
+        if (!double.TryParse(Console.ReadLine(), out double latitude))
+        {
+            Console.WriteLine("Invalid latitude.");
+            return;
+        }
+
+        Console.Write("Enter new Longitude: ");
+        if (!double.TryParse(Console.ReadLine(), out double longitude))
+        {
+            Console.WriteLine("Invalid longitude.");
+            return;
+        }
+
+        Console.Write("Enter new Open Time (format: yyyy-MM-dd HH:mm): ");
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime openTime))
+        {
+            Console.WriteLine("Invalid open time format.");
+            return;
+        }
+
+        Console.Write("Enter new Final Time (format: yyyy-MM-dd HH:mm) or leave empty if not applicable: ");
+        string finalTimeInput = Console.ReadLine();
+        DateTime? finalTime = null;
+        if (!string.IsNullOrEmpty(finalTimeInput))
+        {
+            if (DateTime.TryParse(finalTimeInput, out DateTime parsedFinalTime))
+            {
+                finalTime = parsedFinalTime;
+            }
+            else
+            {
+                Console.WriteLine("Invalid final time format.");
+                return;
+            }
+        }
+
+        Console.Write("Enter new Status (e.g., Open, Closed): ");
+        string statusInput = Console.ReadLine();
+        if (!Enum.TryParse(statusInput, true, out CallStatus status))
+        {
+            Console.WriteLine("Invalid status.");
+            return;
+        }
+
+        var updatedCall = new BO.StudentCall
+        {
+            Id = callId,
+            Subject = subject,
+            Description = description,
+            FullAddress = fullAddress,
+            FullName = fullName,
+            CellNumber = cellNumber,
+            Email = email,
+            Latitude = latitude,
+            Longitude = longitude,
+            OpenTime = openTime,
+            FinalTime = finalTime,
+            Status = status,
+        };
+
+        s_bl.StudentCall.Update(updatedCall);
+        Console.WriteLine("Call updated successfully.");
+    }
+
+    static void CreateCall()
+    {
+        // קריאת הנתונים מהמשתמש עבור כל התכונות של הקריאה
+        Console.Write("Enter Call ID: ");
+        if (!int.TryParse(Console.ReadLine(), out int callId))
+        {
+            Console.WriteLine("Invalid Call ID.");
+            return;
+        }
+
+        Console.Write("Enter Subject (e.g., Math, Science, etc.): ");
+        string subjectInput = Console.ReadLine();
+        if (!Enum.TryParse(subjectInput, true, out Subjects subject))
+        {
+            Console.WriteLine("Invalid subject.");
+            return;
+        }
+
+        Console.Write("Enter Description: ");
+        string description = Console.ReadLine();
+
+        Console.Write("Enter Full Address: ");
+        string fullAddress = Console.ReadLine();
+
+        Console.Write("Enter Full Name: ");
+        string fullName = Console.ReadLine();
+
+        Console.Write("Enter Cell Number: ");
+        string cellNumber = Console.ReadLine();
+
+        Console.Write("Enter Email: ");
+        string email = Console.ReadLine();
+
+        Console.Write("Enter Latitude: ");
+        if (!double.TryParse(Console.ReadLine(), out double latitude))
+        {
+            Console.WriteLine("Invalid latitude.");
+            return;
+        }
+
+        Console.Write("Enter Longitude: ");
+        if (!double.TryParse(Console.ReadLine(), out double longitude))
+        {
+            Console.WriteLine("Invalid longitude.");
+            return;
+        }
+
+        Console.Write("Enter Open Time (format: yyyy-MM-dd HH:mm): ");
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime openTime))
+        {
+            Console.WriteLine("Invalid open time format.");
+            return;
+        }
+
+        Console.Write("Enter Final Time (format: yyyy-MM-dd HH:mm) or leave empty if not applicable: ");
+        string finalTimeInput = Console.ReadLine();
+        DateTime? finalTime = null;
+        if (!string.IsNullOrEmpty(finalTimeInput))
+        {
+            if (DateTime.TryParse(finalTimeInput, out DateTime parsedFinalTime))
+            {
+                finalTime = parsedFinalTime;
+            }
+            else
+            {
+                Console.WriteLine("Invalid final time format.");
+                return;
+            }
+        }
+
+        Console.Write("Enter Status (e.g., Open, Closed): ");
+        string statusInput = Console.ReadLine();
+        if (!Enum.TryParse(statusInput, true, out CallStatus status))
+        {
+            Console.WriteLine("Invalid status.");
+            return;
+        }
+
+        var newCall = new BO.StudentCall
+        {
+            Id = callId,
+            Subject = subject,
+            Description = description,
+            FullAddress = fullAddress,
+            FullName = fullName,
+            CellNumber = cellNumber,
+            Email = email,
+            Latitude = latitude,
+            Longitude = longitude,
+            OpenTime = openTime,
+            FinalTime = finalTime,
+            Status = status,
+            CallsAssignInList = new List<BO.CallAssignInList>()
+        };
+
+
+        s_bl.StudentCall.Create(newCall);
+        Console.WriteLine("Call created successfully.");
+    }
+
+    static void GetCallsForTutor<T, U>(Func<int, Subjects, T, IEnumerable<U>> getCalls) where T : struct, Enum
+    {
+        Console.Write("Enter Tutor ID: ");
+        if (!int.TryParse(Console.ReadLine(), out int tutorId))
+        {
+            Console.WriteLine("Invalid Tutor ID");
+            return;
+        }
+
+        Console.Write("Enter sort field: ");
+        if (!Enum.TryParse(Console.ReadLine(), out T sortField))
+        {
+            Console.WriteLine("Invalid sort Field");
+            return;
+        }
+
+        Console.Write("Enter a subject for filtering: ");
+        if (!Enum.TryParse(Console.ReadLine(), out Subjects filterField))
+        {
+            Console.WriteLine("Invalid sort Field");
+            return;
+        }
+
+        var calls = getCalls(tutorId, filterField, sortField);
+        foreach (var call in calls)
+        {
+            Console.WriteLine(call);
+            Console.WriteLine("---------------");
         }
     }
 
-    // Delete Call details
-    private static void DeleteStudentCall()
+    static void UpdateTreatment(Action<int, int> updateTreatment)
     {
-        Console.Write("Enter Call ID for deletion: ");
-        if (int.TryParse(Console.ReadLine(), out int callId))
-        {
-            try
-            {
-                s_bl.StudentCall.Delete(callId);
-                Console.WriteLine("Call deleted successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-        }
-        else
+        Console.Write("Enter Call ID to update treatment: ");
+        if (!int.TryParse(Console.ReadLine(), out int callId))
         {
             Console.WriteLine("Invalid Call ID.");
+            return;
         }
+
+        Console.Write("Enter Assignment ID to update treatment: ");
+        if (!int.TryParse(Console.ReadLine(), out int assignmentId))
+        {
+            Console.WriteLine("Invalid assignment ID.");
+            return;
+        }
+
+        updateTreatment(callId, assignmentId);
+        Console.WriteLine("Treatment updated successfully.");
+
+    }
+
+    static void AssignCallToTutor()
+    {
+        Console.Write("Enter Call ID: ");
+        if (!int.TryParse(Console.ReadLine(), out int callId))
+        {
+            Console.WriteLine("Invalid Call ID.");
+            return;
+        }
+
+        Console.Write("Enter Tutor ID to assign the call to: ");
+        if (!int.TryParse(Console.ReadLine(), out int tutorId))
+        {
+            Console.WriteLine("Invalid Tutor ID.");
+            return;
+        }
+
+        s_bl.StudentCall.AssignCallToTutor(callId, tutorId);
+        Console.WriteLine("Call assigned to tutor successfully.");
     }
 
     // System Management Menu
@@ -267,31 +670,66 @@ class Program
         bool exit = false;
         while (!exit)
         {
-            
-            Console.WriteLine("System Management Menu:");
-            Console.WriteLine("1. Get System Clock");
-            Console.WriteLine("2. Advance Clock");
-            Console.WriteLine("3. Reset Database");
-            Console.WriteLine("4. Exit");
-            Console.Write("Enter choice: ");
-
-            var choice = Console.ReadLine();
-
-            switch (choice)
+            try
             {
-                case "1":
-                    GetSystemClock(); break;
-                case "2":
-                    AdvanceSystemClock(); break;
-                case "3":
-                    ResetDatabase(); break;
-                case "4":
-                    exit = true; break;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                Console.WriteLine("Admin Management Menu");
+                int i = 1;
+                foreach (var option in Enum.GetValues(typeof(AdminMenuChoice)))
+                    Console.WriteLine(i++ + ". " + option);
+                Console.Write("Enter choice: ");
+                if (!Enum.TryParse(Console.ReadLine(), true, out AdminMenuChoice choice) && Enum.IsDefined(typeof(AdminMenuChoice), choice))
+                    Console.WriteLine("Invalid choice");
+
+                switch (choice)
+                {
+                    case AdminMenuChoice.GetSystemClock:
+                        GetSystemClock(); break;
+                    case AdminMenuChoice.AdvanceSystemClock:
+                        AdvanceSystemClock(); break;
+                    case AdminMenuChoice.GetRiskTimeRange:
+                        GetRiskTimeRange(); break;
+                    case AdminMenuChoice.SetRiskTimeRange:
+                        SetRiskTimeRange(); break;
+                    case AdminMenuChoice.ResetDatabase:
+                        ResetDatabase(); break;
+                    case AdminMenuChoice.InitializeDatabase:
+                        InitializeDatabase(); break;
+                    case AdminMenuChoice.Exit:
+                        exit = true; break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
+    }
+
+    private static void InitializeDatabase()
+    {
+        s_bl.Admin.InitializeDatabase();
+        Console.WriteLine("Database initialized successfully.");
+    }
+
+    private static void SetRiskTimeRange()
+    {
+        Console.WriteLine("Enter a risk time range:");
+        if (TimeSpan.TryParse(Console.ReadLine(), out TimeSpan timeRange))
+        {
+            s_bl.Admin.SetRiskTimeRange(timeRange);
+            Console.WriteLine("Risk time range updated successfully");
+        }
+        else
+            Console.WriteLine("Invalid time range");
+    }
+
+    private static void GetRiskTimeRange()
+    {
+        var timeRange = s_bl.Admin.GetRiskTimeRange();
+        Console.WriteLine($"System risk time range: {timeRange}");
     }
 
     // Get the current system clock
@@ -304,20 +742,13 @@ class Program
     // Advance the system clock
     private static void AdvanceSystemClock()
     {
-        Console.WriteLine("Select time unit (HOUR, MINUTE, DAY, etc.):");
+        Console.WriteLine("Select time unit (Minute, Hour, Day, Month, Year):");
         var input = Console.ReadLine();
 
         if (Enum.TryParse(input, out BO.TimeUnit timeUnit))
         {
-            try
-            {
-                s_bl.Admin.AdvanceClock(timeUnit);
-                Console.WriteLine("Clock advanced successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+            s_bl.Admin.AdvanceClock(timeUnit);
+            Console.WriteLine("Clock advanced successfully.");
         }
         else
         {
@@ -328,14 +759,7 @@ class Program
     // Reset the database
     private static void ResetDatabase()
     {
-        try
-        {
-            s_bl.Admin.ResetDatabase();
-            Console.WriteLine("Database reset successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
+        s_bl.Admin.ResetDatabase();
+        Console.WriteLine("Database reset successfully.");
     }
 }
