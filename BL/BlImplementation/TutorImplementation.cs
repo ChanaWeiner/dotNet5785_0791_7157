@@ -1,4 +1,5 @@
 ﻿
+using BO;
 using DalApi;
 using DO;
 using Helpers;
@@ -121,6 +122,19 @@ internal class TutorImplementation : BlApi.ITutor
 
     public void Update(int id, BO.Tutor boTutor)
     {
+        var doTutor = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id);
+        doTutor = doTutor with
+        {
+            FullName = boTutor.FullName ?? doTutor.FullName,
+            CellNumber = boTutor.CellNumber ?? doTutor.CellNumber,
+            Email = boTutor.Email ?? doTutor.Email,
+            Password = boTutor.Password ?? doTutor.Password,
+            CurrentAddress = boTutor.CurrentAddress ?? doTutor.CurrentAddress,
+            Role = boTutor.Role > 0 ? (DO.Role)boTutor.Role : doTutor.Role,
+            Active = boTutor.Active != null ? boTutor.Active : doTutor.Active,
+            Distance = boTutor.Distance != 0 ? boTutor.Distance : doTutor.Distance,
+            DistanceType = boTutor.DistanceType > 0 ? (DO.DistanceType)boTutor.DistanceType : doTutor.DistanceType
+        };
         try
         {
             TutorManager.Validation(ref boTutor);
@@ -135,9 +149,9 @@ internal class TutorImplementation : BlApi.ITutor
         {
             throw new BO.BlValidationException("You are not authorized to update the tutor.");
         }
-        DO.Tutor doTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password,
-            boTutor.CurrentAddress, boTutor.Latitude, boTutor.Longitude, (DO.Role)boTutor.Role,
-            boTutor.Active, boTutor.Distance, (DO.DistanceType)boTutor.DistanceType);
+        //DO.Tutor doTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password,
+        //    boTutor.CurrentAddress, boTutor.Latitude, boTutor.Longitude, (DO.Role)boTutor.Role,
+        //    boTutor.Active, boTutor.Distance, (DO.DistanceType)boTutor.DistanceType);
         try
         {
             _dal.Tutor.Update(doTutor);

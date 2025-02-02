@@ -12,15 +12,28 @@ public static class Initialization
     //private static IAssignment? s_dalAssignment; //stage 1
     //private static IConfig? s_dalConfig; //stage 1
     private static readonly Random s_rand = new();
+    private static int CalculateCheckDigit(int id)
+    {
+        string idStr = id.ToString().PadLeft(8, '0'); 
+        int sum = 0;
 
+        for (int i = 0; i < 8; i++)
+        {
+            int num = (idStr[i] - '0') * (i % 2 == 0 ? 1 : 2);
+            sum += (num > 9) ? num - 9 : num;
+        }
+
+        int checkDigit = (10 - (sum % 10)) % 10;
+        return checkDigit;
+    }
     /// Creates random tutors and adds them to the DAL.
     private static void CreateTutors()
     {
         string[] firstNames = { "Dani", "Eli", "Yair", "Ariela", "Dina", "Shira", "Rivka", "David", "Moshe", "Tamar" };
         string[] lastNames = { "Levy", "Amar", "Cohen", "Levin", "Klein", "Israelof", "Mizrahi", "Peretz", "Azoulay", "Sharabi" };
 
-        const int MIN_ID = 200000000;
-        const int MAX_ID = 400000000;
+        const int MIN_ID = 20000000;
+        const int MAX_ID = 40000000;
 
         for (int i = 0; i < 15; i++)
         {
@@ -28,6 +41,7 @@ public static class Initialization
             do
             {
                 id = s_rand.Next(MIN_ID, MAX_ID); // Generate random ID
+                id = id * 10 + CalculateCheckDigit(id);
             }
             while (s_dal!.Tutor.Read(id) != null); // Ensure the tutor doesn't already exist
 

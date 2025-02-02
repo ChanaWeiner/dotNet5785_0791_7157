@@ -54,7 +54,7 @@ internal class TutorManager
     }
 
     #region validation
-    internal static void Validation(ref BO.Tutor boTutor)
+    internal static void Validation(ref DO.Tutor boTutor)
     {
         // ID validation
         if (!IsValidId(boTutor.Id))
