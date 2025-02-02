@@ -27,7 +27,7 @@ public class TutorInList
     public int? CurrentCallId { get; set; }
 
     // Type of the current call being handled
-    public Subjects CurrentSubject { get; set; }
+    public Subjects? CurrentSubject { get; set; }
     public override string ToString() => Tools.ToStringProperty(this);
 
 }

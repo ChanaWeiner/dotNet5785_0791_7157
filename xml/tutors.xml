@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTutor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Tutor>
-    <Id>237062997</Id>
-    <FullName>Yair Amar</FullName>
-    <CellNumber>053-6056896</CellNumber>
-    <Email>yair.amar@example.com</Email>
-    <Password>$2a$11$ZqfVzJoi2w8iWL03cToGyeE8xsW3XvBgRQ/Zipoxd16m2rRFT4.OS</Password>
-    <CurrentAddress>Street 43, City 6</CurrentAddress>
-    <Latitude>-8.407158444642022</Latitude>
-    <Longitude>39.346282928557315</Longitude>
-    <Role>Manager</Role>
-    <Active>false</Active>
-    <Distance>8.114287981072723</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
     <Id>213265820</Id>
     <FullName>Yair Israelof</FullName>
     <CellNumber>052-5386122</CellNumber>
@@ -208,6 +194,20 @@
     <Role>MasterTutor</Role>
     <Active>true</Active>
     <Distance>16.231055332357492</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>237062997</Id>
+    <FullName>Hodaya Cohen</FullName>
+    <CellNumber>053-6056896</CellNumber>
+    <Email>yair.amar@example.com</Email>
+    <Password>$2a$11$ZqfVzJoi2w8iWL03cToGyeE8xsW3XvBgRQ/Zipoxd16m2rRFT4.OS</Password>
+    <CurrentAddress>Street 43, City 6</CurrentAddress>
+    <Latitude>29.361058149999998</Latitude>
+    <Longitude>48.013920150000004</Longitude>
+    <Role>Manager</Role>
+    <Active>false</Active>
+    <Distance>8.114287981072723</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
 </ArrayOfTutor>

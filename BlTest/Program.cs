@@ -5,19 +5,40 @@ using BO;
 
 class Program
 {
-    // Initialize the BL interface through the Factory class
+    /// <summary>
+    /// Initializes the BL interface through the Factory class.
+    /// </summary>
     static readonly IBl s_bl = BlApi.Factory.Get();
 
+    /// <summary>
+    /// Main menu options.
+    /// </summary>
     enum MainMenu { TutorManagement = 1, CallManagement, SystemManagement, Exit };
+
+    /// <summary>
+    /// Menu options for managing calls.
+    /// </summary>
     enum CallMenuChoice
     {
         GetCallsByStatus = 1, GetCallsList, ReadCall, UpdateCall, DeleteCall, CreateCall,
         GetClosedCallsForTutor, GetOpenCallsForTutor, UpdateTreatmentCompletion,
         UpdateTreatmentCancellation, AssignCallToTutor, Exit
     };
+
+    /// <summary>
+    /// Menu options for managing tutors.
+    /// </summary>
     enum TutorMenuChoice { CreateTutor = 1, ReadTutor, UpdateTutor, DeleteTutor, SortTutors, LogIn, Exit }
 
+    /// <summary>
+    /// Menu options for system management.
+    /// </summary>
     enum AdminMenuChoice { GetSystemClock = 1, AdvanceSystemClock, GetRiskTimeRange, SetRiskTimeRange, ResetDatabase, InitializeDatabase, Exit }
+
+    /// <summary>
+    /// Main entry point of the application, providing a menu-driven interface for user interaction.
+    /// </summary>
+    /// <param name="args">Command-line arguments.</param>
     static void Main(string[] args)
     {
         bool exit = false;
@@ -36,13 +57,13 @@ class Program
                 switch (choice)
                 {
                     case MainMenu.TutorManagement:
-                        TutorMenu(); break; // Go to Tutor Management Menu
+                        TutorMenu(); break;
                     case MainMenu.CallManagement:
-                        StudentCallMenu(); break; // Go to Call Management Menu
+                        StudentCallMenu(); break;
                     case MainMenu.SystemManagement:
-                        AdminMenu(); break; // Go to System Management Menu
+                        AdminMenu(); break;
                     case MainMenu.Exit:
-                        exit = true; break; // Exit the application
+                        exit = true; break;
                     default:
                         Console.WriteLine("Invalid choice. Please try again.");
                         break;
@@ -50,12 +71,15 @@ class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: ", ex.Message);
+                Console.WriteLine("Error: " + ex.Message);
             }
+            Console.WriteLine();
         }
     }
 
-    // Tutor Management Menu
+    /// <summary>
+    /// Displays the Tutor Management menu and handles user input.
+    /// </summary>
     private static void TutorMenu()
     {
         bool exit = false;
@@ -100,11 +124,16 @@ class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
+
+            Console.WriteLine();
         }
     }
 
+    /// <summary>
+    /// Prompts the user to enter login credentials and verifies them.
+    /// </summary>
     private static void LogIn()
     {
         Console.Write("Enter Your ID: ");
@@ -128,6 +157,9 @@ class Program
         }
     }
 
+    /// <summary>
+    /// Sorts tutors based on specified criteria.
+    /// </summary>
     private static void SortTutors()
     {
         Console.Write("Sort filter: Is Active (true/false): ");
@@ -141,6 +173,7 @@ class Program
         var tutorsInList = s_bl.Tutor.SortTutorsInList(isActive, sortField);
         Console.WriteLine(string.Join("\n-----\n", tutorsInList));
     }
+
 
     private static void CreateTutor()
     {
@@ -223,61 +256,53 @@ class Program
         if (int.TryParse(Console.ReadLine(), out int tutorId))
         {
             Console.Write("Enter new name: ");
-            string? name = Console.ReadLine();
+            string? name = ReadStringOrNull();
 
             Console.Write("Enter new cell number: ");
-            string cellNumber = Console.ReadLine();
+            string? cellNumber = ReadStringOrNull();
 
             Console.Write("Enter new email: ");
-            string email = Console.ReadLine();
+            string? email = ReadStringOrNull();
 
             Console.Write("Enter new password: ");
-            string? password = Console.ReadLine();
+            string? password = ReadStringOrNull();
 
             Console.Write("Enter new current address: ");
-            string? currentAddress = Console.ReadLine();
-
-            //Console.Write("Enter latitude: ");
-            //double.TryParse(Console.ReadLine(), out double latitude);
-
-            //Console.Write("Enter longitude: ");
-            //double.TryParse(Console.ReadLine(), out double longitude);
+            string? currentAddress = ReadStringOrNull();
 
             Console.Write("Enter role (MasterTutor, BeginnerTutor, Manager): ");
-            Enum.TryParse(Console.ReadLine(), out Role role);
+            Role? role = ReadEnumOrNull<Role>();
 
             Console.Write("Is Active (true/false): ");
-            bool.TryParse(Console.ReadLine(), out bool active);
+            bool? active = ReadBoolOrNull();
 
             Console.Write("Enter distance: ");
-            double.TryParse(Console.ReadLine(), out double distance);
+            double? distance = ReadDoubleOrNull();
 
             Console.Write("Enter distance type (Air, Walking, Driving): ");
-            Enum.TryParse(Console.ReadLine(), out DistanceType distanceType);
+            DistanceType? distanceType = ReadEnumOrNull<DistanceType>();
+
+            var existingTutor = s_bl.Tutor.Read(tutorId);
 
             var tutor = new BO.Tutor
             {
                 Id = tutorId,
-                FullName = name,
-                CellNumber = cellNumber,
-                Email = email,
-                Password = password,
-                CurrentAddress = currentAddress,
-                //Latitude = latitude,
-                //Longitude = longitude,
-                Role = role,
-                Active = active,
-                Distance = distance,
-                DistanceType = distanceType
+                FullName = name ?? existingTutor.FullName,
+                CellNumber = cellNumber ?? existingTutor.CellNumber,
+                Email = email ?? existingTutor.Email,
+                Password = password ?? existingTutor.Password,
+                CurrentAddress = currentAddress ?? existingTutor.CurrentAddress,
+                Role = role ?? existingTutor.Role,
+                Active = active ?? existingTutor.Active,
+                Distance = distance ?? existingTutor.Distance,
+                DistanceType = distanceType ?? existingTutor.DistanceType
             };
 
             s_bl.Tutor.Update(tutorId, tutor);
             Console.WriteLine("Tutor updated successfully.");
         }
         else
-        {
             Console.WriteLine("Invalid Tutor ID.");
-        }
     }
 
     // Delete Tutor details
@@ -303,7 +328,7 @@ class Program
         {
             try
             {
-                Console.WriteLine("Call Management Menu");
+                Console.WriteLine("Call Management Menu:");
                 int i = 1;
                 foreach (var option in Enum.GetValues(typeof(CallMenuChoice)))
                     Console.WriteLine(i++ + ". " + option);
@@ -357,37 +382,36 @@ class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
+
+            Console.WriteLine();
         }
     }
 
     static void GetCallsByStatus()
     {
+        string[] subjects = { "English", "Math", "Grammar", "Programming", "History" };
+        Console.WriteLine("Amount of calls:");
         int[] calls = s_bl.StudentCall.GetCallsByStatus();
-        Console.WriteLine(string.Join(", ", calls));
+        for (int i = 0; i < calls.Length; i++)
+            Console.Write($"{subjects[i]}: {calls[i]}  ");
+        Console.WriteLine();
     }
 
     static void GetCallsList()
     {
         Console.Write("Filter field: (0-Id, CallId, CallType, OpeningTime, RemainingTime, LastVolunteerName, CompletionTime, Status, TotalAssignments)");
-        if (!Enum.TryParse(Console.ReadLine(), out StudentCallField filterField))
-        {
-            Console.WriteLine("Invalid input");
-            return;
-        }
+        StudentCallField? filterField = ReadEnumOrNull<StudentCallField>();
 
         Console.Write("Filter value:");
-        object filterValue = Console.ReadLine();
+        string? filterValue = ReadStringOrNull();
 
         Console.WriteLine("Sort field: (0-Id, CallId, CallType, OpeningTime, RemainingTime, LastVolunteerName, CompletionTime, Status, TotalAssignments");
-        if (!Enum.TryParse(Console.ReadLine(), out StudentCallField sortField))
-        {
-            Console.WriteLine("Invalid input");
-            return;
-        }
+        StudentCallField? sortField = ReadEnumOrNull<StudentCallField>();
 
         var calls = s_bl.StudentCall.GetCallsList(filterField, filterValue, sortField);
+
         foreach (var call in calls)
         {
             Console.WriteLine(call);
@@ -592,7 +616,7 @@ class Program
         Console.WriteLine("Call created successfully.");
     }
 
-    static void GetCallsForTutor<T, U>(Func<int, Subjects, T, IEnumerable<U>> getCalls) where T : struct, Enum
+    static void GetCallsForTutor<T, U>(Func<int, Subjects?, T?, IEnumerable<U>> getCalls) where T : struct, Enum
     {
         Console.Write("Enter Tutor ID: ");
         if (!int.TryParse(Console.ReadLine(), out int tutorId))
@@ -602,18 +626,12 @@ class Program
         }
 
         Console.Write("Enter sort field: ");
-        if (!Enum.TryParse(Console.ReadLine(), out T sortField))
-        {
-            Console.WriteLine("Invalid sort Field");
-            return;
-        }
+        T? sortField = ReadEnumOrNull<T>();
+
 
         Console.Write("Enter a subject for filtering: ");
-        if (!Enum.TryParse(Console.ReadLine(), out Subjects filterField))
-        {
-            Console.WriteLine("Invalid sort Field");
-            return;
-        }
+        Subjects? filterField = ReadEnumOrNull<Subjects>();
+
 
         var calls = getCalls(tutorId, filterField, sortField);
         foreach (var call in calls)
@@ -703,7 +721,7 @@ class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
         }
     }
@@ -761,5 +779,29 @@ class Program
     {
         s_bl.Admin.ResetDatabase();
         Console.WriteLine("Database reset successfully.");
+    }
+
+    private static T? ReadEnumOrNull<T>() where T : struct
+    {
+        string? input = Console.ReadLine();
+        return Enum.TryParse(input, out T result) ? result : (T?)null;
+    }
+
+    private static bool? ReadBoolOrNull()
+    {
+        string? input = Console.ReadLine();
+        return bool.TryParse(input, out bool result) ? result : null;
+    }
+
+    private static double? ReadDoubleOrNull()
+    {
+        string? input = Console.ReadLine();
+        return double.TryParse(input, out double result) ? result : null;
+    }
+
+    private static string? ReadStringOrNull()
+    {
+        string? input = Console.ReadLine();
+        return string.IsNullOrWhiteSpace(input) ? null : input;
     }
 }
