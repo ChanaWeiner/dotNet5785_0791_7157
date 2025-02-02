@@ -9,6 +9,10 @@ internal class StudentCallImplementation : IStudentCall
     {
         List<StudentCall> StudentCalls = XMLTools.LoadListFromXMLSerializer<StudentCall>(Config.s_studentcalls_xml);
         int id = Config.NextStudentCallId;
+        if (item.Id != 0)
+        {
+            id = item.Id;
+        }
         StudentCall copy = item with { Id = id };
         StudentCalls.Add(copy);
         XMLTools.SaveListToXMLSerializer(StudentCalls, Config.s_studentcalls_xml);

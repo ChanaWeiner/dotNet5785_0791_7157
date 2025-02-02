@@ -39,18 +39,19 @@ namespace BlImplementation
         /// <param name="call">The student call object to be created.</param>
         public void Create(BO.StudentCall call)
         {
+            call.OpenTime = ClockManager.Now;
             try
             {
                 // Validate the student call data.
                 StudentCallManager.Validation(call);
             }
-            catch (BO.BlValidationException ex)
+            catch (BO.BlValidationException)
             {
-                throw ex; // Rethrow the exception if validation fails.
+                throw; // Rethrow the exception if validation fails.
             }
 
             // Map BO object to DO object for the database.
-            DO.StudentCall studentCall = new(call.Id, (DO.Subjects)call.Subject, call.Description, call.FullAddress, call.FullName, "", "", call.Latitude, call.Longitude, call.OpenTime, call.FinalTime);
+            DO.StudentCall studentCall = new(call.Id, (DO.Subjects)call.Subject, call.Description, call.FullAddress, call.FullName, call.CellNumber, call.Email, call.Latitude, call.Longitude, call.OpenTime, call.FinalTime);
 
             try
             {
@@ -233,6 +234,8 @@ namespace BlImplementation
                 Id = callId,
                 Subject = (BO.Subjects)doStudentCall.Subject,
                 Description = doStudentCall.Description,
+                Email = doStudentCall.Email,
+                CellNumber = doStudentCall.CellNumber,
                 FullAddress = doStudentCall.FullAddress,
                 FullName = doStudentCall.FullName,
                 Latitude = doStudentCall.Latitude,
@@ -255,9 +258,9 @@ namespace BlImplementation
                 // Validate the updated student call data.
                 StudentCallManager.Validation(call);
             }
-            catch (BO.BlValidationException ex)
+            catch (BO.BlValidationException)
             {
-                throw ex; // Rethrow the exception if validation fails.
+                throw; // Rethrow the exception if validation fails.
             }
 
             // Map BO object to DO object for the database update.
@@ -268,9 +271,9 @@ namespace BlImplementation
                 // Attempt to update the student call in the database.
                 _dal.StudentCall.Update(studentCall);
             }
-            catch (DO.DalDoesNotExistException ex)
+            catch (DO.DalDoesNotExistException)
             {
-                throw ex; // Rethrow the exception if the call does not exist.
+                throw; // Rethrow the exception if the call does not exist.
             }
         }
 
@@ -284,7 +287,7 @@ namespace BlImplementation
             DO.Assignment? assignment = null;
 
             // Retrieve the assignment from the database.
-            assignment = _dal.Assignment.Read(assignmentId) ?? throw new BO.BlDoesNotExistException($"Call with ID={tutorId} does not exist");
+            assignment = _dal.Assignment.Read(assignmentId) ?? throw new BO.BlDoesNotExistException($"Assignment's tutor with ID={tutorId}, which its ID={assignmentId} does not exist");
 
             // Ensure the tutor has permission to cancel the treatment.
             if (assignment.TutorId != tutorId && Tools.IsManagerId(tutorId))
@@ -322,7 +325,7 @@ namespace BlImplementation
             DO.Assignment? assignment = null;
 
             // Retrieve the assignment from the database.
-            assignment = _dal.Assignment.Read(a => a.TutorId == tutorId) ?? throw new BO.BlDoesNotExistException($"Assignment with ID={assignmentId} does not exist");
+            assignment = _dal.Assignment.Read(a => a.TutorId == tutorId&&a.Id== assignmentId) ?? throw new BO.BlDoesNotExistException($"Assignment's tutor with ID={tutorId}, which its ID={assignmentId} does not exist");
 
             // Ensure the assignment has not already been completed or canceled.
             if (assignment!.EndOfTreatment != null)

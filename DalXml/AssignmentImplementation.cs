@@ -17,7 +17,7 @@ internal class AssignmentImplementation : IAssignment
             TutorId = (int?)a.Element("TutorId") ?? 0,
             EntryTime = (DateTime)a.Element("EntryTime"),
             EndTime = (DateTime?)a.Element("EndTime") ?? null,
-            EndOfTreatment = Enum.TryParse(a.Element("EndOfTreatment")?.Value, out EndOfTreatment result) ? result : 0
+            EndOfTreatment = Enum.TryParse(a.Element("EndOfTreatment")?.Value, out EndOfTreatment result) ? result :null
         };
     }
 
@@ -52,6 +52,10 @@ internal class AssignmentImplementation : IAssignment
     {
         XElement? assignmentElements = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
         int id = Config.NextAssignmentId; // Generates a new ID.
+        if (item.Id != 0)
+        {
+            id = item.Id;
+        }
         Assignment copy = item with { Id = id }; // Creates a copy of the object with the new ID.
 
         assignmentElements.Add(GetXElement(copy));

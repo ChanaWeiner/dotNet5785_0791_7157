@@ -429,51 +429,25 @@ class Program
         }
 
         Console.Write("Enter new Subject (e.g., Math, Science, etc.): ");
-        string subjectInput = Console.ReadLine();
-        if (!Enum.TryParse(subjectInput, true, out Subjects subject))
-        {
-            Console.WriteLine("Invalid subject.");
-            return;
-        }
+        Subjects? subject = ReadEnumOrNull<Subjects>();
 
         Console.Write("Enter new Description: ");
-        string description = Console.ReadLine();
+        string? description = ReadStringOrNull();
 
         Console.Write("Enter new Full Address: ");
-        string fullAddress = Console.ReadLine();
+        string? fullAddress = ReadStringOrNull();
 
         Console.Write("Enter new Full Name: ");
-        string fullName = Console.ReadLine();
+        string? fullName = ReadStringOrNull();
 
         Console.Write("Enter new Cell Number: ");
-        string cellNumber = Console.ReadLine();
+        string? cellNumber = ReadStringOrNull();
 
         Console.Write("Enter new Email: ");
-        string email = Console.ReadLine();
-
-        Console.Write("Enter new Latitude: ");
-        if (!double.TryParse(Console.ReadLine(), out double latitude))
-        {
-            Console.WriteLine("Invalid latitude.");
-            return;
-        }
-
-        Console.Write("Enter new Longitude: ");
-        if (!double.TryParse(Console.ReadLine(), out double longitude))
-        {
-            Console.WriteLine("Invalid longitude.");
-            return;
-        }
-
-        Console.Write("Enter new Open Time (format: yyyy-MM-dd HH:mm): ");
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime openTime))
-        {
-            Console.WriteLine("Invalid open time format.");
-            return;
-        }
+        string? email = ReadStringOrNull();
 
         Console.Write("Enter new Final Time (format: yyyy-MM-dd HH:mm) or leave empty if not applicable: ");
-        string finalTimeInput = Console.ReadLine();
+        string? finalTimeInput = ReadStringOrNull();
         DateTime? finalTime = null;
         if (!string.IsNullOrEmpty(finalTimeInput))
         {
@@ -488,28 +462,19 @@ class Program
             }
         }
 
-        Console.Write("Enter new Status (e.g., Open, Closed): ");
-        string statusInput = Console.ReadLine();
-        if (!Enum.TryParse(statusInput, true, out CallStatus status))
-        {
-            Console.WriteLine("Invalid status.");
-            return;
-        }
+        var existCall = s_bl.StudentCall.Read(callId);
 
         var updatedCall = new BO.StudentCall
         {
             Id = callId,
-            Subject = subject,
-            Description = description,
-            FullAddress = fullAddress,
-            FullName = fullName,
-            CellNumber = cellNumber,
-            Email = email,
-            Latitude = latitude,
-            Longitude = longitude,
-            OpenTime = openTime,
-            FinalTime = finalTime,
-            Status = status,
+            Subject = subject?? existCall.Subject,
+            Description = description?? existCall.Description,
+            FullAddress = fullAddress?? existCall.FullAddress,
+            FullName = fullName?? existCall.FullName,
+            CellNumber = cellNumber?? existCall.CellNumber,
+            Email = email?? existCall.Email,
+            OpenTime=existCall.OpenTime,
+            FinalTime = finalTime?? existCall.FinalTime,
         };
 
         s_bl.StudentCall.Update(updatedCall);
@@ -518,13 +483,6 @@ class Program
 
     static void CreateCall()
     {
-        // קריאת הנתונים מהמשתמש עבור כל התכונות של הקריאה
-        Console.Write("Enter Call ID: ");
-        if (!int.TryParse(Console.ReadLine(), out int callId))
-        {
-            Console.WriteLine("Invalid Call ID.");
-            return;
-        }
 
         Console.Write("Enter Subject (e.g., Math, Science, etc.): ");
         string subjectInput = Console.ReadLine();
@@ -549,27 +507,6 @@ class Program
         Console.Write("Enter Email: ");
         string email = Console.ReadLine();
 
-        Console.Write("Enter Latitude: ");
-        if (!double.TryParse(Console.ReadLine(), out double latitude))
-        {
-            Console.WriteLine("Invalid latitude.");
-            return;
-        }
-
-        Console.Write("Enter Longitude: ");
-        if (!double.TryParse(Console.ReadLine(), out double longitude))
-        {
-            Console.WriteLine("Invalid longitude.");
-            return;
-        }
-
-        Console.Write("Enter Open Time (format: yyyy-MM-dd HH:mm): ");
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime openTime))
-        {
-            Console.WriteLine("Invalid open time format.");
-            return;
-        }
-
         Console.Write("Enter Final Time (format: yyyy-MM-dd HH:mm) or leave empty if not applicable: ");
         string finalTimeInput = Console.ReadLine();
         DateTime? finalTime = null;
@@ -586,28 +523,26 @@ class Program
             }
         }
 
-        Console.Write("Enter Status (e.g., Open, Closed): ");
-        string statusInput = Console.ReadLine();
-        if (!Enum.TryParse(statusInput, true, out CallStatus status))
-        {
-            Console.WriteLine("Invalid status.");
-            return;
-        }
+        //Console.Write("Enter Status (e.g., Open, Closed): ");
+        //string statusInput = Console.ReadLine();
+        //if (!Enum.TryParse(statusInput, true, out CallStatus status))
+        //{
+        //    Console.WriteLine("Invalid status.");
+        //    return;
+        //}
 
         var newCall = new BO.StudentCall
         {
-            Id = callId,
+          
             Subject = subject,
             Description = description,
             FullAddress = fullAddress,
             FullName = fullName,
             CellNumber = cellNumber,
             Email = email,
-            Latitude = latitude,
-            Longitude = longitude,
-            OpenTime = openTime,
+            
             FinalTime = finalTime,
-            Status = status,
+            //Status = status,
             CallsAssignInList = new List<BO.CallAssignInList>()
         };
 
@@ -643,10 +578,10 @@ class Program
 
     static void UpdateTreatment(Action<int, int> updateTreatment)
     {
-        Console.Write("Enter Call ID to update treatment: ");
-        if (!int.TryParse(Console.ReadLine(), out int callId))
+        Console.Write("Enter Tutor ID to update treatment: ");
+        if (!int.TryParse(Console.ReadLine(), out int tutorId))
         {
-            Console.WriteLine("Invalid Call ID.");
+            Console.WriteLine("Invalid Tutor ID.");
             return;
         }
 
@@ -657,7 +592,7 @@ class Program
             return;
         }
 
-        updateTreatment(callId, assignmentId);
+        updateTreatment(tutorId, assignmentId);
         Console.WriteLine("Treatment updated successfully.");
 
     }
@@ -678,7 +613,7 @@ class Program
             return;
         }
 
-        s_bl.StudentCall.AssignCallToTutor(callId, tutorId);
+        s_bl.StudentCall.AssignCallToTutor(tutorId,callId);
         Console.WriteLine("Call assigned to tutor successfully.");
     }
 
