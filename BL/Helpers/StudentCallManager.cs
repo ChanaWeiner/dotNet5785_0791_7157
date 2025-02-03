@@ -46,7 +46,7 @@ namespace Helpers
                     throw new BO.BlValidationException($"Property '{filterField}' not found on {c.GetType().Name}");
 
                 var propertyValue = propertyInfo.GetValue(c);
-                return propertyValue != null && propertyValue.Equals(filterValue);
+                return propertyValue != null && propertyValue.ToString() == filterValue.ToString();
             }).ToList() ?? throw new BO.BlDoesNotExistException("No StudentCall records found matching the filter criteria.");
 
             // Convert the data to BO objects and return the list.

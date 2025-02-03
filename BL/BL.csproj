@@ -10,7 +10,13 @@
 		<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 		<RootNamespace />
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-
+    
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <WarningLevel>0</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <WarningLevel>0</WarningLevel>
 	</PropertyGroup>
 	<ItemGroup>
 	  <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
