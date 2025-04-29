@@ -76,6 +76,8 @@ namespace BlImplementation
             {
                 throw ex; // Rethrow the exception if the call already exists.
             }
+            StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
         }
 
         /// <summary>
@@ -108,6 +110,8 @@ namespace BlImplementation
             {
                 throw ex; // Rethrow the exception if the call does not exist.
             }
+            StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
         }
 
         /// <summary>
@@ -293,6 +297,9 @@ namespace BlImplementation
             {
                 throw; // Rethrow the exception if the call does not exist.
             }
+            StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+            StudentCallManager.Observers.NotifyItemUpdated(call.Id);  //stage 5
+
         }
 
         /// <summary>

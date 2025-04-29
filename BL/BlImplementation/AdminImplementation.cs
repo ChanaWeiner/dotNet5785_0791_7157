@@ -73,7 +73,7 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void InitializeDatabase()
     {
-        Initialization.Do();
+        AdminManager.InitializeDB();
     }
 
     /// <summary>
@@ -81,7 +81,8 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void ResetDatabase()
     {
-        _dal.ResetDB();
+        AdminManager.ResetDB();
+
     }
 
     /// <summary>
@@ -92,5 +93,17 @@ internal class AdminImplementation : IAdmin
     {
         AdminManager.RiskTimeSpan = timeRange;
     }
+
+    #region Stage 5
+    public void AddClockObserver(Action clockObserver) =>
+    AdminManager.ClockUpdatedObservers += clockObserver;
+    public void RemoveClockObserver(Action clockObserver) =>
+    AdminManager.ClockUpdatedObservers -= clockObserver;
+    public void AddConfigObserver(Action configObserver) =>
+   AdminManager.ConfigUpdatedObservers += configObserver;
+    public void RemoveConfigObserver(Action configObserver) =>
+    AdminManager.ConfigUpdatedObservers -= configObserver;
+    #endregion Stage 5
+
 }
 
