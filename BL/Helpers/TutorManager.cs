@@ -10,6 +10,7 @@ namespace Helpers
 {
     internal class TutorManager
     {
+        internal static ObserverManager Observers = new(); //stage 5 
         private static IDal s_dal = Factory.Get;
 
         /// <summary>
@@ -201,5 +202,9 @@ namespace Helpers
         /// <param name="hashedPassword">The hashed password.</param>
         /// <returns>True if the password matches the hashed password, otherwise false.</returns>
         public static bool VerifyPassword(string password, string hashedPassword) => BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+
+       
+
     }
+
 }

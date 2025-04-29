@@ -6,6 +6,7 @@ namespace Helpers
 {
     internal class StudentCallManager
     {
+        internal static ObserverManager Observers = new(); //stage 5 
         private static IDal s_dal = DalApi.Factory.Get;
         private static IAdmin manager = new AdminImplementation();
 

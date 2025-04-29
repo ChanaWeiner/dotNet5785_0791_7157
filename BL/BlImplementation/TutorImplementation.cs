@@ -10,7 +10,16 @@ namespace BlImplementation
     internal class TutorImplementation : BlApi.ITutor
     {
         private readonly DalApi.IDal _dal = DalApi.Factory.Get;
-
+        #region Stage 5
+        public void AddObserver(Action listObserver) =>
+        TutorManager.Observers.AddListObserver(listObserver); //stage 5
+        public void AddObserver(int id, Action observer) =>
+        TutorManager.Observers.AddObserver(id, observer); //stage 5
+        public void RemoveObserver(Action listObserver) =>
+        TutorManager.Observers.RemoveListObserver(listObserver); //stage 5
+        public void RemoveObserver(int id, Action observer) =>
+        TutorManager.Observers.RemoveObserver(id, observer); //stage 5
+        #endregion Stage 5
         /// <summary>
         /// Creates a new tutor in the system after validating the provided tutor object.
         /// </summary>
@@ -43,6 +52,8 @@ namespace BlImplementation
                 // If tutor already exists, throw a custom exception indicating that.
                 throw new BO.BlAlreadyExistsException($"Tutor with ID={doTutor.Id} already exists", ex);
             }
+            TutorManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
         }
 
         /// <summary>
@@ -69,6 +80,8 @@ namespace BlImplementation
                 // If the tutor does not exist, throw an exception.
                 throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist", ex);
             }
+            TutorManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
         }
 
         /// <summary>
@@ -211,6 +224,7 @@ namespace BlImplementation
                 // If the tutor does not exist, throw an exception.
                 throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist", ex);
             }
+             TutorManager.Observers.NotifyItemUpdated(id);
         }
     }
 }
