@@ -2,7 +2,7 @@
 
 namespace BlApi;
 
-public interface ITutor : IObservable
+public interface ITutor: IObservable
 {
     /// <summary>
     /// Allows a tutor to log in by verifying their credentials.

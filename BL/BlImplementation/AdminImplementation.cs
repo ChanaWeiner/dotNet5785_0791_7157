@@ -13,6 +13,19 @@ internal class AdminImplementation : IAdmin
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
+
+    #region Stage 5
+    public void AddClockObserver(Action clockObserver) =>
+    AdminManager.ClockUpdatedObservers += clockObserver;
+    public void RemoveClockObserver(Action clockObserver) =>
+    AdminManager.ClockUpdatedObservers -= clockObserver;
+    public void AddConfigObserver(Action configObserver) =>
+   AdminManager.ConfigUpdatedObservers += configObserver;
+    public void RemoveConfigObserver(Action configObserver) =>
+    AdminManager.ConfigUpdatedObservers -= configObserver;
+    #endregion Stage 5
+
+
     /// <summary>
     /// Advances the system clock by a specified time unit.
     /// </summary>

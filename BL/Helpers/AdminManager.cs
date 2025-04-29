@@ -64,7 +64,7 @@ internal static class AdminManager //stage 4
 
         //Calling all the observers of clock update
         ClockUpdatedObservers?.Invoke(); //prepared for stage 5
-    } 
+    }
     #endregion Stage 4
 
     #region Stage 7 base
@@ -107,7 +107,7 @@ internal static class AdminManager //stage 4
             //TO_DO:
             //Add calls here to any logic simulation that was required in stage 7
             //for example: course registration simulation
-            StudentManager.SimulateCourseRegistrationAndGrade(); //stage 7
+            //StudentManager.SimulateCourseRegistrationAndGrade(); //stage 7
 
             //etc...
             #endregion Stage 7

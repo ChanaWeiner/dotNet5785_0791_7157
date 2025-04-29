@@ -16,12 +16,13 @@ namespace BlImplementation
         public void AddObserver(Action listObserver) =>
         StudentCallManager.Observers.AddListObserver(listObserver); //stage 5
         public void AddObserver(int id, Action observer) =>
-        StudentCallManager.Observers.AddObserver(id, observer); //stage 5
+    StudentCallManager.Observers.AddObserver(id, observer); //stage 5
         public void RemoveObserver(Action listObserver) =>
-        StudentCallManager.Observers.RemoveListObserver(listObserver); //stage 5
+    StudentCallManager.Observers.RemoveListObserver(listObserver); //stage 5
         public void RemoveObserver(int id, Action observer) =>
-        StudentCallManager.Observers.RemoveObserver(id, observer); //stage 5
+    StudentCallManager.Observers.RemoveObserver(id, observer); //stage 5
         #endregion Stage 5
+
 
         /// <summary>
         /// Assigns a student call to a tutor if the call hasn't been handled or expired.
@@ -68,6 +69,8 @@ namespace BlImplementation
             {
                 // Attempt to create the student call in the database.
                 _dal.StudentCall.Create(studentCall);
+                StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
             }
             catch (DO.DalAlreadyExistsException ex)
             {
@@ -100,6 +103,8 @@ namespace BlImplementation
             try
             {
                 _dal.StudentCall.Delete(callId);
+                StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
             }
             catch (DO.DalDoesNotExistException ex)
             {
@@ -285,6 +290,8 @@ namespace BlImplementation
             {
                 // Attempt to update the student call in the database.
                 _dal.StudentCall.Update(studentCall);
+                StudentCallManager.Observers.NotifyItemUpdated(call.Id);  //stage 5
+                StudentCallManager.Observers.NotifyListUpdated();  //stage 5
             }
             catch (DO.DalDoesNotExistException)
             {
