@@ -7,7 +7,9 @@ namespace Dal;
 
 internal class AssignmentImplementation : IAssignment
 {
+    /// <summary>
     /// Converts an XElement to an Assignment object.
+    /// </summary>
     static Assignment getAssignment(XElement a)
     {
         return new DO.Assignment()
@@ -17,11 +19,13 @@ internal class AssignmentImplementation : IAssignment
             TutorId = (int?)a.Element("TutorId") ?? 0,
             EntryTime = (DateTime)a.Element("EntryTime"),
             EndTime = (DateTime?)a.Element("EndTime") ?? null,
-            EndOfTreatment = Enum.TryParse(a.Element("EndOfTreatment")?.Value, out EndOfTreatment result) ? result :null
+            EndOfTreatment = Enum.TryParse(a.Element("EndOfTreatment")?.Value, out EndOfTreatment result) ? result : null
         };
     }
 
+    /// <summary>
     /// Converts an Assignment object to an XElement.
+    /// </summary>
     static XElement GetXElement(Assignment assignment)
     {
         var elements = new List<XElement>();
@@ -47,7 +51,9 @@ internal class AssignmentImplementation : IAssignment
         return new XElement("Assignment", elements);
     }
 
+    /// <summary>
     /// Creates a new Assignment and saves it to the XML file.
+    /// </summary>
     public void Create(Assignment item)
     {
         XElement? assignmentElements = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
@@ -62,7 +68,9 @@ internal class AssignmentImplementation : IAssignment
         XMLTools.SaveListToXMLElement(assignmentElements, Config.s_assignments_xml);
     }
 
+    /// <summary>
     /// Deletes an Assignment by its ID.
+    /// </summary>
     public void Delete(int id)
     {
         XElement assignmentElements = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
@@ -78,7 +86,9 @@ internal class AssignmentImplementation : IAssignment
         XMLTools.SaveListToXMLElement(assignmentElements, Config.s_assignments_xml);
     }
 
+    /// <summary>
     /// Deletes all Assignments from the XML file.
+    /// </summary>
     public void DeleteAll()
     {
         XElement assignmentElements = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
@@ -86,7 +96,9 @@ internal class AssignmentImplementation : IAssignment
         XMLTools.SaveListToXMLElement(assignmentElements, Config.s_assignments_xml);
     }
 
+    /// <summary>
     /// Reads an Assignment by its ID.
+    /// </summary>
     public Assignment? Read(int id)
     {
         XElement? assignmentElement = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml)
@@ -95,7 +107,9 @@ internal class AssignmentImplementation : IAssignment
         return assignmentElement is null ? null : getAssignment(assignmentElement);
     }
 
+    /// <summary>
     /// Reads an Assignment based on a filter condition.
+    /// </summary>
     public Assignment? Read(Func<Assignment, bool> filter)
     {
         return XMLTools.LoadListFromXMLElement(Config.s_assignments_xml)
@@ -104,7 +118,9 @@ internal class AssignmentImplementation : IAssignment
             .FirstOrDefault(filter);
     }
 
+    /// <summary>
     /// Reads all Assignments with an optional filter.
+    /// </summary>
     public IEnumerable<Assignment> ReadAll(Func<Assignment, bool>? filter = null)
     {
         XElement assignmentElements = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
@@ -120,7 +136,9 @@ internal class AssignmentImplementation : IAssignment
         return assignments;
     }
 
+    /// <summary>
     /// Updates an existing Assignment.
+    /// </summary>
     public void Update(Assignment item)
     {
         Assignment assignment = Read(item.Id);
@@ -134,6 +152,5 @@ internal class AssignmentImplementation : IAssignment
 
         assignmentElements.Add(GetXElement(copy));
         XMLTools.SaveListToXMLElement(assignmentElements, Config.s_assignments_xml);
-
     }
 }

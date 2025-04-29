@@ -6,15 +6,19 @@ namespace DalTest;
 
 public static class Initialization
 {
-    private static IDal? s_dal; //stage 2
-    //private static ITutor? s_dalTutor; //stage 1
-    //private static IStudentCall? s_dalStudentCall;
-    //private static IAssignment? s_dalAssignment; //stage 1
-    //private static IConfig? s_dalConfig; //stage 1
+    private static IDal? s_dal; // stage 2
+    // private static ITutor? s_dalTutor; // stage 1
+    // private static IStudentCall? s_dalStudentCall;
+    // private static IAssignment? s_dalAssignment; // stage 1
+    // private static IConfig? s_dalConfig; // stage 1
     private static readonly Random s_rand = new();
+
+    /// <summary>
+    /// Calculates the check digit for a given ID.
+    /// </summary>
     private static int CalculateCheckDigit(int id)
     {
-        string idStr = id.ToString().PadLeft(8, '0'); 
+        string idStr = id.ToString().PadLeft(8, '0');
         int sum = 0;
 
         for (int i = 0; i < 8; i++)
@@ -26,7 +30,10 @@ public static class Initialization
         int checkDigit = (10 - (sum % 10)) % 10;
         return checkDigit;
     }
+
+    /// <summary>
     /// Creates random tutors and adds them to the DAL.
+    /// </summary>
     private static void CreateTutors()
     {
         string[] firstNames = { "Dani", "Eli", "Yair", "Ariela", "Dina", "Shira", "Rivka", "David", "Moshe", "Tamar" };
@@ -61,7 +68,9 @@ public static class Initialization
         }
     }
 
+    /// <summary>
     /// Creates random student calls and adds them to the DAL.
+    /// </summary>
     private static void CreateStudentCalls()
     {
         string[] subjects = { "English", "Math", "Grammer", "Programming", "History" };
@@ -88,7 +97,9 @@ public static class Initialization
         }
     }
 
+    /// <summary>
     /// Creates random assignments for student calls and tutors, and adds them to the DAL.
+    /// </summary>
     private static void CreateAssignments()
     {
         List<StudentCall> studentCalls = s_dal!.StudentCall.ReadAll().ToList();
@@ -111,21 +122,23 @@ public static class Initialization
         }
     }
 
+    /// <summary>
     /// Initializes the DAL and populates the data with random values.
+    /// </summary>
     public static void Do()
     {
-        //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
-        s_dal = DalApi.Factory.Get; //stage 4
+        // s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
+        s_dal = DalApi.Factory.Get; // stage 4
         s_dal!.ResetDB();
-        //s_dal!.Tutor = dalTutors ?? throw new NullReferenceException("DAL object can not be null!");
-        //s_dal.StudentCall = dalStudentCalls ?? throw new NullReferenceException("DAL object can not be null!");
-        //s_dalAssignment = dalAssignments ?? throw new NullReferenceException("DAL object can not be null!");
-        //s_dalConfig = dalConfig;
+        // s_dal!.Tutor = dalTutors ?? throw new NullReferenceException("DAL object can not be null!");
+        // s_dal.StudentCall = dalStudentCalls ?? throw new NullReferenceException("DAL object can not be null!");
+        // s_dalAssignment = dalAssignments ?? throw new NullReferenceException("DAL object can not be null!");
+        // s_dalConfig = dalConfig;
         Console.WriteLine("Reset Configuration values and List values...");
-        //s_dalConfig!.Reset();
-        //s_dalStudentCall.DeleteAll();
-        //s_dalStudentCall.DeleteAll();
-        //s_dalAssignment.DeleteAll();
+        // s_dalConfig!.Reset();
+        // s_dalStudentCall.DeleteAll();
+        // s_dalStudentCall.DeleteAll();
+        // s_dalAssignment.DeleteAll();
         Console.WriteLine("Initializing All lists ...");
         CreateTutors();
         CreateStudentCalls();

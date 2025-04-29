@@ -27,6 +27,7 @@ public class OpenCallInList
 
     // Distance of the call from the volunteer
     public double DistanceFromVolunteer { get; set; }
+
     public override string ToString() => Tools.ToStringProperty(this);
 
 }

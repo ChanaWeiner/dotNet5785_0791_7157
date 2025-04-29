@@ -1,10 +1,13 @@
 ﻿using DalApi;
 using DO;
+
 namespace Dal;
 
 internal class StudentCallImplementation : IStudentCall
 {
+    /// <summary>
     /// Creates a new student call and adds it to the data source.
+    /// </summary>
     public void Create(StudentCall item)
     {
         int id = Config.NextStudentCallId;
@@ -12,8 +15,10 @@ internal class StudentCallImplementation : IStudentCall
         DataSource.StudentCalls.Add(copy);
     }
 
+    /// <summary>
     /// Deletes a student call by its ID from the data source.
     /// Throws an exception if the student call does not exist.
+    /// </summary>
     public void Delete(int id)
     {
         StudentCall studentCall = Read(id);
@@ -22,28 +27,36 @@ internal class StudentCallImplementation : IStudentCall
         DataSource.StudentCalls.Remove(studentCall);
     }
 
+    /// <summary>
     /// Deletes all student calls from the data source.
+    /// </summary>
     public void DeleteAll()
     {
         DataSource.StudentCalls.Clear();
     }
 
+    /// <summary>
     /// Reads a student call by its ID.
     /// Returns null if the student call does not exist.
+    /// </summary>
     public StudentCall? Read(int id)
     {
         return DataSource.StudentCalls.FirstOrDefault(x => x.Id == id);
     }
 
+    /// <summary>
     /// Reads a student call based on a filter.
     /// Returns null if no matching student call is found.
+    /// </summary>
     public StudentCall? Read(Func<StudentCall, bool> filter)
     {
         return DataSource.StudentCalls.FirstOrDefault(filter);
     }
 
+    /// <summary>
     /// Reads all student calls, optionally filtered by a predicate.
     /// If no filter is provided, all student calls are returned.
+    /// </summary>
     public IEnumerable<StudentCall> ReadAll(Func<StudentCall, bool>? filter = null)
     {
         if (filter != null)
@@ -59,8 +72,10 @@ internal class StudentCallImplementation : IStudentCall
         }
     }
 
+    /// <summary>
     /// Updates an existing student call in the data source.
     /// Throws an exception if the student call does not exist.
+    /// </summary>
     public void Update(StudentCall item)
     {
         StudentCall studentCall = Read(item.Id);

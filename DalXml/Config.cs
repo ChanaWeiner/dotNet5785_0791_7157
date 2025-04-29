@@ -14,42 +14,52 @@ internal static class Config
     // File name for storing assignment data.
     internal const string s_assignments_xml = "assignments.xml";
 
+    /// <summary>
     /// Gets the next assignment ID and increments it in the configuration file.
     /// This ensures unique IDs for new assignments.
+    /// </summary>
     internal static int NextAssignmentId
     {
         get => XMLTools.GetAndIncreaseConfigIntVal(s_data_config_xml, "NextAssignmentId");
         private set => XMLTools.SetConfigIntVal(s_data_config_xml, "NextAssignmentId", value);
     }
 
+    /// <summary>
     /// Gets the next student call ID and increments it in the configuration file.
     /// This ensures unique IDs for new student calls.
+    /// </summary>
     internal static int NextStudentCallId
     {
         get => XMLTools.GetAndIncreaseConfigIntVal(s_data_config_xml, "NextStudentCallId");
         private set => XMLTools.SetConfigIntVal(s_data_config_xml, "NextStudentCallId", value);
     }
 
+    /// <summary>
     /// Gets or sets the system clock. The clock value is stored in the configuration file.
     /// This allows for centralized management of the current date and time in the system.
+    /// </summary>
     internal static DateTime Clock
     {
         get => XMLTools.GetConfigDateVal(s_data_config_xml, "Clock");
         set => XMLTools.SetConfigDateVal(s_data_config_xml, "Clock", value);
     }
 
+    /// <summary>
     /// Gets or sets the risk time span for assignments.
     /// This value represents the time span during which assignments are considered at risk.
+    /// </summary>
     internal static TimeSpan RiskTimeSpan
     {
         get => XMLTools.GetConfigTimeSpanVal(s_data_config_xml, "RiskTimeSpan");
         set => XMLTools.SetConfigTimeSpanVal(s_data_config_xml, "RiskTimeSpan", value);
     }
-    
+
+    /// <summary>
     /// Resets all configuration values to their default settings.
     /// - Resets the next assignment ID to 1000.
     /// - Resets the next student call ID to 1000.
     /// - Resets the system clock to the current date and time.
+    /// </summary>
     internal static void Reset()
     {
         NextAssignmentId = 1000;

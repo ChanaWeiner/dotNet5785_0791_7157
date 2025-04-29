@@ -11,7 +11,7 @@ public enum TutorSortField { Id, FullName, IsActive, TotalHandledCalls, TotalCan
 public enum StudentCallField{ Id, CallId, Subject, OpeningTime, RemainingTime, LastVolunteerName, CompletionTime, Status, TotalAssignments }
 
 
-// עבור OpenCallInList
+// for OpenCallInList
 public enum OpenCallField
 {
     Id,
@@ -23,7 +23,7 @@ public enum OpenCallField
     DistanceFromVolunteer
 }
 
-// עבור ClosedCallInList
+// for ClosedCallInList
 public enum ClosedCallField
 {
     Id,
