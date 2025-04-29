@@ -1,6 +1,6 @@
 ﻿namespace BlApi;
 
-public interface IStudentCall
+public interface IStudentCall: IObservable
 {
     
     public int[] GetCallsByStatus();

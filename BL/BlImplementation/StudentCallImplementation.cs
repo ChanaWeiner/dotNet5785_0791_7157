@@ -12,6 +12,18 @@ namespace BlImplementation
     {
         private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
+        #region Stage 5
+        public void AddObserver(Action listObserver) =>
+        StudentCallManager.Observers.AddListObserver(listObserver); //stage 5
+        public void AddObserver(int id, Action observer) =>
+    StudentCallManager.Observers.AddObserver(id, observer); //stage 5
+        public void RemoveObserver(Action listObserver) =>
+    StudentCallManager.Observers.RemoveListObserver(listObserver); //stage 5
+        public void RemoveObserver(int id, Action observer) =>
+    StudentCallManager.Observers.RemoveObserver(id, observer); //stage 5
+        #endregion Stage 5
+
+
         /// <summary>
         /// Assigns a student call to a tutor if the call hasn't been handled or expired.
         /// </summary>
@@ -29,7 +41,7 @@ namespace BlImplementation
                 throw new BO.BlCanNotAssignCall($"Call with ID={callId} has already been handled or has expired.");
 
             // Create a new assignment for the tutor.
-            DO.Assignment newAssignment = new(0, callId, tutorId, ClockManager.Now, null, null);
+            DO.Assignment newAssignment = new(0, callId, tutorId, AdminManager.Now, null, null);
             _dal.Assignment.Create(newAssignment);
         }
 
@@ -39,7 +51,7 @@ namespace BlImplementation
         /// <param name="call">The student call object to be created.</param>
         public void Create(BO.StudentCall call)
         {
-            call.OpenTime = ClockManager.Now;
+            call.OpenTime = AdminManager.Now;
             try
             {
                 // Validate the student call data.
@@ -57,6 +69,8 @@ namespace BlImplementation
             {
                 // Attempt to create the student call in the database.
                 _dal.StudentCall.Create(studentCall);
+                StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
             }
             catch (DO.DalAlreadyExistsException ex)
             {
@@ -87,6 +101,8 @@ namespace BlImplementation
             try
             {
                 _dal.StudentCall.Delete(callId);
+                StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
             }
             catch (DO.DalDoesNotExistException ex)
             {
@@ -270,6 +286,8 @@ namespace BlImplementation
             {
                 // Attempt to update the student call in the database.
                 _dal.StudentCall.Update(studentCall);
+                StudentCallManager.Observers.NotifyItemUpdated(call.Id);  //stage 5
+                StudentCallManager.Observers.NotifyListUpdated();  //stage 5
             }
             catch (DO.DalDoesNotExistException)
             {
@@ -301,7 +319,7 @@ namespace BlImplementation
             DO.Assignment updateAssignment = assignment with
             {
                 EndOfTreatment = assignment.TutorId == tutorId ? DO.EndOfTreatment.SelfCancel : DO.EndOfTreatment.ManagerCancel,
-                EndTime = ClockManager.Now
+                EndTime = AdminManager.Now
             };
 
             try
@@ -335,7 +353,7 @@ namespace BlImplementation
             DO.Assignment updateAssignment = assignment with
             {
                 EndOfTreatment = (DO.EndOfTreatment)BO.EndOfTreatment.Treated,
-                EndTime = ClockManager.Now
+                EndTime = AdminManager.Now
             };
 
             try
