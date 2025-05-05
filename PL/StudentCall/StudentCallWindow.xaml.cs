@@ -12,18 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Tutor
+namespace PL.StudentCall
 {
     /// <summary>
-    /// Interaction logic for TutorWindow.xaml
+    /// Interaction logic for StudentCallWindow.xaml
     /// </summary>
-    public partial class TutorWindow : Window
+    public partial class StudentCallWindow : Window
     {
-        public TutorWindow()
+        public StudentCallWindow()
         {
             InitializeComponent();
         }
-
-        
     }
 }

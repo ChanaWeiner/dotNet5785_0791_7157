@@ -5,8 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Loaded="mainWindow_Loaded">
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="1" Grid.Row="0" Content="{Binding CurrentTime}" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Margin="0,56,0,0" VerticalAlignment="Top"/>
+
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="+minute" HorizontalAlignment="Left" Margin="20,68,0,0" VerticalAlignment="Top" Click="btnAddOneMinute_Click"/>
+                <Button Grid.Column="1" Content="+month" HorizontalAlignment="Left" Margin="20,68,0,0" VerticalAlignment="Top" Click="btnAddOneMonth_Click"/>
+                <Button Grid.Column="2" Content="+hour" HorizontalAlignment="Left" Margin="20,68,0,0" VerticalAlignment="Top" Click="btnAddOneHour_Click"/>
+                <Button Grid.Column="3" Content="+day" HorizontalAlignment="Left" Margin="20,68,0,0" VerticalAlignment="Top" Click="btnAddOneDay_Click"/>
+                <Button Grid.Column="4" Content="+year" HorizontalAlignment="Left" Margin="20,68,0,0" VerticalAlignment="Top" Click="btnAddOneYear_Click"/>
+            </Grid>
+            <TextBox HorizontalAlignment="Center" Margin="0,54,0,0" TextWrapping="Wrap" Text="{Binding RiskTimeSpan}" VerticalAlignment="Top" Width="120"/>
+            <Button Content="update" HorizontalAlignment="Left" Margin="160,0,0,0" Grid.Row="1" VerticalAlignment="Center" Click="btnUpdateRiskTimeSpan_Click"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="0" Content="Initialize DB" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top"/>
+            <Button Grid.Column="1" Content="Reset DB" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Grid.Column="2" Content="Show lists" HorizontalAlignment="Center" Margin="0,94,0,0" VerticalAlignment="Top"/>
+        </Grid>
+
 
     </Grid>
 </Window>
