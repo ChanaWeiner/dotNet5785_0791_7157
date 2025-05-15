@@ -73,7 +73,7 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void InitializeDatabase()
     {
-        //AdminManager.InitializeDB();
+        Initialization.Do();
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void ResetDatabase()
     {
-        //AdminManager.ResetDB();
+        _dal.ResetDB();
 
     }
 

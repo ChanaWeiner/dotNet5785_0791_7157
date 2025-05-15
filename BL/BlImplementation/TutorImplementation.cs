@@ -3,6 +3,9 @@ using DalApi;
 using DO;
 using Helpers;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace BlImplementation;
@@ -173,7 +176,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
     /// <param name="isActive">The active status of the tutors to filter by. Can be null to ignore this filter.</param>
     /// <param name="sortField">The field to sort the tutors by.</param>
     /// <returns>A sorted list of tutors based on the given criteria.</returns>
-    public IEnumerable<BO.TutorInList> SortTutorsInList(bool? isActive, BO.TutorSortField? sortField = BO.TutorSortField.Id)
+    public IEnumerable<BO.TutorInList> SortTutorsInList(bool? isActive, BO.TutorField? sortField = BO.TutorField.Id)
     {
         // Retrieve tutors from the DAL based on the active status filter.
         List<DO.Tutor> doTutor = _dal.Tutor.ReadAll((DO.Tutor tutor) => (isActive == null || tutor.Active == isActive)).ToList();
@@ -228,6 +231,25 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
             // If the tutor does not exist, throw an exception.
             throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist", ex);
         }
+    }
+
+    public List<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null)
+    {
+        if (filterValue!=null&&filterValue is BO.Role)
+        {
+            filterValue = (DO.Role)filterValue;
+        }
+        IEnumerable<DO.Tutor> doTutors;
+        if (filterValue == null)
+            doTutors = _dal.Tutor.ReadAll();
+        else
+            doTutors = _dal.Tutor.ReadAll((DO.Tutor tutor) => {
+                return tutor.GetType().GetProperty(tutorField.ToString()).GetValue(tutor).Equals(filterValue);
+                });
+        
+        List<BO.TutorInList> tutorsInList = doTutors.Select(TutorManager.ConvertFromDoToBo).ToList();
+
+        return tutorsInList;
     }
 
 }

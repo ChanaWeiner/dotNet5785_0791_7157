@@ -19,8 +19,13 @@ namespace PL.Tutor
     /// </summary>
     public partial class TutorWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        public string ButtonText { get; set; }
+        public string 
         public TutorWindow()
         {
+            ButtonText = id == 0 ? "Add" : "Update";
             InitializeComponent();
         }
 

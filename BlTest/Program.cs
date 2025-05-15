@@ -167,7 +167,7 @@ class Program
             Console.WriteLine("Invalid input");
 
         Console.WriteLine("Sort field: (Id, FullName, IsActive, TotalHandledCalls, TotalCancelledCalls, TotalExpiredCalls, CurrentCallId, CurrentCallType)");
-        if (!Enum.TryParse(Console.ReadLine(), out TutorSortField sortField))
+        if (!Enum.TryParse(Console.ReadLine(), out TutorField sortField))
             Console.WriteLine("Invalid input");
 
         var tutorsInList = s_bl.Tutor.SortTutorsInList(isActive, sortField);

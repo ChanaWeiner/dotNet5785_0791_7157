@@ -7,8 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-        Loaded="mainWindow_Loaded">
-    
+        Loaded="mainWindow_Loaded"
+        Closed="Window_Closed"
+        >
+        
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -48,9 +51,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button  Grid.Column="0" Content="Initialize DB" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top"/>
-            <Button Grid.Column="1" Content="Reset DB" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button Grid.Column="2" Content="Show lists" HorizontalAlignment="Center" Margin="0,94,0,0" VerticalAlignment="Top"/>
+            <Button  Grid.Column="0" Content="Initialize DB" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top" Click="btnInitDB_Click"/>
+            <Button Grid.Column="1" Content="Reset DB" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BtnResetDB_Click"/>
+            <Button Grid.Column="2" Content="Handle Tutors" HorizontalAlignment="Center" Margin="0,94,0,0" VerticalAlignment="Top" Click="btnTutors_Click"/>
         </Grid>
 
 

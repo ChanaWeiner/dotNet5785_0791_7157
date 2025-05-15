@@ -1,5 +1,7 @@
 ﻿
 
+using BO;
+
 namespace BlApi;
 
 public interface ITutor: IObservable
@@ -18,7 +20,7 @@ public interface ITutor: IObservable
     /// <param name="isActive">The active status of the tutors to filter by. Can be null to ignore this filter.</param>
     /// <param name="sortField">The field to sort the tutors by.</param>
     /// <returns>A sorted list of tutors based on the given criteria.</returns>
-    public IEnumerable<BO.TutorInList> SortTutorsInList(bool? isActive, BO.TutorSortField? sortField);
+    public IEnumerable<BO.TutorInList> SortTutorsInList(bool? isActive, BO.TutorField? sortField);
 
     /// <summary>
     /// Retrieves detailed information about a specific tutor.
@@ -44,5 +46,7 @@ public interface ITutor: IObservable
     /// Creates a new tutor in the system after validating the provided tutor object.
     /// </summary>
     /// <param name="boTutor">The business object representing the tutor to be created.</param>
-    public void Create(BO.Tutor tutor); 
+    public void Create(BO.Tutor tutor);
+    public List<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null);
+
 }

@@ -19,9 +19,39 @@ namespace PL.Tutor
     /// </summary>
     public partial class TutorListWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        public BO.Role role { get; set; } = BO.Role.None;
+
+
+        public IEnumerable<BO.TutorInList> TutorsList
+        {
+            get { return (IEnumerable<BO.TutorInList>)GetValue(TutorsListProperty); }
+            set { SetValue(TutorsListProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for TutorsList.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TutorsListProperty =
+            DependencyProperty.Register("TutorsList", typeof(IEnumerable<BO.TutorInList>), typeof(TutorListWindow), new PropertyMetadata(null));
+
+
         public TutorListWindow()
         {
             InitializeComponent();
         }
+
+        private void FilterTutors(object sender, SelectionChangedEventArgs e) => queryTutorList();
+        private void queryTutorList()
+    => TutorsList = (role == BO.Role.None) ?
+              s_bl?.Tutor.FilterTutorsInList()! : s_bl?.Tutor.FilterTutorsInList(BO.TutorField.Role, role)!;
+
+        private void tutorListObserver()
+            => queryTutorList();
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+            => s_bl.Tutor.AddObserver(tutorListObserver);
+
+        private void Window_Closed(object sender, EventArgs e)
+            => s_bl.Tutor.RemoveObserver(tutorListObserver);
+
     }
 }

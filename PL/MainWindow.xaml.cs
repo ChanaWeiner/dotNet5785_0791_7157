@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using PL.Tutor;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -89,5 +90,25 @@ namespace PL
             s_bl.Admin.AddConfigObserver(configObserver);
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            s_bl.Admin.RemoveClockObserver(clockObserver);
+            s_bl.Admin.RemoveConfigObserver(configObserver);
+        }
+
+        private void btnTutors_Click(object sender, RoutedEventArgs e)
+        {
+            new TutorListWindow().Show();
+        }
+
+        private void BtnResetDB_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.Admin.ResetDatabase();
+        }
+
+        private void btnInitDB_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.Admin.InitializeDatabase();
+        }
     }
 }
