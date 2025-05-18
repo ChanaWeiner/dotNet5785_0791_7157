@@ -73,7 +73,7 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void InitializeDatabase()
     {
-        Initialization.Do();
+        AdminManager.InitializeDatabase();
     }
 
     /// <summary>

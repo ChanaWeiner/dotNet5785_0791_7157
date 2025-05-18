@@ -21,7 +21,7 @@ namespace PL.Tutor
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public BO.Role role { get; set; } = BO.Role.None;
-
+        public BO.TutorInList? SelectedTutor { get; set; }
 
         public IEnumerable<BO.TutorInList> TutorsList
         {
@@ -48,10 +48,24 @@ namespace PL.Tutor
             => queryTutorList();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-            => s_bl.Tutor.AddObserver(tutorListObserver);
+        {
+             s_bl.Tutor.AddObserver(tutorListObserver);
+            MessageBox.Show("Observer registered");
+
+        }
 
         private void Window_Closed(object sender, EventArgs e)
             => s_bl.Tutor.RemoveObserver(tutorListObserver);
 
+        private void lsvTutorsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (SelectedTutor != null)
+                new TutorWindow(SelectedTutor.Id).Show();
+        }
+
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            new TutorWindow().Show();
+        }
     }
 }

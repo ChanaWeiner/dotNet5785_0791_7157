@@ -80,11 +80,11 @@ internal class TutorManager
 
         // Validate phone number
         if (!IsValidPhoneNumber(boTutor.CellNumber))
-            throw new FormatException($"Phone number '{boTutor.CellNumber}' is invalid.");
+            throw new BlValidationException($"Phone number '{boTutor.CellNumber}' is invalid.");
 
         // Validate email
         if (!IsValidEmail(boTutor.Email))
-            throw new FormatException($"Email address '{boTutor.Email}' is invalid.");
+            throw new BlValidationException($"Email address '{boTutor.Email}' is invalid.");
 
         // Validate password (if provided)
         if (!IsValidPassword(boTutor.Password))

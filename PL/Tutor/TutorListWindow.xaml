@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="TutorListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-        
+        Loaded="Window_Loaded"
+        Closed="Window_Closed"
         >
     
 
@@ -26,10 +27,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label  Grid.Column="0" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-            <ComboBox SelectionChanged="FilterTutors" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectedValue="{Binding role, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SemestersCollectionKey}}"/>
+            <ComboBox SelectionChanged="FilterTutors" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectedValue="{Binding role, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"/>
         </Grid>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Path=TutorsList}"/>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Path=TutorsList}" SelectedItem="{Binding SelectedTutor}" MouseDoubleClick="lsvTutorsList_MouseDoubleClick" Height="531" VerticalAlignment="Top"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="ButtonAdd_Click"/>
 
 
     </Grid>
