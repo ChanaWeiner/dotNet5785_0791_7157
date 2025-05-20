@@ -6,8 +6,7 @@
     <Application.Resources>
         <local:RolesCollection x:Key="RolesCollectionKey" />
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey" />
-        
-            <!--<local:ConvertYearToColor x:Key="ConvertUpdateToVisibleKey" />-->
-      
+        <local:ConvertDeleteToVisible x:Key="ConvertDeleteToVisibleKey" />
+
     </Application.Resources>
 </Application>

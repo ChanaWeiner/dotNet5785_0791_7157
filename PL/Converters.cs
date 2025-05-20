@@ -26,6 +26,20 @@ namespace PL
             }
         }
 
+        class ConvertDeleteToVisible : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                string str = value as string;
+                return str == "Delete" ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
     }
 }

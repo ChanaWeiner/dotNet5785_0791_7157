@@ -89,8 +89,7 @@
                 <Label Grid.Row="15" Grid.Column="0" Content="CurrentCallInProgress" Margin="5"/>
                 <TextBox Grid.Row="15" Grid.Column="1" Text="{Binding CurrentTutor.CurrentCallInProgress}" Margin="5"/>
                 <Button Grid.Row="16" Content="{Binding ButtonText}"  HorizontalAlignment="Center" Height="50" Width="100" Click="btnAddOrUpdate_Click"/>
-                <Button Grid.Row="16" Grid.Column="1" Content="Delete"  HorizontalAlignment="Center" Height="50" Width="100" Click="btnDelete_Click"
-                        <!--Visibility="{Binding ButtonText, Converter={StaticResource ConvertUpdateToVisibleKey}}"-->/>
+                <Button Grid.Row="16" Grid.Column="1" Content="Delete"  HorizontalAlignment="Center" Height="50" Width="100" Click="btnDelete_Click" Visibility="{Binding ActionType, Converter={StaticResource DeleteToVisibleConverter}}"/>
             </Grid>
         </ScrollViewer>
     </Grid>
