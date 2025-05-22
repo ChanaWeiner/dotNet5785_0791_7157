@@ -251,5 +251,4 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
 
         return tutorsInList;
     }
-
 }

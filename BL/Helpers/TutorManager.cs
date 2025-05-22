@@ -70,34 +70,46 @@ internal class TutorManager
     /// <exception cref="BO.BlValidationException">Thrown when any validation fails.</exception>
     internal static void Validation(ref BO.Tutor boTutor)
     {
-        // Validate ID
+        // Validate ID presence
+        if (boTutor.Id <= 0)
+            throw new BO.BlValidationException("ID is required.");
         if (!IsValidId(boTutor.Id))
             throw new BO.BlValidationException($"ID {boTutor.Id} is invalid.");
 
-        // Validate full name
-        if (string.IsNullOrWhiteSpace(boTutor.FullName) || boTutor.FullName.Length < 2 || boTutor.FullName.Length > 100)
+        // Validate full name presence
+        if (string.IsNullOrWhiteSpace(boTutor.FullName))
+            throw new BO.BlValidationException("Full name is required.");
+        if (boTutor.FullName.Length < 2 || boTutor.FullName.Length > 100)
             throw new BO.BlValidationException($"Full name '{boTutor.FullName}' must be between 2 and 100 characters.");
 
-        // Validate phone number
+        // Validate phone number presence
+        if (string.IsNullOrWhiteSpace(boTutor.CellNumber))
+            throw new BO.BlValidationException("Phone number is required.");
         if (!IsValidPhoneNumber(boTutor.CellNumber))
-            throw new BlValidationException($"Phone number '{boTutor.CellNumber}' is invalid.");
+            throw new BO.BlValidationException($"Phone number '{boTutor.CellNumber}' is invalid.");
 
-        // Validate email
+        // Validate email presence
+        if (string.IsNullOrWhiteSpace(boTutor.Email))
+            throw new BO.BlValidationException("Email address is required.");
         if (!IsValidEmail(boTutor.Email))
-            throw new BlValidationException($"Email address '{boTutor.Email}' is invalid.");
+            throw new BO.BlValidationException($"Email address '{boTutor.Email}' is invalid.");
 
-        // Validate password (if provided)
+        // Validate password presence
+        if (string.IsNullOrWhiteSpace(boTutor.Password))
+            throw new BO.BlValidationException("Password is required.");
         if (!IsValidPassword(boTutor.Password))
-            throw new BO.BlValidationException("Password is not strong enough");
+            throw new BO.BlValidationException("Password is not strong enough.");
 
+        // Validate address presence and get coordinates
+        if (string.IsNullOrWhiteSpace(boTutor.CurrentAddress))
+            throw new BO.BlValidationException("Current address is required.");
         try
         {
-            // Get coordinates for address
-            (boTutor.Latitude, boTutor.Longitude) = Tools.GetCoordinates(boTutor.CurrentAddress!);
+            (boTutor.Latitude, boTutor.Longitude) = Tools.GetCoordinates(boTutor.CurrentAddress);
         }
         catch (Exception ex)
         {
-            throw ex;
+            throw new BO.BlValidationException($"Failed to get coordinates for address: {ex.Message}");
         }
 
         // Validate role (Enum)
@@ -112,6 +124,7 @@ internal class TutorManager
         if (!Enum.IsDefined(typeof(BO.DistanceType), boTutor.DistanceType))
             throw new BO.BlValidationException($"DistanceType - This option: '{boTutor.DistanceType}' is not defined");
     }
+
 
     /// <summary>
     /// Validates if a password meets strength requirements (upper, lower, digit, special).

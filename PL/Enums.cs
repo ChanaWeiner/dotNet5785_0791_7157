@@ -2,7 +2,7 @@
 
 namespace PL
 {
-    internal class RolesCollection : IEnumerable
+    public class RolesCollection : IEnumerable
     {
         static readonly IEnumerable<BO.Role> s_enums =
     (Enum.GetValues(typeof(BO.Role)) as IEnumerable<BO.Role>)!;
@@ -10,7 +10,7 @@ namespace PL
         public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
     }
 
-    internal class DistanceTypeCollection : IEnumerable
+    public class DistanceTypeCollection : IEnumerable
     {
         static readonly IEnumerable<BO.DistanceType> s_enums =
     (Enum.GetValues(typeof(BO.DistanceType)) as IEnumerable<BO.DistanceType>)!;

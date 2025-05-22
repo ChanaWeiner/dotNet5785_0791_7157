@@ -26,18 +26,17 @@ namespace PL.Tutor
             get { return (BO.Tutor)GetValue(CurrentTutorProperty); }
             set { SetValue(CurrentTutorProperty, value); }
         }
-        // Using a DependencyProperty as the backing store for TutorDetails.  This enables animation, styling, binding, etc...
+
         public static readonly DependencyProperty CurrentTutorProperty =
             DependencyProperty.Register("CurrentTutor", typeof(BO.Tutor), typeof(TutorWindow), new PropertyMetadata(null));
 
-        public string ButtonText { get; set; }
+        public static string ButtonText { get; set; }
 
         public TutorWindow(int id = 0)
         {
             ButtonText = id == 0 ? "Add" : "Update";
-            CurrentTutor = (id != 0) ? s_bl.Tutor.Read(id)! : new BO.Tutor() { Id = 0, FullName = "", CellNumber = "", Email = "", Password = "", CurrentAddress = "", Latitude = 0, Longitude = 0, Role = BO.Role.None, Active = false, Distance = 0, DistanceType = BO.DistanceType.Walking, TotalCallsHandled = 0, TotalCallsSelfCanceled = 0, TotalCallsExpired = 0 };
+            CurrentTutor = (id != 0) ? s_bl.Tutor.Read(id)! : new BO.Tutor() { Id = 0, FullName = null, CellNumber = null, Email = null, Password = null, CurrentAddress = null, Latitude = 0, Longitude = 0, Role = BO.Role.None, Active = false, Distance = 0, DistanceType = BO.DistanceType.Walking, TotalCallsHandled = 0, TotalCallsSelfCanceled = 0, TotalCallsExpired = 0 };
             InitializeComponent();
-
         }
 
         private void btnAddOrUpdate_Click(object sender, RoutedEventArgs e)
@@ -48,7 +47,6 @@ namespace PL.Tutor
                 {
                     s_bl.Tutor.Create(CurrentTutor);
                     this.Close();
-
                 }
 
                 else
@@ -57,46 +55,34 @@ namespace PL.Tutor
             catch (BO.BlValidationException ex)
             {
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-
-
             }
             catch (BO.BlAlreadyExistsException ex)
             {
-
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-
             }
             catch (BO.BlDoesNotExistException ex)
             {
-
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-
             }
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show($"Are you sure you want to delete the tutor with ID {CurrentTutor.Id}", "ok", MessageBoxButton.YesNo);
 
-
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-
                     s_bl.Tutor.Delete(CurrentTutor.Id);
                     this.Close();
                 }
                 catch (BO.BlCanNotBeDeletedException ex)
                 {
                     MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-
-
                 }
                 catch (BO.BlDoesNotExistException ex)
                 {
-
                     MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-
                 }
             }
         }
