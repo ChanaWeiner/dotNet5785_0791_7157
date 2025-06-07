@@ -5,8 +5,12 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:RolesCollection x:Key="RolesCollectionKey" />
+        <local:SubjectsCollection x:Key="SubjectsCollectionKey" />
+        <local:StatusCallsCollection x:Key="StatusCallsCollectionKey" />
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey" />
         <local:ConvertDeleteToVisible x:Key="ConvertDeleteToVisibleKey" />
+        <local:ConvertCurrentCallToVisible x:Key="ConvertCurrentCallToVisibleKey" />
+        <local:BoolInverseConverter x:Key="BoolInverseConverterKey" />
 
     </Application.Resources>
 </Application>

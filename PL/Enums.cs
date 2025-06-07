@@ -10,6 +10,22 @@ namespace PL
         public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
     }
 
+    public class StatusCallsCollection : IEnumerable
+    {
+        static readonly IEnumerable<BO.CallStatus> s_enums =
+    (Enum.GetValues(typeof(BO.CallStatus)) as IEnumerable<BO.CallStatus>)!;
+
+        public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+    }
+
+    public class SubjectsCollection : IEnumerable
+    {
+        static readonly IEnumerable<BO.Subjects> s_enums =
+    (Enum.GetValues(typeof(BO.Subjects)) as IEnumerable<BO.Subjects>)!;
+
+        public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+    }
+
     public class DistanceTypeCollection : IEnumerable
     {
         static readonly IEnumerable<BO.DistanceType> s_enums =

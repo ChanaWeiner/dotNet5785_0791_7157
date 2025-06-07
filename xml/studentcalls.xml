@@ -261,19 +261,6 @@
     <FinalTime xsi:nil="true" />
   </StudentCall>
   <StudentCall>
-    <Id>1020</Id>
-    <Subject>English</Subject>
-    <Description>Request for help in English</Description>
-    <FullAddress>45 Elm St, City B</FullAddress>
-    <FullName>Tal Katz</FullName>
-    <CellNumber>055-6861708</CellNumber>
-    <Email>tal.katz@example.com</Email>
-    <Latitude>-55.20452963152942</Latitude>
-    <Longitude>41.38557340370852</Longitude>
-    <OpenTime>2024-12-31T15:50:37</OpenTime>
-    <FinalTime>2025-01-01T00:50:37</FinalTime>
-  </StudentCall>
-  <StudentCall>
     <Id>1021</Id>
     <Subject>Math</Subject>
     <Description>Request for help in Math</Description>
@@ -352,19 +339,6 @@
     <FinalTime xsi:nil="true" />
   </StudentCall>
   <StudentCall>
-    <Id>1027</Id>
-    <Subject>Grammar</Subject>
-    <Description>Request for help in Grammer</Description>
-    <FullAddress>89 Maple Ave, City D</FullAddress>
-    <FullName>Itai Berger</FullName>
-    <CellNumber>057-2726685</CellNumber>
-    <Email>itai.berger@example.com</Email>
-    <Latitude>-79.28045896974396</Latitude>
-    <Longitude>-147.42588003862429</Longitude>
-    <OpenTime>2024-11-12T15:50:37</OpenTime>
-    <FinalTime>2024-11-12T23:50:37</FinalTime>
-  </StudentCall>
-  <StudentCall>
     <Id>1028</Id>
     <Subject>Programming</Subject>
     <Description>Request for help in Programming</Description>
@@ -378,19 +352,6 @@
     <FinalTime xsi:nil="true" />
   </StudentCall>
   <StudentCall>
-    <Id>1029</Id>
-    <Subject>Programming</Subject>
-    <Description>Request for help in Programming</Description>
-    <FullAddress>45 Elm St, City B</FullAddress>
-    <FullName>Tal Azoulay</FullName>
-    <CellNumber>050-5607743</CellNumber>
-    <Email>tal.azoulay@example.com</Email>
-    <Latitude>0.7708299132703331</Latitude>
-    <Longitude>-80.55357715818982</Longitude>
-    <OpenTime>2024-06-15T15:50:37</OpenTime>
-    <FinalTime>2024-06-16T15:50:37</FinalTime>
-  </StudentCall>
-  <StudentCall>
     <Id>1030</Id>
     <Subject>English</Subject>
     <Description>Request for help in English</Description>
@@ -402,19 +363,6 @@
     <Longitude>110.94110913058609</Longitude>
     <OpenTime>2025-01-17T15:50:37</OpenTime>
     <FinalTime xsi:nil="true" />
-  </StudentCall>
-  <StudentCall>
-    <Id>1031</Id>
-    <Subject>Programming</Subject>
-    <Description>Request for help in Programming</Description>
-    <FullAddress>45 Elm St, City B</FullAddress>
-    <FullName>Roni Berger</FullName>
-    <CellNumber>059-6909841</CellNumber>
-    <Email>roni.berger@example.com</Email>
-    <Latitude>47.930627786078105</Latitude>
-    <Longitude>-158.51071655011282</Longitude>
-    <OpenTime>2025-04-25T15:50:37</OpenTime>
-    <FinalTime>2025-04-27T04:50:37</FinalTime>
   </StudentCall>
   <StudentCall>
     <Id>1032</Id>
@@ -454,19 +402,6 @@
     <Longitude>-11.111649464323449</Longitude>
     <OpenTime>2025-05-07T15:50:37</OpenTime>
     <FinalTime xsi:nil="true" />
-  </StudentCall>
-  <StudentCall>
-    <Id>1035</Id>
-    <Subject>History</Subject>
-    <Description>Request for help in History</Description>
-    <FullAddress>45 Elm St, City B</FullAddress>
-    <FullName>Roni Sharabi</FullName>
-    <CellNumber>056-1917518</CellNumber>
-    <Email>roni.sharabi@example.com</Email>
-    <Latitude>52.2073427297143</Latitude>
-    <Longitude>46.08016545737692</Longitude>
-    <OpenTime>2024-10-04T15:50:37</OpenTime>
-    <FinalTime>2024-10-05T13:50:37</FinalTime>
   </StudentCall>
   <StudentCall>
     <Id>1036</Id>
@@ -625,19 +560,6 @@
     <FinalTime xsi:nil="true" />
   </StudentCall>
   <StudentCall>
-    <Id>1048</Id>
-    <Subject>English</Subject>
-    <Description>Request for help in English</Description>
-    <FullAddress>89 Maple Ave, City D</FullAddress>
-    <FullName>Maya Berger</FullName>
-    <CellNumber>051-9498067</CellNumber>
-    <Email>maya.berger@example.com</Email>
-    <Latitude>41.85628974083792</Latitude>
-    <Longitude>-130.77431850063306</Longitude>
-    <OpenTime>2024-10-06T15:50:37</OpenTime>
-    <FinalTime>2024-10-07T04:50:37</FinalTime>
-  </StudentCall>
-  <StudentCall>
     <Id>1049</Id>
     <Subject>Grammar</Subject>
     <Description>Request for help in Grammer</Description>
@@ -649,5 +571,83 @@
     <Longitude>-17.99603101836368</Longitude>
     <OpenTime>2025-04-12T15:50:37</OpenTime>
     <FinalTime>2025-04-12T21:50:37</FinalTime>
+  </StudentCall>
+  <StudentCall>
+    <Id>1020</Id>
+    <Subject>English</Subject>
+    <Description>Request for help in English 3 level</Description>
+    <FullAddress>45 Elm St, City B</FullAddress>
+    <FullName>Tal Katz</FullName>
+    <CellNumber>055-6861708</CellNumber>
+    <Email>tal.katz@example.com</Email>
+    <Latitude>46.9985979</Latitude>
+    <Longitude>-65.5522769</Longitude>
+    <OpenTime>2024-12-31T15:50:37</OpenTime>
+    <FinalTime>2025-01-01T00:50:37</FinalTime>
+  </StudentCall>
+  <StudentCall>
+    <Id>1031</Id>
+    <Subject>Programming</Subject>
+    <Description>Request for help in Programming</Description>
+    <FullAddress>45 Elm St, City B</FullAddress>
+    <FullName>Roni Berger</FullName>
+    <CellNumber>059-6909841בהבזהכג</CellNumber>
+    <Email>roni.berger@example.com</Email>
+    <Latitude>46.9985979</Latitude>
+    <Longitude>-65.5522769</Longitude>
+    <OpenTime>2025-04-25T15:50:37</OpenTime>
+    <FinalTime>2025-04-27T04:50:37</FinalTime>
+  </StudentCall>
+  <StudentCall>
+    <Id>1029</Id>
+    <Subject>Programming</Subject>
+    <Description>Request for help in Programming</Description>
+    <FullAddress>45 Elm St, City B</FullAddress>
+    <FullName>Tal Azoulay</FullName>
+    <CellNumber>050-עיח</CellNumber>
+    <Email>tal.azoulay@example.com</Email>
+    <Latitude>46.9985979</Latitude>
+    <Longitude>-65.5522769</Longitude>
+    <OpenTime>2024-06-15T15:50:37</OpenTime>
+    <FinalTime>2024-06-16T15:50:37</FinalTime>
+  </StudentCall>
+  <StudentCall>
+    <Id>1027</Id>
+    <Subject>Grammar</Subject>
+    <Description>Request for help in Grammer</Description>
+    <FullAddress>89 Maple Ave, City D</FullAddress>
+    <FullName>Itai Berger</FullName>
+    <CellNumber>057-2726684</CellNumber>
+    <Email>itai.berger@example.com</Email>
+    <Latitude>40.6378185</Latitude>
+    <Longitude>-74.1345494432714</Longitude>
+    <OpenTime>2024-11-12T15:50:37</OpenTime>
+    <FinalTime>2024-11-12T23:50:37</FinalTime>
+  </StudentCall>
+  <StudentCall>
+    <Id>1061</Id>
+    <Subject>Math</Subject>
+    <Description>hhhhhhhhhh</Description>
+    <FullAddress>western wall</FullAddress>
+    <FullName>ggg</FullName>
+    <CellNumber>0556753567</CellNumber>
+    <Email>ug@ty.tnjk</Email>
+    <Latitude>31.776734949999998</Latitude>
+    <Longitude>35.23446114230339</Longitude>
+    <OpenTime>2025-05-20T15:50:37</OpenTime>
+    <FinalTime xsi:nil="true" />
+  </StudentCall>
+  <StudentCall>
+    <Id>1035</Id>
+    <Subject>History</Subject>
+    <Description>Request for help in History</Description>
+    <FullAddress>45 Elm St, City B</FullAddress>
+    <FullName>Roni Sharabi</FullName>
+    <CellNumber>056-1917518</CellNumber>
+    <Email>roni.sharabi@example.com</Email>
+    <Latitude>46.9985979</Latitude>
+    <Longitude>-65.5522769</Longitude>
+    <OpenTime>2024-10-04T15:50:37</OpenTime>
+    <FinalTime>2024-10-05T01:50:39</FinalTime>
   </StudentCall>
 </ArrayOfStudentCall>

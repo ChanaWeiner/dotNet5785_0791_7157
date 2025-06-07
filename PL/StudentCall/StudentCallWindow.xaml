@@ -5,8 +5,80 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.StudentCall"
         mc:Ignorable="d"
-        Title="StudentCallWindow" Height="450" Width="800">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Title="Student Call" Height="600" Width="800">
+
     <Grid>
-        
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Id (רק לקריאה) -->
+                <Label Grid.Row="0" Grid.Column="0" Content="Id" Margin="5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentStudentCall.Id}" IsReadOnly="True" Margin="5"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Full Name" Margin="5"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CurrentStudentCall.FullName}" IsReadOnly="{Binding IsTotalyReadOnly}" Margin="5"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Cell Number" Margin="5"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurrentStudentCall.CellNumber}" IsReadOnly="{Binding IsTotalyReadOnly}" Margin="5"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="Email" Margin="5"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentStudentCall.Email}" IsReadOnly="{Binding IsTotalyReadOnly}" Margin="5"/>
+
+                <Label Grid.Row="4" Grid.Column="0" Content="Subject" Margin="5"/>
+                <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Source={StaticResource SubjectsCollectionKey}}" SelectedItem="{Binding CurrentStudentCall.Subject}" IsEnabled="{Binding IsNotFromTutor}" Margin="5"/>
+
+                <Label Grid.Row="5" Grid.Column="0" Content="Description" Margin="5"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CurrentStudentCall.Description}" IsReadOnly="{Binding IsTotalyReadOnly}" Margin="5"/>
+
+                <Label Grid.Row="6" Grid.Column="0" Content="Full Address" Margin="5"/>
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding CurrentStudentCall.FullAddress}" IsReadOnly="{Binding IsTotalyReadOnly}" Margin="5"/>
+
+                <Label Grid.Row="7" Grid.Column="0" Content="Status" Margin="5"/>
+                <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding Source={StaticResource StatusCallsCollectionKey}}" SelectedItem="{Binding CurrentStudentCall.Status}" IsEnabled="False" Margin="5"/>
+
+                <Label Grid.Row="8" Grid.Column="0" Content="Open Time" Margin="5"/>
+                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding CurrentStudentCall.OpenTime}" IsReadOnly="True" Margin="5"/>
+
+                <Label Grid.Row="9" Grid.Column="0" Content="Final Time" Margin="5"/>
+                <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding CurrentStudentCall.FinalTime}"  IsReadOnly="{Binding IsFinalTimeReadOnly}" Margin="5"/>
+
+
+                <Label Grid.Row="10" Grid.Column="0" Content="Assigned Calls" Margin="5" VerticalAlignment="Top"/>
+                <ListBox Grid.Row="10" Grid.Column="1" ItemsSource="{Binding CurrentStudentCall.CallsAssignInList}" Margin="5" Height="100">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- כפתורים -->
+                <StackPanel Grid.Row="11" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Visibility="{Binding IsNotFromTutor}">
+                    <Button Content="{Binding ButtonText}" Width="100" Margin="10" Click="btnAddOrUpdate_Click" Visibility="{Binding IsTotalyReadOnly, Converter={StaticResource BoolInverseConverterKey}}" />
+                    <Button Content="Delete" Width="100" Margin="10" Click="btnDelete_Click" Visibility="{Binding ButtonText, Converter={StaticResource ConvertDeleteToVisibleKey}}" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PL.StudentCall;
 
 namespace PL.Tutor
 {
@@ -85,6 +86,14 @@ namespace PL.Tutor
                     MessageBox.Show(ex.Message, ex.InnerException?.ToString());
                 }
             }
+        }
+
+        private void btnDisplayCall_Click(object sender, RoutedEventArgs e)
+        {
+            new StudentCallWindow(CurrentTutor.CurrentCallInProgress!.CallId,true)
+            {
+                Owner = this
+            }.Show();
         }
         private void tutorObserver()
         {

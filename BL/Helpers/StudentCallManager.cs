@@ -59,7 +59,7 @@ internal class StudentCallManager
     /// </summary>
     /// <param name="studentCall">The DO.StudentCall object to convert.</param>
     /// <returns>A BO.CallInList object representing the student call.</returns>
-    private static BO.CallInList ConvertFromDoToBo(DO.StudentCall studentCall)
+    internal static BO.CallInList ConvertFromDoToBo(DO.StudentCall studentCall)
     {
         var maxCompletionTime = AdminManager.Now - manager.GetRiskTimeRange();
 
@@ -129,13 +129,13 @@ internal class StudentCallManager
         // If the call is in progress, check if it is at risk of missing the deadline.
         if (lastAssignment != null)
         {
-            return DateTime.Now >= maxCompletionTime.AddMinutes(-30) // 30-minute risk range
+            return maxCompletionTime - AdminManager.Now <= AdminManager.RiskTimeSpan // 30-minute risk range
            ? BO.CallStatus.InProgressAtRisk
            : BO.CallStatus.InProgress;
         }
 
         // If the call is open, check if it's at risk of missing the deadline.
-        return DateTime.Now >= maxCompletionTime.AddMinutes(-30) // 30-minute risk range
+        return maxCompletionTime - AdminManager.Now <= AdminManager.RiskTimeSpan// 30-minute risk range
             ? BO.CallStatus.OpenInRisk
             : BO.CallStatus.Open;
     }
@@ -146,20 +146,49 @@ internal class StudentCallManager
     /// <param name="call">The student call object to validate.</param>
     internal static void Validation(BO.StudentCall call)
     {
-        // Ensure that the start time is before the final time.
-        if (call.OpenTime >= call.FinalTime)
-            throw new BO.BlValidationException("Start time must be less than end time");
+         
+        // Validate subject (Enum)
+        if (!Enum.IsDefined(typeof(BO.Subjects), call.Subject))
 
-        // Ensure that the address is valid and can be converted to coordinates.
+        // Validate full name
+        if (string.IsNullOrWhiteSpace(call.FullName))
+            throw new BO.BlValidationException("Full name is required.");
+        if (call.FullName.Length < 2 || call.FullName.Length > 100)
+            throw new BO.BlValidationException($"Full name '{call.FullName}' must be between 2 and 100 characters.");
+
+        // Validate phone number
+        if (string.IsNullOrWhiteSpace(call.CellNumber))
+            throw new BO.BlValidationException("Phone number is required.");
+        if (!Tools.IsValidPhoneNumber(call.CellNumber))
+            throw new BO.BlValidationException($"Phone number '{call.CellNumber}' is invalid.");
+
+        // Validate email
+        if (string.IsNullOrWhiteSpace(call.Email))
+            throw new BO.BlValidationException("Email address is required.");
+        if (!Tools.IsValidEmail(call.Email))
+            throw new BO.BlValidationException($"Email address '{call.Email}' is invalid.");
+
+        // Validate address and get coordinates
+        if (string.IsNullOrWhiteSpace(call.FullAddress))
+            throw new BO.BlValidationException("Address is required.");
         try
         {
-            (call.Latitude, call.Longitude) = Tools.GetCoordinates(call.FullAddress!);
+            (call.Latitude, call.Longitude) = Tools.GetCoordinates(call.FullAddress);
         }
-        catch (BO.BlValidationException ex)
+        catch (Exception ex)
         {
-            throw ex; // Rethrow validation exception if address is invalid.
+            throw new BO.BlValidationException($"Failed to get coordinates for the address: {ex.Message}");
         }
+
+        // Validate open/final time
+        if (call.OpenTime >= call.FinalTime)
+            throw new BO.BlValidationException("Start time must be earlier than end time.");
+
+        // Optional: validate description length if needed
+        if (call.Description != null && call.Description.Length > 500)
+            throw new BO.BlValidationException("Description is too long. Maximum 500 characters allowed.");
     }
+
 
     /// <summary>
     /// Updates the status of calls that have passed their final time.

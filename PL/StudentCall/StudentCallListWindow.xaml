@@ -5,26 +5,118 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.StudentCall"
         mc:Ignorable="d"
-        Title="StudentCallListWindow" Height="450" Width="800">
-    <Grid>
+        Title="StudentCall List"
+        Width="800"
+        Height="640"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed"
+        Background="White">
+
+    <Window.Resources>
+        <!-- עיצוב מותאם לכפתור -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                SnapsToDevicePixels="True"
+                                >
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#005EA6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Drop shadow effect -->
+        <DropShadowEffect x:Key="DropShadow"
+                          BlurRadius="6"
+                          ShadowDepth="2"
+                          Opacity="0.3"/>
+    </Window.Resources>
+
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!--Internal, Upper Grid-->
-        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+        <!-- Filter -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label  Grid.Column="0" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" />
+            <Label Content="Filter by Status:" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+            <ComboBox Grid.Column="1" FontSize="16" Height="30" SelectedValue="{Binding statusCall, Mode=TwoWay}" SelectionChanged="FilterCalls" ItemsSource="{Binding Source={StaticResource StatusCallsCollectionKey}}"/>
         </Grid>
-        <DataGrid Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="1"
+          ItemsSource="{Binding CallsList}"
+          SelectedItem="{Binding SelectedCall}"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          FontSize="16"
+          Margin="0"
+                                    MouseDoubleClick="LsvCallsList_MouseDoubleClick"
+>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                <DataGridTextColumn Header="Time Left" Binding="{Binding TimeToFinish}" />
+                <DataGridTextColumn Header="Treatment Time" Binding="{Binding TotalTreatmentTime}" />
+                <DataGridTextColumn Header="Last Volunteer" Binding="{Binding LastVolunteerName}" />
+                <DataGridTextColumn Header="Assignments" Binding="{Binding AssignmentsCount}" />
+
+                <!-- כפתור מחיקה -->
+                <DataGridTemplateColumn Header="Delete">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Delete"
+                            Click="DeleteCall_Click"
+                            Visibility="{Binding CanDelete, Converter={StaticResource BoolInverseConverterKey}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- כפתור ביטול הקצאה -->
+                <DataGridTemplateColumn Header="Cancel Assignment">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Cancel"
+                            Click="CancelAssign_Click"
+                            Visibility="{Binding CanCancelAssignment, Converter={StaticResource BoolInverseConverterKey}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
 
+        <!-- Add Button with style -->
+        <Button Grid.Row="2"
+                Content="Add"
+                Click="ButtonAdd_Click"
+                Style="{StaticResource ModernButtonStyle}"/>
     </Grid>
 </Window>

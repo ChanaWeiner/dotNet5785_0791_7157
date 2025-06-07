@@ -1,4 +1,5 @@
-﻿using PL.Tutor;
+﻿using PL.StudentCall;
+using PL.Tutor;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -109,6 +110,11 @@ namespace PL
         private void btnInitDB_Click(object sender, RoutedEventArgs e)
         {
             s_bl.Admin.InitializeDatabase();
+        }
+
+        private void btnCalls_Click(object sender, RoutedEventArgs e)
+        {
+            new StudentCallListWindow().Show();
         }
     }
 }

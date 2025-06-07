@@ -58,6 +58,8 @@ public interface IStudentCall: IObservable
     /// <param name="tutorId">The ID of the tutor completing the treatment.</param>
     /// <param name="assignmentId">The ID of the assignment to be updated.</param>
     public void AssignCallToTutor(int tutorId, int callId);
+    public List<BO.CallInList> FilterCallsInList(BO.StudentCallField? callField = null, object? filterValue = null);
+
 
 }
 

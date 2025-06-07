@@ -94,10 +94,10 @@ namespace BlImplementation
 
             // Check if the call is open before deleting.
             if (StudentCallManager.CalculateCallStatus(doCall) != BO.CallStatus.Open)
-                throw new Exception("Cannot delete the call because it is not open.");
+                throw new BO.BlCanNotBeDeletedException("Cannot delete the call because it is not open.");
 
             if (callAssignments.Count() > 0)
-                throw new Exception("Cannot delete the call because there are assignments related to it.");
+                throw new BO.BlCanNotBeDeletedException("Cannot delete the call because there are assignments related to it.");
 
             // Attempt to delete the student call from the database.
             try
@@ -316,11 +316,11 @@ namespace BlImplementation
 
             // Ensure the tutor has permission to cancel the treatment.
             if (assignment.TutorId != tutorId && Tools.IsManagerId(tutorId))
-                throw new Exception("Tutor cannot cancel treatment for this assignment.");
+                throw new BlCanNotUpdateTreatment("Tutor cannot cancel treatment for this assignment.");
 
             // Ensure the assignment has not already been completed or canceled.
             if (assignment!.EndOfTreatment != null)
-                throw new Exception("Assignment treatment has already been completed or canceled.");
+                throw new BlCanNotUpdateTreatment("Assignment treatment has already been completed or canceled.");
 
             // Update the assignment with cancellation details.
             DO.Assignment updateAssignment = assignment with
@@ -354,7 +354,7 @@ namespace BlImplementation
 
             // Ensure the assignment has not already been completed or canceled.
             if (assignment!.EndOfTreatment != null)
-                throw new Exception("Assignment treatment has already been completed or canceled.");
+                throw new BlCanNotUpdateTreatment("Assignment treatment has already been completed or canceled.");
 
             // Update the assignment with treatment completion details.
             DO.Assignment updateAssignment = assignment with
@@ -372,6 +372,26 @@ namespace BlImplementation
             {
                 throw ex; // Rethrow the exception if the assignment does not exist.
             }
+        }
+
+        public List<CallInList> FilterCallsInList(StudentCallField? callField = null, object? filterValue = null)
+        {
+           
+            IEnumerable<DO.StudentCall> doCalls;
+            doCalls = _dal.StudentCall.ReadAll();
+            
+
+            List<BO.CallInList> callsInList = doCalls.Select(StudentCallManager.ConvertFromDoToBo).ToList();
+            return callsInList.FindAll(c =>
+            {
+                if (callField == null)
+                    return true;
+                var propertyInfo = c.GetType().GetProperty(callField.ToString()!);
+                if (propertyInfo == null)
+                    throw new BO.BlValidationException($"Property '{callField}' not found on {c.GetType().Name}");
+                var propertyValue = propertyInfo.GetValue(c);
+                return propertyValue != null && propertyValue.ToString() == filterValue?.ToString();
+            });
         }
     }
 }

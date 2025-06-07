@@ -1,0 +1,29 @@
+﻿<Window x:Class="PL.LogInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="LogInWindow" Height="450" Width="800"
+        >
+    <Grid>
+        <Label Content="Welcome to the Application" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Margin="0,20,0,0"/>
+        <Grid Margin="180,80">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Content="Enter Id" FontSize="17" VerticalAlignment="Bottom" Margin="5"/>
+            <TextBox Grid.Row="1" Margin="5" Text="{Binding Id}"/>
+            <Label Grid.Row="2" Content="Password" FontSize="17"  VerticalAlignment="Bottom" Margin="5"/>
+            <TextBox Grid.Row="3"  Margin="5" Text="{Binding Password}"/>
+            <Button   Grid.Row="4"  Content="submit" Click="ButtonSubmit_Click"/>
+        </Grid>
+        
+    </Grid>
+</Window>

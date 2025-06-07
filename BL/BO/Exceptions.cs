@@ -36,3 +36,9 @@ public class BlCanNotAssignCall : Exception
 {
     public BlCanNotAssignCall(string? message) : base(message) { }
 }
+
+[Serializable]
+public class BlCanNotUpdateTreatment : Exception
+{
+    public BlCanNotUpdateTreatment(string? message) : base(message) { }
+}

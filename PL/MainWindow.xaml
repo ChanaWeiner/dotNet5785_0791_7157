@@ -102,11 +102,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="Initialize DB" Click="btnInitDB_Click" Margin="20,40"/>
-            <Button Grid.Column="1" Content="Reset DB" Click="BtnResetDB_Click" Margin="20,40"/>
-            <Button Grid.Column="2" Content="Handle Tutors" Click="btnTutors_Click" Margin="20,40"/>
+            <Button Grid.Column="0" Content="Initialize DB" Click="btnInitDB_Click" Margin="20,60"/>
+            <Button Grid.Column="1" Content="Reset DB" Click="BtnResetDB_Click" Margin="20,60"/>
+            <Button Grid.Column="2" Content="Handle Tutors" Click="btnTutors_Click" Margin="20,60"/>
+            <Button Grid.Column="3" Content="Handle Calls" Click="btnCalls_Click" Margin="20,60"/>
         </Grid>
     </Grid>
 </Window>

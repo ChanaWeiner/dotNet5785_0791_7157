@@ -74,7 +74,7 @@
         <DataGrid Grid.Row="1"
                   ItemsSource="{Binding TutorsList}"
                   SelectedItem="{Binding SelectedTutor}"
-                  MouseDoubleClick="lsvTutorsList_MouseDoubleClick"
+                  MouseDoubleClick="LsvTutorsList_MouseDoubleClickHandler"
                   AutoGenerateColumns="True"
                   CanUserAddRows="False"
                   FontSize="16"

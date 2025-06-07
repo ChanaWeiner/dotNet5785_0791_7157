@@ -44,20 +44,18 @@ namespace PL.Tutor
     => TutorsList = (role == BO.Role.None) ?
               s_bl?.Tutor.FilterTutorsInList()! : s_bl?.Tutor.FilterTutorsInList(BO.TutorField.Role, role)!;
 
-        private void tutorListObserver()
+        private void TutorListObserver()
             => queryTutorList();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-             s_bl.Tutor.AddObserver(tutorListObserver);
-            MessageBox.Show("Observer registered");
-
+             s_bl.Tutor.AddObserver(TutorListObserver);
         }
 
         private void Window_Closed(object sender, EventArgs e)
-            => s_bl.Tutor.RemoveObserver(tutorListObserver);
+            => s_bl.Tutor.RemoveObserver(TutorListObserver);
 
-        private void lsvTutorsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void LsvTutorsList_MouseDoubleClickHandler(object sender, MouseButtonEventArgs e)
         {
             if (SelectedTutor != null)
                 new TutorWindow(SelectedTutor.Id).Show();

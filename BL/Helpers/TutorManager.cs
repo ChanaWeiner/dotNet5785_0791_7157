@@ -73,7 +73,7 @@ internal class TutorManager
         // Validate ID presence
         if (boTutor.Id <= 0)
             throw new BO.BlValidationException("ID is required.");
-        if (!IsValidId(boTutor.Id))
+        if (!Tools.IsValidId(boTutor.Id))
             throw new BO.BlValidationException($"ID {boTutor.Id} is invalid.");
 
         // Validate full name presence
@@ -85,13 +85,13 @@ internal class TutorManager
         // Validate phone number presence
         if (string.IsNullOrWhiteSpace(boTutor.CellNumber))
             throw new BO.BlValidationException("Phone number is required.");
-        if (!IsValidPhoneNumber(boTutor.CellNumber))
+        if (!Tools.IsValidPhoneNumber(boTutor.CellNumber))
             throw new BO.BlValidationException($"Phone number '{boTutor.CellNumber}' is invalid.");
 
         // Validate email presence
         if (string.IsNullOrWhiteSpace(boTutor.Email))
             throw new BO.BlValidationException("Email address is required.");
-        if (!IsValidEmail(boTutor.Email))
+        if (!Tools.IsValidEmail(boTutor.Email))
             throw new BO.BlValidationException($"Email address '{boTutor.Email}' is invalid.");
 
         // Validate password presence
@@ -144,60 +144,6 @@ internal class TutorManager
         return hasUpper && hasLower && hasDigit && hasSpecial;
     }
 
-    /// <summary>
-    /// Validates if an ID is valid (9 digits, checksum).
-    /// </summary>
-    /// <param name="id">The ID to validate.</param>
-    /// <returns>True if the ID is valid, otherwise false.</returns>
-    private static bool IsValidId(int id)
-    {
-        if (id <= 0)
-            return false;
-
-        string idString = id.ToString();
-        if (idString.Length != 9)
-            return false;
-
-        // Calculate checksum digit
-        int sum = 0;
-        for (int i = 0; i < idString.Length; i++)
-        {
-            int digit = int.Parse(idString[i].ToString());
-            digit *= (i % 2) + 1;
-            if (digit > 9) digit -= 9;
-            sum += digit;
-        }
-
-        return sum % 10 == 0;
-    }
-
-    /// <summary>
-    /// Validates if a phone number is in the correct format.
-    /// </summary>
-    /// <param name="phoneNumber">The phone number to validate.</param>
-    /// <returns>True if the phone number is valid, otherwise false.</returns>
-    private static bool IsValidPhoneNumber(string phoneNumber)
-    {
-        if (string.IsNullOrWhiteSpace(phoneNumber))
-            return false;
-
-        string phonePattern = @"^(\+972|0)([23489]|5[0-9])-?\d{7}$";
-        return Regex.IsMatch(phoneNumber, phonePattern);
-    }
-
-    /// <summary>
-    /// Validates if an email address is in the correct format.
-    /// </summary>
-    /// <param name="email">The email address to validate.</param>
-    /// <returns>True if the email is valid, otherwise false.</returns>
-    private static bool IsValidEmail(string email)
-    {
-        if (string.IsNullOrWhiteSpace(email))
-            return false;
-
-        string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-        return Regex.IsMatch(email, emailPattern);
-    }
     #endregion
 
     /// <summary>

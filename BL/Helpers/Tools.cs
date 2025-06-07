@@ -5,6 +5,7 @@ using DalApi;
 using System.Reflection;
 using System.Text;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Helpers;
 
@@ -152,7 +153,7 @@ static internal class Tools
         }
         catch (Exception ex)
         {
-            throw new Exception("Error retrieving coordinates" + ex.Message);
+            throw new BO.BlValidationException("Error retrieving coordinates" + ex.Message);
         }
     }
 
@@ -169,6 +170,64 @@ static internal class Tools
 
         [JsonPropertyName("display_name")]
         public string DisplayName { get; set; } // Full address representation
+    }
+    #endregion
+
+    #region validation
+
+    /// <summary>
+    /// Validates if an ID is valid (9 digits, checksum).
+    /// </summary>
+    /// <param name="id">The ID to validate.</param>
+    /// <returns>True if the ID is valid, otherwise false.</returns>
+    internal static bool IsValidId(int id)
+    {
+        if (id <= 0)
+            return false;
+
+        string idString = id.ToString();
+        if (idString.Length != 9)
+            return false;
+
+        // Calculate checksum digit
+        int sum = 0;
+        for (int i = 0; i < idString.Length; i++)
+        {
+            int digit = int.Parse(idString[i].ToString());
+            digit *= (i % 2) + 1;
+            if (digit > 9) digit -= 9;
+            sum += digit;
+        }
+
+        return sum % 10 == 0;
+    }
+
+    /// <summary>
+    /// Validates if a phone number is in the correct format.
+    /// </summary>
+    /// <param name="phoneNumber">The phone number to validate.</param>
+    /// <returns>True if the phone number is valid, otherwise false.</returns>
+    internal static bool IsValidPhoneNumber(string phoneNumber)
+    {
+        if (string.IsNullOrWhiteSpace(phoneNumber))
+            return false;
+
+        string phonePattern = @"^(\+972|0)([23489]|5[0-9])-?\d{7}$";
+        return Regex.IsMatch(phoneNumber, phonePattern);
+    }
+
+    /// <summary>
+    /// Validates if an email address is in the correct format.
+    /// </summary>
+    /// <param name="email">The email address to validate.</param>
+    /// <returns>True if the email is valid, otherwise false.</returns>
+    internal static bool IsValidEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        return Regex.IsMatch(email, emailPattern);
     }
     #endregion
 }
