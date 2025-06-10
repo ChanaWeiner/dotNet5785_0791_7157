@@ -1,0 +1,48 @@
+﻿<Window x:Class="PL.TutorHomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="TutorHome" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
+    <Window.Resources>
+        <!-- Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"  >
+            <Button Visibility="{Binding noCallInProgress,Converter={StaticResource ConvertBoolToVisibleKey}}"  Content="Choose Call" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Margin="0,0,0,30" Click="BtnChooseCall_Click"/>
+            <Button Content="My Details" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Margin="0,0,0,30" Click="BtnMyDetails_Click"/>
+            <Button Visibility="{Binding hasCallInProgress,Converter={StaticResource ConvertBoolToVisibleKey}}" Content="My Current Call" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Margin="0,0,0,30" Click="BtnCurrentCall_Click"/>
+            <Button Visibility="{Binding hasCallsHistory,Converter={StaticResource ConvertBoolToVisibleKey}}" Content="Calls History" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Click="BtnCallsHistory_Click"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.StudentCall;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +22,29 @@ namespace PL
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        private string Id { get; set; }
-        private string Password { get; set; }
+
+
+
+        public string Id
+        {
+            get { return (string)GetValue(IdProperty); }
+            set { SetValue(IdProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Id.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IdProperty =
+            DependencyProperty.Register("Id", typeof(string), typeof(LogInWindow), new PropertyMetadata(""));
+
+
+        public string Password
+        {
+            get { return (string)GetValue(PasswordProperty); }
+            set { SetValue(PasswordProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Password.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PasswordProperty =
+            DependencyProperty.Register("Password", typeof(string), typeof(LogInWindow), new PropertyMetadata(""));
 
         public LogInWindow()
         {
@@ -37,15 +59,12 @@ namespace PL
                BO.Role currentUserRole= s_bl.Tutor.LogIn(int.Parse(Id), Password);
                 if (currentUserRole == BO.Role.Manager)
                 {
-
+                    new MainWindow().Show();
                 }
                 else
                 {
-
+                    new TutorHomeWindow(int.Parse(Id)).Show();
                 }
-
-
-
             }
             catch(BO.BlDoesNotExistException ex)
             {

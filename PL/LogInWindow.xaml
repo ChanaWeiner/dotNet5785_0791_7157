@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="LogInWindow" Height="450" Width="800"
+                DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+
         >
     <Grid>
         <Label Content="Welcome to the Application" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Margin="0,20,0,0"/>

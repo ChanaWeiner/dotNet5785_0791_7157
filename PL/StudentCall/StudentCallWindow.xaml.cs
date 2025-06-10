@@ -32,13 +32,13 @@ namespace PL.StudentCall
         public static readonly DependencyProperty CurrentStudentCallProperty =
             DependencyProperty.Register("CurrentStudentCall", typeof(BO.StudentCall), typeof(StudentCallWindow), new PropertyMetadata(null));
 
-        public static string ButtonText { get; set; }
-        public static bool IsFromTutor { get; set; }
-        public static bool IsNotFromTutor { get; set; }
-        public static bool IsInTreatment { get; set; }
-        public static bool IsClosedOrExpired{ get; set; }
-        public static bool IsTotalyReadOnly{ get; set; }
-        public static bool IsFinalTimeReadOnly{ get; set; }
+        public string ButtonText { get; set; }
+        public bool IsFromTutor { get; set; }
+        public bool IsNotFromTutor { get; set; }
+        public bool IsInTreatment { get; set; }
+        public bool IsClosedOrExpired { get; set; }
+        public bool IsTotalyReadOnly { get; set; }
+        public bool IsFinalTimeReadOnly { get; set; }
 
 
         private void btnAddOrUpdate_Click(object sender, RoutedEventArgs e)
@@ -134,7 +134,8 @@ namespace PL.StudentCall
     
         public StudentCallWindow(int id=0,bool isFromTutor=false)
         {
-                IsFromTutor = isFromTutor;
+
+            IsFromTutor = isFromTutor;
             IsNotFromTutor = !isFromTutor;
 
             if(IsNotFromTutor)
@@ -155,6 +156,7 @@ namespace PL.StudentCall
                 Status = BO.CallStatus.Open,
                 CallsAssignInList = new List<BO.CallAssignInList>()
             };
+
             switch(CurrentStudentCall.Status)
             {
                 case BO.CallStatus.InProgress:
