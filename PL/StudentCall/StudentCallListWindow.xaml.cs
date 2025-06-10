@@ -23,7 +23,7 @@ namespace PL.StudentCall
     public partial class StudentCallListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public BO.CallStatus? statusCall { get; set; } = BO.CallStatus.Open;
+        public BO.CallStatus? statusCall { get; set; } = BO.CallStatus.None;
         public BO.CallInList? SelectedCall { get; set; }
 
         public IEnumerable<BO.CallInList> CallsList
@@ -46,7 +46,7 @@ namespace PL.StudentCall
         {
             try
             {
-                CallsList = (statusCall == null) ?
+                CallsList = (statusCall == BO.CallStatus.None) ?
                             s_bl?.StudentCall.FilterCallsInList()! : s_bl?.StudentCall.FilterCallsInList(BO.StudentCallField.Status, statusCall)!;
 
             }
@@ -80,15 +80,17 @@ namespace PL.StudentCall
 
         private void DeleteCall_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && int.TryParse(btn.Tag.ToString(), out int callId))
+            if (sender is Button btn && btn.DataContext is CallInList call)
             {
-                var result = MessageBox.Show($"Are you sure you want to delete the StudentCall with ID {CurrentStudentCall.Id}", "ok", MessageBoxButton.YesNo);
+                var result = MessageBox.Show($"Are you sure you want to delete the StudentCall with ID {call.CallId}?",
+                                             "Confirm Delete",
+                                             MessageBoxButton.YesNo);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        s_bl.StudentCall.Delete(callId);
+                        s_bl.StudentCall.Delete(call.CallId);
                         QueryCallsList();
                     }
                     catch (Exception ex)
@@ -99,13 +101,14 @@ namespace PL.StudentCall
             }
         }
 
+
         private void CancelAssignment_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && int.TryParse(btn.Tag.ToString(), out int callId))
+            if (sender is Button btn && btn.DataContext is CallInList call)
             {
                 try
                 {
-                    //s_bl.StudentCall.CancelAssignment(callId); 
+                    s_bl.StudentCall.UpdateTreatmentCancellation((int)call.Id);
                     MessageBox.Show("ההקצאה בוטלה ונשלח אימייל.");
                     QueryCallsList();
                 }

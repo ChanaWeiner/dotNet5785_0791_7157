@@ -51,7 +51,7 @@ public interface IStudentCall: IObservable
     /// </summary>
     /// <param name="tutorId">The ID of the tutor who is canceling the treatment.</param>
     /// <param name="assignmentId">The ID of the assignment to be updated.</param>
-    public void UpdateTreatmentCancellation(int tutorId, int assignmentId);
+    public void UpdateTreatmentCancellation( int assignmentId, int tutorId = 0);
     /// <summary>
     /// Updates the treatment completion status of an assignment.
     /// </summary>

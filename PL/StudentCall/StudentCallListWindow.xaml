@@ -81,12 +81,12 @@
                                     MouseDoubleClick="LsvCallsList_MouseDoubleClick"
 >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                <DataGridTextColumn Header="Id" Binding="{Binding CallId}" />
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
-                <DataGridTextColumn Header="Time Left" Binding="{Binding TimeToFinish}" />
-                <DataGridTextColumn Header="Treatment Time" Binding="{Binding TotalTreatmentTime}" />
-                <DataGridTextColumn Header="Last Volunteer" Binding="{Binding LastVolunteerName}" />
-                <DataGridTextColumn Header="Assignments" Binding="{Binding AssignmentsCount}" />
+                <DataGridTextColumn Header="Time Left" Binding="{Binding RemainingTime}" />
+                <DataGridTextColumn Header="Treatment Time" Binding="{Binding CompletionTime}" />
+                <DataGridTextColumn Header="Last Tutor" Binding="{Binding LastTutorName}" />
+                <DataGridTextColumn Header="Assignments" Binding="{Binding TotalAssignments}" />
 
                 <!-- כפתור מחיקה -->
                 <DataGridTemplateColumn Header="Delete">
@@ -104,7 +104,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Cancel"
-                            Click="CancelAssign_Click"
+                            Click="CancelAssignment_Click"
                             Visibility="{Binding CanCancelAssignment, Converter={StaticResource BoolInverseConverterKey}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

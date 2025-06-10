@@ -521,19 +521,6 @@
     <FinalTime>2025-01-24T08:50:37</FinalTime>
   </StudentCall>
   <StudentCall>
-    <Id>1045</Id>
-    <Subject>English</Subject>
-    <Description>Request for help in English</Description>
-    <FullAddress>89 Maple Ave, City D</FullAddress>
-    <FullName>Roni Mizrahi</FullName>
-    <CellNumber>058-2878690</CellNumber>
-    <Email>roni.mizrahi@example.com</Email>
-    <Latitude>-77.40177427481466</Latitude>
-    <Longitude>132.69938395713194</Longitude>
-    <OpenTime>2025-03-30T15:50:37</OpenTime>
-    <FinalTime>2025-03-31T11:50:37</FinalTime>
-  </StudentCall>
-  <StudentCall>
     <Id>1046</Id>
     <Subject>Programming</Subject>
     <Description>Request for help in Programming</Description>
@@ -636,18 +623,5 @@
     <Longitude>35.23446114230339</Longitude>
     <OpenTime>2025-05-20T15:50:37</OpenTime>
     <FinalTime xsi:nil="true" />
-  </StudentCall>
-  <StudentCall>
-    <Id>1035</Id>
-    <Subject>History</Subject>
-    <Description>Request for help in History</Description>
-    <FullAddress>45 Elm St, City B</FullAddress>
-    <FullName>Roni Sharabi</FullName>
-    <CellNumber>056-1917518</CellNumber>
-    <Email>roni.sharabi@example.com</Email>
-    <Latitude>46.9985979</Latitude>
-    <Longitude>-65.5522769</Longitude>
-    <OpenTime>2024-10-04T15:50:37</OpenTime>
-    <FinalTime>2024-10-05T01:50:39</FinalTime>
   </StudentCall>
 </ArrayOfStudentCall>

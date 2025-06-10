@@ -307,20 +307,24 @@ namespace BlImplementation
         /// </summary>
         /// <param name="tutorId">The ID of the tutor who is canceling the treatment.</param>
         /// <param name="assignmentId">The ID of the assignment to be updated.</param>
-        public void UpdateTreatmentCancellation(int tutorId, int assignmentId)
+        public void UpdateTreatmentCancellation( int assignmentId, int tutorId=0)
         {
             DO.Assignment? assignment = null;
 
+            
             // Retrieve the assignment from the database.
             assignment = _dal.Assignment.Read(assignmentId) ?? throw new BO.BlDoesNotExistException($"Assignment's tutor with ID={tutorId}, which its ID={assignmentId} does not exist");
-
+            if (tutorId == 0)
+            {
+                tutorId = assignment.TutorId;
+            }
             // Ensure the tutor has permission to cancel the treatment.
             if (assignment.TutorId != tutorId && Tools.IsManagerId(tutorId))
                 throw new BlCanNotUpdateTreatment("Tutor cannot cancel treatment for this assignment.");
 
             // Ensure the assignment has not already been completed or canceled.
             if (assignment!.EndOfTreatment != null)
-                throw new BlCanNotUpdateTreatment("Assignment treatment has already been completed or canceled.");
+                throw new BlCanNotUpdateTreatment("Assignment treatment has already been completed, canceled or expired.");
 
             // Update the assignment with cancellation details.
             DO.Assignment updateAssignment = assignment with
