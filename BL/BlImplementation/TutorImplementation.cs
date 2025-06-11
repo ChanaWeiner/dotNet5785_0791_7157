@@ -123,7 +123,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
             throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist");
 
         // Retrieve the tutor's assignment if available.
-        var doAssignment = _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime != null);
+        var doAssignment = _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime == null);
         BO.CallStatus? status = null;
         double distance = 0.0;
         DO.StudentCall doStudentCall = null;
@@ -209,7 +209,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
         bool isManager = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id).Role == DO.Role.Manager;
 
         // Ensure that the user is authorized to update this tutor.
-        if (id != boTutor.Id || !isManager)
+        if (id != boTutor.Id && !isManager)
         {
             // If the user is not authorized, throw a validation exception.
             throw new BO.BlValidationException("You are not authorized to update the tutor.");

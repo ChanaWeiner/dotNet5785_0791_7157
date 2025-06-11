@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 using PL.StudentCall;
 using PL.Tutor;
 using System;
@@ -26,6 +27,7 @@ namespace PL
         private bool hasCallInProgress{get;set;}
         private bool noCallInProgress{get;set;}
         private bool hasCallsHistory{get;set;}
+        private int TutorId{get;set; }
 
         public TutorHomeWindow(int id = 309141281)
         {
@@ -33,7 +35,7 @@ namespace PL
             hasCallInProgress = tutor.CurrentCallInProgress != null;
             noCallInProgress = !hasCallInProgress;
             hasCallsHistory = s_bl.StudentCall.FilterCallsInList(BO.StudentCallField.Id,id).Count()!=0;
-           
+            TutorId = id;
 
             InitializeComponent();
         }
@@ -45,7 +47,7 @@ namespace PL
 
         private void BtnMyDetails_Click(object sender, RoutedEventArgs e)
         {
-            new TutorWindow().Show();
+            new TutorWindow(TutorId,true).Show();
         }
 
         private void BtnCurrentCall_Click(object sender, RoutedEventArgs e)

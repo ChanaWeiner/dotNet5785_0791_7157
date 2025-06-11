@@ -12,6 +12,8 @@
         <local:ConvertCurrentCallToVisible x:Key="ConvertCurrentCallToVisibleKey" />
         <local:ConvertBoolToVisible x:Key="ConvertBoolToVisibleKey" />
         <local:BoolInverseConverter x:Key="BoolInverseConverterKey" />
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverterKey" />
+
 
     </Application.Resources>
 </Application>

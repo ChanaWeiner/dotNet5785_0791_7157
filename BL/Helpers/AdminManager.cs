@@ -82,7 +82,7 @@ internal static class AdminManager //stage 4
 
         for (int i = 0; i < 50; i++)
         {
-            int numSubject = s_rand.Next(Enum.GetValues(typeof(Subjects)).Length);
+            int numSubject = s_rand.Next(Enum.GetValues(typeof(Subjects)).Length-1);
             DO.Subjects subject = (DO.Subjects)numSubject;
             string description = $"Request for help in {subjects[numSubject]}";
             string fullAddress = addresses[s_rand.Next(addresses.Length)];
