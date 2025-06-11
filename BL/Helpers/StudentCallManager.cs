@@ -144,7 +144,7 @@ internal class StudentCallManager
     /// Validates a student call object before creating or updating it.
     /// </summary>
     /// <param name="call">The student call object to validate.</param>
-    internal static void Validation(BO.StudentCall call)
+    internal static void Validation(ref BO.StudentCall call)
     {
          
         // Validate subject (Enum)

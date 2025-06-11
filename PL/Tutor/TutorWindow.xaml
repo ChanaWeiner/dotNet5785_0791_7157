@@ -86,11 +86,14 @@
             Click="BtnDisplayCall_Click"
             Visibility="{Binding CurrentTutor.CurrentCallInProgress, Converter={StaticResource ConvertCurrentCallToVisibleKey}}"/>
 
-                    <Button Content="Delete" Height="40" Width="100" Margin="5"
-            Click="BtnDelete_Click"
-            Visibility="{Binding ButtonText, Converter={StaticResource ConvertDeleteToVisibleKey}}"/>
+
                 </StackPanel>
-                <Button Grid.Row="14" Content="{Binding ButtonText}"  HorizontalAlignment="Center" Height="50" Width="100" Click="BtnAddOrUpdate_Click"/>
+                <StackPanel Grid.Row="14" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="{Binding ButtonText}"  HorizontalAlignment="Center" Height="50" Width="100" Click="BtnAddOrUpdate_Click"/>
+                    <Button Grid.Column="1" Content="Delete" Height="40" Width="100" Margin="5"
+                        Click="BtnDelete_Click"
+                        Visibility="{Binding ButtonText, Converter={StaticResource ConvertDeleteToVisibleKey}}"/>
+                </StackPanel>
             </Grid>
         </ScrollViewer>
     </Grid>

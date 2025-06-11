@@ -21,10 +21,7 @@ namespace PL
     public partial class LogInWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
-
-
-
+        
         public string Id
         {
             get { return (string)GetValue(IdProperty); }
@@ -34,7 +31,6 @@ namespace PL
         // Using a DependencyProperty as the backing store for Id.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IdProperty =
             DependencyProperty.Register("Id", typeof(string), typeof(LogInWindow), new PropertyMetadata(""));
-
 
         public string Password
         {
@@ -55,15 +51,27 @@ namespace PL
         {
             try
             {
-            
-               BO.Role currentUserRole= s_bl.Tutor.LogIn(int.Parse(Id), Password);
+                // Validate ID and Password inputs
+                if (string.IsNullOrWhiteSpace(Id) || !int.TryParse(Id, out int parsedId))
+                {
+                    MessageBox.Show("Invalid ID. Please enter a numeric value.");
+                    return;
+                }
+                if(string.IsNullOrWhiteSpace(Password))
+                {
+                    MessageBox.Show("Password cannot be empty.");
+                    return;
+                }
+                // Attempt to log in the user
+                BO.Role currentUserRole= s_bl.Tutor.LogIn(parsedId, Password);
+                // If login is successful, open the appropriate window based on the role
                 if (currentUserRole == BO.Role.Manager)
                 {
                     new MainWindow().Show();
                 }
                 else
                 {
-                    new TutorHomeWindow(int.Parse(Id)).Show();
+                    new TutorHomeWindow(parsedId).Show();
                 }
             }
             catch(BO.BlDoesNotExistException ex)
@@ -74,7 +82,6 @@ namespace PL
             {
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString());
             }
-         
         }
     }
 }

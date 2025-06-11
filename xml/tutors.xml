@@ -15,20 +15,6 @@
     <DistanceType>Walking</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>242911097</Id>
-    <FullName>Dina Peretz</FullName>
-    <CellNumber>053-8329989</CellNumber>
-    <Email>dina.peretz@example.com</Email>
-    <Password>$2a$11$8aPbn4PvkPBooGlmaTZdY.a74s6TSVFY1BvlcpddMqZMx6jgh4fCG</Password>
-    <CurrentAddress>Street 58, City 15</CurrentAddress>
-    <Latitude>-82.02767817953699</Latitude>
-    <Longitude>59.77933960181474</Longitude>
-    <Role>MasterTutor</Role>
-    <Active>true</Active>
-    <Distance>15.73118937398826</Distance>
-    <DistanceType>Driving</DistanceType>
-  </Tutor>
-  <Tutor>
     <Id>265282426</Id>
     <FullName>Yair Sharabi</FullName>
     <CellNumber>053-1050750</CellNumber>
@@ -209,5 +195,19 @@
     <Active>true</Active>
     <Distance>8.455825317689804</Distance>
     <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>242911097</Id>
+    <FullName>Dina Weiner</FullName>
+    <CellNumber>053-8329989</CellNumber>
+    <Email>dina.peretz@example.com</Email>
+    <Password>$2a$11$8aPbn4PvkPBooGlmaTZdY.a74s6TSVFY1BvlcpddMqZMx6jgh4fCG</Password>
+    <CurrentAddress>Street 58, City 15</CurrentAddress>
+    <Latitude>29.342113050000002</Latitude>
+    <Longitude>47.954271500000004</Longitude>
+    <Role>MasterTutor</Role>
+    <Active>true</Active>
+    <Distance>16.73118937398826</Distance>
+    <DistanceType>Driving</DistanceType>
   </Tutor>
 </ArrayOfTutor>

@@ -11,33 +11,6 @@
         Loaded="mainWindow_Loaded"
         Closed="Window_Closed">
 
-    <Window.Resources>
-        <!-- Button Style -->
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="#2196F3"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="8"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -105,10 +78,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="Initialize DB" Click="btnInitDB_Click" Margin="20,60"/>
-            <Button Grid.Column="1" Content="Reset DB" Click="BtnResetDB_Click" Margin="20,60"/>
-            <Button Grid.Column="2" Content="Handle Tutors" Click="btnTutors_Click" Margin="20,60"/>
-            <Button Grid.Column="3" Content="Handle Calls" Click="btnCalls_Click" Margin="20,60"/>
+            <Button FontSize="20" Grid.Column="0" Content="Initialize DB" Click="btnInitDB_Click" Margin="20,60"/>
+            <Button FontSize="20" Grid.Column="1" Content="Reset DB" Click="BtnResetDB_Click" Margin="20,60"/>
+            <Button FontSize="20" Grid.Column="2" Content="Handle Tutors" Click="btnTutors_Click" Margin="20,60"/>
+            <Button FontSize="20" Grid.Column="3" Content="Handle Calls" Click="btnCalls_Click" Margin="20,60"/>
         </Grid>
     </Grid>
 </Window>

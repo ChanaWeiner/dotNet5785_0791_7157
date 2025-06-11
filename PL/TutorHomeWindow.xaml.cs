@@ -34,7 +34,7 @@ namespace PL
             BO.Tutor tutor=s_bl.Tutor.Read(id);
             hasCallInProgress = tutor.CurrentCallInProgress != null;
             noCallInProgress = !hasCallInProgress;
-            hasCallsHistory = s_bl.StudentCall.FilterCallsInList(BO.StudentCallField.Id,id).Count()!=0;
+            hasCallsHistory = s_bl.StudentCall.GetCalls().Count()!=0;
             TutorId = id;
 
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace PL
 
         private void BtnChooseCall_Click(object sender, RoutedEventArgs e)
         {
-            new OpenCallsWindow(Id).Show();
+            new OpenCallsWindow(TutorId).Show();
         }
 
         private void BtnMyDetails_Click(object sender, RoutedEventArgs e)
@@ -57,7 +57,7 @@ namespace PL
 
         private void BtnCallsHistory_Click(object sender, RoutedEventArgs e)
         {
-            new CallsHistoryWindow(Id).Show();
+            new CallsHistoryWindow(TutorId).Show();
         }
     }
 }

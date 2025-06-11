@@ -2,16 +2,11 @@
 
 public interface IStudentCall: IObservable
 {
-    
-    public int[] GetCallsByStatus();
     /// <summary>
-    /// Retrieves a list of open calls for a specific tutor, with optional filtering and sorting.
+    /// Retrieves the number of calls by their status (grouped by subject).
     /// </summary>
-    /// <param name="tutorId">The ID of the tutor to retrieve the open calls for.</param>
-    /// <param name="subjectFilter">An optional filter by subject.</param>
-    /// <param name="sortField">An optional field to sort the open calls by.</param>
-    /// <returns>A list of open calls for the tutor.</returns>
-    public IEnumerable<BO.CallInList> GetCallsList(BO.StudentCallField? filterField, object? filterValue, BO.StudentCallField? sortField = BO.StudentCallField.Id);
+    /// <returns>An array of integers representing the number of calls per subject.</returns>
+    public int[] GetCallsByStatus();
     /// <summary>
     /// Retrieves detailed information about a specific student call.
     /// </summary>
@@ -24,10 +19,19 @@ public interface IStudentCall: IObservable
     /// <param name="call">The updated student call object.</param>
     
     public void Update(BO.StudentCall call);
-    
+
+    /// <summary>
+    /// Creates a new student call and validates it before storing.
+    /// </summary>
+    /// <param name="call">The student call object to be created.</param>
     public void Delete(int callId);
-    
+
+    /// <summary>
+    /// Creates a new student call and validates it before storing.
+    /// </summary>
+    /// <param name="call">The student call object to be created.</param>
     public void Create(BO.StudentCall call);
+
     /// <summary>
     /// Retrieves a list of closed calls for a specific tutor, with optional filtering and sorting.
     /// </summary>
@@ -35,7 +39,8 @@ public interface IStudentCall: IObservable
     /// <param name="subjectFilter">An optional filter by subject.</param>
     /// <param name="sortField">An optional field to sort the closed calls by.</param>
     /// <returns>A list of closed calls for the tutor.</returns>
-    public IEnumerable<BO.ClosedCallInList> GetClosedCallsForTutor(int tutorId, Predicate<BO.ClosedCallInList> predicate);
+    public IEnumerable<BO.ClosedCallInList> GetClosedCallsForTutor(int tutorId, Func<BO.ClosedCallInList, bool> predicate=null);
+
     /// <summary>
     /// Retrieves a list of open calls for a specific tutor, with optional filtering and sorting.
     /// </summary>
@@ -43,22 +48,36 @@ public interface IStudentCall: IObservable
     /// <param name="subjectFilter">An optional filter by subject.</param>
     /// <param name="sortField">An optional field to sort the open calls by.</param>
     /// <returns>A list of open calls for the tutor.</returns>
-    public IEnumerable<BO.OpenCallInList> GetOpenCallsForTutor(int tutorId,Predicate<BO.OpenCallInList> predicate=null);
-    
+    public IEnumerable<BO.OpenCallInList> GetOpenCallsForTutor(int tutorId, Func<BO.OpenCallInList, bool> predicate = null);
+
+    /// <summary>
+    /// Updates the treatment completion status of an assignment.
+    /// </summary>
+    /// <param name="tutorId">The ID of the tutor completing the treatment.</param>
+    /// <param name="assignmentId">The ID of the assignment to be updated.</param>
     public void UpdateTreatmentCompletion(int tutorId, int assignmentId);
+
     /// <summary>
     /// Updates the treatment cancellation status of an assignment.
     /// </summary>
     /// <param name="tutorId">The ID of the tutor who is canceling the treatment.</param>
     /// <param name="assignmentId">The ID of the assignment to be updated.</param>
     public void UpdateTreatmentCancellation(int assignmentId, int tutorId = 0);
+
     /// <summary>
     /// Updates the treatment completion status of an assignment.
     /// </summary>
     /// <param name="tutorId">The ID of the tutor completing the treatment.</param>
     /// <param name="assignmentId">The ID of the assignment to be updated.</param>
     public void AssignCallToTutor(int tutorId, int callId);
-    public List<BO.CallInList> FilterCallsInList(Predicate<BO.CallInList> predicate=null);
 
+    /// <summary>
+    /// Retrieves a list of student calls, with optional filtering and sorting.
+    /// </summary>
+    /// <param name="filter">The filter lambda</param>
+    /// <param name="orderBy">The orderBy lambda</param>
+    /// <param name="descending">The order</param>
+    /// <returns></returns>
+    public IEnumerable<BO.CallInList> GetCalls(Func<BO.CallInList, bool>? filter = null, Func<BO.CallInList, object>? orderBy = null, bool descending = false);
 }
 
