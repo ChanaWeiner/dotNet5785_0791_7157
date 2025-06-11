@@ -47,7 +47,7 @@ namespace PL.StudentCall
             try
             {
                 CallsList = (statusCall == BO.CallStatus.None) ?
-                            s_bl?.StudentCall.FilterCallsInList()! : s_bl?.StudentCall.FilterCallsInList(BO.StudentCallField.Status, statusCall)!;
+                            s_bl?.StudentCall.FilterCallsInList()! : s_bl?.StudentCall.FilterCallsInList(c=>c.Status == statusCall)!;
 
             }
             catch (BO.BlValidationException ex)

@@ -5,6 +5,7 @@ using DO;
 using Helpers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace BlImplementation
 {
@@ -159,10 +160,9 @@ namespace BlImplementation
         /// Retrieves a list of closed calls for a specific tutor, with optional filtering and sorting.
         /// </summary>
         /// <param name="tutorId">The ID of the tutor to retrieve the closed calls for.</param>
-        /// <param name="subjectFilter">An optional filter by subject.</param>
-        /// <param name="sortField">An optional field to sort the closed calls by.</param>
+        /// <param name="predicate">A predicate to filter the closed calls.</param>
         /// <returns>A list of closed calls for the tutor.</returns>
-        public IEnumerable<BO.ClosedCallInList> GetClosedCallsForTutor(int tutorId, BO.Subjects? subjectFilter, BO.ClosedCallField? sortField = BO.ClosedCallField.Id)
+        public IEnumerable<BO.ClosedCallInList> GetClosedCallsForTutor(int tutorId, Predicate<BO.ClosedCallInList> predicate)
         {
             // Retrieve all closed calls for the tutor from the assignments table.
             var closedCalls = _dal.Assignment.ReadAll(a => a.TutorId == tutorId)
@@ -179,14 +179,11 @@ namespace BlImplementation
                     EndType = (BO.EndOfTreatment)a.EndOfTreatment
                 });
 
-            // Apply subject filter if specified.
-            if (subjectFilter.HasValue)
+            // Apply the predicate filter if specified.
+            if (predicate != null)
             {
-                closedCalls = closedCalls.Where(c => c.Subject == subjectFilter.Value).ToList();
+                closedCalls = closedCalls.Where(call => predicate(call));
             }
-
-            // Sort the list by the specified field.
-            Tools.SortByField(closedCalls.ToList(), sortField.ToString()!);
 
             return closedCalls;
         }
@@ -195,14 +192,15 @@ namespace BlImplementation
         /// Retrieves a list of open calls for a specific tutor, with optional filtering and sorting.
         /// </summary>
         /// <param name="tutorId">The ID of the tutor to retrieve the open calls for.</param>
-        /// <param name="subjectFilter">An optional filter by subject.</param>
-        /// <param name="sortField">An optional field to sort the open calls by.</param>
+        /// <param name="predicate">An optional predicate to filter the open calls.</param>
         /// <returns>A list of open calls for the tutor.</returns>
-        public IEnumerable<BO.OpenCallInList> GetOpenCallsForTutor(int tutorId, BO.Subjects? subjectFilter, BO.OpenCallField? sortField = BO.OpenCallField.Id)
+        public IEnumerable<BO.OpenCallInList> GetOpenCallsForTutor(int tutorId, Predicate<BO.OpenCallInList> predicate = null)
         {
-            // Retrieve all open or open-in-risk calls for the tutor.
+            var tutor = _dal.Tutor.Read(tutorId) ?? throw new BO.BlDoesNotExistException($"Tutor with ID={tutorId} does not exist");
+
+            // Retrieve all open or open-in-risk calls for the tutor.  
             var openCalls = _dal.StudentCall.ReadAll(c => StudentCallManager.CalculateCallStatus(c) == BO.CallStatus.Open ||
-            StudentCallManager.CalculateCallStatus(c) == BO.CallStatus.OpenInRisk)
+                StudentCallManager.CalculateCallStatus(c) == BO.CallStatus.OpenInRisk)
                 .Select(c => new BO.OpenCallInList
                 {
                     Id = c.Id,
@@ -211,15 +209,14 @@ namespace BlImplementation
                     FullAddress = c.FullAddress,
                     OpeningTime = c.OpenTime,
                     MaxCompletionTime = c.FinalTime,
-                    DistanceFromVolunteer = Tools.CalculateDistance(tutorId, c.Latitude, c.Longitude)
+                    DistanceFromTutor = Tools.CalculateDistance(tutorId, c.Latitude, c.Longitude)
                 });
 
-            // Apply subject filter if specified.
-            if (subjectFilter.HasValue)
-                openCalls = openCalls.Where(c => c.Subject == subjectFilter.Value);
+            // Apply predicate filter if specified.  
+            if (predicate != null)
+                openCalls = openCalls.Where(call => predicate(call)); // Fix: Convert Predicate to Func  
 
-            // Sort the list by the specified field.
-            Tools.SortByField(openCalls.ToList(), sortField.ToString()!);
+            openCalls = openCalls.Where(c => c.DistanceFromTutor <= tutor.Distance); // Filter out calls that are too far away.  
 
             return openCalls;
         }
@@ -378,24 +375,14 @@ namespace BlImplementation
             }
         }
 
-        public List<CallInList> FilterCallsInList(StudentCallField? callField = null, object? filterValue = null)
+        public List<CallInList> FilterCallsInList(Predicate<BO.CallInList> predicate=null)
         {
-           
             IEnumerable<DO.StudentCall> doCalls;
             doCalls = _dal.StudentCall.ReadAll();
-            
-
             List<BO.CallInList> callsInList = doCalls.Select(StudentCallManager.ConvertFromDoToBo).ToList();
-            return callsInList.FindAll(c =>
-            {
-                if (callField == null)
-                    return true;
-                var propertyInfo = c.GetType().GetProperty(callField.ToString()!);
-                if (propertyInfo == null)
-                    throw new BO.BlValidationException($"Property '{callField}' not found on {c.GetType().Name}");
-                var propertyValue = propertyInfo.GetValue(c);
-                return propertyValue != null && propertyValue.ToString() == filterValue?.ToString();
-            });
+            if(predicate != null)
+                callsInList=callsInList.FindAll(predicate);
+            return callsInList;
         }
     }
 }

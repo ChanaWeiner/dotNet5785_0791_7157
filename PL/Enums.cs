@@ -33,4 +33,12 @@ namespace PL
 
         public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
     }
+
+    public class EndOfTreatmentCollection : IEnumerable
+    {
+        static readonly IEnumerable<BO.EndOfTreatment> s_enums =
+    (Enum.GetValues(typeof(BO.EndOfTreatment)) as IEnumerable<BO.EndOfTreatment>)!;
+
+        public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+    }
 }

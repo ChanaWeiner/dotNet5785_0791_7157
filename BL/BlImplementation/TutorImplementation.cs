@@ -123,7 +123,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
             throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist");
 
         // Retrieve the tutor's assignment if available.
-        var doAssignment = _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime != null);
+        var doAssignment = _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime == null);
         BO.CallStatus? status = null;
         double distance = 0.0;
         DO.StudentCall doStudentCall = null;
@@ -191,7 +191,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
     /// <summary>
     /// Updates the details of a tutor, ensuring that only authorized users can perform the update.
     /// </summary>
-    /// <param name="id">The ID of the tutor to be updated.</param>
+    /// <param name="id">The ID of the tutor who asks to update.</param>
     /// <param name="boTutor">The business object containing the updated tutor information.</param>
     public void Update(int id, BO.Tutor boTutor)
     {
@@ -223,19 +223,19 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
         {
             // Attempt to update the tutor in the DAL.
             _dal.Tutor.Update(doTutor);
-            TutorManager.Observers.NotifyItemUpdated(id);  //stage 5
+            TutorManager.Observers.NotifyItemUpdated(boTutor.Id);  //stage 5
             TutorManager.Observers.NotifyListUpdated();  //stage 5
         }
         catch (DalDoesNotExistException ex)
         {
             // If the tutor does not exist, throw an exception.
-            throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist", ex);
+            throw new BO.BlDoesNotExistException($"Tutor with ID={boTutor.Id} does not exist", ex);
         }
     }
 
     public List<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null)
     {
-        if (filterValue!=null&&filterValue is BO.Role)
+        if (filterValue != null && filterValue is BO.Role)
         {
             filterValue = (DO.Role)filterValue;
         }
@@ -243,10 +243,11 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
         if (filterValue == null)
             doTutors = _dal.Tutor.ReadAll();
         else
-            doTutors = _dal.Tutor.ReadAll((DO.Tutor tutor) => {
+            doTutors = _dal.Tutor.ReadAll((DO.Tutor tutor) =>
+            {
                 return tutor.GetType().GetProperty(tutorField.ToString()).GetValue(tutor).Equals(filterValue);
-                });
-        
+            });
+
         List<BO.TutorInList> tutorsInList = doTutors.Select(TutorManager.ConvertFromDoToBo).ToList();
 
         return tutorsInList;

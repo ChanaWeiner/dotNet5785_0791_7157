@@ -27,20 +27,22 @@ namespace PL
         private bool noCallInProgress{get;set;}
         private bool hasCallsHistory{get;set;}
 
+        private int Id { get;set;}
+
         public TutorHomeWindow(int id = 309141281)
         {
+            Id = id;
             BO.Tutor tutor=s_bl.Tutor.Read(id);
             hasCallInProgress = tutor.CurrentCallInProgress != null;
             noCallInProgress = !hasCallInProgress;
-            hasCallsHistory = s_bl.StudentCall.FilterCallsInList(BO.StudentCallField.Id,id).Count()!=0;
-           
+            hasCallsHistory = s_bl.StudentCall.FilterCallsInList().Count()!=0;
 
             InitializeComponent();
         }
 
         private void BtnChooseCall_Click(object sender, RoutedEventArgs e)
         {
-            new StudentCallListWindow().Show();
+            new OpenCallsWindow(Id).Show();
         }
 
         private void BtnMyDetails_Click(object sender, RoutedEventArgs e)
@@ -55,7 +57,7 @@ namespace PL
 
         private void BtnCallsHistory_Click(object sender, RoutedEventArgs e)
         {
-            new CallsHistoryWindow().Show();
+            new CallsHistoryWindow(Id).Show();
         }
     }
 }

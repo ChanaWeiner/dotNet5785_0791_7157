@@ -25,8 +25,8 @@ public class OpenCallInList
     // Maximum time for call completion
     public DateTime? MaxCompletionTime { get; set; } 
 
-    // Distance of the call from the volunteer
-    public double DistanceFromVolunteer { get; set; }
+    // Distance of the call from the tutor
+    public double DistanceFromTutor { get; set; }
 
     public override string ToString() => Tools.ToStringProperty(this);
 

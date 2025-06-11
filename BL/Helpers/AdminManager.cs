@@ -38,59 +38,91 @@ internal static class AdminManager //stage 4
     /// </summary>
     private static void CreateTutors()
     {
+        var locations = new[]
+        {
+        new { City = "Tel Aviv", Address = "Dizengoff 100", Lat = 32.0853, Lon = 34.7818 },
+        new { City = "Ramat Gan", Address = "Jabotinsky 33", Lat = 32.0823, Lon = 34.8106 },
+        new { City = "Petah Tikva", Address = "Bar Kochva 21", Lat = 32.0871, Lon = 34.8878 },
+        new { City = "Holon", Address = "HaHistadrut 15", Lat = 32.0104, Lon = 34.7740 },
+        new { City = "Rishon LeZion", Address = "Herzl 5", Lat = 31.9700, Lon = 34.7900 },
+        new { City = "Bat Yam", Address = "Balfour 8", Lat = 32.0163, Lon = 34.7480 },
+        new { City = "Herzliya", Address = "Sokolov 50", Lat = 32.1656, Lon = 34.8490 }
+    };
+
         string[] firstNames = { "Dani", "Eli", "Yair", "Ariela", "Dina", "Shira", "Rivka", "David", "Moshe", "Tamar" };
         string[] lastNames = { "Levy", "Amar", "Cohen", "Levin", "Klein", "Israelof", "Mizrahi", "Peretz", "Azoulay", "Sharabi" };
 
         const int MIN_ID = 20000000;
         const int MAX_ID = 40000000;
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < locations.Length; i++)
         {
+            var loc = locations[i];
             int id;
             do
             {
-                id = s_rand.Next(MIN_ID, MAX_ID); // Generate random ID
+                id = s_rand.Next(MIN_ID, MAX_ID);
                 id = id * 10 + CalculateCheckDigit(id);
             }
-            while (s_dal!.Tutor.Read(id) != null); // Ensure the tutor doesn't already exist
+            while (s_dal!.Tutor.Read(id) != null);
 
             string fullName = $"{firstNames[s_rand.Next(firstNames.Length)]} {lastNames[s_rand.Next(lastNames.Length)]}";
             string cellNumber = $"05{s_rand.Next(0, 10)}-{s_rand.Next(1000000, 9999999)}";
             string email = $"{fullName.Replace(" ", ".").ToLower()}@example.com";
             string password = $"Pass{id % 1000}!";
-            string currentAddress = $"Street {s_rand.Next(1, 100)}, City {s_rand.Next(1, 20)}";
-            double latitude = s_rand.NextDouble() * 180 - 90;
-            double longitude = s_rand.NextDouble() * 360 - 180;
+
+            string currentAddress = $"{loc.Address}, {loc.City}";
+            double latitude = loc.Lat;
+            double longitude = loc.Lon;
+
             DO.Role role = (i == 0) ? DO.Role.Manager : (DO.Role)s_rand.Next(2);
             bool active = s_rand.Next(0, 2) == 1;
-            double distance = s_rand.NextDouble() * 20;
+
+            // טווח ההגעה הרצוי של המורה (לא מיקום פיזי)
+            double distance = 20 + s_rand.NextDouble() * 180; // [20, 200]
             DO.DistanceType distanceType = (DO.DistanceType)s_rand.Next(3);
 
-            s_dal!.Tutor.Create(new DO.Tutor(id, fullName, cellNumber, email, BCrypt.Net.BCrypt.HashPassword(password), currentAddress, latitude, longitude, role, active, distance, distanceType));
+            s_dal!.Tutor.Create(new DO.Tutor(id, fullName, cellNumber, email,
+                BCrypt.Net.BCrypt.HashPassword(password), currentAddress,
+                latitude, longitude, role, active, distance, distanceType));
         }
     }
+
 
     /// <summary>
     /// Creates random student calls and adds them to the DAL.
     /// </summary>
     private static void CreateStudentCalls()
     {
+        var locations = new[]
+        {
+        new { City = "Tel Aviv", Address = "Rothschild Blvd 1", Lat = 32.0656, Lon = 34.7762 },
+        new { City = "Ramat Gan", Address = "Bialik St 10", Lat = 32.0809, Lon = 34.8147 },
+        new { City = "Petah Tikva", Address = "Arlozorov 3", Lat = 32.0889, Lon = 34.8864 },
+        new { City = "Herzliya", Address = "Ben Gurion St 25", Lat = 32.1635, Lon = 34.8442 },
+        new { City = "Bat Yam", Address = "Ben Gurion 67", Lat = 32.0195, Lon = 34.7459 },
+        new { City = "Holon", Address = "Sderot Yerushalayim 200", Lat = 32.0135, Lon = 34.7703 },
+        new { City = "Rishon LeZion", Address = "Rothschild St 7", Lat = 31.9638, Lon = 34.8044 }
+    };
+
         string[] subjects = { "English", "Math", "Grammer", "Programming", "History" };
-        string[] addresses = { "123 Main St, City A", "45 Elm St, City B", "678 Pine Rd, City C", "89 Maple Ave, City D" };
         string[] firstNames = { "Noa", "Itai", "Maya", "Amit", "Eden", "Omer", "Roni", "Tal", "Shai", "Yael" };
         string[] lastNames = { "Levi", "Cohen", "Mizrahi", "Peretz", "Sharabi", "Azoulay", "Hazan", "Katz", "Berger", "Shaked" };
 
         for (int i = 0; i < 50; i++)
         {
-            int numSubject = s_rand.Next(Enum.GetValues(typeof(Subjects)).Length);
+            int numSubject = s_rand.Next(Enum.GetValues(typeof(Subjects)).Length-1);
             DO.Subjects subject = (DO.Subjects)numSubject;
             string description = $"Request for help in {subjects[numSubject]}";
-            string fullAddress = addresses[s_rand.Next(addresses.Length)];
+
+            var loc = locations[s_rand.Next(locations.Length)];
+            string fullAddress = $"{loc.Address}, {loc.City}";
+            double latitude = loc.Lat;
+            double longitude = loc.Lon;
+
             string fullName = $"{firstNames[s_rand.Next(firstNames.Length)]} {lastNames[s_rand.Next(lastNames.Length)]}";
             string cellNumber = $"05{s_rand.Next(0, 10)}-{s_rand.Next(1000000, 9999999)}";
             string email = $"{fullName.Replace(" ", ".").ToLower()}@example.com";
-            double latitude = s_rand.NextDouble() * 180 - 90;
-            double longitude = s_rand.NextDouble() * 360 - 180;
 
             DateTime openTime = s_dal!.Config.Clock.AddDays(-s_rand.Next(1, 365));
             DateTime? finalTime = s_rand.Next(0, 2) == 1 ? openTime.AddHours(s_rand.Next(1, 48)) : null;
@@ -98,6 +130,7 @@ internal static class AdminManager //stage 4
             s_dal!.StudentCall.Create(new DO.StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
         }
     }
+
 
     /// <summary>
     /// Creates random assignments for student calls and tutors, and adds them to the DAL.
