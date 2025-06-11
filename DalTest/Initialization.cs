@@ -103,7 +103,7 @@ public static class Initialization
     private static void CreateAssignments()
     {
         List<StudentCall> studentCalls = s_dal!.StudentCall.ReadAll().ToList();
-        List<Tutor> tutors = s_dal!.Tutor.ReadAll().ToList();
+        List<Tutor> tutors = s_dal!.Tutor.ReadAll().Where(t => t.Active).ToList();
 
         if (studentCalls.Count == 0 || tutors.Count == 0)
             throw new Exception("Cannot initialize assignments: no student calls or tutors available.");

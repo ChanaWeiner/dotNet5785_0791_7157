@@ -209,7 +209,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
         bool isManager = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id).Role == DO.Role.Manager;
 
         // Ensure that the user is authorized to update this tutor.
-        if (id != boTutor.Id || !isManager)
+        if (id != boTutor.Id && !isManager)
         {
             // If the user is not authorized, throw a validation exception.
             throw new BO.BlValidationException("You are not authorized to update the tutor.");

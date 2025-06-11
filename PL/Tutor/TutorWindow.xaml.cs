@@ -32,15 +32,19 @@ namespace PL.Tutor
             DependencyProperty.Register("CurrentTutor", typeof(BO.Tutor), typeof(TutorWindow), new PropertyMetadata(null));
 
         public static string ButtonText { get; set; }
+        public static bool IsFromTutorWindow { get; set; }
+        public static bool NotHasCallInProgress { get; set; } 
 
-        public TutorWindow(int id = 0)
+        public TutorWindow(int id = 0,bool isFromTutorWindow=false)
         {
             ButtonText = id == 0 ? "Add" : "Update";
             CurrentTutor = (id != 0) ? s_bl.Tutor.Read(id)! : new BO.Tutor() { Id = 0, FullName = null, CellNumber = null, Email = null, Password = null, CurrentAddress = null, Latitude = 0, Longitude = 0, Role = BO.Role.None, Active = false, Distance = 0, DistanceType = BO.DistanceType.Walking, TotalCallsHandled = 0, TotalCallsSelfCanceled = 0, TotalCallsExpired = 0 };
+            IsFromTutorWindow = isFromTutorWindow;
+            NotHasCallInProgress = (CurrentTutor.CurrentCallInProgress==null)?true: false;
             InitializeComponent();
         }
 
-        private void btnAddOrUpdate_Click(object sender, RoutedEventArgs e)
+        private void BtnAddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -66,7 +70,7 @@ namespace PL.Tutor
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString());
             }
         }
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show($"Are you sure you want to delete the tutor with ID {CurrentTutor.Id}", "ok", MessageBoxButton.YesNo);
 
@@ -87,30 +91,26 @@ namespace PL.Tutor
                 }
             }
         }
-
-        private void btnDisplayCall_Click(object sender, RoutedEventArgs e)
+        private void BtnDisplayCall_Click(object sender, RoutedEventArgs e)
         {
             new StudentCallWindow(CurrentTutor.CurrentCallInProgress!.CallId,true)
             {
                 Owner = this
             }.Show();
         }
-        private void tutorObserver()
+        private void TutorObserver()
         {
             int id = CurrentTutor!.Id;
             CurrentTutor = null;
             CurrentTutor = s_bl.Tutor.Read(id);
         }
-
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (CurrentTutor!.Id != 0)
-                s_bl.Tutor.AddObserver(CurrentTutor.Id, tutorObserver);
+                s_bl.Tutor.AddObserver(CurrentTutor.Id, TutorObserver);
         }
-
         private void Window_Closed(object sender, EventArgs e)
-            => s_bl.Tutor.RemoveObserver(tutorObserver);
+            => s_bl.Tutor.RemoveObserver(TutorObserver);
     }
 
 }
