@@ -10,10 +10,10 @@
 
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" >
-            <Button FontSize="40" Visibility="{Binding noCallInProgress,Converter={StaticResource ConvertBoolToVisibleKey}}"  Content="Choose Call" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Margin="0,0,0,30" Click="BtnChooseCall_Click"/>
+            <Button FontSize="40" Visibility="{Binding NoCallInProgress,Converter={StaticResource ConvertBoolToVisibleKey}}"  Content="Choose Call" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Margin="0,0,0,30" Click="BtnChooseCall_Click"/>
             <Button FontSize="40" Content="My Details" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Margin="0,0,0,30" Click="BtnMyDetails_Click"/>
-            <Button FontSize="40" Visibility="{Binding hasCallInProgress,Converter={StaticResource ConvertBoolToVisibleKey}}" Content="My Current Call" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Margin="0,0,0,30" Click="BtnCurrentCall_Click"/>
-            <Button FontSize="40" Visibility="{Binding hasCallsHistory,Converter={StaticResource ConvertBoolToVisibleKey}}" Content="Calls History" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Click="BtnCallsHistory_Click"/>
+            <Button FontSize="40" Visibility="{Binding HasCallInProgress,Converter={StaticResource ConvertBoolToVisibleKey}}" Content="My Current Call" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Margin="0,0,0,30" Click="BtnCurrentCall_Click"/>
+            <Button FontSize="40" Visibility="{Binding HasCallsHistory,Converter={StaticResource ConvertBoolToVisibleKey}}" Content="Calls History" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Click="BtnCallsHistory_Click"/>
         </StackPanel>
 
     </Grid>

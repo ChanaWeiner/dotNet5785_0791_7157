@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using BO;
 
 namespace PL.StudentCall
 {
@@ -47,11 +48,43 @@ namespace PL.StudentCall
             DependencyProperty.Register("OpenCalls", typeof(List<BO.OpenCallInList>), typeof(OpenCallsWindow), new PropertyMetadata(null));
 
 
+ 
+        public string Description
+        {
+            get { return (string)GetValue(DescriptionProperty); }
+            set { SetValue(DescriptionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Description.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DescriptionProperty =
+            DependencyProperty.Register("Description", typeof(string), typeof(OpenCallsWindow), new PropertyMetadata(""));
+
+        public string MapUrl
+        {
+            get { return (string)GetValue(MapUrlProperty); }
+            set { SetValue(MapUrlProperty, value); }
+        }
+
+        public static readonly DependencyProperty MapUrlProperty =
+            DependencyProperty.Register("MapUrl", typeof(string), typeof(OpenCallsWindow), new PropertyMetadata(null));
+
+        public BO.OpenCallInList SelectedCall
+        {
+            get { return (BO.OpenCallInList)GetValue(SelectedCallProperty); }
+            set { SetValue(SelectedCallProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedCall.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedCallProperty =
+            DependencyProperty.Register("SelectedCall", typeof(BO.OpenCallInList), typeof(OpenCallsWindow), new PropertyMetadata(null));
+
+
         public OpenCallsWindow(int id)
         {
             TutorId = id;
             OpenCalls = s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
             InitializeComponent();
+
         }
 
         private void FilterOpenCalls(object sender, SelectionChangedEventArgs e)
@@ -60,5 +93,38 @@ namespace PL.StudentCall
                 s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList() :
                 s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
         }
+
+        private void AssignCall_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                s_bl.StudentCall.AssignCallToTutor(TutorId, SelectedCall.Id);
+            }
+            catch(BO.BlCanNotAssignCall ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void OpenCallsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectedCall != null)
+            {
+                Description = SelectedCall.Description ?? "";
+
+                if (!string.IsNullOrEmpty(SelectedCall.FullAddress))
+                {
+                    string encodedAddress = Uri.EscapeDataString(SelectedCall.FullAddress);
+                    MapUrl = $"https://www.google.com/maps?q={encodedAddress}&output=embed";
+                    MapBrowser.Navigate(MapUrl);
+                }
+                else
+                {
+                    MapUrl = "";
+                }
+            }
+        }
+
+
     }
 }

@@ -20,8 +20,10 @@ namespace PL.Tutor
     public partial class TutorListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public BO.Role role { get; set; } = BO.Role.None;
+        public BO.TutorField? SelectedSearchOption { get; set; } = null;
+        public object SearchValue { get; set; } = string.Empty;
         public BO.TutorInList? SelectedTutor { get; set; }
+        public BO.TutorField? SelectedSortOption { get; set; }
 
         public IEnumerable<BO.TutorInList> TutorsList
         {
@@ -36,13 +38,14 @@ namespace PL.Tutor
 
         public TutorListWindow()
         {
+            queryTutorList();
             InitializeComponent();
         }
 
         private void FilterTutors(object sender, SelectionChangedEventArgs e) => queryTutorList();
         private void queryTutorList()
-    => TutorsList = (role == BO.Role.None) ?
-              s_bl?.Tutor.FilterTutorsInList()! : s_bl?.Tutor.FilterTutorsInList(BO.TutorField.Role, role)!;
+    => TutorsList = (SelectedSearchOption == null) ?
+              s_bl?.Tutor.FilterTutorsInList()! : s_bl?.Tutor.FilterTutorsInList(SelectedSearchOption,SearchValue)!;
 
         private void TutorListObserver()
             => queryTutorList();
@@ -64,6 +67,26 @@ namespace PL.Tutor
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             new TutorWindow().Show();
+        }
+
+        private void ClearSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            TutorsList = s_bl?.Tutor.FilterTutorsInList().ToList()!;
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            queryTutorList();
+        }
+
+        private void SortButton_Click(object sender, RoutedEventArgs e)
+        {
+            TutorsList = s_bl.Tutor.SortTutorsInList(SelectedSortOption);
+        }
+
+        private void ResetSortButton_Click(object sender, RoutedEventArgs e)
+        {
+            TutorsList = s_bl?.Tutor.FilterTutorsInList().ToList()!; // Reset to the original list without sorting
         }
     }
 }

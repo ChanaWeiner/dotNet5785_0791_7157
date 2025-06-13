@@ -5,21 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.StudentCall"
         mc:Ignorable="d"
-        Title="OpenCallsWindow" Height="450" Width="800"    
+        Title="OpenCallsWindow" Height="600" Width="900"    
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,0,0,10">
+
+        <!-- Filters -->
+        <Grid Grid.Row="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Filter by" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-            <ComboBox Grid.Column="1" FontSize="16" Height="30"  SelectionChanged="FilterOpenCalls"/>
+            <ComboBox Grid.Column="1" FontSize="16" Height="30" SelectionChanged="FilterOpenCalls"/>
         </Grid>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding OpenCalls}" AutoGenerateColumns="True" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" Margin="10,10,10,10"/>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="OpenCallsDataGrid"
+                  Grid.Row="1" 
+                  ItemsSource="{Binding OpenCalls}" 
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  SelectionChanged="OpenCallsDataGrid_SelectionChanged"
+                  SelectedItem="{Binding SelectedCall}"
+                  Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Subject}"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding FullAddress}"/>
+                <DataGridTextColumn Header="Distance" Binding="{Binding DistanceFromTutor}"/>
+                <DataGridTemplateColumn Header="Assign">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Assign" Click="AssignCall_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Description and optional map -->
+        <StackPanel Grid.Row="2" Margin="10">
+            <TextBlock Text="Call Description:" FontWeight="Bold" FontSize="14" Margin="0,0,0,5"/>
+            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Height="100" Background="#f5f5f5" Padding="10"/>
+            <WebBrowser Height="200" x:Name="MapBrowser"/>
+
+
+        </StackPanel>
+
     </Grid>
 </Window>

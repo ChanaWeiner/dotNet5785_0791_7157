@@ -41,4 +41,12 @@ namespace PL
 
         public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
     }
+
+    public class TutorFieldsCollection : IEnumerable
+    {
+        static readonly IEnumerable<BO.TutorField> s_enums =
+    (Enum.GetValues(typeof(BO.TutorField)) as IEnumerable<BO.TutorField>)!;
+
+        public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+    }
 }

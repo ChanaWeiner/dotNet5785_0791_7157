@@ -30,15 +30,15 @@ namespace BlImplementation
             // Check if the call has already been handled or expired.
             var callAssignments = _dal.Assignment.ReadAll(a =>
             a.StudentCallId == callId &&
-            a.EndOfTreatment != DO.EndOfTreatment.Treated &&
-            a.EndOfTreatment != DO.EndOfTreatment.Expired);
+            (a.EndOfTreatment == DO.EndOfTreatment.Treated || a.EndOfTreatment == DO.EndOfTreatment.Expired));
 
-            if (!callAssignments.Any())
+            if (callAssignments.Any())
                 throw new BO.BlCanNotAssignCall($"Call with ID={callId} has already been handled or has expired.");
 
             // Create a new assignment for the tutor.
             DO.Assignment newAssignment = new(0, callId, tutorId, AdminManager.Now, null, null);
             _dal.Assignment.Create(newAssignment);
+            StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
         }
 
         public void Create(BO.StudentCall call)
@@ -137,7 +137,7 @@ namespace BlImplementation
             {
                 closedCalls = closedCalls.Where(predicate);
             }
-
+            
             return closedCalls;
         }
 
@@ -205,7 +205,7 @@ namespace BlImplementation
                 CallsAssignInList = CallsAssignInList
             };
         }
-
+        
         public void Update(BO.StudentCall call)
         {
             try

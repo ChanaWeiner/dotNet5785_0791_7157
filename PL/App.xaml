@@ -8,6 +8,7 @@
         <local:SubjectsCollection x:Key="SubjectsCollectionKey" />
         <local:StatusCallsCollection x:Key="StatusCallsCollectionKey" />
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey" />
+        <local:TutorFieldsCollection x:Key="TutorFieldsCollectionKey" />
         <local:EndOfTreatmentCollection x:Key="EndOfTreatmentCollectionKey" />
         <local:ConvertDeleteToVisible x:Key="ConvertDeleteToVisibleKey" />
         <local:ConvertCurrentCallToVisible x:Key="ConvertCurrentCallToVisibleKey" />

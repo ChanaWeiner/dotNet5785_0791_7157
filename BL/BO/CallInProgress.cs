@@ -16,7 +16,7 @@ public class CallInProgress
     public Subjects Subject { get; set; }
 
     // Description of the call.
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     // Full address of the call.
     public string FullAddress { get; set; }

@@ -78,7 +78,7 @@
           CanUserAddRows="False"
           FontSize="16"
           Margin="0"
-                                    MouseDoubleClick="LsvCallsList_MouseDoubleClick"
+          MouseDoubleClick="LsvCallsList_MouseDoubleClick"
 >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding CallId}" />

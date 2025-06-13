@@ -24,20 +24,28 @@ namespace PL
     public partial class TutorHomeWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        private bool hasCallInProgress{get;set;}
-        private bool noCallInProgress{get;set;}
-        private bool hasCallsHistory{get;set;}
+        public bool HasCallInProgress{get;set;}
+        public bool NoCallInProgress{get;set;}
+        public bool HasCallsHistory{get;set;}
         private int TutorId{get;set; }
 
-        public TutorHomeWindow(int id = 309141281)
+        public TutorHomeWindow() : this(265383422) { }
+        public TutorHomeWindow(int id = 265383422)
         {
-            BO.Tutor tutor=s_bl.Tutor.Read(id);
-            hasCallInProgress = tutor.CurrentCallInProgress != null;
-            noCallInProgress = !hasCallInProgress;
-            hasCallsHistory = s_bl.StudentCall.GetCalls().Count()!=0;
-            TutorId = id;
+            try
+            {
+                BO.Tutor tutor = s_bl.Tutor.Read(id);
+                HasCallInProgress = tutor.CurrentCallInProgress != null;
+                NoCallInProgress = !HasCallInProgress;
+                HasCallsHistory = s_bl.StudentCall.GetCalls().Count() != 0;
+                TutorId = id;
 
-            InitializeComponent();
+                InitializeComponent();
+            }
+            catch (BO.BlDoesNotExistException)
+            {
+                MessageBox.Show($"Tutor with ID {id} does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }          
         }
 
         private void BtnChooseCall_Click(object sender, RoutedEventArgs e)

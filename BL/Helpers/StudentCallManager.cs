@@ -9,51 +9,7 @@ internal class StudentCallManager
     private static IDal s_dal = DalApi.Factory.Get;
     private static IAdmin manager = new AdminImplementation();
     internal static ObserverManager Observers = new(); //stage 5
-    /// <summary>
-    /// Determines the call status based on the final time and the current time.
-    /// </summary>
-    /// <param name="studentCall">The student call to check the status for.</param>
-    /// <returns>The status of the student call.</returns>
-    internal static BO.CallStatus GetCallStatus(DO.StudentCall studentCall)
-    {
-        DateTime? FinalTime = studentCall.FinalTime;
-        DateTime clock = AdminManager.Now;
-        TimeSpan? range = manager.GetRiskTimeRange();
-
-        if (FinalTime - clock <= range)
-        {
-            return BO.CallStatus.InProgressAtRisk; // The call is nearing its end and is at risk.
-        }
-        return BO.CallStatus.InProgress; // The call is in progress without risk.
-    }
-
-    /// <summary>
-    /// Retrieves a list of student calls, filtered by the given criteria.
-    /// </summary>
-    /// <param name="filterField">The field to filter the calls by (optional).</param>
-    /// <param name="filterValue">The value to filter by (optional).</param>
-    /// <returns>A list of student calls matching the filter criteria.</returns>
-    internal static List<BO.CallInList> GetCallInList(BO.StudentCallField? filterField, object? filterValue)
-    {
-        // Retrieve all student calls from the database, applying the filter if needed.
-        List<DO.StudentCall> doCalls = s_dal.StudentCall.ReadAll((DO.StudentCall c) =>
-        {
-            if (filterField == null)
-                return true;
-
-            var propertyInfo = c.GetType().GetProperty(filterField.ToString()!);
-            if (propertyInfo == null)
-                throw new BO.BlValidationException($"Property '{filterField}' not found on {c.GetType().Name}");
-
-            var propertyValue = propertyInfo.GetValue(c);
-            return propertyValue != null && propertyValue.ToString() == filterValue.ToString();
-        }).ToList() ?? throw new BO.BlDoesNotExistException("No StudentCall records found matching the filter criteria.");
-
-        // Convert the data to BO objects and return the list.
-        List<BO.CallInList> callInList = doCalls.Select(ConvertFromDoToBo).ToList();
-        return callInList;
-    }
-
+   
     /// <summary>
     /// Converts a DO.StudentCall object to a BO.CallInList object.
     /// </summary>
@@ -93,13 +49,8 @@ internal class StudentCallManager
             TotalAssignments = totalAssignments
         };
     }
-
-    /// <summary>
-    /// Calculates the status of a student call based on its properties and the current time.
-    /// </summary>
-    /// <param name="studentCall">The student call to calculate the status for.</param>
-    /// <returns>The calculated status of the student call.</returns>
-    internal static BO.CallStatus CalculateCallStatus(DO.StudentCall studentCall)
+    
+    internal static BO.CallStatus CalculateCallStatus2(DO.StudentCall studentCall)
     {
         var maxCompletionTime = studentCall.OpenTime.AddHours(2); // Example: maximum time to complete the call is 2 hours.
         var lastAssignment = s_dal.Assignment
@@ -141,18 +92,52 @@ internal class StudentCallManager
     }
 
     /// <summary>
+    /// Calculates the status of a student call based on its properties and the current time.
+    /// </summary>
+    /// <param name="studentCall">The student call to calculate the status for.</param>
+    /// <returns>The calculated status of the student call.</returns>
+    internal static BO.CallStatus CalculateCallStatus(DO.StudentCall studentCall)
+    {
+        var lastAssignment = s_dal.Assignment
+           .ReadAll(a => a.StudentCallId == studentCall.Id)
+           .OrderByDescending(a => a.EntryTime)
+           .FirstOrDefault();
+        bool isCallExpired = studentCall.FinalTime.HasValue && studentCall.FinalTime < AdminManager.Now;
+        bool isCallInRisk = studentCall.FinalTime.HasValue && studentCall.FinalTime - AdminManager.Now < AdminManager.RiskTimeSpan;
+        if (isCallExpired)
+        {
+            return BO.CallStatus.Expired;
+        }
+
+        if (lastAssignment == null)
+            return isCallInRisk ? BO.CallStatus.OpenInRisk : BO.CallStatus.Open;
+
+        if (isCallInRisk)
+            return BO.CallStatus.InProgressAtRisk;
+
+        return lastAssignment?.EndOfTreatment switch
+        {
+            DO.EndOfTreatment.Treated => BO.CallStatus.Closed,
+            DO.EndOfTreatment.SelfCancel => BO.CallStatus.Open,
+            DO.EndOfTreatment.ManagerCancel => BO.CallStatus.Open,
+            DO.EndOfTreatment.Expired => BO.CallStatus.Expired,
+            _ or null => BO.CallStatus.InProgress
+        };
+    }
+
+    /// <summary>
     /// Validates a student call object before creating or updating it.
     /// </summary>
     /// <param name="call">The student call object to validate.</param>
     internal static void Validation(ref BO.StudentCall call)
     {
-         
+
         // Validate subject (Enum)
         if (!Enum.IsDefined(typeof(BO.Subjects), call.Subject))
 
-        // Validate full name
-        if (string.IsNullOrWhiteSpace(call.FullName))
-            throw new BO.BlValidationException("Full name is required.");
+            // Validate full name
+            if (string.IsNullOrWhiteSpace(call.FullName))
+                throw new BO.BlValidationException("Full name is required.");
         if (call.FullName.Length < 2 || call.FullName.Length > 100)
             throw new BO.BlValidationException($"Full name '{call.FullName}' must be between 2 and 100 characters.");
 
@@ -195,17 +180,45 @@ internal class StudentCallManager
     /// </summary>
     internal static void UpdateStatusCalls()
     {
-        // Retrieve all calls that have a final time later than the current time.
-        var calls = s_dal.StudentCall.ReadAll(c => c.FinalTime > AdminManager.Now);
+        var now = AdminManager.Now;
+        var calls = s_dal.StudentCall.ReadAll(c => c.FinalTime.HasValue && c.FinalTime <= now);
+
         foreach (var call in calls)
         {
-            // Retrieve all assignments for the call and update their status.
-            var callAssignments = s_dal.Assignment.ReadAll(a => a.StudentCallId == call.Id);
-            foreach (var callAssignment in callAssignments)
+            var assignments = s_dal.Assignment.ReadAll(a => a.StudentCallId == call.Id);
+
+            if (assignments == null)
             {
-                var updateAssignment = callAssignment with { EndOfTreatment = DO.EndOfTreatment.Expired };
-                s_dal.Assignment.Update(updateAssignment); // Mark assignment as expired.
+                var newAssignment = new DO.Assignment
+                {
+                    StudentCallId = call.Id,
+                    TutorId = 0,
+                    EntryTime = now,
+                    EndOfTreatment = DO.EndOfTreatment.Expired,
+                    EndTime = now
+                };
+                s_dal.Assignment.Create(newAssignment);
+                Observers.NotifyItemUpdated(newAssignment.StudentCallId);
+            }
+            else
+            {
+                foreach (var assignment in assignments)
+                {
+                    if (assignment.EndTime == null)
+                    {
+                        var updated = assignment with
+                        {
+                            EndTime = now,
+                            EndOfTreatment = DO.EndOfTreatment.Expired
+                        };
+                        s_dal.Assignment.Update(updated);
+                        Observers.NotifyItemUpdated(updated.StudentCallId);
+                    }
+                }
             }
         }
+
+        Observers.NotifyListUpdated();
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using DalApi;
 using DO;
 using Helpers;
@@ -67,11 +68,10 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
     /// <param name="id">The ID of the tutor to be deleted.</param>
     public void Delete(int id)
     {
-        // Retrieve all assignments related to the tutor by the tutor's ID.
-        var assignments = _dal.Assignment.ReadAll(a => a.TutorId == id).ToList();
-        if (assignments.Count > 0)
+        // If the tutor has active assignments, prevent deletion.
+
+        if (_dal.Assignment.ReadAll(a => a.TutorId == id).Any())
         {
-            // If the tutor has active assignments, prevent deletion.
             throw new BO.BlCanNotBeDeletedException($"Tutor with ID={id} has assignment/s, they can't be deleted");
         }
 
@@ -79,8 +79,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
         {
             // Attempt to delete the tutor from the DAL.
             _dal.Tutor.Delete(id);
-            TutorManager.Observers.NotifyListUpdated(); //stage 5                                                    
-
+            TutorManager.Observers.NotifyListUpdated();
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -98,8 +97,8 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
     public BO.Role LogIn(int id, string password)
     {
         // Retrieve the tutor by ID from the DAL.
-        DO.Tutor doTutor = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id) ??
-            throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist");
+        var doTutor = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id) ??
+       throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist");
 
         // Verify the provided password against the stored password.
         if (!TutorManager.VerifyPassword(password, doTutor.Password))
@@ -120,8 +119,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
     {
         // Retrieve the tutor from the DAL.
         var doTutor = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id) ??
-            throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist");
-
+       throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist");
         // Retrieve the tutor's assignment if available.
         var doAssignment = _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime == null);
         BO.CallStatus? status = null;
@@ -132,7 +130,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
         {
             // If there is an assignment, retrieve the associated student call.
             doStudentCall = _dal.StudentCall.Read(doAssignment.StudentCallId);
-            status = StudentCallManager.GetCallStatus(doStudentCall);
+            status = StudentCallManager.CalculateCallStatus(doStudentCall);
             distance = Tools.CalculateDistance(id, doStudentCall.Latitude, doStudentCall.Longitude);
         }
 
@@ -156,10 +154,10 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
             TotalCallsExpired = TutorManager.CountCallsByEndStatus(id, BO.EndOfTreatment.Expired),
             CurrentCallInProgress = doAssignment != null ? new BO.CallInProgress()
             {
-                Id = doTutor.Id,
-                CallId = doStudentCall.Id,
+                Id = doAssignment.Id,
+                CallId = doAssignment.StudentCallId,
                 Subject = (BO.Subjects)doStudentCall.Subject,
-                Description = doStudentCall.Description!,
+                Description = doStudentCall.Description,
                 FullAddress = doStudentCall.FullAddress,
                 OpenTime = doStudentCall.OpenTime,
                 MaxEndTime = doStudentCall.FinalTime,
@@ -176,16 +174,16 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
     /// <param name="isActive">The active status of the tutors to filter by. Can be null to ignore this filter.</param>
     /// <param name="sortField">The field to sort the tutors by.</param>
     /// <returns>A sorted list of tutors based on the given criteria.</returns>
-    public IEnumerable<BO.TutorInList> SortTutorsInList(bool? isActive, BO.TutorField? sortField = BO.TutorField.Id)
+    public IEnumerable<BO.TutorInList> SortTutorsInList(BO.TutorField? sortField = BO.TutorField.Id)
     {
         // Retrieve tutors from the DAL based on the active status filter.
-        List<DO.Tutor> doTutor = _dal.Tutor.ReadAll((DO.Tutor tutor) => (isActive == null || tutor.Active == isActive)).ToList();
+        IEnumerable<DO.Tutor> doTutor = _dal.Tutor.ReadAll();
 
         // Convert the retrieved tutors from DAL objects to BO objects.
-        List<BO.TutorInList> tutorsInList = doTutor.Select(TutorManager.ConvertFromDoToBo).ToList();
+        IEnumerable<BO.TutorInList> tutorsInList = doTutor.Select(TutorManager.ConvertFromDoToBo).ToList();
 
-        // Sort the tutors by the specified field.
-        return Tools.SortByField(tutorsInList, sortField.ToString());
+        return tutorsInList.OrderBy(item =>
+            item.GetType().GetProperty(sortField.ToString())?.GetValue(item));
     }
 
     /// <summary>
@@ -195,6 +193,27 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
     /// <param name="boTutor">The business object containing the updated tutor information.</param>
     public void Update(int id, BO.Tutor boTutor)
     {
+
+        var oldDoTutor = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == boTutor.Id) ??
+    throw new BO.BlDoesNotExistException($"Tutor with ID={boTutor.Id} does not exist");
+
+
+        bool isManager = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id).Role == DO.Role.Manager;
+
+        if (oldDoTutor.Role != (DO.Role)boTutor.Role && !isManager)
+            throw new BO.BlValidationException("You are not authorized to change the tutor's role.");
+
+        if (id != boTutor.Id && !isManager)
+        {
+            // If the user is not authorized, throw a validation exception.
+            throw new BO.BlValidationException("You are not authorized to update the tutor.");
+        }
+        if (boTutor.CurrentCallInProgress != null && !boTutor.Active)
+        {
+            // If the tutor is trying to update their status to inactive while having a call in progress, throw an exception.
+            throw new BO.BlValidationException("You cannot set the tutor to inactive while there is a call in progress.");
+        }
+
         try
         {
             // Validate the provided tutor object before proceeding with the update.
@@ -206,25 +225,16 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
             throw error;
         }
 
-        bool isManager = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id).Role == DO.Role.Manager;
-
-        // Ensure that the user is authorized to update this tutor.
-        if (id != boTutor.Id && !isManager)
-        {
-            // If the user is not authorized, throw a validation exception.
-            throw new BO.BlValidationException("You are not authorized to update the tutor.");
-        }
-
-        DO.Tutor doTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password,
+        DO.Tutor newDoTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password,
             boTutor.CurrentAddress, boTutor.Latitude, boTutor.Longitude, (DO.Role)boTutor.Role,
             boTutor.Active, boTutor.Distance, (DO.DistanceType)boTutor.DistanceType);
 
         try
         {
             // Attempt to update the tutor in the DAL.
-            _dal.Tutor.Update(doTutor);
-            TutorManager.Observers.NotifyItemUpdated(boTutor.Id);  //stage 5
-            TutorManager.Observers.NotifyListUpdated();  //stage 5
+            _dal.Tutor.Update(newDoTutor);
+            TutorManager.Observers.NotifyItemUpdated(boTutor.Id);
+            TutorManager.Observers.NotifyListUpdated();
         }
         catch (DalDoesNotExistException ex)
         {
@@ -233,22 +243,12 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
         }
     }
 
-    public List<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null)
+    public IEnumerable<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null)
     {
-        if (filterValue != null && filterValue is BO.Role)
-        {
-            filterValue = (DO.Role)filterValue;
-        }
-        IEnumerable<DO.Tutor> doTutors;
-        if (filterValue == null)
-            doTutors = _dal.Tutor.ReadAll();
-        else
-            doTutors = _dal.Tutor.ReadAll((DO.Tutor tutor) =>
-            {
-                return tutor.GetType().GetProperty(tutorField.ToString()).GetValue(tutor).Equals(filterValue);
-            });
-
-        List<BO.TutorInList> tutorsInList = doTutors.Select(TutorManager.ConvertFromDoToBo).ToList();
+        var doTutors = _dal.Tutor.ReadAll();
+        IEnumerable<BO.TutorInList> tutorsInList = doTutors.Select(TutorManager.ConvertFromDoToBo);
+        if (filterValue != null)
+            tutorsInList = tutorsInList.Where(tutor => tutor.GetType().GetProperty(tutorField.ToString()).GetValue(tutor).ToString().Equals(filterValue));
 
         return tutorsInList;
     }

@@ -20,7 +20,7 @@ public interface ITutor: IObservable
     /// <param name="isActive">The active status of the tutors to filter by. Can be null to ignore this filter.</param>
     /// <param name="sortField">The field to sort the tutors by.</param>
     /// <returns>A sorted list of tutors based on the given criteria.</returns>
-    public IEnumerable<BO.TutorInList> SortTutorsInList(bool? isActive, BO.TutorField? sortField);
+    public IEnumerable<BO.TutorInList> SortTutorsInList(BO.TutorField? sortField);
 
     /// <summary>
     /// Retrieves detailed information about a specific tutor.
@@ -47,6 +47,6 @@ public interface ITutor: IObservable
     /// </summary>
     /// <param name="boTutor">The business object representing the tutor to be created.</param>
     public void Create(BO.Tutor tutor);
-    public List<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null);
+    public IEnumerable<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null);
 
 }
