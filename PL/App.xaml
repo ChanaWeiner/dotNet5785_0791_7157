@@ -2,13 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PL"
-             StartupUri="MainWindow.xaml">
+             StartupUri="LogInWindow.xaml">
     <Application.Resources>
         <local:RolesCollection x:Key="RolesCollectionKey" />
         <local:SubjectsCollection x:Key="SubjectsCollectionKey" />
         <local:StatusCallsCollection x:Key="StatusCallsCollectionKey" />
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey" />
         <local:TutorFieldsCollection x:Key="TutorFieldsCollectionKey" />
+        <local:CallsFieldsCollection x:Key="CallsFieldsCollectionKey" />
         <local:EndOfTreatmentCollection x:Key="EndOfTreatmentCollectionKey" />
         <local:ConvertDeleteToVisible x:Key="ConvertDeleteToVisibleKey" />
         <local:ConvertCurrentCallToVisible x:Key="ConvertCurrentCallToVisibleKey" />

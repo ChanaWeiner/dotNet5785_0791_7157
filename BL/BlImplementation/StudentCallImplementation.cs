@@ -267,6 +267,7 @@ namespace BlImplementation
             {
                 // Attempt to update the assignment in the database.
                 _dal.Assignment.Update(updateAssignment);
+                StudentCallManager.Observers.NotifyItemUpdated(assignmentId); //stage 5
             }
             catch (DO.DalDoesNotExistException ex)
             {
@@ -317,6 +318,35 @@ namespace BlImplementation
                     : callInLists.OrderBy(orderBy);
 
             return callInLists;
+        }
+
+        public IEnumerable<BO.CallInList> SortCallsInList(BO.StudentCallField? sortField = BO.StudentCallField.Id)
+        {
+            // Retrieve tutors from the DAL based on the active status filter.
+            IEnumerable<DO.StudentCall> doTutor = _dal.StudentCall.ReadAll();
+
+            // Convert the retrieved tutors from DAL objects to BO objects.
+            IEnumerable<BO.CallInList> callsInList = doTutor.Select(StudentCallManager.ConvertFromDoToBo).ToList();
+
+            return callsInList.OrderBy(item =>
+                item.GetType().GetProperty(sortField.ToString())?.GetValue(item));
+        }
+
+        public IEnumerable<BO.CallInList> FilterCallsInList(BO.StudentCallField? filterField = null, object? filterValue = null)
+        {
+            var doCalls = _dal.StudentCall.ReadAll();
+            IEnumerable<BO.CallInList> callsInList = doCalls.Select(StudentCallManager.ConvertFromDoToBo);
+            if (filterValue != null)
+                callsInList = callsInList.Where(call =>
+                {
+                    var prop = call.GetType().GetProperty(filterField.ToString());
+                    var val = prop?.GetValue(call);
+
+                    Console.WriteLine($"Checking: {val} == {filterValue} → {val?.ToString() == filterValue?.ToString()}");
+
+                    return val?.ToString() == filterValue?.ToString();
+                }).ToList();
+            return callsInList;
         }
     }
 }

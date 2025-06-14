@@ -28,29 +28,19 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Filter -->
-        <!--<Grid Grid.Row="0" Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Filter by Role:" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-            <ComboBox Grid.Column="1" FontSize="16" Height="30" SelectedValue="{Binding role, Mode=TwoWay}" SelectionChanged="FilterTutors" ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"/>
-        </Grid>-->
-
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
             <Label Content="Search:" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
             <ComboBox Width="200" FontSize="16" Height="30" SelectedValue="{Binding SelectedSearchOption}" ItemsSource="{Binding Source={StaticResource TutorFieldsCollectionKey}}" />
             <TextBox Width="200" Height="30" FontSize="16" Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged}" />
             <Button Content="Search" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="SearchButton_Click"/>
-            <Button Content="Clear" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="ClearSearchButton_Click"/>
+            <Button Content="Clear" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="ClearButton_Click"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
             <Label Content="Sort:" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
             <ComboBox Width="200" FontSize="16" Height="30" SelectedValue="{Binding SelectedSortOption}" ItemsSource="{Binding Source={StaticResource TutorFieldsCollectionKey}}" />
 
             <Button Content="Sort" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="SortButton_Click"/>
-            <Button Content="Reset Sort" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="ResetSortButton_Click"/>
+            <Button Content="Reset Sort" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="ClearButton_Click"/>
         </StackPanel>
 
         <!-- DataGrid -->

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using BO;
+using Microsoft.Win32;
+
 
 namespace PL.StudentCall
 {
@@ -78,14 +80,29 @@ namespace PL.StudentCall
         public static readonly DependencyProperty SelectedCallProperty =
             DependencyProperty.Register("SelectedCall", typeof(BO.OpenCallInList), typeof(OpenCallsWindow), new PropertyMetadata(null));
 
-
-        public OpenCallsWindow(int id)
+        public OpenCallsWindow() : this(329214969) // Default TutorId
+        {
+        }
+        public OpenCallsWindow(int id= 329214969)
         {
             TutorId = id;
             OpenCalls = s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
             InitializeComponent();
-
+            SetBrowserFeatureControl();
         }
+
+
+        public static void SetBrowserFeatureControl()
+        {
+            // קבע את שמות הקבצים של האפליקציה
+            string appName = System.IO.Path.GetFileName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+
+            using (var key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION"))
+            {
+                key.SetValue(appName, 11001, RegistryValueKind.DWord); // 11001 = Edge mode
+            }
+        }
+
 
         private void FilterOpenCalls(object sender, SelectionChangedEventArgs e)
         {
@@ -111,20 +128,11 @@ namespace PL.StudentCall
             if (SelectedCall != null)
             {
                 Description = SelectedCall.Description ?? "";
-
-                if (!string.IsNullOrEmpty(SelectedCall.FullAddress))
-                {
-                    string encodedAddress = Uri.EscapeDataString(SelectedCall.FullAddress);
-                    MapUrl = $"https://www.google.com/maps?q={encodedAddress}&output=embed";
-                    MapBrowser.Navigate(MapUrl);
-                }
-                else
-                {
-                    MapUrl = "";
-                }
+                var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
+                var tutor = s_bl.Tutor.Read(TutorId);
+                string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
+                MapBrowser.Navigate(url);
             }
         }
-
-
     }
 }

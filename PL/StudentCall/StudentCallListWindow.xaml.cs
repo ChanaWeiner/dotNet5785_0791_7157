@@ -36,18 +36,22 @@ namespace PL.StudentCall
         public static readonly DependencyProperty CallsListProperty =
             DependencyProperty.Register("CallsList", typeof(IEnumerable<BO.CallInList>), typeof(StudentCallListWindow), new PropertyMetadata(null));
 
+        public BO.StudentCallField? SelectedSearchOption { get; set; } = null;
+        public object SearchValue { get; set; } = string.Empty;
+        public BO.StudentCallField? SelectedSortOption { get; set; }
+
         public StudentCallListWindow()
         {
+            QueryCallsList();
             InitializeComponent();
         }
 
-        private void FilterCalls(object sender, SelectionChangedEventArgs e) => QueryCallsList();
         private void QueryCallsList()
         {
             try
             {
-                CallsList = (statusCall == BO.CallStatus.None) ?
-                            s_bl?.StudentCall.GetCalls().ToList()! : s_bl?.StudentCall.GetCalls(c=>c.Status == statusCall)!;
+                CallsList = (SelectedSearchOption==null) ?
+                            s_bl?.StudentCall.FilterCallsInList().ToList()! : s_bl?.StudentCall.FilterCallsInList(SelectedSearchOption, SearchValue)!;
             }
             catch (BO.BlValidationException ex)
             {
@@ -59,9 +63,8 @@ namespace PL.StudentCall
             => QueryCallsList();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            s_bl.StudentCall.AddObserver(CallsListObserver);
-        }
+        => s_bl.StudentCall.AddObserver(CallsListObserver);
+        
 
         private void Window_Closed(object sender, EventArgs e)
             => s_bl.StudentCall.RemoveObserver(CallsListObserver);
@@ -90,7 +93,6 @@ namespace PL.StudentCall
                     try
                     {
                         s_bl.StudentCall.Delete(call.CallId);
-                        QueryCallsList();
                     }
                     catch (Exception ex)
                     {
@@ -107,16 +109,27 @@ namespace PL.StudentCall
             {
                 try
                 {
-                    s_bl.StudentCall.UpdateTreatmentCancellation((int)call.Id);
-                    MessageBox.Show("ההקצאה בוטלה ונשלח אימייל.");
-                    QueryCallsList();
+                    s_bl.StudentCall.UpdateTreatmentCancellation((int)call.CallId);
+                    //MessageBox.Show("ההקצאה בוטלה ונשלח אימייל.");
                 }
-                catch (Exception ex)
+                catch (BO.BlDoesNotExistException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BlCanNotBeDeletedException ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
         }
 
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+=> CallsList = s_bl?.StudentCall.FilterCallsInList().ToList()!;
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e) => QueryCallsList();
+
+        private void SortButton_Click(object sender, RoutedEventArgs e)
+        => CallsList = s_bl.StudentCall.SortCallsInList(SelectedSortOption).ToList();
     }
 }

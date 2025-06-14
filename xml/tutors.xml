@@ -1,101 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTutor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Tutor>
-    <Id>326604444</Id>
-    <FullName>Moshe Klein</FullName>
-    <CellNumber>051-4909727</CellNumber>
-    <Email>moshe.klein@example.com</Email>
-    <Password>$2a$11$e7qbvCxQRr9csrWez37kF.dtYdlKpsFcQc.0yl2croTOgBk9JjWou</Password>
+    <Id>398804070</Id>
+    <FullName>Eli Sharabi</FullName>
+    <CellNumber>057-8682082</CellNumber>
+    <Email>eli.sharabi@example.com</Email>
+    <Password>$2a$11$DySLXCb5XOdNA7/HVbtaH.iBqqQa89Rxxj4xZc.Ee76umDbT9KSGC</Password>
     <CurrentAddress>Dizengoff 100, Tel Aviv</CurrentAddress>
     <Latitude>32.0853</Latitude>
     <Longitude>34.7818</Longitude>
     <Role>Manager</Role>
     <Active>false</Active>
-    <Distance>64.98190006121601</Distance>
-    <DistanceType>Walking</DistanceType>
+    <Distance>194.41152705401524</Distance>
+    <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>282687367</Id>
-    <FullName>Ariela Israelof</FullName>
-    <CellNumber>055-1450065</CellNumber>
-    <Email>ariela.israelof@example.com</Email>
-    <Password>$2a$11$/pn.4yqRV93AmScYRCTcy.EbN7xwXzCkV.uv3iEQoMC4X5s51z34a</Password>
+    <Id>329214969</Id>
+    <FullName>Rivka Azoulay</FullName>
+    <CellNumber>055-8313874</CellNumber>
+    <Email>rivka.azoulay@example.com</Email>
+    <Password>$2a$11$bffu6tp2Bosi8W0O2yyMTOnxh8uZtFrtHYR6MNfc4hBK3493mxbb2</Password>
     <CurrentAddress>Jabotinsky 33, Ramat Gan</CurrentAddress>
     <Latitude>32.0823</Latitude>
     <Longitude>34.8106</Longitude>
-    <Role>MasterTutor</Role>
+    <Role>BeginnerTutor</Role>
     <Active>true</Active>
-    <Distance>129.77502724728322</Distance>
+    <Distance>196.81300893401195</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>272759200</Id>
-    <FullName>Eli Amar</FullName>
-    <CellNumber>059-1027680</CellNumber>
-    <Email>eli.amar@example.com</Email>
-    <Password>$2a$11$Mb2u.OwEhsQcpWF8rg0HPerSf23Dnr1K2zZ.hqlD9syOoO81Z3v6q</Password>
+    <Id>298439001</Id>
+    <FullName>Shira Sharabi</FullName>
+    <CellNumber>056-8276723</CellNumber>
+    <Email>shira.sharabi@example.com</Email>
+    <Password>$2a$11$ZlYeHestvA4joACAw9EpxOTszsdzHVaF75yKH3xyNxx1J80TH7pdq</Password>
     <CurrentAddress>Bar Kochva 21, Petah Tikva</CurrentAddress>
     <Latitude>32.0871</Latitude>
     <Longitude>34.8878</Longitude>
-    <Role>BeginnerTutor</Role>
+    <Role>MasterTutor</Role>
     <Active>false</Active>
-    <Distance>141.46613713125421</Distance>
-    <DistanceType>Air</DistanceType>
+    <Distance>20.31954014887582</Distance>
+    <DistanceType>Walking</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>350798187</Id>
-    <FullName>Dina Amar</FullName>
-    <CellNumber>050-9172805</CellNumber>
-    <Email>dina.amar@example.com</Email>
-    <Password>$2a$11$j7iZd8Xd2rCSUuz69f9XsuEMNyoETbfs1MDufKoW6U5QWthPj452C</Password>
+    <Id>317323806</Id>
+    <FullName>Yair Israelof</FullName>
+    <CellNumber>051-6114373</CellNumber>
+    <Email>yair.israelof@example.com</Email>
+    <Password>$2a$11$I35bS65VLvD4qVyPYl4Tgek5e4/3C2pm4h2mmRevhNtpSn1XdcMQ.</Password>
     <CurrentAddress>HaHistadrut 15, Holon</CurrentAddress>
     <Latitude>32.0104</Latitude>
     <Longitude>34.774</Longitude>
-    <Role>MasterTutor</Role>
-    <Active>true</Active>
-    <Distance>77.87608027990638</Distance>
+    <Role>BeginnerTutor</Role>
+    <Active>false</Active>
+    <Distance>136.41037766886393</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>258655687</Id>
-    <FullName>Shira Israelof</FullName>
-    <CellNumber>050-9320147</CellNumber>
-    <Email>shira.israelof@example.com</Email>
-    <Password>$2a$11$9ZAnmAXJ6iAmAWSuDjU14O5pyKVN441NWXZtrYneoz0VCit1h2M0y</Password>
+    <Id>277915591</Id>
+    <FullName>Dina Peretz</FullName>
+    <CellNumber>054-7321928</CellNumber>
+    <Email>dina.peretz@example.com</Email>
+    <Password>$2a$11$A49Y1gYcpEUSAwrGVcyG6.G.BAxmTmp0kwOTu1WFiSE5m/nQueplC</Password>
     <CurrentAddress>Herzl 5, Rishon LeZion</CurrentAddress>
     <Latitude>31.97</Latitude>
     <Longitude>34.79</Longitude>
     <Role>BeginnerTutor</Role>
     <Active>false</Active>
-    <Distance>118.34527575318798</Distance>
+    <Distance>168.14823798522832</Distance>
     <DistanceType>Walking</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>208061309</Id>
-    <FullName>Eli Amar</FullName>
-    <CellNumber>055-4848674</CellNumber>
-    <Email>eli.amar@example.com</Email>
-    <Password>$2a$11$a408jSg6n/hRyOdj81KWUu17Bc6rEAJIDuXZGMAFS.uIvbqJ4uD92</Password>
+    <Id>323909903</Id>
+    <FullName>Ariela Amar</FullName>
+    <CellNumber>051-6668610</CellNumber>
+    <Email>ariela.amar@example.com</Email>
+    <Password>$2a$11$O.4mIaB0xKxoTZtuoWuljOTqCPm/6cwjPye75GTbZexPLXNKAgp0C</Password>
     <CurrentAddress>Balfour 8, Bat Yam</CurrentAddress>
     <Latitude>32.0163</Latitude>
     <Longitude>34.748</Longitude>
     <Role>BeginnerTutor</Role>
     <Active>true</Active>
-    <Distance>197.06311545337059</Distance>
-    <DistanceType>Walking</DistanceType>
+    <Distance>177.86999206508725</Distance>
+    <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>347735052</Id>
-    <FullName>Dani Levy</FullName>
-    <CellNumber>053-7034634</CellNumber>
-    <Email>dani.levy@example.com</Email>
-    <Password>$2a$11$R6rfEmyqqHQbwFEURSFXWO.CQ0P9pvy85MIXaTMgGJflEW819A5by</Password>
+    <Id>369531371</Id>
+    <FullName>Shira Sharabi</FullName>
+    <CellNumber>054-5389497</CellNumber>
+    <Email>shira.sharabi@example.com</Email>
+    <Password>$2a$11$bCCUnehK7fSaYo4BreQDC.nHZ1bfpYSSyNspimKXDKZrqzfbCfBHK</Password>
     <CurrentAddress>Sokolov 50, Herzliya</CurrentAddress>
     <Latitude>32.1656</Latitude>
     <Longitude>34.849</Longitude>
-    <Role>MasterTutor</Role>
+    <Role>BeginnerTutor</Role>
     <Active>true</Active>
-    <Distance>124.29274735755443</Distance>
-    <DistanceType>Driving</DistanceType>
+    <Distance>155.3300102174037</Distance>
+    <DistanceType>Walking</DistanceType>
   </Tutor>
 </ArrayOfTutor>

@@ -23,14 +23,14 @@ namespace PL
 
         public DateTime CurrentTime
         {
-            get { return (DateTime )GetValue(CurrentTimeProperty); }
+            get { return (DateTime)GetValue(CurrentTimeProperty); }
             set { SetValue(CurrentTimeProperty, value); }
-        } 
+        }
 
 
         // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentTimeProperty =
-            DependencyProperty.Register("CurrentTime", typeof(DateTime ), typeof(MainWindow), new PropertyMetadata(DateTime.Now));
+            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(DateTime.Now));
 
 
 
@@ -42,7 +42,7 @@ namespace PL
 
         // Using a DependencyProperty as the backing store for RiskTimeSpan.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RiskTimeSpanProperty =
-            DependencyProperty.Register("RiskTimeSpan", typeof(TimeSpan), typeof(MainWindow) ,new PropertyMetadata(TimeSpan.Zero));
+            DependencyProperty.Register("RiskTimeSpan", typeof(TimeSpan), typeof(MainWindow), new PropertyMetadata(TimeSpan.Zero));
 
 
         public MainWindow()
@@ -81,7 +81,7 @@ namespace PL
             s_bl.Admin.SetRiskTimeRange(RiskTimeSpan);
 
         }
-        private void clockObserver()=> CurrentTime = s_bl.Admin.GetSystemClock();
+        private void clockObserver() => CurrentTime = s_bl.Admin.GetSystemClock();
         private void configObserver() => RiskTimeSpan = s_bl.Admin.GetRiskTimeRange();
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -102,15 +102,67 @@ namespace PL
             new TutorListWindow().Show();
         }
 
-        private void BtnResetDB_Click(object sender, RoutedEventArgs e)
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.Admin.ResetDatabase();
+            var result = MessageBox.Show(
+                "Are you sure you want to reset the list?",
+                "Confirm Reset",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    s_bl.Admin.ResetDatabase();
+                    MessageBox.Show(
+                        "The list has been successfully reset.",
+                        "Success",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        $"An error occurred while resetting the list:\n{ex.Message}",
+                        "Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
+            }
         }
 
         private void btnInitDB_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.Admin.InitializeDatabase();
+            var result = MessageBox.Show(
+                "Are you sure you want to initialize the database?\nThis action may overwrite existing data.",
+                "Confirm Initialization",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    s_bl.Admin.InitializeDatabase();
+                    MessageBox.Show(
+                        "Database was initialized successfully.",
+                        "Initialization Complete",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        $"An error occurred while initializing the database:\n{ex.Message}",
+                        "Initialization Failed",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
+            }
         }
+
 
         private void btnCalls_Click(object sender, RoutedEventArgs e)
         {

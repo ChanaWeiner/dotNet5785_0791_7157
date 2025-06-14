@@ -49,4 +49,12 @@ namespace PL
 
         public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
     }
+
+    public class CallsFieldsCollection : IEnumerable
+    {
+        static readonly IEnumerable<BO.StudentCallField> s_enums =
+    (Enum.GetValues(typeof(BO.StudentCallField)) as IEnumerable<BO.StudentCallField>)!;
+
+        public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+    }
 }

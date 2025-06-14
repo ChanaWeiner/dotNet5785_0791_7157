@@ -79,5 +79,8 @@ public interface IStudentCall: IObservable
     /// <param name="descending">The order</param>
     /// <returns></returns>
     public IEnumerable<BO.CallInList> GetCalls(Func<BO.CallInList, bool>? filter = null, Func<BO.CallInList, object>? orderBy = null, bool descending = false);
+
+    public IEnumerable<BO.CallInList> FilterCallsInList(BO.StudentCallField? filterField = null, object? filterValue = null);
+    public IEnumerable<BO.CallInList> SortCallsInList(BO.StudentCallField? sortField = BO.StudentCallField.Id);
 }
 

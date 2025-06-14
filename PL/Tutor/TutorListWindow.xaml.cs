@@ -31,62 +31,43 @@ namespace PL.Tutor
             set { SetValue(TutorsListProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for TutorsList.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TutorsListProperty =
             DependencyProperty.Register("TutorsList", typeof(IEnumerable<BO.TutorInList>), typeof(TutorListWindow), new PropertyMetadata(null));
 
-
         public TutorListWindow()
         {
-            queryTutorList();
+            QueryTutorList();
             InitializeComponent();
         }
 
-        private void FilterTutors(object sender, SelectionChangedEventArgs e) => queryTutorList();
-        private void queryTutorList()
-    => TutorsList = (SelectedSearchOption == null) ?
+        private void FilterTutors(object sender, SelectionChangedEventArgs e) => QueryTutorList();
+        private void QueryTutorList()
+        => TutorsList = (SelectedSearchOption == null) ?
               s_bl?.Tutor.FilterTutorsInList()! : s_bl?.Tutor.FilterTutorsInList(SelectedSearchOption,SearchValue)!;
 
         private void TutorListObserver()
-            => queryTutorList();
+            => QueryTutorList();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-             s_bl.Tutor.AddObserver(TutorListObserver);
-        }
+        => s_bl.Tutor.AddObserver(TutorListObserver);
+        
 
         private void Window_Closed(object sender, EventArgs e)
-            => s_bl.Tutor.RemoveObserver(TutorListObserver);
+        => s_bl.Tutor.RemoveObserver(TutorListObserver);
 
         private void LsvTutorsList_MouseDoubleClickHandler(object sender, MouseButtonEventArgs e)
-        {
-            if (SelectedTutor != null)
-                new TutorWindow(SelectedTutor.Id).Show();
-        }
+        => new TutorWindow(SelectedTutor!.Id).Show();
+        
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            new TutorWindow().Show();
-        }
-
-        private void ClearSearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            TutorsList = s_bl?.Tutor.FilterTutorsInList().ToList()!;
-        }
-
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            queryTutorList();
-        }
+        => new TutorWindow().Show();
+        
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        => TutorsList = s_bl?.Tutor.FilterTutorsInList().ToList()!;
+        
+        private void SearchButton_Click(object sender, RoutedEventArgs e) => QueryTutorList();
 
         private void SortButton_Click(object sender, RoutedEventArgs e)
-        {
-            TutorsList = s_bl.Tutor.SortTutorsInList(SelectedSortOption);
-        }
-
-        private void ResetSortButton_Click(object sender, RoutedEventArgs e)
-        {
-            TutorsList = s_bl?.Tutor.FilterTutorsInList().ToList()!; // Reset to the original list without sorting
-        }
+        => TutorsList = s_bl.Tutor.SortTutorsInList(SelectedSortOption);
     }
 }

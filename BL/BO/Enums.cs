@@ -8,7 +8,17 @@ public enum CallStatus { Open, InProgress, Closed, Expired, OpenInRisk, InProgre
 // ENUM for sorting tutors
 public enum TutorField { Id, FullName, IsActive, TotalHandledCalls, TotalCancelledCalls, TotalExpiredCalls, CurrentCallId, CurrentCallType, Role }
 
-public enum StudentCallField { Id, CallId, Subject, OpeningTime, RemainingTime, LastVolunteerName, CompletionTime, Status, TotalAssignments }
+public enum StudentCallField {
+    Id,
+    CallId,
+    Subject,
+    OpeningTime,
+    RemainingTime,
+    LastTutorName,
+    CompletionTime,
+    Status,
+    TotalAssignments
+}
 
 
 // for OpenCallInList

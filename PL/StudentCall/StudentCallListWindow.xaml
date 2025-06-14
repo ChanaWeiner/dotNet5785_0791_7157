@@ -13,65 +13,33 @@
         Closed="Window_Closed"
         Background="White">
 
-    <Window.Resources>
-        <!-- עיצוב מותאם לכפתור -->
-        <Style x:Key="ModernButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#007ACC"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Width" Value="120"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,10,0,0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="8"
-                                SnapsToDevicePixels="True"
-                                >
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#005EA6"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Drop shadow effect -->
-        <DropShadowEffect x:Key="DropShadow"
-                          BlurRadius="6"
-                          ShadowDepth="2"
-                          Opacity="0.3"/>
-    </Window.Resources>
+   
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Filter -->
-        <Grid Grid.Row="0" Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Filter by Status:" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-            <ComboBox Grid.Column="1" FontSize="16" Height="30" SelectedValue="{Binding statusCall, Mode=TwoWay}" SelectionChanged="FilterCalls" ItemsSource="{Binding Source={StaticResource StatusCallsCollectionKey}}"/>
-        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <Label Content="Search:" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+            <ComboBox Width="200" FontSize="16" Height="30" SelectedValue="{Binding SelectedSearchOption}" ItemsSource="{Binding Source={StaticResource CallsFieldsCollectionKey}}" />
+            <TextBox Width="200" Height="30" FontSize="16" Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Content="Search" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="SearchButton_Click"/>
+            <Button Content="Clear" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="ClearButton_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
+            <Label Content="Sort:" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+            <ComboBox Width="200" FontSize="16" Height="30" SelectedValue="{Binding SelectedSortOption}" ItemsSource="{Binding Source={StaticResource CallsFieldsCollectionKey}}" />
+
+            <Button Content="Sort" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="SortButton_Click"/>
+            <Button Content="Reset Sort" Width="100" Height="30" FontSize="16" Margin="10,0,0,0" Click="ClearButton_Click"/>
+        </StackPanel>
 
         <!-- DataGrid -->
-        <DataGrid Grid.Row="1"
+        <DataGrid Grid.Row="2"
           ItemsSource="{Binding CallsList}"
           SelectedItem="{Binding SelectedCall}"
           AutoGenerateColumns="False"
@@ -114,9 +82,8 @@
 
 
         <!-- Add Button with style -->
-        <Button Grid.Row="2"
+        <Button Grid.Row="3"
                 Content="Add"
-                Click="ButtonAdd_Click"
-                Style="{StaticResource ModernButtonStyle}"/>
+                Click="ButtonAdd_Click" />
     </Grid>
 </Window>
