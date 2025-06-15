@@ -29,6 +29,15 @@ namespace PL
         public bool HasCallsHistory{get;set;}
         private int TutorId{get;set; }
 
+        public static readonly DependencyProperty CurrentPageProperty =
+            DependencyProperty.Register("CurrentPage", typeof(Page), typeof(TutorHomeWindow), new PropertyMetadata(null));
+
+        public Page CurrentPage
+        {
+            get => (Page)GetValue(CurrentPageProperty);
+            set => SetValue(CurrentPageProperty, value);
+        }
+
         public TutorHomeWindow() : this(265383422) { }
         public TutorHomeWindow(int id = 265383422)
         {
@@ -37,10 +46,14 @@ namespace PL
                 BO.Tutor tutor = s_bl.Tutor.Read(id);
                 HasCallInProgress = tutor.CurrentCallInProgress != null;
                 NoCallInProgress = !HasCallInProgress;
-                HasCallsHistory = s_bl.StudentCall.GetCalls().Count() != 0;
+                HasCallsHistory = s_bl.StudentCall.FilterCallsInList().Count() != 0;
                 TutorId = id;
 
                 InitializeComponent();
+                if(HasCallInProgress)
+                {
+                    CurrentPage = new CurrentCallPage(tutor.Id,tutor.CurrentCallInProgress!.CallId,tutor.CurrentCallInProgress.Id);
+                }
             }
             catch (BO.BlDoesNotExistException)
             {
@@ -58,14 +71,19 @@ namespace PL
             new TutorWindow(TutorId,true).Show();
         }
 
-        private void BtnCurrentCall_Click(object sender, RoutedEventArgs e)
-        {
-            new StudentCallWindow().Show();
-        }
-
         private void BtnCallsHistory_Click(object sender, RoutedEventArgs e)
         {
             new CallsHistoryWindow(TutorId).Show();
+        }
+
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            new LogInWindow().Show();
+        }
+
+        private void BtnCurrentCall_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

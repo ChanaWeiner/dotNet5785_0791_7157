@@ -10,6 +10,7 @@
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey" />
         <local:TutorFieldsCollection x:Key="TutorFieldsCollectionKey" />
         <local:CallsFieldsCollection x:Key="CallsFieldsCollectionKey" />
+        <local:OpenCallsFieldsCollection x:Key="OpenCallsFieldsCollectionKey" />
         <local:EndOfTreatmentCollection x:Key="EndOfTreatmentCollectionKey" />
         <local:ConvertDeleteToVisible x:Key="ConvertDeleteToVisibleKey" />
         <local:ConvertCurrentCallToVisible x:Key="ConvertCurrentCallToVisibleKey" />
@@ -99,6 +100,98 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="DataGrid">
+            <!-- רקע כללי -->
+            <Setter Property="Background" Value="White"/>
+            <!-- שורת כותרת -->
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#D6EAF8"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="8,4"/>
+                        <Setter Property="BorderBrush" Value="Gray"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+            <!-- שורות רגילות -->
+            <Setter Property="RowBackground" Value="White"/>
+            <!-- שורות מתחלפות -->
+            <Setter Property="AlternatingRowBackground" Value="#ECF6FC"/>
+
+            <!-- גבולות -->
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+            <!-- טקסט ועימוד -->
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+
+            <!-- בחירה -->
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+
+            <!-- גלילה -->
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+
+            <!-- שוליים -->
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="CheckBox">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Border
+                        x:Name="border"
+                        Width="18" Height="18"
+                        CornerRadius="9"
+                        Background="Transparent"
+                        BorderBrush="#2196F3"
+                        BorderThickness="2"
+                        VerticalAlignment="Center"
+                        Margin="0,0,5,0">
+                        <Ellipse x:Name="checkMark"
+                                 Width="10" Height="10"
+                                 Fill="#2196F3"
+                                 Visibility="Collapsed"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"/>
+                    </Border>
+                    <ContentPresenter VerticalAlignment="Center"/>
+                </StackPanel>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="border" Property="BorderBrush" Value="#42A5F5"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="border" Property="BorderBrush" Value="#AAA"/>
+                        <Setter TargetName="checkMark" Property="Fill" Value="#AAA"/>
+                        <Setter Property="Foreground" Value="#888"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
 
     </Application.Resources>
 </Application>

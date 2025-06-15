@@ -6,26 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="LogInWindow" Height="450" Width="800"
-                DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         >
     <Grid>
-        <Label Content="Welcome to the Application" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Margin="0,20,0,0"/>
-        <Grid Margin="180,80">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Label Grid.Row="0" Content="Enter Id" FontSize="17" VerticalAlignment="Bottom" Margin="5"/>
-            <TextBox Grid.Row="1" Margin="5" Text="{Binding Id}"/>
-            <Label Grid.Row="2" Content="Password" FontSize="17"  VerticalAlignment="Bottom" Margin="5"/>
-            <TextBox Grid.Row="3"  Margin="5" Text="{Binding Password}"/>
-            <Button FontSize="20" Grid.Row="4"  Content="submit" Click="ButtonSubmit_Click"/>
-        </Grid>
-        
+        <Frame Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

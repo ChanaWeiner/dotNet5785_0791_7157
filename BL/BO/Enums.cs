@@ -25,12 +25,12 @@ public enum StudentCallField {
 public enum OpenCallField
 {
     Id,
-    CallType,
+    Subject,
     Description,
     FullAddress,
     OpeningTime,
     MaxCompletionTime,
-    DistanceFromVolunteer,
+    DistanceFromTutor,
     None
 }
 

@@ -33,13 +33,16 @@ namespace PL.Tutor
 
         public static string ButtonText { get; set; }
         public static bool IsFromTutorWindow { get; set; }
-        public static bool NotHasCallInProgress { get; set; } 
+        public static bool IdIsReadOnly { get; set; }
+        public static bool NotHasCallInProgress { get; set; }
+
 
         public TutorWindow(int id = 0,bool isFromTutorWindow=false)
         {
             ButtonText = id == 0 ? "Add" : "Update";
             CurrentTutor = (id != 0) ? s_bl.Tutor.Read(id)! : new BO.Tutor() { Id = 0, FullName = null, CellNumber = null, Email = null, Password = null, CurrentAddress = null, Latitude = 0, Longitude = 0, Role = BO.Role.None, Active = false, Distance = 0, DistanceType = BO.DistanceType.Walking, TotalCallsHandled = 0, TotalCallsSelfCanceled = 0, TotalCallsExpired = 0 };
             IsFromTutorWindow = isFromTutorWindow;
+            IdIsReadOnly = id == 0 ? false : true;
             NotHasCallInProgress = (CurrentTutor.CurrentCallInProgress==null)?true: false;
             InitializeComponent();
         }
@@ -48,6 +51,7 @@ namespace PL.Tutor
         {
             try
             {
+                FormatValidation();
                 if (ButtonText == "Add")
                 {
                     s_bl.Tutor.Create(CurrentTutor);
@@ -56,6 +60,10 @@ namespace PL.Tutor
 
                 else
                     s_bl.Tutor.Update(CurrentTutor.Id, CurrentTutor);
+            }
+            catch (PL.PlFormatException ex)
+            {
+                MessageBox.Show(ex.Message, ex.InnerException?.ToString());
             }
             catch (BO.BlValidationException ex)
             {
@@ -70,6 +78,25 @@ namespace PL.Tutor
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString());
             }
         }
+
+        private void FormatValidation()
+        {
+            if (string.IsNullOrWhiteSpace(CurrentTutor.FullName))
+                throw new PL.PlFormatException("Full name cannot be empty.");
+            if (string.IsNullOrWhiteSpace(CurrentTutor.CellNumber))
+                throw new PL.PlFormatException("Cell number cannot be empty.");
+            if (string.IsNullOrWhiteSpace(CurrentTutor.Email))
+                throw new PL.PlFormatException("Email cannot be empty.");
+            if (CurrentTutor.Role == BO.Role.None)
+                throw new PL.PlFormatException("Role cannot be None. Please select a valid role.");
+            if (CurrentTutor.Id <= 0)
+                throw new PL.PlFormatException("ID must be a positive integer.");
+            if (CurrentTutor.FullName.Length < 2 || CurrentTutor.FullName.Length > 100)
+                throw new PL.PlFormatException($"Full name '{CurrentTutor.FullName}' must be between 2 and 100 characters.");
+
+        }
+
+
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show($"Are you sure you want to delete the tutor with ID {CurrentTutor.Id}", "ok", MessageBoxButton.YesNo);

@@ -70,6 +70,10 @@ internal class TutorManager
     /// <exception cref="BO.BlValidationException">Thrown when any validation fails.</exception>
     internal static void Validation(ref BO.Tutor boTutor)
     {
+        // Validate role presence
+        if (boTutor.Role == BO.Role.None)
+            throw new BO.BlValidationException("Role cannot be None. Please select a valid role.");
+
         // Validate ID presence
         if (boTutor.Id <= 0)
             throw new BO.BlValidationException("ID is required.");

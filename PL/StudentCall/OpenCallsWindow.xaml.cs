@@ -24,7 +24,10 @@ namespace PL.StudentCall
     public partial class OpenCallsWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
+        public BO.OpenCallField? SelectedSearchOption { get; set; } = null;
+        public object SearchValue { get; set; } = string.Empty;
+        public BO.OpenCallInList? SelectedOpenCall { get; set; }
+        public BO.OpenCallField? SelectedSortOption { get; set; }
         private int TutorId { get; set; }
 
         public BO.OpenCallField FilterField
@@ -91,6 +94,12 @@ namespace PL.StudentCall
             SetBrowserFeatureControl();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        => s_bl.StudentCall.AddObserver(CallsListObserver);
+
+
+        private void Window_Closed(object sender, EventArgs e)
+            => s_bl.StudentCall.RemoveObserver(CallsListObserver);
 
         public static void SetBrowserFeatureControl()
         {
@@ -103,7 +112,24 @@ namespace PL.StudentCall
             }
         }
 
+        public void CallsListObserver() => QueryOpenCall();
 
+        public void QueryOpenCall()
+        {
+            if (SelectedSearchOption == null || string.IsNullOrEmpty(SearchValue?.ToString()))
+            {
+                OpenCalls = s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
+                return;
+            }
+            try
+            {
+                OpenCalls = s_bl.StudentCall.FilterOpenCalls(TutorId, SelectedSearchOption.Value, SearchValue.ToString()).ToList();
+            }
+            catch (BO.BlDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void FilterOpenCalls(object sender, SelectionChangedEventArgs e)
         {
             OpenCalls = (FilterField == BO.OpenCallField.None) ?
@@ -131,8 +157,16 @@ namespace PL.StudentCall
                 var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
                 var tutor = s_bl.Tutor.Read(TutorId);
                 string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
-                MapBrowser.Navigate(url);
+                //MapBrowser.Navigate(url);
             }
         }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+=> OpenCalls = s_bl?.StudentCall.GetOpenCallsForTutor(TutorId).ToList()!;
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e) => QueryOpenCall();
+
+        private void SortButton_Click(object sender, RoutedEventArgs e)
+        => OpenCalls = s_bl.StudentCall.SortOpenCalls(TutorId,SelectedSortOption).ToList();
     }
 }

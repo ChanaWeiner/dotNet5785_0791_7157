@@ -134,9 +134,12 @@ internal class StudentCallManager
 
         // Validate subject (Enum)
         if (!Enum.IsDefined(typeof(BO.Subjects), call.Subject))
-
-            // Validate full name
-            if (string.IsNullOrWhiteSpace(call.FullName))
+            throw new BO.BlValidationException($"Subject '{call.Subject}' is not valid. Please select a valid subject.");
+        // Ensure subject is not 'None'
+        if (call.Subject == BO.Subjects.None)
+            throw new BO.BlValidationException("Subject cannot be 'None'. Please select a valid subject.");
+        // Validate full name
+        if (string.IsNullOrWhiteSpace(call.FullName))
                 throw new BO.BlValidationException("Full name is required.");
         if (call.FullName.Length < 2 || call.FullName.Length > 100)
             throw new BO.BlValidationException($"Full name '{call.FullName}' must be between 2 and 100 characters.");

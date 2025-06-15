@@ -40,7 +40,7 @@
 
                 <!-- Id (רק לקריאה) -->
                 <Label Grid.Row="0" Grid.Column="0" Content="Id" Margin="5"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentTutor.Id}" Margin="5" IsReadOnly="True"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentTutor.Id}" Margin="5" IsReadOnly="{Binding IdIsReadOnly}"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="FullName" Margin="5"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CurrentTutor.FullName}" Margin="5"/>

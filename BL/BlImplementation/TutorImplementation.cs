@@ -121,7 +121,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
         var doTutor = _dal.Tutor.Read((DO.Tutor tutor) => tutor.Id == id) ??
        throw new BO.BlDoesNotExistException($"Tutor with ID={id} does not exist");
         // Retrieve the tutor's assignment if available.
-        var doAssignment = _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime == null);
+        var doAssignment = _dal.Assignment.Read(a => a.TutorId == doTutor.Id && a.EndTime == null );
         BO.CallStatus? status = null;
         double distance = 0.0;
         DO.StudentCall doStudentCall = null;
@@ -133,6 +133,8 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
             status = StudentCallManager.CalculateCallStatus(doStudentCall);
             distance = Tools.CalculateDistance(id, doStudentCall.Latitude, doStudentCall.Longitude);
         }
+
+        bool hasCallInProgress = (status != null && status == BO.CallStatus.InProgress || status == BO.CallStatus.InProgressAtRisk);
 
         // Construct and return the detailed tutor information.
         return new BO.Tutor()
@@ -152,7 +154,7 @@ TutorManager.Observers.RemoveObserver(id, observer); //stage 5
             TotalCallsSelfCanceled = TutorManager.CountCallsByEndStatus(id, BO.EndOfTreatment.SelfCancel),
             TotalCallsHandled = TutorManager.CountCallsByEndStatus(id, BO.EndOfTreatment.Treated),
             TotalCallsExpired = TutorManager.CountCallsByEndStatus(id, BO.EndOfTreatment.Expired),
-            CurrentCallInProgress = doAssignment != null ? new BO.CallInProgress()
+            CurrentCallInProgress = hasCallInProgress ? new BO.CallInProgress()
             {
                 Id = doAssignment.Id,
                 CallId = doAssignment.StudentCallId,

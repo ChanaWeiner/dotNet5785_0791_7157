@@ -6,7 +6,7 @@ namespace Helpers;
 /// <summary>
 /// Internal BL manager for all Application's Clock logic policies
 /// </summary>
-internal static class AdminManager //stage 4
+internal static class AdminManager//stage 4
 {
     #region Stage 4
     private static readonly DalApi.IDal s_dal = DalApi.Factory.Get; //stage 4
@@ -33,69 +33,50 @@ internal static class AdminManager //stage 4
         return checkDigit;
     }
 
-    /// <summary>
-    /// Creates random tutors and adds them to the DAL.
-    /// </summary>
     private static void CreateTutors()
     {
-        var locations = new[]
-        {
+        var locations = new[] {
         new { City = "Tel Aviv", Address = "Dizengoff 100", Lat = 32.0853, Lon = 34.7818 },
         new { City = "Ramat Gan", Address = "Jabotinsky 33", Lat = 32.0823, Lon = 34.8106 },
         new { City = "Petah Tikva", Address = "Bar Kochva 21", Lat = 32.0871, Lon = 34.8878 },
         new { City = "Holon", Address = "HaHistadrut 15", Lat = 32.0104, Lon = 34.7740 },
         new { City = "Rishon LeZion", Address = "Herzl 5", Lat = 31.9700, Lon = 34.7900 },
         new { City = "Bat Yam", Address = "Balfour 8", Lat = 32.0163, Lon = 34.7480 },
-        new { City = "Herzliya", Address = "Sokolov 50", Lat = 32.1656, Lon = 34.8490 }
+        new { City = "Herzliya", Address = "Sokolov 50", Lat = 32.1656, Lon = 34.8490 },
     };
 
         string[] firstNames = { "Dani", "Eli", "Yair", "Ariela", "Dina", "Shira", "Rivka", "David", "Moshe", "Tamar" };
         string[] lastNames = { "Levy", "Amar", "Cohen", "Levin", "Klein", "Israelof", "Mizrahi", "Peretz", "Azoulay", "Sharabi" };
 
-        const int MIN_ID = 20000000;
-        const int MAX_ID = 40000000;
-
-        for (int i = 0; i < locations.Length; i++)
+        for (int i = 0; i < 16; i++)
         {
-            var loc = locations[i];
+            var loc = locations[i % locations.Length];
             int id;
             do
             {
-                id = s_rand.Next(MIN_ID, MAX_ID);
+                id = s_rand.Next(20000000, 40000000);
                 id = id * 10 + CalculateCheckDigit(id);
             }
             while (s_dal!.Tutor.Read(id) != null);
 
             string fullName = $"{firstNames[s_rand.Next(firstNames.Length)]} {lastNames[s_rand.Next(lastNames.Length)]}";
-            string cellNumber = $"05{s_rand.Next(0, 10)}-{s_rand.Next(1000000, 9999999)}";
             string email = $"{fullName.Replace(" ", ".").ToLower()}@example.com";
-            string password = $"Pass{id % 1000}!";
+            string cell = $"05{s_rand.Next(0, 10)}-{s_rand.Next(1000000, 9999999)}";
+            string pass = $"Pass{id % 1000}!";
 
-            string currentAddress = $"{loc.Address}, {loc.City}";
-            double latitude = loc.Lat;
-            double longitude = loc.Lon;
-
-            DO.Role role = (i == 0) ? DO.Role.Manager : (DO.Role)s_rand.Next(2);
-            bool active = s_rand.Next(0, 2) == 1;
-
-            // טווח ההגעה הרצוי של המורה (לא מיקום פיזי)
-            double distance = 20 + s_rand.NextDouble() * 180; // [20, 200]
-            DO.DistanceType distanceType = (DO.DistanceType)s_rand.Next(3);
-
-            s_dal!.Tutor.Create(new DO.Tutor(id, fullName, cellNumber, email,
-                BCrypt.Net.BCrypt.HashPassword(password), currentAddress,
-                latitude, longitude, role, active, distance, distanceType));
+            s_dal.Tutor.Create(new DO.Tutor(
+                id, fullName, cell, email, BCrypt.Net.BCrypt.HashPassword(pass),
+                $"{loc.Address}, {loc.City}", loc.Lat, loc.Lon,
+                i == 0 ? DO.Role.Manager : DO.Role.BeginnerTutor,
+                true,
+                30 + s_rand.NextDouble() * 100,
+                DO.DistanceType.Air));
         }
     }
 
-
-    /// <summary>
-    /// Creates random student calls and adds them to the DAL.
-    /// </summary>
     private static void CreateStudentCalls()
     {
-        var locations = new[]
-        {
+        var locations = new[] {
         new { City = "Tel Aviv", Address = "Rothschild Blvd 1", Lat = 32.0656, Lon = 34.7762 },
         new { City = "Ramat Gan", Address = "Bialik St 10", Lat = 32.0809, Lon = 34.8147 },
         new { City = "Petah Tikva", Address = "Arlozorov 3", Lat = 32.0889, Lon = 34.8864 },
@@ -105,57 +86,63 @@ internal static class AdminManager //stage 4
         new { City = "Rishon LeZion", Address = "Rothschild St 7", Lat = 31.9638, Lon = 34.8044 }
     };
 
-        string[] subjects = { "English", "Math", "Grammer", "Programming", "History" };
+        string[] subjects = { "English", "Math", "Grammar", "Programming", "History" };
         string[] firstNames = { "Noa", "Itai", "Maya", "Amit", "Eden", "Omer", "Roni", "Tal", "Shai", "Yael" };
         string[] lastNames = { "Levi", "Cohen", "Mizrahi", "Peretz", "Sharabi", "Azoulay", "Hazan", "Katz", "Berger", "Shaked" };
 
         for (int i = 0; i < 50; i++)
         {
-            int numSubject = s_rand.Next(Enum.GetValues(typeof(Subjects)).Length-1);
-            DO.Subjects subject = (DO.Subjects)numSubject;
-            string description = $"Request for help in {subjects[numSubject]}";
-
+            int subjectIndex = s_rand.Next(subjects.Length);
             var loc = locations[s_rand.Next(locations.Length)];
-            string fullAddress = $"{loc.Address}, {loc.City}";
-            double latitude = loc.Lat;
-            double longitude = loc.Lon;
-
             string fullName = $"{firstNames[s_rand.Next(firstNames.Length)]} {lastNames[s_rand.Next(lastNames.Length)]}";
-            string cellNumber = $"05{s_rand.Next(0, 10)}-{s_rand.Next(1000000, 9999999)}";
+            string phone = $"05{s_rand.Next(0, 10)}-{s_rand.Next(1000000, 9999999)}";
             string email = $"{fullName.Replace(" ", ".").ToLower()}@example.com";
 
-            DateTime openTime = s_dal!.Config.Clock.AddDays(-s_rand.Next(1, 365));
-            DateTime? finalTime = s_rand.Next(0, 2) == 1 ? openTime.AddHours(s_rand.Next(1, 48)) : null;
+            DateTime open = Now.AddDays(-s_rand.Next(1, 20));
+            DateTime? final = s_rand.Next(0, 5) == 0 ? open.AddDays(-1) : // פג תוקף
+                              s_rand.Next(0, 3) == 0 ? null :
+                              open.AddHours(s_rand.Next(5, 48));
 
-            s_dal!.StudentCall.Create(new DO.StudentCall(0, subject, description, fullAddress, fullName, cellNumber, email, latitude, longitude, openTime, finalTime));
+            s_dal!.StudentCall.Create(new DO.StudentCall(
+                0, (DO.Subjects)subjectIndex, $"Help in {subjects[subjectIndex]}",
+                $"{loc.Address}, {loc.City}", fullName, phone, email, loc.Lat, loc.Lon, open, final));
         }
     }
 
-
-    /// <summary>
-    /// Creates random assignments for student calls and tutors, and adds them to the DAL.
-    /// </summary>
     private static void CreateAssignments()
     {
-        List<DO.StudentCall> studentCalls = s_dal!.StudentCall.ReadAll().ToList();
-        List<DO.Tutor> tutors = s_dal!.Tutor.ReadAll().ToList();
+        var studentCalls = s_dal!.StudentCall.ReadAll().ToList();
+        var tutors = s_dal.Tutor.ReadAll().Where(t => t.Role == DO.Role.BeginnerTutor).ToList();
+        var untreatedCalls = studentCalls.Where(c => !s_dal.Assignment.ReadAll().Any(a => a.StudentCallId == c.Id)).ToList();
 
-        if (studentCalls.Count == 0 || tutors.Count == 0)
-            throw new Exception("Cannot initialize assignments: no student calls or tutors available.");
-
-        for (int i = 0; i < 155; i++)
+        // ראשית, 5 קריאות בטיפול עכשיו (ולא הסתיימו)  
+        for (int i = 0; i < 5; i++)
         {
-            DO.StudentCall studentCall = studentCalls[s_rand.Next(studentCalls.Count - 15)];
-            DO.Tutor tutor = tutors[s_rand.Next(tutors.Count)];
+            var call = untreatedCalls[i];
+            var tutor = tutors[i];
 
-            DateTime entryTime = s_dal!.Config.Clock.AddDays(-s_rand.Next(1, 30));
-            DateTime? endTime = s_rand.Next(0, 2) == 1 ? entryTime.AddHours(s_rand.Next(1, 48)) : null;
+            DateTime entry = call.OpenTime.AddHours(1);
+            s_dal.Assignment.Create(new DO.Assignment(
+                0, call.Id, tutor.Id, entry, null, DO.EndOfTreatment.None));
+        }
 
-            DO.EndOfTreatment status = i < 50 ? DO.EndOfTreatment.Treated : (i < 100 ? DO.EndOfTreatment.SelfCancel : (i < 150 ? DO.EndOfTreatment.ManagerCancel : DO.EndOfTreatment.Expired));
+        // שאר הקצאות רנדומליות  
+        int count = 50;
+        for (int i = 0; i < count; i++)
+        {
+            var call = studentCalls[s_rand.Next(studentCalls.Count)];
+            var tutor = tutors[s_rand.Next(tutors.Count)];
 
-            s_dal!.Assignment.Create(new DO.Assignment(0, studentCall.Id, tutor.Id, entryTime, endTime, status));
+            DateTime entry = call.OpenTime.AddHours(1 + s_rand.Next(1, 5));
+            DateTime? end = s_rand.Next(0, 2) == 1 ? entry.AddHours(s_rand.Next(1, 10)) : null;
+            DO.EndOfTreatment status = end == null
+                ? DO.EndOfTreatment.None
+                : (DO.EndOfTreatment)s_rand.Next(1, 4);
+
+            s_dal.Assignment.Create(new DO.Assignment(0, call.Id, tutor.Id, entry, end, status));
         }
     }
+
 
     /// <summary>
     /// Initializes the DAL and populates the data with random values.

@@ -71,16 +71,10 @@ public interface IStudentCall: IObservable
     /// <param name="assignmentId">The ID of the assignment to be updated.</param>
     public void AssignCallToTutor(int tutorId, int callId);
 
-    /// <summary>
-    /// Retrieves a list of student calls, with optional filtering and sorting.
-    /// </summary>
-    /// <param name="filter">The filter lambda</param>
-    /// <param name="orderBy">The orderBy lambda</param>
-    /// <param name="descending">The order</param>
-    /// <returns></returns>
-    public IEnumerable<BO.CallInList> GetCalls(Func<BO.CallInList, bool>? filter = null, Func<BO.CallInList, object>? orderBy = null, bool descending = false);
-
     public IEnumerable<BO.CallInList> FilterCallsInList(BO.StudentCallField? filterField = null, object? filterValue = null);
     public IEnumerable<BO.CallInList> SortCallsInList(BO.StudentCallField? sortField = BO.StudentCallField.Id);
+
+    public IEnumerable<BO.OpenCallInList> FilterOpenCalls(int tutorId, BO.OpenCallField? filterField = null, object? filterValue = null);
+    public IEnumerable<BO.OpenCallInList> SortOpenCalls(int tutorId, BO.OpenCallField? sortField = BO.OpenCallField.Id);
 }
 

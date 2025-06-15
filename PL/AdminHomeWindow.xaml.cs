@@ -14,9 +14,9 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AdminHomeWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AdminHomeWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
@@ -30,7 +30,7 @@ namespace PL
 
         // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentTimeProperty =
-            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(DateTime.Now));
+            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(AdminHomeWindow), new PropertyMetadata(DateTime.Now));
 
 
 
@@ -42,10 +42,10 @@ namespace PL
 
         // Using a DependencyProperty as the backing store for RiskTimeSpan.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RiskTimeSpanProperty =
-            DependencyProperty.Register("RiskTimeSpan", typeof(TimeSpan), typeof(MainWindow), new PropertyMetadata(TimeSpan.Zero));
+            DependencyProperty.Register("RiskTimeSpan", typeof(TimeSpan), typeof(AdminHomeWindow), new PropertyMetadata(TimeSpan.Zero));
 
 
-        public MainWindow()
+        public AdminHomeWindow()
         {
             InitializeComponent();
         }
@@ -83,7 +83,7 @@ namespace PL
         }
         private void clockObserver() => CurrentTime = s_bl.Admin.GetSystemClock();
         private void configObserver() => RiskTimeSpan = s_bl.Admin.GetRiskTimeRange();
-        private void mainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void AdminHomeWindow_Loaded(object sender, RoutedEventArgs e)
         {
             CurrentTime = s_bl.Admin.GetSystemClock();
             RiskTimeSpan = s_bl.Admin.GetRiskTimeRange();

@@ -1,0 +1,83 @@
+﻿<Page x:Class="PL.StudentCall.CurrentCallPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL.StudentCall"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CurrentCallPage"
+      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
+    <Grid Background="AliceBlue">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Id (רק לקריאה) -->
+                <Label Grid.Row="0" Grid.Column="0" Content="Id" Margin="5"/>
+                <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentStudentCall.Id}" Margin="5"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Full Name" Margin="5"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentStudentCall.FullName}" Margin="5"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Cell Number" Margin="5"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentStudentCall.CellNumber}" Margin="5"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="Email" Margin="5"/>
+                <Label Grid.Row="3" Grid.Column="1" Content="{Binding CurrentStudentCall.Email}" Margin="5"/>
+
+                <Label Grid.Row="4" Grid.Column="0" Content="Subject" Margin="5"/>
+                <Label Grid.Row="4" Grid.Column="1" Content="{Binding CurrentStudentCall.Subject}" Margin="5"/>
+
+                <Label Grid.Row="5" Grid.Column="0" Content="Description" Margin="5"/>
+                <Label Grid.Row="5" Grid.Column="1" Content="{Binding CurrentStudentCall.Description}" Margin="5"/>
+
+                <Label Grid.Row="6" Grid.Column="0" Content="Full Address" Margin="5"/>
+                <Label Grid.Row="6" Grid.Column="1" Content="{Binding CurrentStudentCall.FullAddress}" Margin="5"/>
+
+                <Label Grid.Row="7" Grid.Column="0" Content="Status" Margin="5"/>
+                <Label Grid.Row="7" Grid.Column="1" Content="{Binding CurrentStudentCall.Status}" IsEnabled="False" Margin="5"/>
+
+                <Label Grid.Row="8" Grid.Column="0" Content="Open Time" Margin="5"/>
+                <Label Grid.Row="8" Grid.Column="1" Content="{Binding CurrentStudentCall.OpenTime}" Margin="5"/>
+
+                <Label Grid.Row="9" Grid.Column="0" Content="Final Time" Margin="5"/>
+                <Label Grid.Row="9" Grid.Column="1" Content="{Binding CurrentStudentCall.FinalTime}" Margin="5"/>
+
+                <Label Grid.Row="10" Grid.Column="0" Content="Assigned Calls" Margin="5" VerticalAlignment="Top"/>
+                <ListBox Grid.Row="10" Grid.Column="1" ItemsSource="{Binding CurrentStudentCall.CallsAssignInList}" Margin="5" Height="100">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Grid.Row="11" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Visibility="{Binding IsNotFromTutor}">
+                    <Button Content="Cancel" Width="100" Margin="10" Click="btnCancel_Click" />
+                    <Button Content="End Treatment" Width="100" Margin="10" Click="btnEndTreatment_Click" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

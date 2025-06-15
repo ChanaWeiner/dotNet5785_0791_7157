@@ -11,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL
@@ -20,68 +21,29 @@ namespace PL
     /// </summary>
     public partial class LogInWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         
-        public string Id
+        public Page CurrentPage
         {
-            get { return (string)GetValue(IdProperty); }
-            set { SetValue(IdProperty, value); }
+            get { return (Page)GetValue(CurrentPageProperty); }
+            set { SetValue(CurrentPageProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Id.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IdProperty =
-            DependencyProperty.Register("Id", typeof(string), typeof(LogInWindow), new PropertyMetadata(""));
+        public static readonly DependencyProperty CurrentPageProperty =
+    DependencyProperty.Register("CurrentPage", typeof(Page), typeof(LogInWindow), new PropertyMetadata(null));
 
-        public string Password
-        {
-            get { return (string)GetValue(PasswordProperty); }
-            set { SetValue(PasswordProperty, value); }
-        }
 
-        // Using a DependencyProperty as the backing store for Password.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register("Password", typeof(string), typeof(LogInWindow), new PropertyMetadata(""));
+
 
         public LogInWindow()
         {
+            CurrentPage = new LogInPage((id) => NavigateTo(id));
             InitializeComponent();
         }
 
-        private void ButtonSubmit_Click(object sender, RoutedEventArgs e)
+        public void NavigateTo(int id)
         {
-            try
-            {
-                // Validate ID and Password inputs
-                if (string.IsNullOrWhiteSpace(Id) || !int.TryParse(Id, out int parsedId))
-                {
-                    MessageBox.Show("Invalid ID. Please enter a numeric value.");
-                    return;
-                }
-                if(string.IsNullOrWhiteSpace(Password))
-                {
-                    MessageBox.Show("Password cannot be empty.");
-                    return;
-                }
-                // Attempt to log in the user
-                BO.Role currentUserRole= s_bl.Tutor.LogIn(parsedId, Password);
-                // If login is successful, open the appropriate window based on the role
-                if (currentUserRole == BO.Role.Manager)
-                {
-                    new MainWindow().Show();
-                }
-                else
-                {
-                    new TutorHomeWindow(parsedId).Show();
-                }
-            }
-            catch(BO.BlDoesNotExistException ex)
-            {
-                MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-            }
-            catch (BO.BlValidationException ex)
-            {
-                MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-            }
+            CurrentPage = new AdminButtonsPage(id);
         }
+
     }
 }
