@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL.StudentCall"
         mc:Ignorable="d"
         Title="CallsHistoryWindow" Height="450" Width="800"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
         <Grid.RowDefinitions>

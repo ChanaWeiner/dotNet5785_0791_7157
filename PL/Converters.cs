@@ -88,5 +88,21 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => value is bool b ? !b : false;
     }
+    public class NoAssignmentsToVisibilityConverter : IValueConverter
+    {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int callId= (int)value;
+            
+            return !s_bl.StudentCall.hasAssignments(callId) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 

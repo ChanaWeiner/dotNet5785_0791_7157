@@ -1,61 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assignments.xml>
   <Assignment>
-    <Id>1055</Id>
-    <StudentCallId>1002</StudentCallId>
-    <TutorId>368299194</TutorId>
-    <EntryTime>2025-06-15T19:46:17</EntryTime>
-    <EndTime>2025-06-15T19:46:17</EndTime>
-    <EndOfTreatment>Treated</EndOfTreatment>
-  </Assignment>
-  <Assignment>
-    <Id>1056</Id>
-    <StudentCallId>1006</StudentCallId>
-    <TutorId>368299194</TutorId>
-    <EntryTime>2025-06-15T19:46:17</EntryTime>
-  </Assignment>
-  <Assignment>
-    <Id>1057</Id>
-    <StudentCallId>1013</StudentCallId>
-    <TutorId>368299194</TutorId>
-    <EntryTime>2025-06-15T19:46:17</EntryTime>
-  </Assignment>
-  <Assignment>
-    <Id>1058</Id>
-    <StudentCallId>1014</StudentCallId>
-    <TutorId>374474914</TutorId>
-    <EntryTime>2025-06-15T19:46:17</EntryTime>
-    <EndTime>2025-06-15T19:46:17</EndTime>
-    <EndOfTreatment>Treated</EndOfTreatment>
-  </Assignment>
-  <Assignment>
-    <Id>1059</Id>
-    <StudentCallId>1020</StudentCallId>
-    <TutorId>374474914</TutorId>
-    <EntryTime>2025-06-15T19:46:17</EntryTime>
-    <EndTime>2025-06-15T19:46:17</EndTime>
-    <EndOfTreatment>Treated</EndOfTreatment>
-  </Assignment>
-  <Assignment>
     <Id>1060</Id>
-    <StudentCallId>1023</StudentCallId>
-    <TutorId>374474914</TutorId>
-    <EntryTime>2025-06-15T19:46:17</EntryTime>
+    <StudentCallId>1002</StudentCallId>
+    <TutorId>267549590</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
+    <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1061</Id>
-    <StudentCallId>1024</StudentCallId>
-    <TutorId>328335260</TutorId>
-    <EntryTime>2025-06-15T19:46:17</EntryTime>
-    <EndTime>2025-06-15T19:46:17</EndTime>
+    <StudentCallId>1002</StudentCallId>
+    <TutorId>267549590</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1062</Id>
-    <StudentCallId>1042</StudentCallId>
-    <TutorId>388133811</TutorId>
-    <EntryTime>2025-06-15T19:46:17</EntryTime>
-    <EndTime>2025-06-15T19:46:17</EndTime>
+    <StudentCallId>1002</StudentCallId>
+    <TutorId>267549590</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
     <EndOfTreatment>Treated</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1063</Id>
+    <StudentCallId>1004</StudentCallId>
+    <TutorId>235805868</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
+    <EndOfTreatment>Treated</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1064</Id>
+    <StudentCallId>1007</StudentCallId>
+    <TutorId>235805868</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
+    <EndOfTreatment>Treated</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1065</Id>
+    <StudentCallId>1012</StudentCallId>
+    <TutorId>235805868</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
+    <EndOfTreatment>Treated</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1066</Id>
+    <StudentCallId>1022</StudentCallId>
+    <TutorId>235805868</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
+    <EndOfTreatment>Treated</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1067</Id>
+    <StudentCallId>1014</StudentCallId>
+    <TutorId>235805868</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
+    <EndOfTreatment>SelfCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1068</Id>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>267549590</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
+    <EndOfTreatment>SelfCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1069</Id>
+    <StudentCallId>1014</StudentCallId>
+    <TutorId>267549590</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-06-17T14:11:19</EndTime>
+    <EndOfTreatment>ManagerCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1070</Id>
+    <StudentCallId>1040</StudentCallId>
+    <TutorId>235805868</TutorId>
+    <EntryTime>2025-06-17T14:11:19</EntryTime>
   </Assignment>
 </assignments.xml>

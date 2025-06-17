@@ -13,7 +13,7 @@
         Closed="Window_Closed"
         Background="White">
 
-   
+
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -62,7 +62,7 @@
                         <DataTemplate>
                             <Button Content="Delete"
                             Click="DeleteCall_Click"
-                            Visibility="{Binding CanDelete, Converter={StaticResource BoolInverseConverterKey}}"/>
+                                  Visibility="{Binding CallId, Converter={StaticResource NoAssignmentsToVisibilityConverterKey}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -72,8 +72,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Cancel"
-                            Click="CancelAssignment_Click"
-                            Visibility="{Binding CanCancelAssignment, Converter={StaticResource BoolInverseConverterKey}}"/>
+                            Click="CancelAssignment_Click"         />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

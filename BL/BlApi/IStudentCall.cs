@@ -76,5 +76,12 @@ public interface IStudentCall: IObservable
 
     public IEnumerable<BO.OpenCallInList> FilterOpenCalls(int tutorId, BO.OpenCallField? filterField = null, object? filterValue = null);
     public IEnumerable<BO.OpenCallInList> SortOpenCalls(int tutorId, BO.OpenCallField? sortField = BO.OpenCallField.Id);
+
+    /// <summary>
+    /// Check if there are assignments for specific call
+    /// </summary>
+    /// <param name="callId"></param>
+    /// <returns></returns>
+    public bool hasAssignments(int callId);
 }
 

@@ -24,10 +24,10 @@ namespace PL
     public partial class TutorHomeWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public bool HasCallInProgress{get;set;}
-        public bool NoCallInProgress{get;set;}
-        public bool HasCallsHistory{get;set;}
-        private int TutorId{get;set; }
+        public bool HasCallInProgress { get; set; }
+        public bool NoCallInProgress { get; set; }
+        public bool HasCallsHistory { get; set; }
+        private int TutorId { get; set; }
 
         public static readonly DependencyProperty CurrentPageProperty =
             DependencyProperty.Register("CurrentPage", typeof(Page), typeof(TutorHomeWindow), new PropertyMetadata(null));
@@ -50,15 +50,30 @@ namespace PL
                 TutorId = id;
 
                 InitializeComponent();
-                if(HasCallInProgress)
+                if (HasCallInProgress)
                 {
-                    CurrentPage = new CurrentCallPage(tutor.Id,tutor.CurrentCallInProgress!.CallId,tutor.CurrentCallInProgress.Id);
+                    CurrentPage = new CurrentCallPage(tutor.Id, tutor.CurrentCallInProgress!.CallId, tutor.CurrentCallInProgress.Id);
                 }
             }
             catch (BO.BlDoesNotExistException)
             {
                 MessageBox.Show($"Tutor with ID {id} does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }          
+            }
+        }
+
+        private void DisplayCurrentCallObserver()
+        {
+            var tutor = s_bl.Tutor.Read(TutorId);
+            HasCallInProgress = tutor.CurrentCallInProgress != null;
+            NoCallInProgress = !HasCallInProgress;
+            if (HasCallInProgress)
+            {
+                CurrentPage = new CurrentCallPage(tutor.Id, tutor.CurrentCallInProgress!.CallId, tutor.CurrentCallInProgress.Id);
+            }
+            else
+            {
+                CurrentPage = null;
+            }
         }
 
         private void BtnChooseCall_Click(object sender, RoutedEventArgs e)
@@ -68,7 +83,7 @@ namespace PL
 
         private void BtnMyDetails_Click(object sender, RoutedEventArgs e)
         {
-            new TutorWindow(TutorId,true).Show();
+            new TutorWindow(TutorId, true).Show();
         }
 
         private void BtnCallsHistory_Click(object sender, RoutedEventArgs e)
@@ -85,5 +100,17 @@ namespace PL
         private void BtnCurrentCall_Click(object sender, RoutedEventArgs e)
         {
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            s_bl.Tutor.AddObserver(TutorId, DisplayCurrentCallObserver);
+            s_bl.StudentCall.AddObserver(DisplayCurrentCallObserver);
+            
+         }
+
+        private void Window_Closed(object sender, EventArgs e)
+            => s_bl.Tutor.RemoveObserver(TutorId, DisplayCurrentCallObserver);
+
+
     }
 }

@@ -40,8 +40,10 @@ namespace PL.StudentCall
         public object SearchValue { get; set; } = string.Empty;
         public BO.StudentCallField? SelectedSortOption { get; set; }
 
-        public StudentCallListWindow()
+        private int ManagerId { get; set; }
+        public StudentCallListWindow(int managerId)
         {
+            ManagerId = managerId;
             QueryCallsList();
             InitializeComponent();
         }
@@ -109,14 +111,17 @@ namespace PL.StudentCall
             {
                 try
                 {
-                    s_bl.StudentCall.UpdateTreatmentCancellation((int)call.CallId);
+                    if (call.Id != null)
+                        s_bl.StudentCall.UpdateTreatmentCancellation((int)call.Id, ManagerId);
+                    else
+                        MessageBox.Show("Cannot cancel treatment because the call is open");
                     //MessageBox.Show("ההקצאה בוטלה ונשלח אימייל.");
                 }
                 catch (BO.BlDoesNotExistException ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-                catch (BO.BlCanNotBeDeletedException ex)
+                catch (BO.BlCanNotUpdateTreatment ex)
                 {
                     MessageBox.Show(ex.Message);
                 }

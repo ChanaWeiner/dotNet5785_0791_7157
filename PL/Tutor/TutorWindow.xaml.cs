@@ -55,11 +55,12 @@ namespace PL.Tutor
                 if (ButtonText == "Add")
                 {
                     s_bl.Tutor.Create(CurrentTutor);
-                    this.Close();
                 }
 
                 else
                     s_bl.Tutor.Update(CurrentTutor.Id, CurrentTutor);
+                this.Close();
+
             }
             catch (PL.PlFormatException ex)
             {

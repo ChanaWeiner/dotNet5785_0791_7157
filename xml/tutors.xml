@@ -1,227 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTutor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Tutor>
-    <Id>368299194</Id>
-    <FullName>Rivka Azoulay</FullName>
-    <CellNumber>052-4982369</CellNumber>
-    <Email>rivka.azoulay@example.com</Email>
-    <Password>$2a$11$Nc.CtHDo1AEutYQqtdmX5u62B0HDj6G848bE7fngzweDaxq7ENwRC</Password>
-    <CurrentAddress>Jabotinsky 33, Ramat Gan</CurrentAddress>
-    <Latitude>32.0823</Latitude>
-    <Longitude>34.8106</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>50.49773693275924</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>374474914</Id>
-    <FullName>Moshe Sharabi</FullName>
-    <CellNumber>056-5859980</CellNumber>
-    <Email>moshe.sharabi@example.com</Email>
-    <Password>$2a$11$.lSgrifqvJhDGXGNsJ5bOuyBsX3/D95Lh4H1/8NoXSqgXph2QJGNi</Password>
-    <CurrentAddress>Bar Kochva 21, Petah Tikva</CurrentAddress>
-    <Latitude>32.0871</Latitude>
-    <Longitude>34.8878</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>46.879773946815206</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>328335260</Id>
-    <FullName>Tamar Sharabi</FullName>
-    <CellNumber>050-1184088</CellNumber>
-    <Email>tamar.sharabi@example.com</Email>
-    <Password>$2a$11$QNk0jP93foJCQDrCPS1RuujtbgNjz7JmogCzcgiAaLqQBABknR9L2</Password>
-    <CurrentAddress>HaHistadrut 15, Holon</CurrentAddress>
-    <Latitude>32.0104</Latitude>
-    <Longitude>34.774</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>117.00889742699903</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>235662541</Id>
-    <FullName>David Israelof</FullName>
-    <CellNumber>054-3929613</CellNumber>
-    <Email>david.israelof@example.com</Email>
-    <Password>$2a$11$VghrkY/ElzgZGP3TEeHQF.OQ8v0RinyRPcgxv2nibOg7irg7IG2fO</Password>
-    <CurrentAddress>Herzl 5, Rishon LeZion</CurrentAddress>
-    <Latitude>31.97</Latitude>
-    <Longitude>34.79</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>102.04190577763633</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>203716949</Id>
-    <FullName>Shira Mizrahi</FullName>
-    <CellNumber>059-1171457</CellNumber>
-    <Email>shira.mizrahi@example.com</Email>
-    <Password>$2a$11$N0WNJKmRfo5PU4PLeFCa4.jkSJNmxoeyZBcg0pcTxtzVFtoZMqeMy</Password>
-    <CurrentAddress>Balfour 8, Bat Yam</CurrentAddress>
-    <Latitude>32.0163</Latitude>
-    <Longitude>34.748</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>36.29433779903656</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>364016113</Id>
-    <FullName>David Sharabi</FullName>
-    <CellNumber>054-8068779</CellNumber>
-    <Email>david.sharabi@example.com</Email>
-    <Password>$2a$11$JcETwMfE2XNTqVX8QVVif.OII0Tgmq4np7urB43jlfGhFo98BFnD2</Password>
-    <CurrentAddress>Sokolov 50, Herzliya</CurrentAddress>
-    <Latitude>32.1656</Latitude>
-    <Longitude>34.849</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>123.87720519908112</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>390785368</Id>
-    <FullName>Tamar Amar</FullName>
-    <CellNumber>057-3912114</CellNumber>
-    <Email>tamar.amar@example.com</Email>
-    <Password>$2a$11$B2r48OFhIlzRvt339YMX9./DrppBBm/KXluG6oUGTVY/jgxBTGMRO</Password>
+    <Id>235805868</Id>
+    <FullName>Moshe Levy</FullName>
+    <CellNumber>058-8018389</CellNumber>
+    <Email>moshe.levy@example.com</Email>
+    <Password>$2a$11$xqPEjKu9QZrmwyksZlsC5OD1KaGpkU5aDD79t2K1w29J4AG4y4g16</Password>
     <CurrentAddress>Dizengoff 100, Tel Aviv</CurrentAddress>
     <Latitude>32.0853</Latitude>
     <Longitude>34.7818</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>72.2138359716691</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>223269614</Id>
-    <FullName>Tamar Klein</FullName>
-    <CellNumber>050-8218710</CellNumber>
-    <Email>tamar.klein@example.com</Email>
-    <Password>$2a$11$4rd3Cv4YdcY5fh336w6eu.B/iK3P6RMYZyUyDJBnTWiPK0lTyk5B.</Password>
-    <CurrentAddress>Bar Kochva 21, Petah Tikva</CurrentAddress>
-    <Latitude>32.0871</Latitude>
-    <Longitude>34.8878</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>103.73826295274556</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>280150095</Id>
-    <FullName>Tamar Cohen</FullName>
-    <CellNumber>055-8218485</CellNumber>
-    <Email>tamar.cohen@example.com</Email>
-    <Password>$2a$11$mPJnsYJ/kJIu8QmCvGSP/OJqfrchGcq4/Hq6xjWtU0aOKxSVZKCLK</Password>
-    <CurrentAddress>HaHistadrut 15, Holon</CurrentAddress>
-    <Latitude>32.0104</Latitude>
-    <Longitude>34.774</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>80.22992177446153</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>211668595</Id>
-    <FullName>Eli Peretz</FullName>
-    <CellNumber>055-4230363</CellNumber>
-    <Email>eli.peretz@example.com</Email>
-    <Password>$2a$11$.wPVuy5EXzM1RWUiO6ZsVedSrfPsZ0KDUYVNX0d28sPyzXIXOGi0G</Password>
-    <CurrentAddress>Herzl 5, Rishon LeZion</CurrentAddress>
-    <Latitude>31.97</Latitude>
-    <Longitude>34.79</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>39.32651210381454</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>380892349</Id>
-    <FullName>Yair Peretz</FullName>
-    <CellNumber>052-7130127</CellNumber>
-    <Email>yair.peretz@example.com</Email>
-    <Password>$2a$11$yGfIW2ATWVu7kluTd.JOIO7MvaH2cv66xSkb9m1iHH7sn/1KwEAsq</Password>
-    <CurrentAddress>Balfour 8, Bat Yam</CurrentAddress>
-    <Latitude>32.0163</Latitude>
-    <Longitude>34.748</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>60.15065642672755</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>288199391</Id>
-    <FullName>Ariela Mizrahi</FullName>
-    <CellNumber>050-3833419</CellNumber>
-    <Email>ariela.mizrahi@example.com</Email>
-    <Password>$2a$11$206RMZBLKSQ8ZV4p.xN4ye4pfHvAAko63MppligE9YOcD9nFf8phG</Password>
-    <CurrentAddress>Sokolov 50, Herzliya</CurrentAddress>
-    <Latitude>32.1656</Latitude>
-    <Longitude>34.849</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>89.25322908695482</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>340858307</Id>
-    <FullName>David Sharabi</FullName>
-    <CellNumber>054-4739848</CellNumber>
-    <Email>david.sharabi@example.com</Email>
-    <Password>$2a$11$UV0TuHm/j.Pd.UGTYduZpOTRo0pSz6nz7vLWAYDlBeqMhM88qvshW</Password>
-    <CurrentAddress>Dizengoff 100, Tel Aviv</CurrentAddress>
-    <Latitude>32.0853</Latitude>
-    <Longitude>34.7818</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>71.02015961780745</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>237280870</Id>
-    <FullName>Tamar Azoulay</FullName>
-    <CellNumber>050-4022355</CellNumber>
-    <Email>tamar.azoulay@example.com</Email>
-    <Password>$2a$11$TlZe4c2nXF9xzJotbCP2ZetPinbpAlD8z1LAFc0ASs.79gYPl4aR6</Password>
-    <CurrentAddress>Jabotinsky 33, Ramat Gan</CurrentAddress>
-    <Latitude>32.0823</Latitude>
-    <Longitude>34.8106</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>115.35341287831561</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>388133811</Id>
-    <FullName>David Azoulay</FullName>
-    <CellNumber>052-7715807</CellNumber>
-    <Email>david.azoulay@example.com</Email>
-    <Password>$2a$11$bo3NofigxAmhDpgDSzmwZemzLrlRSo4/D.iPnMSXt.H3Qen8nyccO</Password>
-    <CurrentAddress>Dizengoff 100, Tel Aviv</CurrentAddress>
-    <Latitude>32.079249</Latitude>
-    <Longitude>34.774114</Longitude>
     <Role>Manager</Role>
     <Active>true</Active>
-    <Distance>44.700338361196756</Distance>
+    <Distance>99.19610005072359</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>270879398</Id>
-    <FullName>Tamar Azoulay</FullName>
-    <CellNumber>058-9327700</CellNumber>
-    <Email>tamar.azoulay@example.com</Email>
-    <Password>$2a$11$VZtE/Yt.P3van8iWJ2VwNebru/hcS2Rzf0iXImcSu2HxdLl/pU5ei</Password>
+    <Id>267549590</Id>
+    <FullName>Moshe Mizrahi</FullName>
+    <CellNumber>052-2205611</CellNumber>
+    <Email>moshe.mizrahi@example.com</Email>
+    <Password>$2a$11$JUSBRCEI9RYJzl.3z2ycQOukWCy1fI62POLKP/Q8JplEcUI1NC2pK</Password>
     <CurrentAddress>Jabotinsky 33, Ramat Gan</CurrentAddress>
-    <Latitude>32.083716800000005</Latitude>
-    <Longitude>34.805953233172076</Longitude>
+    <Latitude>32.0823</Latitude>
+    <Longitude>34.8106</Longitude>
     <Role>BeginnerTutor</Role>
     <Active>true</Active>
-    <Distance>98.58852929065574</Distance>
+    <Distance>35.195727126132766</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>216125344</Id>
+    <FullName>Tamar Mizrahi</FullName>
+    <CellNumber>050-7119029</CellNumber>
+    <Email>tamar.mizrahi@example.com</Email>
+    <Password>$2a$11$fA3/7R3hN1L2EvAvpN2ATu4jULPjyMpy/pJ/RZYfpfKorA5YBiHQG</Password>
+    <CurrentAddress>Bar Kochva 21, Petah Tikva</CurrentAddress>
+    <Latitude>32.0871</Latitude>
+    <Longitude>34.8878</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>86.80986972993033</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>222098618</Id>
+    <FullName>David Klein</FullName>
+    <CellNumber>053-2668380</CellNumber>
+    <Email>david.klein@example.com</Email>
+    <Password>$2a$11$kNBVaKfcUANVl/oVlislUe.upE6j1IPSEFieIRrfZX9c/kQ7X1OkK</Password>
+    <CurrentAddress>HaHistadrut 15, Holon</CurrentAddress>
+    <Latitude>32.0104</Latitude>
+    <Longitude>34.774</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>101.62695540393796</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>305646432</Id>
+    <FullName>Rivka Peretz</FullName>
+    <CellNumber>052-3778922</CellNumber>
+    <Email>rivka.peretz@example.com</Email>
+    <Password>$2a$11$8XOeGhYU810YUSVdQqzHTuXQyFsLu9UIWOWQC8U2YgZcS8mE9Z2A6</Password>
+    <CurrentAddress>Herzl 5, Rishon LeZion</CurrentAddress>
+    <Latitude>31.97</Latitude>
+    <Longitude>34.79</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>117.30109603100912</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>338588957</Id>
+    <FullName>Dina Cohen</FullName>
+    <CellNumber>056-2643970</CellNumber>
+    <Email>dina.cohen@example.com</Email>
+    <Password>$2a$11$9IrTMzIvOcT9xs3taWOQI.ErgG2bx6P1yf9Cvu32wO5GHPA9Lo1aW</Password>
+    <CurrentAddress>Balfour 8, Bat Yam</CurrentAddress>
+    <Latitude>32.0163</Latitude>
+    <Longitude>34.748</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>56.169786526417056</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>224414151</Id>
+    <FullName>Moshe Levy</FullName>
+    <CellNumber>053-7717546</CellNumber>
+    <Email>moshe.levy@example.com</Email>
+    <Password>$2a$11$yb1U10R9ZMsIQ1jYYgptzOnX5xZANaGSewKluzta81XVqoTKHjYq.</Password>
+    <CurrentAddress>Sokolov 50, Herzliya</CurrentAddress>
+    <Latitude>32.1656</Latitude>
+    <Longitude>34.849</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>30.994298707325736</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>282565530</Id>
+    <FullName>Yair Levy</FullName>
+    <CellNumber>058-3122608</CellNumber>
+    <Email>yair.levy@example.com</Email>
+    <Password>$2a$11$.mID2TC5Ta.w3/BoW1kWwukbGDe96NDIfEDim1TV4ENT7sPJBw9NW</Password>
+    <CurrentAddress>Dizengoff 100, Tel Aviv</CurrentAddress>
+    <Latitude>32.0853</Latitude>
+    <Longitude>34.7818</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>32.60021449447322</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>224094219</Id>
+    <FullName>Dina Klein</FullName>
+    <CellNumber>054-7325240</CellNumber>
+    <Email>dina.klein@example.com</Email>
+    <Password>$2a$11$cZcnBE3qqv8CFGpn31eIWuWkWA3Kt6JskERMIp5IW2MGZXV.7bope</Password>
+    <CurrentAddress>Jabotinsky 33, Ramat Gan</CurrentAddress>
+    <Latitude>32.0823</Latitude>
+    <Longitude>34.8106</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>45.52276396854935</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>268823309</Id>
+    <FullName>Rivka Amar</FullName>
+    <CellNumber>051-3798334</CellNumber>
+    <Email>rivka.amar@example.com</Email>
+    <Password>$2a$11$IWNU36RRX3H46oWgTZX2qusrBPe.g9LBg2cQRexgVx9JqNC9qazSy</Password>
+    <CurrentAddress>Bar Kochva 21, Petah Tikva</CurrentAddress>
+    <Latitude>32.0871</Latitude>
+    <Longitude>34.8878</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>58.6408279361405</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>393831300</Id>
+    <FullName>Shira Levy</FullName>
+    <CellNumber>059-6443552</CellNumber>
+    <Email>shira.levy@example.com</Email>
+    <Password>$2a$11$pBPghH4OYDnfeFfb194TpeS0.7Fs2BCHy5vwT67IOAXOl98xN02za</Password>
+    <CurrentAddress>HaHistadrut 15, Holon</CurrentAddress>
+    <Latitude>32.0104</Latitude>
+    <Longitude>34.774</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>34.47429773307577</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>319955720</Id>
+    <FullName>Shira Israelof</FullName>
+    <CellNumber>056-6869770</CellNumber>
+    <Email>shira.israelof@example.com</Email>
+    <Password>$2a$11$Cf/QZYjC85dzm/LSdKlbheoL8GyqnI.AmIshJ6pY8c8TL5CcRPULO</Password>
+    <CurrentAddress>Herzl 5, Rishon LeZion</CurrentAddress>
+    <Latitude>31.97</Latitude>
+    <Longitude>34.79</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>62.15908366817077</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>319649745</Id>
+    <FullName>Ariela Levy</FullName>
+    <CellNumber>050-1147900</CellNumber>
+    <Email>ariela.levy@example.com</Email>
+    <Password>$2a$11$GagwUNwdEF99orSKSUKeD.RLZhLjhkZk0Qvovcj3axrkJVIxsVG3.</Password>
+    <CurrentAddress>Balfour 8, Bat Yam</CurrentAddress>
+    <Latitude>32.0163</Latitude>
+    <Longitude>34.748</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>99.21809384677039</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>229445176</Id>
+    <FullName>Shira Levin</FullName>
+    <CellNumber>052-9440509</CellNumber>
+    <Email>shira.levin@example.com</Email>
+    <Password>$2a$11$12.N/a3Kh3Tf2UMR5UGkSugzIox5FUIqqr4d1rlbmSUbiK4fvJJhi</Password>
+    <CurrentAddress>Sokolov 50, Herzliya</CurrentAddress>
+    <Latitude>32.1656</Latitude>
+    <Longitude>34.849</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>35.39005204042861</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>367687852</Id>
+    <FullName>Rivka Israelof</FullName>
+    <CellNumber>057-4725552</CellNumber>
+    <Email>rivka.israelof@example.com</Email>
+    <Password>$2a$11$updXzjzYNXDw7PTgCx69U.Oijw14533l2utSeZyiXiTuLwhFTYbBO</Password>
+    <CurrentAddress>Dizengoff 100, Tel Aviv</CurrentAddress>
+    <Latitude>32.0853</Latitude>
+    <Longitude>34.7818</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>69.54613159242001</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>202983680</Id>
+    <FullName>Rivka Sharabi</FullName>
+    <CellNumber>057-4828891</CellNumber>
+    <Email>rivka.sharabi@example.com</Email>
+    <Password>$2a$11$5m6f7obpWnJ3fKC7lNP3WeZvLNfyFRfbwo1jWFP4VuEwtwwNgXimy</Password>
+    <CurrentAddress>Jabotinsky 33, Ramat Gan</CurrentAddress>
+    <Latitude>32.0823</Latitude>
+    <Longitude>34.8106</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>71.22407734596496</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>328240791</Id>
+    <FullName>chana weiner</FullName>
+    <CellNumber>0583202711</CellNumber>
+    <Email>h12@gmail.com</Email>
+    <Password>$2a$11$LtSjfva5OKqhW.gCtGDHqeTypW78WcjhOrf332XP16zfu/YsqQ9T.</Password>
+    <CurrentAddress>western wall</CurrentAddress>
+    <Latitude>31.776734949999998</Latitude>
+    <Longitude>35.23446114230339</Longitude>
+    <Role>MasterTutor</Role>
+    <Active>true</Active>
+    <Distance>50</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
 </ArrayOfTutor>

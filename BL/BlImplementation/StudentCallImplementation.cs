@@ -44,7 +44,8 @@ namespace BlImplementation
             // Create a new assignment for the tutor.
             DO.Assignment newAssignment = new(0, callId, tutorId, AdminManager.Now, null, null);
             _dal.Assignment.Create(newAssignment);
-            StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+            StudentCallManager.Observers.NotifyListUpdated(); //stage 5
+            TutorManager.Observers.NotifyItemUpdated(tutorId);
         }
 
         public void Create(BO.StudentCall call)
@@ -124,7 +125,7 @@ namespace BlImplementation
         public IEnumerable<BO.ClosedCallInList> GetClosedCallsForTutor(int tutorId, Func<BO.ClosedCallInList, bool>? predicate = null)
         {
             // Retrieve all closed calls for the tutor from the assignments table.  
-            var closedCalls = _dal.Assignment.ReadAll(a => a.TutorId == tutorId)
+            var closedCalls = _dal.Assignment.ReadAll(a => a.TutorId == tutorId && a.EndOfTreatment!=null)
                 .Join(_dal.StudentCall.ReadAll(),
                 a => a.StudentCallId, c => c.Id,
                 (a, c) => new BO.ClosedCallInList
@@ -135,7 +136,7 @@ namespace BlImplementation
                     OpeningTime = c.OpenTime,
                     AssignmentTime = a.EntryTime,
                     ActualEndTime = a.EndTime,
-                    EndType = (BO.EndOfTreatment)a.EndOfTreatment
+                    EndType = a.EndOfTreatment!=null ? (BO.EndOfTreatment)a.EndOfTreatment : null
                 });
 
             // Apply the predicate filter if specified.  
@@ -243,19 +244,15 @@ namespace BlImplementation
 
         }
 
-        public void UpdateTreatmentCancellation(int assignmentId, int tutorId = 0)
+        public void UpdateTreatmentCancellation(int assignmentId, int tutorId)
         {
             DO.Assignment? assignment = null;
 
 
             // Retrieve the assignment from the database.
             assignment = _dal.Assignment.Read(assignmentId) ?? throw new BO.BlDoesNotExistException($"Assignment's tutor with ID={tutorId}, which its ID={assignmentId} does not exist");
-            if (tutorId == 0)
-            {
-                tutorId = assignment.TutorId;
-            }
             // Ensure the tutor has permission to cancel the treatment.
-            if (assignment.TutorId != tutorId && Tools.IsManagerId(tutorId))
+            if (assignment.TutorId != tutorId && !Tools.IsManagerId(tutorId))
                 throw new BlCanNotUpdateTreatment("Tutor cannot cancel treatment for this assignment.");
 
             // Ensure the assignment has not already been completed or canceled.
@@ -273,7 +270,10 @@ namespace BlImplementation
             {
                 // Attempt to update the assignment in the database.
                 _dal.Assignment.Update(updateAssignment);
-                StudentCallManager.Observers.NotifyItemUpdated(assignmentId); //stage 5
+                //StudentCallManager.Observers.NotifyItemUpdated(assignmentId); //stage 5
+                TutorManager.Observers.NotifyItemUpdated(tutorId);
+                StudentCallManager.Observers.NotifyListUpdated();
+
             }
             catch (DO.DalDoesNotExistException ex)
             {
@@ -304,6 +304,8 @@ namespace BlImplementation
                 // Attempt to update the assignment in the database.
                 _dal.Assignment.Update(updateAssignment);
                 //StudentCallManager.Observers.NotifyItemUpdated(assignmentId); //stage 5
+                TutorManager.Observers.NotifyItemUpdated(tutorId);
+                StudentCallManager.Observers.NotifyListUpdated();
             }
             catch (DO.DalDoesNotExistException ex)
             {
@@ -392,6 +394,7 @@ namespace BlImplementation
                 }).ToList();
             return openCalls;
         }
-
+        //אני רוצה פונקציה שתבדוק האם לקריאה מסויימת יש הקצאות
+        public bool hasAssignments(int callId)=> _dal.Assignment.ReadAll(a => a.StudentCallId == callId).Any();
     }
 }

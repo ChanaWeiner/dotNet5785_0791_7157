@@ -132,6 +132,7 @@ namespace PL.StudentCall
             try
             {
                 s_bl.StudentCall.AssignCallToTutor(TutorId, SelectedCall.Id);
+                this.Close();
             }
             catch(BO.BlCanNotAssignCall ex)
             {

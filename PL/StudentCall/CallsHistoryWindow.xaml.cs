@@ -50,7 +50,7 @@ namespace PL.StudentCall
         public CallsHistoryWindow(int id)
         {
             TutorId = id;
-            ClosedCallInLists = s_bl.StudentCall.GetClosedCallsForTutor(id,null).ToList();
+            ClosedCallInLists = s_bl.StudentCall.GetClosedCallsForTutor(id).ToList();
             InitializeComponent();
         }
 
@@ -59,5 +59,19 @@ namespace PL.StudentCall
             ClosedCallInLists = (EndType==BO.EndOfTreatment.None)? s_bl.StudentCall.GetClosedCallsForTutor(TutorId, null).ToList() :
                 s_bl.StudentCall.GetClosedCallsForTutor(TutorId, c => c.EndType == EndType).ToList();
         }
+        private void CallsHistorybserver()
+        {
+            ClosedCallInLists = s_bl.StudentCall.GetClosedCallsForTutor(TutorId).ToList();
+
+        }
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+                s_bl.Tutor.AddObserver(TutorId, CallsHistorybserver);
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+            => s_bl.StudentCall.RemoveObserver(CallsHistorybserver);
     }
 }

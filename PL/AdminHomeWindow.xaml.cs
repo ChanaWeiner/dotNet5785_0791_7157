@@ -43,10 +43,11 @@ namespace PL
         // Using a DependencyProperty as the backing store for RiskTimeSpan.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RiskTimeSpanProperty =
             DependencyProperty.Register("RiskTimeSpan", typeof(TimeSpan), typeof(AdminHomeWindow), new PropertyMetadata(TimeSpan.Zero));
+        private int ManagerId { get; set; }
 
-
-        public AdminHomeWindow()
+        public AdminHomeWindow(int managerId)
         {
+            ManagerId = managerId;
             InitializeComponent();
         }
 
@@ -166,7 +167,7 @@ namespace PL
 
         private void btnCalls_Click(object sender, RoutedEventArgs e)
         {
-            new StudentCallListWindow().Show();
+            new StudentCallListWindow(ManagerId).Show();
         }
     }
 }

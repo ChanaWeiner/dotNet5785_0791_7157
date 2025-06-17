@@ -31,9 +31,6 @@ namespace PL
         public static readonly DependencyProperty CurrentPageProperty =
     DependencyProperty.Register("CurrentPage", typeof(Page), typeof(LogInWindow), new PropertyMetadata(null));
 
-
-
-
         public LogInWindow()
         {
             CurrentPage = new LogInPage((id) => NavigateTo(id));

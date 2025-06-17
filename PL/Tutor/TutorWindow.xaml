@@ -52,7 +52,7 @@
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentTutor.Email}" Margin="5"/>
 
                 <Label Grid.Row="4" Grid.Column="0" Content="Password" Margin="5"  Visibility="{Binding IsFromTutorWindow, Converter={StaticResource BoolInverseConverterKey}}"/>
-                <TextBox Grid.Row="4" Grid.Column="1" Margin="5" Visibility="{Binding IsFromTutorWindow, Converter={StaticResource BoolInverseConverterKey}}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CurrentTutor.Password}" Margin="5" Visibility="{Binding IsFromTutorWindow, Converter={StaticResource BoolInverseConverterKey}}"/>
 
                 <Label Grid.Row="5" Grid.Column="0" Content="CurrentAddress" Margin="5"/>
                 <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CurrentTutor.CurrentAddress}" Margin="5"/>

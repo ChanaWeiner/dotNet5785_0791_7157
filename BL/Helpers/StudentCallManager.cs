@@ -21,8 +21,8 @@ internal class StudentCallManager
 
         var lastAssignment = s_dal.Assignment
           .ReadAll(a => a.StudentCallId == studentCall.Id)
-          .OrderByDescending(a => a.EntryTime)
-          .FirstOrDefault();
+          .OrderBy(a => a.EntryTime)
+          .LastOrDefault();
 
         var status = CalculateCallStatus(studentCall);
 
@@ -100,8 +100,8 @@ internal class StudentCallManager
     {
         var lastAssignment = s_dal.Assignment
            .ReadAll(a => a.StudentCallId == studentCall.Id)
-           .OrderByDescending(a => a.EntryTime)
-           .FirstOrDefault();
+           .OrderBy(a => a.EntryTime)
+           .LastOrDefault();
         bool isCallExpired = studentCall.FinalTime.HasValue && studentCall.FinalTime < AdminManager.Now;
         bool isCallInRisk = studentCall.FinalTime.HasValue && studentCall.FinalTime - AdminManager.Now < AdminManager.RiskTimeSpan;
         if (isCallExpired)
