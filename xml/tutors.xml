@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTutor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Tutor>
-    <Id>388133811</Id>
-    <FullName>David Azoulay</FullName>
-    <CellNumber>052-7715807</CellNumber>
-    <Email>david.azoulay@example.com</Email>
-    <Password>$2a$11$bo3NofigxAmhDpgDSzmwZemzLrlRSo4/D.iPnMSXt.H3Qen8nyccO</Password>
-    <CurrentAddress>Dizengoff 100, Tel Aviv</CurrentAddress>
-    <Latitude>32.0853</Latitude>
-    <Longitude>34.7818</Longitude>
-    <Role>Manager</Role>
-    <Active>true</Active>
-    <Distance>44.700338361196756</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
     <Id>368299194</Id>
     <FullName>Rivka Azoulay</FullName>
     <CellNumber>052-4982369</CellNumber>
@@ -113,20 +99,6 @@
     <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>270879398</Id>
-    <FullName>Tamar Azoulay</FullName>
-    <CellNumber>058-9327700</CellNumber>
-    <Email>tamar.azoulay@example.com</Email>
-    <Password>$2a$11$VZtE/Yt.P3van8iWJ2VwNebru/hcS2Rzf0iXImcSu2HxdLl/pU5ei</Password>
-    <CurrentAddress>Jabotinsky 33, Ramat Gan</CurrentAddress>
-    <Latitude>32.0823</Latitude>
-    <Longitude>34.8106</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>98.58852929065574</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
     <Id>223269614</Id>
     <FullName>Tamar Klein</FullName>
     <CellNumber>050-8218710</CellNumber>
@@ -222,6 +194,34 @@
     <Role>BeginnerTutor</Role>
     <Active>true</Active>
     <Distance>115.35341287831561</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>388133811</Id>
+    <FullName>David Azoulay</FullName>
+    <CellNumber>052-7715807</CellNumber>
+    <Email>david.azoulay@example.com</Email>
+    <Password>$2a$11$bo3NofigxAmhDpgDSzmwZemzLrlRSo4/D.iPnMSXt.H3Qen8nyccO</Password>
+    <CurrentAddress>Dizengoff 100, Tel Aviv</CurrentAddress>
+    <Latitude>32.079249</Latitude>
+    <Longitude>34.774114</Longitude>
+    <Role>Manager</Role>
+    <Active>true</Active>
+    <Distance>44.700338361196756</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>270879398</Id>
+    <FullName>Tamar Azoulay</FullName>
+    <CellNumber>058-9327700</CellNumber>
+    <Email>tamar.azoulay@example.com</Email>
+    <Password>$2a$11$VZtE/Yt.P3van8iWJ2VwNebru/hcS2Rzf0iXImcSu2HxdLl/pU5ei</Password>
+    <CurrentAddress>Jabotinsky 33, Ramat Gan</CurrentAddress>
+    <Latitude>32.083716800000005</Latitude>
+    <Longitude>34.805953233172076</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>98.58852929065574</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
 </ArrayOfTutor>

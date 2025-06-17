@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Xml.Linq;
+using BCrypt.Net;
 
 namespace BlImplementation;
 

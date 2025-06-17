@@ -170,7 +170,7 @@ class Program
         if (!Enum.TryParse(Console.ReadLine(), out TutorField sortField))
             Console.WriteLine("Invalid input");
 
-        var tutorsInList = s_bl.Tutor.SortTutorsInList(isActive, sortField);
+        var tutorsInList = s_bl.Tutor.SortTutorsInList(sortField);
         Console.WriteLine(string.Join("\n-----\n", tutorsInList));
     }
 
@@ -358,10 +358,10 @@ class Program
                         CreateCall();
                         break;
                     case CallMenuChoice.GetClosedCallsForTutor:
-                        GetCallsForTutor<ClosedCallField, ClosedCallInList>((tutorId, filterField, sortField) => s_bl.StudentCall.GetClosedCallsForTutor(tutorId, filterField, sortField));
+                        GetCallsForTutor<ClosedCallField, ClosedCallInList>((tutorId, filterField, sortField) => s_bl.StudentCall.GetClosedCallsForTutor(tutorId));
                         break;
                     case CallMenuChoice.GetOpenCallsForTutor:
-                        GetCallsForTutor<OpenCallField, OpenCallInList>((tutorId, filterField, sortField) => s_bl.StudentCall.GetOpenCallsForTutor(tutorId, filterField, sortField));
+                        GetCallsForTutor<OpenCallField, OpenCallInList>((tutorId, filterField, sortField) => s_bl.StudentCall.FilterOpenCalls(tutorId));
                         break;
                     case CallMenuChoice.UpdateTreatmentCompletion:
                         UpdateTreatment((callId, assignmentId) => s_bl.StudentCall.UpdateTreatmentCompletion(callId, assignmentId));
@@ -401,18 +401,20 @@ class Program
 
     static void GetCallsList()
     {
-        Console.Write("Filter field: (0-Id, CallId, CallType, OpeningTime, RemainingTime, LastVolunteerName, CompletionTime, Status, TotalAssignments)");
+        Console.Write("Filter field: (0-Id, CallId, Subject, OpeningTime, RemainingTime, LastTutorName, CompletionTime, Status, TotalAssignments): ");
         StudentCallField? filterField = ReadEnumOrNull<StudentCallField>();
 
-        Console.Write("Filter value:");
+        Console.Write("Filter value: ");
         string? filterValue = ReadStringOrNull();
 
-        Console.WriteLine("Sort field: (0-Id, CallId, CallType, OpeningTime, RemainingTime, LastVolunteerName, CompletionTime, Status, TotalAssignments");
+        Console.WriteLine("Sort field: (0-Id, CallId, Subject, OpeningTime, RemainingTime, LastTutorName, CompletionTime, Status, TotalAssignments): ");
         StudentCallField? sortField = ReadEnumOrNull<StudentCallField>();
 
-        var calls = s_bl.StudentCall.GetCallsList(filterField, filterValue, sortField);
+        // Updated to use FilterCallsInList and SortCallsInList methods  
+        var filteredCalls = s_bl.StudentCall.FilterCallsInList(filterField, filterValue);
+        var sortedCalls = s_bl.StudentCall.SortCallsInList(sortField);
 
-        foreach (var call in calls)
+        foreach (var call in sortedCalls)
         {
             Console.WriteLine(call);
             Console.WriteLine("---------------");

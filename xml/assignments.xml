@@ -50,4 +50,12 @@
     <EndTime>2025-06-15T19:46:17</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
+  <Assignment>
+    <Id>1062</Id>
+    <StudentCallId>1042</StudentCallId>
+    <TutorId>388133811</TutorId>
+    <EntryTime>2025-06-15T19:46:17</EntryTime>
+    <EndTime>2025-06-15T19:46:17</EndTime>
+    <EndOfTreatment>Treated</EndOfTreatment>
+  </Assignment>
 </assignments.xml>

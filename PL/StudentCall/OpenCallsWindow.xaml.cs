@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using BlApi;
 using BO;
 using Microsoft.Win32;
+using Microsoft.Web.WebView2.Core;
 
 
 namespace PL.StudentCall
@@ -91,7 +92,6 @@ namespace PL.StudentCall
             TutorId = id;
             OpenCalls = s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
             InitializeComponent();
-            SetBrowserFeatureControl();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -101,16 +101,6 @@ namespace PL.StudentCall
         private void Window_Closed(object sender, EventArgs e)
             => s_bl.StudentCall.RemoveObserver(CallsListObserver);
 
-        public static void SetBrowserFeatureControl()
-        {
-            // קבע את שמות הקבצים של האפליקציה
-            string appName = System.IO.Path.GetFileName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-
-            using (var key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION"))
-            {
-                key.SetValue(appName, 11001, RegistryValueKind.DWord); // 11001 = Edge mode
-            }
-        }
 
         public void CallsListObserver() => QueryOpenCall();
 
@@ -154,10 +144,8 @@ namespace PL.StudentCall
             if (SelectedCall != null)
             {
                 Description = SelectedCall.Description ?? "";
-                var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
-                var tutor = s_bl.Tutor.Read(TutorId);
-                string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
                 //MapBrowser.Navigate(url);
+                //InitializeAsync();
             }
         }
 
@@ -168,5 +156,14 @@ namespace PL.StudentCall
 
         private void SortButton_Click(object sender, RoutedEventArgs e)
         => OpenCalls = s_bl.StudentCall.SortOpenCalls(TutorId,SelectedSortOption).ToList();
+
+        //private async void InitializeAsync()
+        //{
+        //    var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
+        //    var tutor = s_bl.Tutor.Read(TutorId);
+        //    string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
+        //    await MyWebView.EnsureCoreWebView2Async(null);
+        //    MyWebView.Source = new Uri(url);
+        //}
     }
 }

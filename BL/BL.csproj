@@ -10,21 +10,21 @@
 		<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 		<RootNamespace />
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    
+
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <WarningLevel>0</WarningLevel>
+		<WarningLevel>0</WarningLevel>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <WarningLevel>0</WarningLevel>
+		<WarningLevel>0</WarningLevel>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
-	  <ProjectReference Include="..\DalList\DalList.csproj" />
-	  <ProjectReference Include="..\DalTest\DalTest.csproj" />
-	  <ProjectReference Include="..\DalXml\DalXml.csproj" />
+		<ProjectReference Include="..\DalFacade\DalFacade.csproj" />
+		<ProjectReference Include="..\DalList\DalList.csproj" />
+		<ProjectReference Include="..\DalTest\DalTest.csproj" />
+		<ProjectReference Include="..\DalXml\DalXml.csproj" />
 	</ItemGroup>
 </Project>
