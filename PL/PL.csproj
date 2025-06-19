@@ -22,4 +22,8 @@
 		<ProjectReference Include="..\BL\BL.csproj" />
 	</ItemGroup>
 
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy /Y /S /I &quot;$(ProjectDir)..\libs\*&quot; &quot;$(TargetDir)&quot;" />
+	</Target>
+
 </Project>

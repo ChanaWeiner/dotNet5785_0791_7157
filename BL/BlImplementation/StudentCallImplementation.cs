@@ -27,30 +27,43 @@ namespace BlImplementation
 
         public void AssignCallToTutor(int tutorId, int callId)
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
+            IEnumerable<DO.Assignment> existingAssignments = null, callAssignments = null;
             //בדיקה האם למורה יש כבר קריאה בטיפול
-            var existingAssignments = _dal.Assignment.ReadAll(a => a.TutorId == tutorId && a.EndTime == null);
+            lock (AdminManager.BlMutex)
+                existingAssignments = _dal.Assignment.ReadAll(a => a.TutorId == tutorId && a.EndTime == null);
             if (existingAssignments.Any())
             {
                 throw new BO.BlCanNotAssignCall($"Tutor with ID={tutorId} already has an open call in treatment.");
             }
-            // Check if the call has already been handled or expired.
-            var callAssignments = _dal.Assignment.ReadAll(a =>
-        a.StudentCallId == callId &&
-        (a.EndOfTreatment == DO.EndOfTreatment.Treated || a.EndOfTreatment == DO.EndOfTreatment.Expired));
+            lock (AdminManager.BlMutex)
+            {
+                // Check if the call has already been handled or expired.
+                callAssignments = _dal.Assignment.ReadAll(a =>
+                 a.StudentCallId == callId &&
+                (a.EndOfTreatment == DO.EndOfTreatment.Treated || a.EndOfTreatment == DO.EndOfTreatment.Expired));
+            }
 
             if (callAssignments.Any())
                 throw new BO.BlCanNotAssignCall($"Call with ID={callId} has already been handled or has expired.");
 
-            // Create a new assignment for the tutor.
-            DO.Assignment newAssignment = new(0, callId, tutorId, AdminManager.Now, null, null);
-            _dal.Assignment.Create(newAssignment);
+            DO.Assignment newAssignment = null;
+            lock (AdminManager.BlMutex)
+            {
+                // Create a new assignment for the tutor.
+                newAssignment = new(0, callId, tutorId, AdminManager.Now, null, null);
+                _dal.Assignment.Create(newAssignment);
+            }
+
             StudentCallManager.Observers.NotifyListUpdated(); //stage 5
             TutorManager.Observers.NotifyItemUpdated(tutorId);
         }
 
         public void Create(BO.StudentCall call)
         {
-            call.OpenTime = AdminManager.Now;
+            AdminManager.ThrowOnSimulatorIsRunning();
+            lock (AdminManager.BlMutex)
+                call.OpenTime = AdminManager.Now;
             try
             {
                 // Validate the student call data.
@@ -66,8 +79,9 @@ namespace BlImplementation
 
             try
             {
-                // Attempt to create the student call in the database.
-                _dal.StudentCall.Create(studentCall);
+                lock (AdminManager.BlMutex)
+                    // Attempt to create the student call in the database.
+                    _dal.StudentCall.Create(studentCall);
                 StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
 
             }
@@ -82,13 +96,22 @@ namespace BlImplementation
 
         public void Delete(int callId)
         {
-            // Retrieve the student call from the database.
-            var doCall = _dal.StudentCall.Read(callId) ?? throw new BO.BlDoesNotExistException($"Call with ID={callId} does not exist");
+            DO.StudentCall doCall = null;
+            IEnumerable<DO.Assignment> callAssignments = null;
+            BO.CallStatus statusCall;
+            AdminManager.ThrowOnSimulatorIsRunning();
+            lock (AdminManager.BlMutex)
+            {
+                // Retrieve the student call from the database.
+                doCall = _dal.StudentCall.Read(callId) ?? throw new BO.BlDoesNotExistException($"Call with ID={callId} does not exist");
 
-            // Check if there are assignments for the call and if it can be deleted.
-            var callAssignments = _dal.Assignment.ReadAll(a => a.StudentCallId == callId);
+                // Check if there are assignments for the call and if it can be deleted.
+                callAssignments = _dal.Assignment.ReadAll(a => a.StudentCallId == callId);
 
-            var statusCall = StudentCallManager.CalculateCallStatus(doCall);
+                statusCall = StudentCallManager.CalculateCallStatus(doCall);
+
+            }
+
             // Check if the call is open before deleting.
             if (statusCall != BO.CallStatus.Open && statusCall != BO.CallStatus.OpenInRisk)
                 throw new BO.BlCanNotBeDeletedException("Cannot delete the call because it is not open.");
@@ -99,7 +122,8 @@ namespace BlImplementation
             // Attempt to delete the student call from the database.
             try
             {
-                _dal.StudentCall.Delete(callId);
+                lock (AdminManager.BlMutex)
+                    _dal.StudentCall.Delete(callId);
                 StudentCallManager.Observers.NotifyListUpdated(); //stage 5                                                    
             }
             catch (DO.DalDoesNotExistException ex)
@@ -110,8 +134,10 @@ namespace BlImplementation
 
         public int[] GetCallsByStatus()
         {
-            // Retrieve all student calls from the database.
-            var calls = _dal.StudentCall.ReadAll();
+            IEnumerable<DO.StudentCall> calls;
+            lock (AdminManager.BlMutex)
+                // Retrieve all student calls from the database.
+                calls = _dal.StudentCall.ReadAll();
 
             // Group the calls by their subject and count them.
             int[] subjectCountsArray = calls
@@ -124,20 +150,25 @@ namespace BlImplementation
 
         public IEnumerable<BO.ClosedCallInList> GetClosedCallsForTutor(int tutorId, Func<BO.ClosedCallInList, bool>? predicate = null)
         {
-            // Retrieve all closed calls for the tutor from the assignments table.  
-            var closedCalls = _dal.Assignment.ReadAll(a => a.TutorId == tutorId && a.EndOfTreatment!=null)
-                .Join(_dal.StudentCall.ReadAll(),
-                a => a.StudentCallId, c => c.Id,
-                (a, c) => new BO.ClosedCallInList
-                {
-                    Id = c.Id,
-                    Subject = (BO.Subjects)c.Subject,
-                    FullAddress = c.FullAddress,
-                    OpeningTime = c.OpenTime,
-                    AssignmentTime = a.EntryTime,
-                    ActualEndTime = a.EndTime,
-                    EndType = a.EndOfTreatment!=null ? (BO.EndOfTreatment)a.EndOfTreatment : null
-                });
+            IEnumerable<BO.ClosedCallInList> closedCalls;
+            lock (AdminManager.BlMutex)
+            {
+                // Retrieve all closed calls for the tutor from the assignments table.  
+                closedCalls = _dal.Assignment.ReadAll(a => a.TutorId == tutorId && a.EndOfTreatment != null)
+                   .Join(_dal.StudentCall.ReadAll(),
+                   a => a.StudentCallId, c => c.Id,
+                   (a, c) => new BO.ClosedCallInList
+                   {
+                       Id = c.Id,
+                       Subject = (BO.Subjects)c.Subject,
+                       FullAddress = c.FullAddress,
+                       OpeningTime = c.OpenTime,
+                       AssignmentTime = a.EntryTime,
+                       ActualEndTime = a.EndTime,
+                       EndType = a.EndOfTreatment != null ? (BO.EndOfTreatment)a.EndOfTreatment : null
+                   });
+            }
+
 
             // Apply the predicate filter if specified.  
             if (predicate != null)
@@ -150,21 +181,23 @@ namespace BlImplementation
 
         public IEnumerable<BO.OpenCallInList> GetOpenCallsForTutor(int tutorId, Func<BO.OpenCallInList, bool> predicate = null)
         {
-            var tutor = _dal.Tutor.Read(tutorId) ?? throw new BO.BlDoesNotExistException($"Tutor with ID={tutorId} does not exist");
+            DO.Tutor tutor;
+            IEnumerable<BO.OpenCallInList> openCalls;
+            tutor = _dal.Tutor.Read(tutorId) ?? throw new BO.BlDoesNotExistException($"Tutor with ID={tutorId} does not exist");
 
             // Retrieve all open or open-in-risk calls for the tutor.  
-            var openCalls = _dal.StudentCall.ReadAll(c => StudentCallManager.CalculateCallStatus(c) == BO.CallStatus.Open ||
-                StudentCallManager.CalculateCallStatus(c) == BO.CallStatus.OpenInRisk)
-                .Select(c => new BO.OpenCallInList
-                {
-                    Id = c.Id,
-                    Subject = (BO.Subjects)c.Subject,
-                    Description = c.Description,
-                    FullAddress = c.FullAddress,
-                    OpeningTime = c.OpenTime,
-                    MaxCompletionTime = c.FinalTime,
-                    DistanceFromTutor = Tools.CalculateDistance(tutorId, c.Latitude, c.Longitude)
-                });
+            openCalls = _dal.StudentCall.ReadAll(c => StudentCallManager.CalculateCallStatus(c) == BO.CallStatus.Open ||
+               StudentCallManager.CalculateCallStatus(c) == BO.CallStatus.OpenInRisk)
+               .Select(c => new BO.OpenCallInList
+               {
+                   Id = c.Id,
+                   Subject = (BO.Subjects)c.Subject,
+                   Description = c.Description,
+                   FullAddress = c.FullAddress,
+                   OpeningTime = c.OpenTime,
+                   MaxCompletionTime = c.FinalTime,
+                   DistanceFromTutor = Tools.CalculateDistance(tutorId, c.Latitude, c.Longitude)
+               });
 
             // Apply predicate filter if specified.  
             if (predicate != null)
@@ -177,23 +210,34 @@ namespace BlImplementation
 
         public BO.StudentCall Read(int callId)
         {
-            // Retrieve the student call from the database.
-            var doStudentCall = _dal.StudentCall.Read(callId) ?? throw new BO.BlDoesNotExistException($"Call with ID={callId} does not exist");
+            DO.StudentCall doStudentCall;
+            IEnumerable<DO.Assignment> doAssignments;
+            lock (AdminManager.BlMutex)
+            {
+                // Retrieve the student call from the database.
+                doStudentCall = _dal.StudentCall.Read(callId) ?? throw new BO.BlDoesNotExistException($"Call with ID={callId} does not exist");
 
-            // Retrieve the assignments for the student call.
-            var doAssignments = _dal.Assignment.ReadAll((DO.Assignment a) => a.StudentCallId == callId);
-
+                // Retrieve the assignments for the student call.
+                doAssignments = _dal.Assignment.ReadAll((DO.Assignment a) => a.StudentCallId == callId);
+            }
             // Map the assignments to BO objects.
             var firstAssignment = doAssignments.FirstOrDefault();
-            List<CallAssignInList> CallsAssignInList = doAssignments.Select((DO.Assignment a) => new BO.CallAssignInList()
+            List<CallAssignInList> CallsAssignInList;
+            lock (AdminManager.BlMutex)
             {
-                TutorId = a.TutorId,
-                TutorName = _dal.Tutor.Read((DO.Tutor t) => t.Id == a.TutorId)!.FullName,
-                AssignmentTime = (DateTime)a.EntryTime!,
-                ActualEndTime = a.EndTime,
-                EndType = a.EndOfTreatment.HasValue ? (BO.EndOfTreatment)a.EndOfTreatment : null
-            }).ToList();
+                CallsAssignInList= doAssignments.Select((DO.Assignment a) => new BO.CallAssignInList()
+                {
+                    TutorId = a.TutorId,
+                    TutorName = _dal.Tutor.Read((DO.Tutor t) => t.Id == a.TutorId)!.FullName,
+                    AssignmentTime = (DateTime)a.EntryTime!,
+                    ActualEndTime = a.EndTime,
+                    EndType = a.EndOfTreatment.HasValue ? (BO.EndOfTreatment)a.EndOfTreatment : null
+                }).ToList();
+            }
 
+            BO.CallStatus status;
+            lock (AdminManager.BlMutex)
+                status = StudentCallManager.CalculateCallStatus(doStudentCall);
             // Return the full student call details, including the assignments.
             return new BO.StudentCall
             {
@@ -208,13 +252,14 @@ namespace BlImplementation
                 Longitude = doStudentCall.Longitude,
                 OpenTime = doStudentCall.OpenTime,
                 FinalTime = doStudentCall.FinalTime,
-                Status = StudentCallManager.CalculateCallStatus(doStudentCall),
+                Status = status,
                 CallsAssignInList = CallsAssignInList
             };
         }
 
         public void Update(BO.StudentCall call)
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
             try
             {
                 // Validate the updated student call data.
@@ -246,6 +291,7 @@ namespace BlImplementation
 
         public void UpdateTreatmentCancellation(int assignmentId, int tutorId)
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
             DO.Assignment? assignment = null;
 
 
@@ -283,6 +329,7 @@ namespace BlImplementation
 
         public void UpdateTreatmentCompletion(int tutorId, int assignmentId)
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
             DO.Assignment? assignment = null;
 
             // Retrieve the assignment from the database.
@@ -364,7 +411,7 @@ namespace BlImplementation
                 item.GetType().GetProperty(sortField.ToString())?.GetValue(item));
         }
 
-        public IEnumerable<BO.OpenCallInList> FilterOpenCalls(int tutorId,BO.OpenCallField? filterField = null, object? filterValue = null)
+        public IEnumerable<BO.OpenCallInList> FilterOpenCalls(int tutorId, BO.OpenCallField? filterField = null, object? filterValue = null)
         {
             var tutor = _dal.Tutor.Read(tutorId) ?? throw new BO.BlDoesNotExistException($"Tutor with ID={tutorId} does not exist");
 
@@ -381,7 +428,7 @@ namespace BlImplementation
                     MaxCompletionTime = c.FinalTime,
                     DistanceFromTutor = Tools.CalculateDistance(tutorId, c.Latitude, c.Longitude)
                 });
-            
+
             if (filterValue != null)
                 openCalls = openCalls.Where(call =>
                 {
@@ -394,7 +441,6 @@ namespace BlImplementation
                 }).ToList();
             return openCalls;
         }
-        //אני רוצה פונקציה שתבדוק האם לקריאה מסויימת יש הקצאות
-        public bool hasAssignments(int callId)=> _dal.Assignment.ReadAll(a => a.StudentCallId == callId).Any();
+        public bool hasAssignments(int callId) => _dal.Assignment.ReadAll(a => a.StudentCallId == callId).Any();
     }
 }

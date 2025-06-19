@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using DO;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -10,6 +11,7 @@ internal class TutorImplementation : ITutor
     /// Creates a new tutor and adds it to the data source.
     /// Throws an exception if a tutor with the same ID already exists.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(Tutor item)
     {
         if (Read(item.Id) is not null)
@@ -21,6 +23,7 @@ internal class TutorImplementation : ITutor
     /// Deletes a tutor by its ID from the data source.
     /// Throws an exception if the tutor does not exist.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         Tutor tutor = Read(id);
@@ -32,6 +35,7 @@ internal class TutorImplementation : ITutor
     /// <summary>
     /// Deletes all tutors from the data source.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         DataSource.Tutors.Clear();
@@ -41,6 +45,7 @@ internal class TutorImplementation : ITutor
     /// Reads a tutor by its ID.
     /// Returns null if the tutor does not exist.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Tutor? Read(int id)
     {
         return DataSource.Tutors.FirstOrDefault(x => x.Id == id);
@@ -50,6 +55,7 @@ internal class TutorImplementation : ITutor
     /// Reads a tutor based on a filter.
     /// Returns null if no matching tutor is found.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Tutor? Read(Func<Tutor, bool> filter)
     {
         return DataSource.Tutors.FirstOrDefault(filter);
@@ -59,6 +65,7 @@ internal class TutorImplementation : ITutor
     /// Reads all tutors, optionally filtered by a predicate.
     /// If no filter is provided, all tutors are returned.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Tutor> ReadAll(Func<Tutor, bool>? filter = null)
     {
         return filter == null
@@ -70,6 +77,7 @@ internal class TutorImplementation : ITutor
     /// Updates an existing tutor in the data source.
     /// Throws an exception if the tutor does not exist.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Tutor item)
     {
         Tutor tutor = Read(item.Id);

@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using System.Runtime.CompilerServices;
+using DalApi;
 using DO;
 namespace Dal;
 
@@ -9,6 +10,7 @@ internal class StudentCallImplementation : IStudentCall
     /// This method creates a new student call and saves it to the XML file.
     /// If the ID is 0, a new ID is generated.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(StudentCall item)
     {
         List<StudentCall> StudentCalls = XMLTools.LoadListFromXMLSerializer<StudentCall>(Config.s_studentcalls_xml);
@@ -27,6 +29,7 @@ internal class StudentCallImplementation : IStudentCall
     /// This method removes the student call with the specified ID from the data storage.
     /// Throws an exception if the student call is not found.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<StudentCall> StudentCalls = XMLTools.LoadListFromXMLSerializer<StudentCall>(Config.s_studentcalls_xml);
@@ -41,6 +44,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Deletes all student calls from the data storage.
     /// This method clears all student call records in the storage.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         List<StudentCall> StudentCalls = XMLTools.LoadListFromXMLSerializer<StudentCall>(Config.s_studentcalls_xml);
@@ -52,6 +56,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Reads a specific student call by its ID.
     /// This method retrieves the student call with the specified ID from the data storage.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public StudentCall? Read(int id)
     {
         List<StudentCall> StudentCalls = XMLTools.LoadListFromXMLSerializer<StudentCall>(Config.s_studentcalls_xml);
@@ -62,6 +67,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Reads a specific student call based on a filter condition.
     /// This method retrieves a student call that matches the provided filter condition.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public StudentCall? Read(Func<StudentCall, bool> filter)
     {
         List<StudentCall> StudentCalls = XMLTools.LoadListFromXMLSerializer<StudentCall>(Config.s_studentcalls_xml);
@@ -72,6 +78,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Reads all student calls or filters them based on a provided condition.
     /// This method retrieves all student calls or applies the given filter to the list.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<StudentCall> ReadAll(Func<StudentCall, bool>? filter = null)
     {
         List<StudentCall> StudentCalls = XMLTools.LoadListFromXMLSerializer<StudentCall>(Config.s_studentcalls_xml);
@@ -92,6 +99,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Updates an existing student call in the data storage.
     /// This method deletes the existing student call and creates a new one with updated data.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(StudentCall item)
     {
         StudentCall studentCall = Read(item.Id);

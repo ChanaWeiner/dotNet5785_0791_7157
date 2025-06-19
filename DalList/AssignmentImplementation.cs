@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using System.Runtime.CompilerServices;
+using DalApi;
 using DO;
 namespace Dal;
 
@@ -8,6 +9,7 @@ internal class AssignmentImplementation : IAssignment
     /// Creates a new assignment and adds it to the data source.
     /// </summary>
     /// <param name="item">The assignment to add.</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(Assignment item)
     {
         int id = Config.NextAssignmentId;
@@ -20,6 +22,7 @@ internal class AssignmentImplementation : IAssignment
     /// Throws an exception if the assignment does not exist.
     /// </summary>
     /// <param name="id">The ID of the assignment to delete.</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         Assignment assignment = Read(id);
@@ -31,6 +34,7 @@ internal class AssignmentImplementation : IAssignment
     /// <summary>
     /// Deletes all assignments from the data source.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         DataSource.Assignments.Clear();
@@ -42,6 +46,7 @@ internal class AssignmentImplementation : IAssignment
     /// </summary>
     /// <param name="id">The ID of the assignment to read.</param>
     /// <returns>The assignment if found, otherwise null.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Assignment? Read(int id)
     {
         return DataSource.Assignments.FirstOrDefault(x => x.Id == id);
@@ -53,6 +58,7 @@ internal class AssignmentImplementation : IAssignment
     /// </summary>
     /// <param name="filter">A predicate function to filter assignments.</param>
     /// <returns>The first matching assignment if found, otherwise null.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Assignment? Read(Func<Assignment, bool> filter)
     {
         return DataSource.Assignments.FirstOrDefault(filter);
@@ -64,6 +70,7 @@ internal class AssignmentImplementation : IAssignment
     /// </summary>
     /// <param name="filter">An optional predicate to filter assignments.</param>
     /// <returns>An enumerable collection of assignments.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Assignment> ReadAll(Func<Assignment, bool>? filter = null)
     {
         return filter != null ? DataSource.Assignments.Where(filter) : DataSource.Assignments;
@@ -74,6 +81,7 @@ internal class AssignmentImplementation : IAssignment
     /// Throws an exception if the assignment does not exist.
     /// </summary>
     /// <param name="item">The assignment to update.</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Assignment item)
     {
         Assignment assignment = Read(item.Id);

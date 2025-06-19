@@ -146,7 +146,7 @@ namespace PL.StudentCall
             {
                 Description = SelectedCall.Description ?? "";
                 //MapBrowser.Navigate(url);
-                //InitializeAsync();
+                InitializeAsync();
             }
         }
 
@@ -158,13 +158,14 @@ namespace PL.StudentCall
         private void SortButton_Click(object sender, RoutedEventArgs e)
         => OpenCalls = s_bl.StudentCall.SortOpenCalls(TutorId,SelectedSortOption).ToList();
 
-        //private async void InitializeAsync()
-        //{
-        //    var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
-        //    var tutor = s_bl.Tutor.Read(TutorId);
-        //    string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
-        //    await MyWebView.EnsureCoreWebView2Async(null);
-        //    MyWebView.Source = new Uri(url);
-        //}
+        private async void InitializeAsync()
+        {
+            var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
+            var tutor = s_bl.Tutor.Read(TutorId);
+            string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
+            //url = "https://www.google.com/maps";
+            await MyWebView.EnsureCoreWebView2Async(null);
+            MyWebView.Source = new Uri(url);
+        }
     }
 }

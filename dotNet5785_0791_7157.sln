@@ -33,6 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{24B56619-7ECF-47AC-9C8F-3BBCE3EEF2AF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{048CA989-4DE9-413B-8E64-0C4731662B82}"
+	ProjectSection(SolutionItems) = preProject
+		libs\BCrypt.Net-Next.dll = libs\BCrypt.Net-Next.dll
+		libs\Microsoft.Web.WebView2.Core.dll = libs\Microsoft.Web.WebView2.Core.dll
+		libs\Microsoft.Web.WebView2.Wpf.dll = libs\Microsoft.Web.WebView2.Wpf.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

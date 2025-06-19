@@ -44,6 +44,8 @@ public interface IAdmin
     /// </summary>
     public void InitializeDatabase();
 
- 
+    void StartSimulator(int interval); //stage 7
+    void StopSimulator(); //stage 7
+
 
 }

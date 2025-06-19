@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using System.Runtime.CompilerServices;
+using DalApi;
 namespace Dal;
 
 internal class ConfigImplementation : IConfig
@@ -9,7 +10,11 @@ internal class ConfigImplementation : IConfig
     /// </summary>
     public DateTime Clock
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         get => Config.Clock;
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         set => Config.Clock = value;
     }
 
@@ -19,7 +24,11 @@ internal class ConfigImplementation : IConfig
     /// </summary>
     public TimeSpan RiskTimeSpan
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         get => Config.RiskTimeSpan;
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         set => Config.RiskTimeSpan = value;
     }
 
@@ -27,6 +36,7 @@ internal class ConfigImplementation : IConfig
     /// Resets the configuration values to their default state.
     /// Calls the Reset method from the Config class to reset all configuration settings.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Reset()
     {
         Config.Reset();

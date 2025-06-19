@@ -32,6 +32,7 @@ internal class AdminImplementation : IAdmin
     /// <param name="timeUnit">The time unit by which the clock should be advanced.</param>
     public void AdvanceClock(BO.TimeUnit timeUnit)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         DateTime newTime = AdminManager.Now;
 
         switch (timeUnit)
@@ -73,7 +74,9 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void InitializeDatabase()
     {
-        AdminManager.InitializeDatabase();
+
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.InitializeDB(); //stage 7
     }
 
     /// <summary>
@@ -81,7 +84,8 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void ResetDatabase()
     {
-        _dal.ResetDB();
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.ResetDB();
 
     }
 
@@ -91,9 +95,16 @@ internal class AdminImplementation : IAdmin
     /// <param name="timeRange">A <see cref="TimeSpan"/> representing the new risk time range.</param>
     public void SetRiskTimeRange(TimeSpan timeRange)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         AdminManager.RiskTimeSpan = timeRange;
     }
+    public void StartSimulator(int interval)  //stage 7
+    {
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.Start(interval); //stage 7
+    }
 
-
+    public void StopSimulator()
+    => AdminManager.Stop(); //stage 7
 }
 

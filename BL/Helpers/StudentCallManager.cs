@@ -181,10 +181,9 @@ internal class StudentCallManager
     /// <summary>
     /// Updates the status of calls that have passed their final time.
     /// </summary>
-    internal static void UpdateStatusCalls()
+    internal static void PeriodicStudentcallStatusUpdates(DateTime oldClock, DateTime newClock)
     {
-        var now = AdminManager.Now;
-        var calls = s_dal.StudentCall.ReadAll(c => c.FinalTime.HasValue && c.FinalTime <= now);
+        var calls = s_dal.StudentCall.ReadAll(c => c.FinalTime.HasValue && c.FinalTime <= newClock);
 
         foreach (var call in calls)
         {
@@ -196,9 +195,9 @@ internal class StudentCallManager
                 {
                     StudentCallId = call.Id,
                     TutorId = 0,
-                    EntryTime = now,
+                    EntryTime = newClock,
                     EndOfTreatment = DO.EndOfTreatment.Expired,
-                    EndTime = now
+                    EndTime = newClock
                 };
                 s_dal.Assignment.Create(newAssignment);
                 Observers.NotifyItemUpdated(newAssignment.StudentCallId);
@@ -211,7 +210,7 @@ internal class StudentCallManager
                     {
                         var updated = assignment with
                         {
-                            EndTime = now,
+                            EndTime = newClock,
                             EndOfTreatment = DO.EndOfTreatment.Expired
                         };
                         s_dal.Assignment.Update(updated);

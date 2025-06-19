@@ -42,3 +42,8 @@ public class BlCanNotUpdateTreatment : Exception
 {
     public BlCanNotUpdateTreatment(string? message) : base(message) { }
 }
+[Serializable]
+public class BLTemporaryNotAvailableException : Exception
+{
+    public BLTemporaryNotAvailableException(string? message) : base(message) { }
+}

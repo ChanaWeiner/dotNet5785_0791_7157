@@ -85,5 +85,21 @@
     <StudentCallId>1040</StudentCallId>
     <TutorId>235805868</TutorId>
     <EntryTime>2025-06-17T14:11:19</EntryTime>
+    <EndTime>2025-08-19T14:11:19</EndTime>
+    <EndOfTreatment>Treated</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1071</Id>
+    <StudentCallId>1014</StudentCallId>
+    <TutorId>267549590</TutorId>
+    <EntryTime>2025-08-19T14:11:19</EntryTime>
+    <EndTime>2025-08-19T14:11:19</EndTime>
+    <EndOfTreatment>Treated</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1072</Id>
+    <StudentCallId>1021</StudentCallId>
+    <TutorId>267549590</TutorId>
+    <EntryTime>2025-08-19T14:11:19</EntryTime>
   </Assignment>
 </assignments.xml>

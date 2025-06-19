@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using System.Runtime.CompilerServices;
+using DalApi;
 using DO;
 
 namespace Dal;
@@ -8,6 +9,7 @@ internal class StudentCallImplementation : IStudentCall
     /// <summary>
     /// Creates a new student call and adds it to the data source.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(StudentCall item)
     {
         int id = Config.NextStudentCallId;
@@ -19,6 +21,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Deletes a student call by its ID from the data source.
     /// Throws an exception if the student call does not exist.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         StudentCall studentCall = Read(id);
@@ -30,6 +33,7 @@ internal class StudentCallImplementation : IStudentCall
     /// <summary>
     /// Deletes all student calls from the data source.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         DataSource.StudentCalls.Clear();
@@ -39,6 +43,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Reads a student call by its ID.
     /// Returns null if the student call does not exist.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public StudentCall? Read(int id)
     {
         return DataSource.StudentCalls.FirstOrDefault(x => x.Id == id);
@@ -48,6 +53,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Reads a student call based on a filter.
     /// Returns null if no matching student call is found.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public StudentCall? Read(Func<StudentCall, bool> filter)
     {
         return DataSource.StudentCalls.FirstOrDefault(filter);
@@ -57,6 +63,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Reads all student calls, optionally filtered by a predicate.
     /// If no filter is provided, all student calls are returned.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<StudentCall> ReadAll(Func<StudentCall, bool>? filter = null)
     {
         if (filter != null)
@@ -76,6 +83,7 @@ internal class StudentCallImplementation : IStudentCall
     /// Updates an existing student call in the data source.
     /// Throws an exception if the student call does not exist.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(StudentCall item)
     {
         StudentCall studentCall = Read(item.Id);
