@@ -267,6 +267,9 @@ namespace PL
             }
         }
 
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
 
+        }
     }
 }
