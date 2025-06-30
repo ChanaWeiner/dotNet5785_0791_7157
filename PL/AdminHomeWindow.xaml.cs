@@ -1,4 +1,5 @@
-﻿using PL.StudentCall;
+﻿using BlApi;
+using PL.StudentCall;
 using PL.Tutor;
 using System.Text;
 using System.Windows;
@@ -10,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PL
 {
@@ -19,6 +21,33 @@ namespace PL
     public partial class AdminHomeWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private volatile DispatcherOperation? _observerOperationClock = null; //stage 7
+        private volatile DispatcherOperation? _observerOperationRiskTime = null; //stage 7
+
+
+
+        public string ButtonText
+        {
+            get { return (string)GetValue(ButtonTextProperty); }
+            set { SetValue(ButtonTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty ButtonTextProperty =
+            DependencyProperty.Register("ButtonText", typeof(string), typeof(AdminHomeWindow), new PropertyMetadata(""));
+
+
+        public int Interval { get; set; }
+
+
+
+        public bool IsSimulatorRunning
+        {
+            get { return (bool)GetValue(IsSimulatorRunningProperty); }
+            set { SetValue(IsSimulatorRunningProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsSimulatorRunningProperty =
+            DependencyProperty.Register("IsSimulatorRunning", typeof(bool), typeof(AdminHomeWindow), new PropertyMetadata(false));
 
 
         public DateTime CurrentTime
@@ -48,7 +77,10 @@ namespace PL
         public AdminHomeWindow(int managerId)
         {
             ManagerId = managerId;
+            ButtonText = "Start Simulator";
+            IsSimulatorRunning = false;
             InitializeComponent();
+
         }
 
         private void btnAddOneMinute_Click(object sender, RoutedEventArgs e)
@@ -82,25 +114,61 @@ namespace PL
             s_bl.Admin.SetRiskTimeRange(RiskTimeSpan);
 
         }
-        private void clockObserver() => CurrentTime = s_bl.Admin.GetSystemClock();
-        private void configObserver() => RiskTimeSpan = s_bl.Admin.GetRiskTimeRange();
+        private void ClockObserver()
+        {
+            if (_observerOperationClock is null || _observerOperationClock.Status == DispatcherOperationStatus.Completed)
+                _observerOperationClock = Dispatcher.BeginInvoke(() =>
+                {
+                    CurrentTime = s_bl.Admin.GetSystemClock();
+                });
+        }
+        private void RiskTimeObserver()
+        {
+            if (_observerOperationRiskTime is null || _observerOperationRiskTime.Status == DispatcherOperationStatus.Completed)
+                _observerOperationRiskTime = Dispatcher.BeginInvoke(() =>
+                {
+                    RiskTimeSpan = s_bl.Admin.GetRiskTimeRange();
+                });
+        }
+
         private void AdminHomeWindow_Loaded(object sender, RoutedEventArgs e)
         {
             CurrentTime = s_bl.Admin.GetSystemClock();
             RiskTimeSpan = s_bl.Admin.GetRiskTimeRange();
-            s_bl.Admin.AddClockObserver(clockObserver);
-            s_bl.Admin.AddConfigObserver(configObserver);
+            s_bl.Admin.AddClockObserver(ClockObserver);
+            s_bl.Admin.AddConfigObserver(RiskTimeObserver);
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private async void Window_Closed(object sender, EventArgs e)
         {
-            s_bl.Admin.RemoveClockObserver(clockObserver);
-            s_bl.Admin.RemoveConfigObserver(configObserver);
+            if (IsSimulatorRunning)
+            {
+                await Task.Run(() => s_bl.Admin.StopSimulator());
+            }
+            s_bl.Admin.RemoveClockObserver(ClockObserver);
+            s_bl.Admin.RemoveConfigObserver(RiskTimeObserver);
+            CloseOwnedWindows(this);
+
+
+        }
+
+        private void CloseOwnedWindows(Window parent)
+        {
+            foreach (Window child in Application.Current.Windows)
+            {
+                if (child.Owner == parent)
+                {
+                    CloseOwnedWindows(child);
+                    child.Close();
+                }
+            }
         }
 
         private void btnTutors_Click(object sender, RoutedEventArgs e)
         {
-            new TutorListWindow().Show();
+            var tutorListWindow = new TutorListWindow();
+            tutorListWindow.Owner = this;
+            tutorListWindow.Show();
         }
 
 
@@ -114,6 +182,7 @@ namespace PL
 
             if (result == MessageBoxResult.Yes)
             {
+                Mouse.OverrideCursor = Cursors.Wait;
                 try
                 {
                     s_bl.Admin.ResetDatabase();
@@ -131,6 +200,10 @@ namespace PL
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
+                finally
+                {
+                    Mouse.OverrideCursor = null;
+                }
             }
         }
 
@@ -144,6 +217,7 @@ namespace PL
 
             if (result == MessageBoxResult.Yes)
             {
+                Mouse.OverrideCursor = Cursors.Wait;
                 try
                 {
                     s_bl.Admin.InitializeDatabase();
@@ -161,13 +235,38 @@ namespace PL
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
+                finally
+                {
+                    Mouse.OverrideCursor = null;
+                }
             }
         }
 
 
         private void btnCalls_Click(object sender, RoutedEventArgs e)
         {
-            new StudentCallListWindow(ManagerId).Show();
+            var studentCallListWindow = new StudentCallListWindow(ManagerId);
+            studentCallListWindow.Owner = this;
+            studentCallListWindow.Show();
         }
+
+        private async void btnStartOrStopSimulator_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsSimulatorRunning)
+            {
+                await Task.Run(() => s_bl.Admin.StopSimulator());
+                ButtonText = "Start Simulator";
+                IsSimulatorRunning = false;
+            }
+            else
+            {
+                IsSimulatorRunning = true;
+                s_bl.Admin.StartSimulator(Interval); //stage 7
+                ButtonText = "Stop Simulator";
+
+            }
+        }
+
+
     }
 }

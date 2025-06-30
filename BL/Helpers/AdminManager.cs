@@ -146,10 +146,8 @@ internal static class AdminManager//stage 4
         {
             UpdateClock(Now.AddMinutes(s_interval));
 
-            // TO_DO: logic simulation
             if (simulateTask is null || simulateTask.IsCompleted)
-                simulateTask = Task.Run(() => { });
-
+                simulateTask = Task.Run(() => TutorManager.TutorSimulator());
 
             try
             {

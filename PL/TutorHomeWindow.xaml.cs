@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PL
 {
@@ -24,8 +25,30 @@ namespace PL
     public partial class TutorHomeWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public bool HasCallInProgress { get; set; }
-        public bool NoCallInProgress { get; set; }
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
+
+
+        public bool HasCallInProgress
+        {
+            get { return (bool)GetValue(HasCallInProgressProperty); }
+            set { SetValue(HasCallInProgressProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HasCallInProgress.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HasCallInProgressProperty =
+            DependencyProperty.Register("HasCallInProgress", typeof(bool), typeof(TutorHomeWindow), new PropertyMetadata(false));
+
+
+        public bool NoCallInProgress
+        {
+            get { return (bool)GetValue(NoCallInProgressProperty); }
+            set { SetValue(NoCallInProgressProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for NoCallInProgress.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NoCallInProgressProperty =
+            DependencyProperty.Register("NoCallInProgress", typeof(bool), typeof(TutorHomeWindow), new PropertyMetadata(false));
+
         public bool HasCallsHistory { get; set; }
         private int TutorId { get; set; }
 
@@ -38,8 +61,7 @@ namespace PL
             set => SetValue(CurrentPageProperty, value);
         }
 
-        public TutorHomeWindow() : this(265383422) { }
-        public TutorHomeWindow(int id = 265383422)
+        public TutorHomeWindow(int id )
         {
             try
             {
@@ -63,17 +85,21 @@ namespace PL
 
         private void DisplayCurrentCallObserver()
         {
-            var tutor = s_bl.Tutor.Read(TutorId);
-            HasCallInProgress = tutor.CurrentCallInProgress != null;
-            NoCallInProgress = !HasCallInProgress;
-            if (HasCallInProgress)
-            {
-                CurrentPage = new CurrentCallPage(tutor.Id, tutor.CurrentCallInProgress!.CallId, tutor.CurrentCallInProgress.Id);
-            }
-            else
-            {
-                CurrentPage = null;
-            }
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    var tutor = s_bl.Tutor.Read(TutorId);
+                    HasCallInProgress = tutor.CurrentCallInProgress != null;
+                    NoCallInProgress = !HasCallInProgress;
+                    if (HasCallInProgress)
+                    {
+                        CurrentPage = new CurrentCallPage(tutor.Id, tutor.CurrentCallInProgress!.CallId, tutor.CurrentCallInProgress.Id);
+                    }
+                    else
+                    {
+                        CurrentPage = null;
+                    }
+                });
         }
 
         private void BtnChooseCall_Click(object sender, RoutedEventArgs e)
@@ -105,8 +131,8 @@ namespace PL
         {
             s_bl.Tutor.AddObserver(TutorId, DisplayCurrentCallObserver);
             s_bl.StudentCall.AddObserver(DisplayCurrentCallObserver);
-            
-         }
+
+        }
 
         private void Window_Closed(object sender, EventArgs e)
             => s_bl.Tutor.RemoveObserver(TutorId, DisplayCurrentCallObserver);

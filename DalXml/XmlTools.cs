@@ -1,6 +1,7 @@
 ﻿namespace Dal;
 
 using DO;
+using System.Runtime.CompilerServices;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;

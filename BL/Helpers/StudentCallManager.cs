@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BlImplementation;
+using BO;
 using DalApi;
 
 namespace Helpers;
@@ -9,26 +10,21 @@ internal class StudentCallManager
     private static IDal s_dal = DalApi.Factory.Get;
     private static IAdmin manager = new AdminImplementation();
     internal static ObserverManager Observers = new(); //stage 5
-   
-    /// <summary>
-    /// Converts a DO.StudentCall object to a BO.CallInList object.
-    /// </summary>
-    /// <param name="studentCall">The DO.StudentCall object to convert.</param>
-    /// <returns>A BO.CallInList object representing the student call.</returns>
+
+
     internal static BO.CallInList ConvertFromDoToBo(DO.StudentCall studentCall)
     {
         var maxCompletionTime = AdminManager.Now - manager.GetRiskTimeRange();
 
-        var lastAssignment = s_dal.Assignment
-          .ReadAll(a => a.StudentCallId == studentCall.Id)
-          .OrderBy(a => a.EntryTime)
-          .LastOrDefault();
+        var assignments = Tools.ReadAllAssignments(a => a.StudentCallId == studentCall.Id)
+                                      .OrderBy(a => a.EntryTime)
+                                      .ToList();
+
+        var lastAssignment = assignments.LastOrDefault();
 
         var status = CalculateCallStatus(studentCall);
 
-        var totalAssignments = s_dal.Assignment
-            .ReadAll(a => a.StudentCallId == studentCall.Id)
-            .Count();
+        var totalAssignments = assignments.Count;
 
         return new BO.CallInList
         {
@@ -40,7 +36,7 @@ internal class StudentCallManager
                 ? studentCall.FinalTime.Value - AdminManager.Now
                 : maxCompletionTime - AdminManager.Now,
             LastTutorName = lastAssignment != null
-                ? s_dal.Tutor.Read(lastAssignment.TutorId)!.FullName
+                ? TutorManager.Read(lastAssignment.TutorId)?.FullName
                 : null,
             CompletionTime = studentCall.FinalTime.HasValue
                 ? studentCall.FinalTime.Value - studentCall.OpenTime
@@ -49,65 +45,23 @@ internal class StudentCallManager
             TotalAssignments = totalAssignments
         };
     }
-    
-    internal static BO.CallStatus CalculateCallStatus2(DO.StudentCall studentCall)
-    {
-        var maxCompletionTime = studentCall.OpenTime.AddHours(2); // Example: maximum time to complete the call is 2 hours.
-        var lastAssignment = s_dal.Assignment
-           .ReadAll(a => a.StudentCallId == studentCall.Id)
-           .OrderByDescending(a => a.EntryTime)
-           .FirstOrDefault();
-
-        // If the call has a final time, determine its status based on the end treatment.
-        if (studentCall.FinalTime.HasValue)
-        {
-            return lastAssignment?.EndOfTreatment switch
-            {
-                DO.EndOfTreatment.Treated => BO.CallStatus.Closed, // Call is treated and closed.
-                DO.EndOfTreatment.SelfCancel => BO.CallStatus.Open, // Self-canceled, still open.
-                DO.EndOfTreatment.ManagerCancel => BO.CallStatus.Open, // Manager canceled, still open.
-                DO.EndOfTreatment.Expired => BO.CallStatus.Expired, // Call expired.
-                _ => BO.CallStatus.Open // Default to open if no other status.
-            };
-        }
-
-        // If the maximum completion time has passed, mark the call as expired.
-        if (AdminManager.Now >= maxCompletionTime)
-        {
-            return BO.CallStatus.Expired;
-        }
-
-        // If the call is in progress, check if it is at risk of missing the deadline.
-        if (lastAssignment != null)
-        {
-            return maxCompletionTime - AdminManager.Now <= AdminManager.RiskTimeSpan // 30-minute risk range
-           ? BO.CallStatus.InProgressAtRisk
-           : BO.CallStatus.InProgress;
-        }
-
-        // If the call is open, check if it's at risk of missing the deadline.
-        return maxCompletionTime - AdminManager.Now <= AdminManager.RiskTimeSpan// 30-minute risk range
-            ? BO.CallStatus.OpenInRisk
-            : BO.CallStatus.Open;
-    }
 
     /// <summary>
-    /// Calculates the status of a student call based on its properties and the current time.
+    /// Converts a DO.StudentCall object to a BO.CallInList object.
     /// </summary>
-    /// <param name="studentCall">The student call to calculate the status for.</param>
-    /// <returns>The calculated status of the student call.</returns>
+    /// <param name="studentCall">The DO.StudentCall object to convert.</param>
+    /// <returns>A BO.CallInList object representing the student call.</returns>
     internal static BO.CallStatus CalculateCallStatus(DO.StudentCall studentCall)
     {
-        var lastAssignment = s_dal.Assignment
-           .ReadAll(a => a.StudentCallId == studentCall.Id)
-           .OrderBy(a => a.EntryTime)
-           .LastOrDefault();
+        var lastAssignment = Tools.ReadAllAssignments(a => a.StudentCallId == studentCall.Id)
+                                         .OrderBy(a => a.EntryTime)
+                                         .LastOrDefault();
+
         bool isCallExpired = studentCall.FinalTime.HasValue && studentCall.FinalTime < AdminManager.Now;
         bool isCallInRisk = studentCall.FinalTime.HasValue && studentCall.FinalTime - AdminManager.Now < AdminManager.RiskTimeSpan;
+
         if (isCallExpired)
-        {
             return BO.CallStatus.Expired;
-        }
 
         if (lastAssignment == null)
             return isCallInRisk ? BO.CallStatus.OpenInRisk : BO.CallStatus.Open;
@@ -115,7 +69,7 @@ internal class StudentCallManager
         if (isCallInRisk)
             return BO.CallStatus.InProgressAtRisk;
 
-        return lastAssignment?.EndOfTreatment switch
+        return lastAssignment.EndOfTreatment switch
         {
             DO.EndOfTreatment.Treated => BO.CallStatus.Closed,
             DO.EndOfTreatment.SelfCancel => BO.CallStatus.Open,
@@ -124,6 +78,8 @@ internal class StudentCallManager
             _ or null => BO.CallStatus.InProgress
         };
     }
+
+
 
     /// <summary>
     /// Validates a student call object before creating or updating it.
@@ -162,6 +118,7 @@ internal class StudentCallManager
         try
         {
             (call.Latitude, call.Longitude) = Tools.GetCoordinates(call.FullAddress);
+
         }
         catch (Exception ex)
         {
@@ -183,13 +140,13 @@ internal class StudentCallManager
     /// </summary>
     internal static void PeriodicStudentcallStatusUpdates(DateTime oldClock, DateTime newClock)
     {
-        var calls = s_dal.StudentCall.ReadAll(c => c.FinalTime.HasValue && c.FinalTime <= newClock);
+        var calls = StudentCallManager.ReadAll(c => c.FinalTime.HasValue && c.FinalTime <= newClock);
 
         foreach (var call in calls)
         {
-            var assignments = s_dal.Assignment.ReadAll(a => a.StudentCallId == call.Id);
+            var assignments = Tools.ReadAllAssignments(a => a.StudentCallId == call.Id).ToList();
 
-            if (assignments == null)
+            if (assignments == null || !assignments.Any())
             {
                 var newAssignment = new DO.Assignment
                 {
@@ -199,28 +156,121 @@ internal class StudentCallManager
                     EndOfTreatment = DO.EndOfTreatment.Expired,
                     EndTime = newClock
                 };
-                s_dal.Assignment.Create(newAssignment);
+
+                Tools.CreateAssignment(newAssignment);
                 Observers.NotifyItemUpdated(newAssignment.StudentCallId);
             }
             else
             {
-                foreach (var assignment in assignments)
+                foreach (var assignment in assignments.Where(a => a.EndTime == null))
                 {
-                    if (assignment.EndTime == null)
+                    var updated = assignment with
                     {
-                        var updated = assignment with
-                        {
-                            EndTime = newClock,
-                            EndOfTreatment = DO.EndOfTreatment.Expired
-                        };
-                        s_dal.Assignment.Update(updated);
-                        Observers.NotifyItemUpdated(updated.StudentCallId);
-                    }
+                        EndTime = newClock,
+                        EndOfTreatment = DO.EndOfTreatment.Expired
+                    };
+
+                    Tools.UpdateAssignment(updated);
+                    Observers.NotifyItemUpdated(updated.StudentCallId);
                 }
             }
         }
 
         Observers.NotifyListUpdated();
+    }
+
+
+    internal static void UpdateTreatmentCancellation(int assignmentId, int tutorId)
+    {
+        var assignment = Tools.ReadAssignment(assignmentId) ??
+    throw new BO.BlDoesNotExistException($"Assignment's tutor with ID={tutorId}, which its ID={assignmentId} does not exist");
+
+        if (assignment.TutorId != tutorId && !Tools.IsManagerId(tutorId))
+            throw new BlCanNotUpdateTreatment("Tutor cannot cancel treatment for this assignment.");
+
+        if (assignment.EndTime != null)
+            throw new BlCanNotUpdateTreatment("Assignment treatment has already been completed, canceled or expired.");
+
+        var updateAssignment = assignment with
+        {
+            EndOfTreatment = assignment.TutorId == tutorId ? DO.EndOfTreatment.SelfCancel : DO.EndOfTreatment.ManagerCancel,
+            EndTime = AdminManager.Now
+        };
+
+        Tools.UpdateAssignment(updateAssignment);
+        TutorManager.Observers.NotifyItemUpdated(tutorId);
+        StudentCallManager.Observers.NotifyListUpdated();
+        TutorManager.Observers.NotifyListUpdated();
+    }
+
+    internal static void UpdateTreatmentCompletion(int tutorId, int assignmentId)
+    {
+        var assignment = Tools.ReadAssignment(a => a.TutorId == tutorId && a.Id == assignmentId) ??
+    throw new BO.BlDoesNotExistException($"Assignment's tutor with ID={tutorId}, which its ID={assignmentId} does not exist");
+
+        if (assignment.EndTime != null)
+            throw new BlCanNotUpdateTreatment("Assignment treatment has already been completed or canceled.");
+
+        var updateAssignment = assignment with
+        {
+            EndOfTreatment = DO.EndOfTreatment.Treated,
+            EndTime = AdminManager.Now
+        };
+
+        Tools.UpdateAssignment(updateAssignment);
+        TutorManager.Observers.NotifyItemUpdated(tutorId);
+        StudentCallManager.Observers.NotifyListUpdated();
+        TutorManager.Observers.NotifyListUpdated();
+
+    }
+
+
+    internal static void AssignCallToTutor(int tutorId, int callId)
+    {
+        var existingAssignments = Tools.ReadAllAssignments(a => a.TutorId == tutorId && a.EndTime == null);
+        if (existingAssignments.Any())
+            throw new BO.BlCanNotAssignCall($"Tutor with ID={tutorId} already has an open call in treatment.");
+
+        var callAssignments = Tools.ReadAllAssignments(a =>
+            a.StudentCallId == callId &&
+            (a.EndOfTreatment == DO.EndOfTreatment.Treated || a.EndOfTreatment == DO.EndOfTreatment.Expired));
+
+        if (callAssignments.Any())
+            throw new BO.BlCanNotAssignCall($"Call with ID={callId} has already been handled or has expired.");
+
+        var newAssignment = new DO.Assignment(0, callId, tutorId, AdminManager.Now, null, null);
+        Tools.CreateAssignment(newAssignment);
+
+        StudentCallManager.Observers.NotifyListUpdated();
+        TutorManager.Observers.NotifyItemUpdated(tutorId);
+        TutorManager.Observers.NotifyListUpdated();
+
+    }
+
+    internal static void Create(DO.StudentCall item)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.StudentCall.Create(item);
+    }
+    internal static DO.StudentCall? Read(int id)
+    {
+        lock (AdminManager.BlMutex)
+            return s_dal.StudentCall.Read(id);
+    }
+    internal static IEnumerable<DO.StudentCall> ReadAll(Func<DO.StudentCall, bool>? filter = null)
+    {
+        lock (AdminManager.BlMutex)
+            return s_dal.StudentCall.ReadAll(filter).ToList();
+    }
+    internal static void Update(DO.StudentCall item)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.StudentCall.Update(item);
+    }
+    internal static void Delete(int id)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.StudentCall.Delete(id);
     }
 
 }

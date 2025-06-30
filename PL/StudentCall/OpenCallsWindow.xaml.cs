@@ -15,6 +15,7 @@ using BlApi;
 using BO;
 using Microsoft.Win32;
 using Microsoft.Web.WebView2.Core;
+using System.Windows.Threading;
 
 
 namespace PL.StudentCall
@@ -25,6 +26,7 @@ namespace PL.StudentCall
     public partial class OpenCallsWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
         public BO.OpenCallField? SelectedSearchOption { get; set; } = null;
         public object SearchValue { get; set; } = string.Empty;
         public BO.OpenCallInList? SelectedOpenCall { get; set; }
@@ -54,7 +56,7 @@ namespace PL.StudentCall
             DependencyProperty.Register("OpenCalls", typeof(List<BO.OpenCallInList>), typeof(OpenCallsWindow), new PropertyMetadata(null));
 
 
- 
+
         public string Description
         {
             get { return (string)GetValue(DescriptionProperty); }
@@ -84,10 +86,7 @@ namespace PL.StudentCall
         public static readonly DependencyProperty SelectedCallProperty =
             DependencyProperty.Register("SelectedCall", typeof(BO.OpenCallInList), typeof(OpenCallsWindow), new PropertyMetadata(null));
 
-        public OpenCallsWindow() : this(329214969) // Default TutorId
-        {
-        }
-        public OpenCallsWindow(int id= 329214969)
+        public OpenCallsWindow(int id)
         {
             TutorId = id;
             OpenCalls = s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
@@ -102,7 +101,15 @@ namespace PL.StudentCall
             => s_bl.StudentCall.RemoveObserver(CallsListObserver);
 
 
-        public void CallsListObserver() => QueryOpenCall();
+        public void CallsListObserver()
+        {
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    QueryOpenCall();
+
+                });
+        }
 
         public void QueryOpenCall()
         {
@@ -134,7 +141,7 @@ namespace PL.StudentCall
                 s_bl.StudentCall.AssignCallToTutor(TutorId, SelectedCall.Id);
                 this.Close();
             }
-            catch(BO.BlCanNotAssignCall ex)
+            catch (BO.BlCanNotAssignCall ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -156,14 +163,13 @@ namespace PL.StudentCall
         private void SearchButton_Click(object sender, RoutedEventArgs e) => QueryOpenCall();
 
         private void SortButton_Click(object sender, RoutedEventArgs e)
-        => OpenCalls = s_bl.StudentCall.SortOpenCalls(TutorId,SelectedSortOption).ToList();
+        => OpenCalls = s_bl.StudentCall.SortOpenCalls(TutorId, SelectedSortOption).ToList();
 
         private async void InitializeAsync()
         {
             var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
             var tutor = s_bl.Tutor.Read(TutorId);
             string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
-            //url = "https://www.google.com/maps";
             await MyWebView.EnsureCoreWebView2Async(null);
             MyWebView.Source = new Uri(url);
         }

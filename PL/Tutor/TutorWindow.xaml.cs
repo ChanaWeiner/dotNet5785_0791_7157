@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using PL.StudentCall;
 
 namespace PL.Tutor
@@ -21,6 +22,7 @@ namespace PL.Tutor
     public partial class TutorWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
 
         public BO.Tutor CurrentTutor
         {
@@ -121,16 +123,20 @@ namespace PL.Tutor
         }
         private void BtnDisplayCall_Click(object sender, RoutedEventArgs e)
         {
-            new StudentCallWindow(CurrentTutor.CurrentCallInProgress!.CallId,true)
-            {
-                Owner = this
-            }.Show();
+            var studentCallWindow = new StudentCallWindow(CurrentTutor.CurrentCallInProgress!.CallId, true);
+            studentCallWindow.Owner = this;
+            studentCallWindow.Show();
         }
         private void TutorObserver()
         {
-            int id = CurrentTutor!.Id;
-            CurrentTutor = null;
-            CurrentTutor = s_bl.Tutor.Read(id);
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    int id = CurrentTutor!.Id;
+                    CurrentTutor = null;
+                    CurrentTutor = s_bl.Tutor.Read(id);
+                });
+                 
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -138,7 +144,10 @@ namespace PL.Tutor
                 s_bl.Tutor.AddObserver(CurrentTutor.Id, TutorObserver);
         }
         private void Window_Closed(object sender, EventArgs e)
-            => s_bl.Tutor.RemoveObserver(TutorObserver);
+        {
+            if (CurrentTutor!.Id != 0)
+                s_bl.Tutor.RemoveObserver(CurrentTutor.Id,TutorObserver);
+        }
     }
 
 }

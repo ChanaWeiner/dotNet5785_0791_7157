@@ -5,12 +5,14 @@ using DO;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using BCrypt.Net;
+using System.Collections.Generic;
+using BlApi;
 
 namespace Helpers;
 
 internal class TutorManager
 {
-    private static IDal s_dal = Factory.Get;
+    private static IDal s_dal = DalApi.Factory.Get;
     internal static ObserverManager Observers = new(); //stage 5
     /// <summary>
     /// Converts a DO.Tutor object to a BO.TutorInList object.
@@ -19,33 +21,32 @@ internal class TutorManager
     /// <returns>A BO.TutorInList object containing relevant tutor information.</returns>
     internal static BO.TutorInList ConvertFromDoToBo(DO.Tutor tutor)
     {
-        var tutorAssignments = s_dal.Assignment.ReadAll(a => a.TutorId == tutor.Id);
-        var currenCallId = tutorAssignments.Where(a => a.EndTime == null)
-                .Select(a => a.StudentCallId)
-                .FirstOrDefault();
-        var currentCall = s_dal.StudentCall.Read(currenCallId);
+        // שימוש ב-TutorManager לגישה ל-Assignment
+        IEnumerable<DO.Assignment> tutorAssignments = Tools.ReadAllAssignments(a => a.TutorId == tutor.Id);
+
+        var currenCallId = tutorAssignments
+            .Where(a => a.EndTime == null)
+            .Select(a => a.StudentCallId)
+            .FirstOrDefault();
+
+        var currentCall = StudentCallManager.Read(currenCallId);
+
         return new BO.TutorInList
         {
             Id = tutor.Id,
             FullName = tutor.FullName,
             IsActive = tutor.Active,
 
-            // Counting total handled calls (where EndOfTreatment is "Handled")
             TotalHandledCalls = tutorAssignments.Count(a => a.EndOfTreatment == DO.EndOfTreatment.Treated),
-
-            // Counting total canceled calls (where EndOfTreatment is "Canceled")
             TotalCancelledCalls = tutorAssignments.Count(a => a.EndOfTreatment == DO.EndOfTreatment.ManagerCancel ||
-                                                              a.EndOfTreatment == DO.EndOfTreatment.SelfCancel),
-
-            // Counting total expired calls (where EndOfTreatment is "Expired")
+                                                               a.EndOfTreatment == DO.EndOfTreatment.SelfCancel),
             TotalExpiredCalls = tutorAssignments.Count(a => a.EndOfTreatment == DO.EndOfTreatment.Expired),
 
-            // Getting the current call ID and type
             CurrentCallId = currenCallId,
-
             CurrentSubject = currentCall != null ? (BO.Subjects)currentCall.Subject : null
         };
     }
+
 
     /// <summary>
     /// Counts the number of calls with a specific EndOfTreatment status for a tutor.
@@ -55,7 +56,7 @@ internal class TutorManager
     /// <returns>The count of calls with the specified EndOfTreatment status.</returns>
     internal static int CountCallsByEndStatus(int tutorId, BO.EndOfTreatment endStatus)
     {
-        return s_dal.Assignment.ReadAll(a =>
+        return Tools.ReadAllAssignments(a =>
             a.TutorId == tutorId && a.EndOfTreatment != null && (BO.EndOfTreatment)a.EndOfTreatment == endStatus
         ).Select(a => a.StudentCallId)
         .Distinct()
@@ -155,7 +156,7 @@ internal class TutorManager
     /// </summary>
     /// <param name="password">The password to hash.</param>
     /// <returns>The hashed password.</returns>
-    public static string HashPassword(string password) => BCrypt.Net.BCrypt.HashPassword(password);
+    internal static string HashPassword(string password) => BCrypt.Net.BCrypt.HashPassword(password);
 
     /// <summary>
     /// Verifies if a password matches a hashed password.
@@ -163,5 +164,90 @@ internal class TutorManager
     /// <param name="password">The plain password.</param>
     /// <param name="hashedPassword">The hashed password.</param>
     /// <returns>True if the password matches the hashed password, otherwise false.</returns>
-    public static bool VerifyPassword(string password, string hashedPassword) => BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+    internal static bool VerifyPassword(string password, string hashedPassword) => BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+
+    internal static void Create(DO.Tutor item)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.Tutor.Create(item);
+    }
+    internal static DO.Tutor? Read(int id)
+    {
+        lock (AdminManager.BlMutex)
+            return s_dal.Tutor.Read(id);
+    }
+    internal static IEnumerable<DO.Tutor> ReadAll(Func<DO.Tutor, bool>? filter = null)
+    {
+        lock (AdminManager.BlMutex)
+            return s_dal.Tutor.ReadAll(filter).ToList();
+    }
+    internal static void Update(DO.Tutor item)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.Tutor.Update(item);
+    }
+    internal static void Delete(int id)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.Tutor.Delete(id);
+    }
+
+
+
+    internal static void TutorSimulator()
+    {
+        BlApi.IStudentCall StudentCallImpl = new StudentCallImplementation();
+        BlApi.ITutor TutorImpl = new TutorImplementation();
+        Random rnd = new Random();
+        int toCancel = rnd.Next(1, 6);
+        int toAssign = rnd.Next(1, 6);
+        var activeDOTutors = ReadAll(tutor => tutor.Active);
+        IEnumerable<BO.Tutor> activeTutors = activeDOTutors.Select(t => TutorImpl.Read(t.Id));
+        foreach (var tutor in activeTutors)
+        {
+            BO.CallInProgress currentCallInProgress = tutor.CurrentCallInProgress;
+            if (currentCallInProgress == null)
+            {
+                if (toAssign % 5 == 0)
+                {
+                    toAssign+= rnd.Next(1, 6);
+                    var mostCommonSubject = StudentCallImpl.GetClosedCallsForTutor(tutor.Id)
+                     .GroupBy(c => c.Subject)
+                     .OrderByDescending(g => g.Count())
+                     .Select(g => (BO.Subjects?)g.Key)  
+                     .FirstOrDefault();
+
+                    IEnumerable<BO.OpenCallInList> openCalls;
+                    if (mostCommonSubject != null)
+                        openCalls = StudentCallImpl.FilterOpenCalls(tutor.Id, BO.OpenCallField.Subject, mostCommonSubject);
+                    else
+                        openCalls = StudentCallImpl.FilterOpenCalls(tutor.Id);
+
+                    openCalls.OrderBy(c => c.DistanceFromTutor);
+                    if(openCalls.Any())
+                        StudentCallManager.AssignCallToTutor(tutor.Id, openCalls.FirstOrDefault().Id);
+
+                }
+            }
+            else
+            {
+                DateTime openTime = currentCallInProgress.OpenTime;
+                int addTime = 7 + (int)Math.Floor(currentCallInProgress.Distance) / 2;
+                if (openTime.AddDays(addTime) <= AdminManager.Now)
+                {
+                    StudentCallManager.UpdateTreatmentCompletion(tutor.Id,currentCallInProgress.Id);
+                }
+                else
+                {
+                    toCancel+=rnd.Next(1, 6);
+                    if (toCancel % 10 == 0)
+                        StudentCallManager.UpdateTreatmentCancellation(currentCallInProgress.Id, tutor.Id);
+                }
+                
+
+            }
+
+        }
+    }
+
 }

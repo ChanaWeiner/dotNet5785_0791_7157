@@ -34,7 +34,6 @@ namespace PL.StudentCall
         public int AssignmentId { get; set; }
         public CurrentCallPage(int tuturId, int callId, int assignmentId)
         {
-            //תאתחל אותם
             TutorId = tuturId;
             CallId = callId;
             AssignmentId = assignmentId;
@@ -58,10 +57,9 @@ namespace PL.StudentCall
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            // Logic to handle cancel action  
+ 
             MessageBox.Show("Cancel button clicked.");
-            //אני רוצה להפעיל פונקציה בBL
-            //תעטוף את זה בtry catch
+ 
             try
             {
                 s_bl.StudentCall.UpdateTreatmentCancellation(AssignmentId,TutorId);
@@ -83,8 +81,7 @@ namespace PL.StudentCall
 
         private void btnEndTreatment_Click(object sender, RoutedEventArgs e)
         {
-            // Logic to handle end treatment action  
-            //תעשה אותו רעיון כאן
+
             MessageBox.Show("End Treatment button clicked.");
             try
             {

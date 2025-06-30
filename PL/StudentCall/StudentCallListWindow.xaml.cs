@@ -11,9 +11,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using BO;
 using DO;
 using PL.StudentCall;
+using PL.Tutor;
 
 namespace PL.StudentCall
 {
@@ -23,6 +25,7 @@ namespace PL.StudentCall
     public partial class StudentCallListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
         public BO.CallStatus? statusCall { get; set; } = BO.CallStatus.None;
         public BO.CallInList? SelectedCall { get; set; }
 
@@ -62,7 +65,13 @@ namespace PL.StudentCall
         }
 
         private void CallsListObserver()
-            => QueryCallsList();
+        {
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    QueryCallsList();
+                });
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         => s_bl.StudentCall.AddObserver(CallsListObserver);
@@ -74,12 +83,18 @@ namespace PL.StudentCall
         private void LsvCallsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (SelectedCall != null)
-                new StudentCallWindow(SelectedCall.CallId).Show();
+            {
+                var studentCallWindow = new StudentCallWindow(SelectedCall.CallId);
+                studentCallWindow.Owner = this;
+                studentCallWindow.Show();
+            }
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new StudentCallWindow().Show();
+            var studentCallWindow = new StudentCallWindow();
+            studentCallWindow.Owner = this;
+            studentCallWindow.Show();
         }
 
         private void DeleteCall_Click(object sender, RoutedEventArgs e)

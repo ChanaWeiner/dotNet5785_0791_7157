@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using PL.StudentCall;
 
 namespace PL.Tutor
 {
@@ -20,6 +22,7 @@ namespace PL.Tutor
     public partial class TutorListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
         public BO.TutorField? SelectedSearchOption { get; set; } = null;
         public object SearchValue { get; set; } = string.Empty;
         public BO.TutorInList? SelectedTutor { get; set; }
@@ -46,7 +49,14 @@ namespace PL.Tutor
               s_bl?.Tutor.FilterTutorsInList()! : s_bl?.Tutor.FilterTutorsInList(SelectedSearchOption,SearchValue)!;
 
         private void TutorListObserver()
-            => QueryTutorList();
+        {
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    QueryTutorList();
+                });
+
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         => s_bl.Tutor.AddObserver(TutorListObserver);
@@ -56,11 +66,21 @@ namespace PL.Tutor
         => s_bl.Tutor.RemoveObserver(TutorListObserver);
 
         private void LsvTutorsList_MouseDoubleClickHandler(object sender, MouseButtonEventArgs e)
-        => new TutorWindow(SelectedTutor!.Id).Show();
+        {
+            var tutorWindow = new TutorWindow(SelectedTutor!.Id);
+            tutorWindow.Owner = this;
+            tutorWindow.Show();
+
+        }
         
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
-        => new TutorWindow().Show();
+        {
+            var tutorWindow = new TutorWindow();
+            tutorWindow.Owner = this;
+            tutorWindow.Show();
+        }
+       
         
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         => TutorsList = s_bl?.Tutor.FilterTutorsInList().ToList()!;

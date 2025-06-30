@@ -6,7 +6,7 @@ namespace DalTest;
 
 public static class Initialization
 {
-    private static IDal? s_dal; // stage 2
+    private static IDal? s_dal = DalApi.Factory.Get;
     // private static ITutor? s_dalTutor; // stage 1
     // private static IStudentCall? s_dalStudentCall;
     // private static IAssignment? s_dalAssignment; // stage 1
@@ -97,9 +97,9 @@ public static class Initialization
             string email = $"{fullName.Replace(" ", ".").ToLower()}@example.com";
 
             DateTime open = DateTime.Now.AddDays(-s_rand.Next(1, 20));
-            DateTime? final = s_rand.Next(0, 5) == 0 ? open.AddDays(-1) : // פג תוקף
+            DateTime? final = s_rand.Next(0, 8) == 0 ? open.AddDays(-1) : // פג תוקף
                               s_rand.Next(0, 3) == 0 ? null :
-                              open.AddHours(s_rand.Next(5, 48));
+                              open.AddDays(s_rand.Next(5, 25));
 
             s_dal!.StudentCall.Create(new DO.StudentCall(
                 0, (DO.Subjects)subjectIndex, $"Help in {subjects[subjectIndex]}",
@@ -147,11 +147,13 @@ public static class Initialization
     /// </summary>
     public static void Do()
     {
-        s_dal!.ResetDB();
+        s_dal!.Tutor.DeleteAll();
+        s_dal!.StudentCall.DeleteAll();
+        s_dal!.Assignment.DeleteAll();
         Console.WriteLine("Reset Configuration values and List values...");
         Console.WriteLine("Initializing All lists ...");
         CreateTutors();
         CreateStudentCalls();
-        CreateAssignments();
+        //CreateAssignments();
     }
 }

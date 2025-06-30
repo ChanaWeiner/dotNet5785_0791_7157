@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using BO;
 
 namespace PL.StudentCall
@@ -21,6 +22,7 @@ namespace PL.StudentCall
     public partial class CallsHistoryWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
 
         public BO.EndOfTreatment EndType
         {
@@ -61,7 +63,12 @@ namespace PL.StudentCall
         }
         private void CallsHistorybserver()
         {
-            ClosedCallInLists = s_bl.StudentCall.GetClosedCallsForTutor(TutorId).ToList();
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    ClosedCallInLists = s_bl.StudentCall.GetClosedCallsForTutor(TutorId).ToList();
+
+                });
 
         }
 

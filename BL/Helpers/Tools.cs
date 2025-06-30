@@ -45,26 +45,13 @@ static internal class Tools
     }
 
     /// <summary>
-    /// Sorts a list of objects by a specified property field.
-    /// </summary>
-    /// <typeparam name="T">The type of the objects in the list.</typeparam>
-    /// <param name="list">The list to sort.</param>
-    /// <param name="fieldName">The property field name to sort by.</param>
-    /// <returns>A new sorted list of objects.</returns>
-    internal static List<T> SortByField<T>(List<T> list, string fieldName) where T : class
-    {
-        return list.OrderBy(item =>
-            item.GetType().GetProperty(fieldName)?.GetValue(item)).ToList();
-    }
-
-    /// <summary>
     /// Checks if a tutor has the role of manager.
     /// </summary>
     /// <param name="tutorId">The ID of the tutor.</param>
     /// <returns>True if the tutor is a manager, otherwise false.</returns>
     internal static bool IsManagerId(int tutorId)
     {
-        return s_dal.Tutor.Read(tutorId).Role == DO.Role.Manager;
+        return TutorManager.Read(tutorId).Role == DO.Role.Manager;
     }
 
     #region distance
@@ -77,7 +64,7 @@ static internal class Tools
     /// <returns>The distance in kilometers between the tutor and the student call location.</returns>
     internal static double CalculateDistance(int volunteerId, double callLat, double callLong)
     {
-        var tutor = s_dal.Tutor.Read(volunteerId);
+        var tutor = TutorManager.Read(volunteerId);
         if (tutor == null)
             throw new BO.BlDoesNotExistException($"Tutor with ID {volunteerId} not found");
 
@@ -230,4 +217,36 @@ static internal class Tools
         return Regex.IsMatch(email, emailPattern);
     }
     #endregion
+
+    public static void CreateAssignment(DO.Assignment item)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.Assignment.Create(item);
+    }
+    public static DO.Assignment? ReadAssignment(int id)
+    {
+        lock (AdminManager.BlMutex)
+            return s_dal.Assignment.Read(id);
+    }
+    public static IEnumerable<DO.Assignment> ReadAllAssignments(Func<DO.Assignment, bool>? filter = null)
+    {
+        lock (AdminManager.BlMutex)
+            return s_dal.Assignment.ReadAll(filter).ToList();
+    }
+    public static void UpdateAssignment(DO.Assignment item)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.Assignment.Update(item);
+    }
+    public static void DeleteAssignment(int id)
+    {
+        lock (AdminManager.BlMutex)
+            s_dal.Assignment.Delete(id);
+    }
+
+    public static DO.Assignment ReadAssignment(Func<DO.Assignment, bool>? filter)
+    {
+        lock (AdminManager.BlMutex)
+            return s_dal.Assignment.Read(filter);
+    }
 }
