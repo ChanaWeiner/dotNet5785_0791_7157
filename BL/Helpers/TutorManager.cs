@@ -69,7 +69,7 @@ internal class TutorManager
     /// </summary>
     /// <param name="boTutor">The BO.Tutor object to validate.</param>
     /// <exception cref="BO.BlValidationException">Thrown when any validation fails.</exception>
-    internal static void Validation(ref BO.Tutor boTutor)
+    internal static void Validation(BO.Tutor boTutor)
     {
         // Validate role presence
         if (boTutor.Role == BO.Role.None)
@@ -109,8 +109,6 @@ internal class TutorManager
         if (string.IsNullOrWhiteSpace(boTutor.CurrentAddress))
             throw new BO.BlValidationException("Current address is required.");
 
-        UpdateCoordinatesAsync(boTutor);
-
         // Validate role (Enum)
         if (!Enum.IsDefined(typeof(BO.Role), boTutor.Role))
             throw new BO.BlValidationException($"Role - This option: '{boTutor.Role}' is not defined");
@@ -118,47 +116,12 @@ internal class TutorManager
         // Validate distance (must be non-negative)
         if (boTutor.Distance < 0)
             throw new BO.BlValidationException($"Distance {boTutor.Distance} must be a non-negative value.");
-
+        if(boTutor.Distance > 1000 || boTutor.Distance==0)
+            throw new BO.BlValidationException($"Distance {boTutor.Distance} must be between 0 and 1000 km.");
         // Validate distance type (Enum)
         if (!Enum.IsDefined(typeof(BO.DistanceType), boTutor.DistanceType))
             throw new BO.BlValidationException($"DistanceType - This option: '{boTutor.DistanceType}' is not defined");
     }
-
-
-    internal async static void UpdateCoordinatesAsync(BO.Tutor boTutor)
-    {
-        if (string.IsNullOrWhiteSpace(boTutor.CurrentAddress))
-            throw new BO.BlValidationException("Current address is required.");
-        try
-        {
-            (boTutor.Latitude, boTutor.Longitude) = await Tools.GetCoordinatesAsync(boTutor.CurrentAddress);
-            s_dal.Tutor.Update(new DO.Tutor
-            {
-                Id = boTutor.Id,
-                FullName = boTutor.FullName,
-                CellNumber = boTutor.CellNumber,
-                Email = boTutor.Email,
-                Password = HashPassword(boTutor.Password),
-                CurrentAddress = boTutor.CurrentAddress,
-                Latitude = boTutor.Latitude,
-                Longitude = boTutor.Longitude,
-                Role = (DO.Role)boTutor.Role,
-                Active = boTutor.Active,
-                Distance = boTutor.Distance,
-                DistanceType = (DO.DistanceType)boTutor.DistanceType
-            });
-        }
-        catch (DO.DalDoesNotExistException)
-        {
-            throw new BO.BlDoesNotExistException($"Tutor with ID={boTutor.Id} does not exist.");
-        }
-        catch (Exception ex)
-        {
-            throw new BO.BlValidationException($"Failed to get coordinates for address: {ex.Message}");
-        } 
-    }
-
-
 
     /// <summary>
     /// Validates if a password meets strength requirements (upper, lower, digit, special).

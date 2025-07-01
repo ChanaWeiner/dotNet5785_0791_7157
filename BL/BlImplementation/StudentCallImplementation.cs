@@ -6,6 +6,7 @@ using Helpers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlImplementation
 {
@@ -256,5 +257,38 @@ namespace BlImplementation
         }
 
         public bool hasAssignments(int callId) => Tools.ReadAllAssignments(a => a.StudentCallId == callId).Any();
+
+        public async Task UpdateCoordinates(BO.StudentCall boCall)
+        {
+            try
+            {
+                (boCall.Latitude, boCall.Longitude) = await Tools.GetCoordinatesAsync(boCall.FullAddress);
+                StudentCallManager.Update(new DO.StudentCall()
+                {
+                    Id = boCall.Id,
+                    Subject = (DO.Subjects)boCall.Subject,
+                    Description = boCall.Description,
+                    FullAddress = boCall.FullAddress,
+                    FullName = boCall.FullName,
+                    CellNumber = boCall.CellNumber,
+                    Email = boCall.Email,
+                    Latitude = boCall.Latitude,
+                    Longitude = boCall.Longitude,
+                    OpenTime = boCall.OpenTime,
+                    FinalTime = boCall.FinalTime
+                });
+                TutorManager.Observers.NotifyListUpdated();
+            }
+            catch (DO.DalDoesNotExistException)
+            {
+                throw new BO.BlDoesNotExistException($"Call with ID={boCall.Id} does not exist");
+            }
+            catch (BO.BlValidationException)
+            {
+                TutorManager.Delete(boCall.Id);
+                TutorManager.Observers.NotifyListUpdated();
+                throw;
+            }
+        }
     }
 }

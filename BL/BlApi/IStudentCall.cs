@@ -1,4 +1,7 @@
-﻿namespace BlApi;
+﻿using BO;
+using System.Threading.Tasks;
+
+namespace BlApi;
 
 public interface IStudentCall: IObservable
 {
@@ -83,5 +86,11 @@ public interface IStudentCall: IObservable
     /// <param name="callId"></param>
     /// <returns></returns>
     public bool hasAssignments(int callId);
+    /// <summary>
+    /// Updates the coordinates of the specified student call.
+    /// </summary>
+    /// <param name="currentStudentCall">The student call object containing the updated coordinates.  This parameter cannot be null.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    public Task UpdateCoordinates(StudentCall currentStudentCall);
 }
 

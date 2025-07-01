@@ -51,32 +51,32 @@ namespace PL.Tutor
             InitializeComponent();
         }
 
+        private async void UpdateCoordinatesAsync()
+        {
+            try
+            {
+                await s_bl.Tutor.UpdateCoordinates(CurrentTutor);
+            }
+            catch (BO.BlValidationException ex)
+            {
+                MessageBox.Show(ex.Message, ex.InnerException?.ToString());
+            }
+        }
+
         private void BtnAddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 FormatValidation();
                 if (ButtonText == "Add")
-                {
                     s_bl.Tutor.Create(CurrentTutor);
-                }
                 else
-                {
-                    if (ManagerId==0)
-                    {
-                    s_bl.Tutor.Update(CurrentTutor.Id, CurrentTutor);
-
-                    }
+                    if (ManagerId == 0)
+                        s_bl.Tutor.Update(CurrentTutor.Id, CurrentTutor);
                     else
-                    {
                         s_bl.Tutor.Update(ManagerId, CurrentTutor);
-
-                    }
-
-                }
-
+                UpdateCoordinatesAsync();
                 this.Close();
-
             }
             catch (PL.PlFormatException ex)
             {
@@ -85,7 +85,6 @@ namespace PL.Tutor
             catch (BLTemporaryNotAvailableException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
             catch (BO.BlValidationException ex)
             {

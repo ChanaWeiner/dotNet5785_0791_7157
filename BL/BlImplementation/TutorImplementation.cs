@@ -1,4 +1,7 @@
-﻿using Helpers;
+﻿using BO;
+using DalApi;
+using Helpers;
+using System.Threading.Tasks;
 
 internal class TutorImplementation : BlApi.ITutor
 {
@@ -16,7 +19,9 @@ internal class TutorImplementation : BlApi.ITutor
     public void Create(BO.Tutor boTutor)
     {
         AdminManager.ThrowOnSimulatorIsRunning();
-        try { TutorManager.Validation(ref boTutor); }
+        try { 
+            TutorManager.Validation(boTutor);
+        }
         catch (BO.BlValidationException error) { throw error; }
 
         DO.Tutor doTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email,
@@ -27,7 +32,6 @@ internal class TutorImplementation : BlApi.ITutor
         try
         {
             TutorManager.Create(doTutor);
-            TutorManager.Observers.NotifyListUpdated();
         }
         catch (DO.DalAlreadyExistsException ex)
         {
@@ -166,7 +170,7 @@ internal class TutorImplementation : BlApi.ITutor
         if (boTutor.CurrentCallInProgress != null && !boTutor.Active)
             throw new BO.BlValidationException("You cannot set the tutor to inactive while there is a call in progress.");
 
-        TutorManager.Validation(ref boTutor);
+        TutorManager.Validation( boTutor);
 
         DO.Tutor newDoTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password,
             boTutor.CurrentAddress, boTutor.Latitude, boTutor.Longitude, (DO.Role)boTutor.Role,
@@ -194,5 +198,39 @@ internal class TutorImplementation : BlApi.ITutor
                 tutor.GetType().GetProperty(tutorField.ToString()).GetValue(tutor)?.ToString() == filterValue.ToString());
 
         return tutorsInList;
+    }
+
+    public async Task UpdateCoordinates(Tutor boTutor)
+    {
+        try
+        {
+            (boTutor.Latitude, boTutor.Longitude) = await Tools.GetCoordinatesAsync(boTutor.CurrentAddress);
+            TutorManager.Update(new DO.Tutor
+            {
+                Id = boTutor.Id,
+                FullName = boTutor.FullName,
+                CellNumber = boTutor.CellNumber,
+                Email = boTutor.Email,
+                Password = TutorManager.HashPassword(boTutor.Password),
+                CurrentAddress = boTutor.CurrentAddress,
+                Latitude = boTutor.Latitude,
+                Longitude = boTutor.Longitude,
+                Role = (DO.Role)boTutor.Role,
+                Active = boTutor.Active,
+                Distance = boTutor.Distance,
+                DistanceType = (DO.DistanceType)boTutor.DistanceType
+            });
+            TutorManager.Observers.NotifyListUpdated();
+        }
+        catch (DO.DalDoesNotExistException)
+        {
+            throw new BO.BlDoesNotExistException($"Tutor with ID={boTutor.Id} does not exist.");
+        }
+        catch (BO.BlValidationException)
+        {
+            TutorManager.Delete(boTutor.Id);
+            TutorManager.Observers.NotifyListUpdated();
+            throw;
+        }
     }
 }

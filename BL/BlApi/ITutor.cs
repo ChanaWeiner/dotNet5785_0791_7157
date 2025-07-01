@@ -1,6 +1,7 @@
 ﻿
 
 using BO;
+using System.Threading.Tasks;
 
 namespace BlApi;
 
@@ -48,5 +49,13 @@ public interface ITutor: IObservable
     /// <param name="boTutor">The business object representing the tutor to be created.</param>
     public void Create(BO.Tutor tutor);
     public IEnumerable<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null);
-
+    /// <summary>
+    /// Updates the coordinates of the specified tutor in the system.
+    /// </summary>
+    /// <remarks>This method updates the tutor's location data asynchronously. Ensure that the provided
+    /// <paramref name="currentTutor"/> object contains valid and up-to-date information before calling this
+    /// method.</remarks>
+    /// <param name="currentTutor">The tutor whose coordinates need to be updated. Cannot be null.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    public Task UpdateCoordinates(Tutor currentTutor);
 }

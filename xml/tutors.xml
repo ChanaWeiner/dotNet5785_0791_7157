@@ -225,4 +225,18 @@
     <Distance>91.94222942005476</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
+  <Tutor>
+    <Id>326081700</Id>
+    <FullName>rina</FullName>
+    <CellNumber>0556753091</CellNumber>
+    <Email>r@example.com</Email>
+    <Password>$2a$11$mbNue3ThpHfbnewV740WkONeZbwE6xEoOBlYPk.BT4wxQWRe.75xm</Password>
+    <CurrentAddress>kljk</CurrentAddress>
+    <Latitude>31.776734949999998</Latitude>
+    <Longitude>35.23446114230339</Longitude>
+    <Role>MasterTutor</Role>
+    <Active>true</Active>
+    <Distance>100</Distance>
+    <DistanceType>Driving</DistanceType>
+  </Tutor>
 </ArrayOfTutor>
