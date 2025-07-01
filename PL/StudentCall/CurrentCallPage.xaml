@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PL.StudentCall"
+      xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CurrentCallPage"
@@ -30,10 +31,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Id (רק לקריאה) -->
+                <!-- כל השדות שלך כמו קודם כאן -->
+
                 <Label Grid.Row="0" Grid.Column="0" Content="Id" Margin="5"/>
                 <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentStudentCall.Id}" Margin="5"/>
 
@@ -77,6 +79,11 @@
                     <Button Content="Cancel" Width="100" Margin="10" Click="btnCancel_Click" />
                     <Button Content="End Treatment" Width="100" Margin="10" Click="btnEndTreatment_Click" />
                 </StackPanel>
+
+                <wv2:WebView2 Grid.Row="12" Grid.ColumnSpan="2"
+                              Source="{Binding MapView}"
+                              Margin="10"
+                              MinHeight="300" />
             </Grid>
         </ScrollViewer>
     </Grid>

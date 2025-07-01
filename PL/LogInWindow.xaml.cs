@@ -33,13 +33,18 @@ namespace PL
 
         public LogInWindow()
         {
-            CurrentPage = new LogInPage((id) => NavigateTo(id));
+            CurrentPage = new LogInPage((id) => NavigateToAdminButtonsPage(id));
             InitializeComponent();
         }
 
-        public void NavigateTo(int id)
+        public void NavigateToAdminButtonsPage(int id)
         {
-            CurrentPage = new AdminButtonsPage(id);
+            CurrentPage = new AdminButtonsPage(id, NavigateToLoginPage);
+        }
+
+        public void NavigateToLoginPage()
+        {
+            CurrentPage = new LogInPage((id) => NavigateToAdminButtonsPage(id));
         }
 
     }

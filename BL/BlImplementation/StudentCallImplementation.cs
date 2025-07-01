@@ -179,7 +179,7 @@ namespace BlImplementation
         public void UpdateTreatmentCompletion(int tutorId, int assignmentId)
         {
             AdminManager.ThrowOnSimulatorIsRunning();
-            StudentCallManager.UpdateTreatmentCompletion(assignmentId, tutorId);
+            StudentCallManager.UpdateTreatmentCompletion(tutorId, assignmentId);
 
         }
 

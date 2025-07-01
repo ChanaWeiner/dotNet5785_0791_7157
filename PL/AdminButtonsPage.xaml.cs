@@ -21,8 +21,10 @@ namespace PL
     public partial class AdminButtonsPage : Page
     {
         private int Id { get; set; }
-        public AdminButtonsPage(int id)
+        private Action Navigate;
+        public AdminButtonsPage(int id,Action navigate)
         {
+            Navigate = navigate;
             Id = id;
             InitializeComponent();
         }
@@ -30,10 +32,12 @@ namespace PL
         private void Admin_Click(object sender, RoutedEventArgs e)
         {
             new AdminHomeWindow(Id).Show();
+            Navigate();
         }
         private void Tutor_Click(object sender, RoutedEventArgs e)
         {
             new TutorHomeWindow(Id).Show();
+            Navigate();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BO;
+using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BO;
 
 namespace PL.StudentCall
 {
@@ -30,6 +31,11 @@ namespace PL.StudentCall
         public static readonly DependencyProperty CurrentStudentCallProperty =
             DependencyProperty.Register("CurrentStudentCall", typeof(BO.StudentCall), typeof(CurrentCallPage), new PropertyMetadata(null));
 
+
+
+        public Uri MapView { get; set; }
+
+
         public int TutorId { get; set; }
         public int CallId { get; set; }
         public int AssignmentId { get; set; }
@@ -39,11 +45,11 @@ namespace PL.StudentCall
             CallId = callId;
             AssignmentId = assignmentId;
 
-            InitializeComponent();
             try
             {
                 CurrentStudentCall = s_bl.StudentCall.Read(callId);
-
+                var tutor= s_bl.Tutor.Read(tuturId);
+                MapView = new Uri($"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={CurrentStudentCall.Latitude},{CurrentStudentCall.Longitude}&travelmode=driving");
             }
             catch (BlDoesNotExistException ex)
             {
@@ -59,6 +65,8 @@ namespace PL.StudentCall
                     MessageBoxImage.Error
                 );
             }
+            InitializeComponent();
+
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
