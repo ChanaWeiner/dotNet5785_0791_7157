@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using BO;
 using PL.StudentCall;
 
 namespace PL.Tutor
@@ -81,6 +82,11 @@ namespace PL.Tutor
             {
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString());
             }
+            catch (BLTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
             catch (BO.BlValidationException ex)
             {
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString());
@@ -123,6 +129,11 @@ namespace PL.Tutor
                 {
                     s_bl.Tutor.Delete(CurrentTutor.Id);
                     this.Close();
+                }
+                catch (BLTemporaryNotAvailableException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 catch (BO.BlCanNotBeDeletedException ex)
                 {

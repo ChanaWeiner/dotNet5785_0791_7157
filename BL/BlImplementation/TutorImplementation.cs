@@ -140,8 +140,27 @@ internal class TutorImplementation : BlApi.ITutor
             ?? throw new BO.BlDoesNotExistException($"Tutor with ID={boTutor.Id} does not exist");
         bool isManager = Tools.IsManagerId(id);
 
-        if (oldDoTutor.Role != (DO.Role)boTutor.Role && !isManager)
-            throw new BO.BlValidationException("You are not authorized to change the tutor's role.");
+        if (oldDoTutor.Role != (DO.Role)boTutor.Role)
+        {
+            if (!isManager)
+                throw new BO.BlValidationException("You are not authorized to change the tutor's role.");
+            if (oldDoTutor.Role == DO.Role.Manager)
+            {
+                int countOfManagers = TutorManager.ReadAll(tutor=>tutor.Active==true&&tutor.Role==(DO.Role) BO.Role.Manager).Count();
+                if (countOfManagers == 1) {
+                    throw new BO.BlValidationException("You can not change the tutor's role, he is the single manager.");
+                }
+            }
+        }
+        if(Tools.IsManagerId(boTutor.Id)&&boTutor.Active==false&& oldDoTutor.Active == true)
+        {
+            int countOfManagers = TutorManager.ReadAll(tutor => tutor.Active == true && tutor.Role == (DO.Role)BO.Role.Manager).Count();
+            if (countOfManagers == 1)
+            {
+                throw new BO.BlValidationException("You can not change the manager to be not active, he is the single manager.");
+            }
+        }
+
         if (id != boTutor.Id && !isManager)
             throw new BO.BlValidationException("You are not authorized to update the tutor.");
         if (boTutor.CurrentCallInProgress != null && !boTutor.Active)

@@ -249,4 +249,5 @@ static internal class Tools
         lock (AdminManager.BlMutex)
             return s_dal.Assignment.Read(filter);
     }
+
 }
