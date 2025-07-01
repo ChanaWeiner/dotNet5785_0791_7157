@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using BO;
 using PL.StudentCall;
 using PL.Tutor;
@@ -23,6 +24,7 @@ namespace PL.StudentCall
     public partial class StudentCallWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
 
         public BO.StudentCall CurrentStudentCall
         {
@@ -126,9 +128,18 @@ namespace PL.StudentCall
         }
         private void StudentCallObserver()
         {
-            int id = CurrentStudentCall!.Id;
-            CurrentStudentCall = null;
-            CurrentStudentCall = s_bl.StudentCall.Read(id);
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    int id = CurrentStudentCall!.Id;
+                    CurrentStudentCall = null;
+                    CurrentStudentCall = s_bl.StudentCall.Read(id);
+                    if (CurrentStudentCall!.Status != BO.CallStatus.InProgress || CurrentStudentCall.Status != BO.CallStatus.InProgressAtRisk)
+                    {
+                        this.Close();
+                    }
+                });
+
         }
 
 
@@ -139,7 +150,7 @@ namespace PL.StudentCall
         }
 
         private void Window_Closed(object sender, EventArgs e)
-            => s_bl.StudentCall.RemoveObserver(StudentCallObserver);
+            => s_bl.StudentCall.RemoveObserver(CurrentStudentCall.Id, StudentCallObserver);
     
         public StudentCallWindow(int id=0,bool isFromTutor=false,int managerId=0)
         {

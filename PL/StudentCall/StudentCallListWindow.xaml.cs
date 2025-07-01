@@ -24,6 +24,8 @@ namespace PL.StudentCall
     /// </summary>
     public partial class StudentCallListWindow : Window
     {
+        private static StudentCallListWindow? s_instance;
+
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         private volatile DispatcherOperation? _observerOperation = null; //stage 7
         public BO.CallStatus? statusCall { get; set; } = BO.CallStatus.None;
@@ -44,6 +46,8 @@ namespace PL.StudentCall
         public BO.StudentCallField? SelectedSortOption { get; set; }
 
         private int ManagerId { get; set; }
+
+
         public StudentCallListWindow(int managerId, BO.CallStatus status = BO.CallStatus.None)
         {
             if (status != BO.CallStatus.None)
@@ -89,7 +93,7 @@ namespace PL.StudentCall
         {
             if (SelectedCall != null)
             {
-                var studentCallWindow = new StudentCallWindow(SelectedCall.CallId,false,ManagerId);
+                var studentCallWindow = new StudentCallWindow(SelectedCall.CallId, false, ManagerId);
                 studentCallWindow.Owner = this;
                 studentCallWindow.Show();
             }
@@ -114,12 +118,22 @@ namespace PL.StudentCall
                 {
                     try
                     {
-                        s_bl.StudentCall.Delete(ManagerId,call.CallId);
+                        s_bl.StudentCall.Delete(ManagerId, call.CallId);
+
                     }
-                    catch (Exception ex)
+                    catch (BO.BlCanNotBeDeletedException ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                    catch (BO.BlAccessDeniedException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (BO.BlDoesNotExistException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+          
                 }
             }
         }

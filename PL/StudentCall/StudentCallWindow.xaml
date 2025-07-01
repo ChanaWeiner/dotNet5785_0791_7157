@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL.StudentCall"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                Loaded="Window_Loaded"
+        Closed="Window_Closed"
         Title="Student Call" Height="600" Width="800">
 
     <Grid>

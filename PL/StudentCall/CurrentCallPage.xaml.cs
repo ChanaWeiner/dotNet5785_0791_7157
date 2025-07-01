@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BO;
 
 namespace PL.StudentCall
 {
@@ -42,6 +43,11 @@ namespace PL.StudentCall
             try
             {
                 CurrentStudentCall = s_bl.StudentCall.Read(callId);
+
+            }
+            catch (BlDoesNotExistException ex)
+            {
+                MessageBox.Show("The call does not exist or has already been processed.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using PL.StudentCall;
 using PL.Tutor;
 using System.Text;
@@ -98,33 +99,74 @@ namespace PL
 
         private void btnAddOneMinute_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.Admin.AdvanceClock(BO.TimeUnit.Minute);
+            try
+            {
+                s_bl.Admin.AdvanceClock(BO.TimeUnit.Minute);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void btnAddOneYear_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.Admin.AdvanceClock(BO.TimeUnit.Year);
-
+            try
+            {
+                s_bl.Admin.AdvanceClock(BO.TimeUnit.Year);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void btnAddOneDay_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.Admin.AdvanceClock(BO.TimeUnit.Day);
+            try
+            {
+                s_bl.Admin.AdvanceClock(BO.TimeUnit.Day);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
         private void btnAddOneHour_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.Admin.AdvanceClock(BO.TimeUnit.Hour);
-
+            try
+            {
+                s_bl.Admin.AdvanceClock(BO.TimeUnit.Hour);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
         private void btnAddOneMonth_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.Admin.AdvanceClock(BO.TimeUnit.Month);
+            try
+            {
+                s_bl.Admin.AdvanceClock(BO.TimeUnit.Month);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
         private void btnUpdateRiskTimeSpan_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.Admin.SetRiskTimeRange(RiskTimeSpan);
+            try
+            {
+                s_bl.Admin.SetRiskTimeRange(RiskTimeSpan);
+
+            }
+            catch (BLTemporaryNotAvailableException ex) { 
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
 
         }
         private void ClockObserver()
@@ -179,9 +221,7 @@ namespace PL
 
         private void btnTutors_Click(object sender, RoutedEventArgs e)
         {
-            var tutorListWindow = new TutorListWindow();
-            tutorListWindow.Owner = this;
-            tutorListWindow.Show();
+            TutorListWindow.ShowWindow(this);
         }
 
 
@@ -204,6 +244,10 @@ namespace PL
                         "Success",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
+                }catch(BLTemporaryNotAvailableException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 catch (Exception ex)
                 {
@@ -239,6 +283,11 @@ namespace PL
                         "Initialization Complete",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
+                }
+                catch (BLTemporaryNotAvailableException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 catch (Exception ex)
                 {

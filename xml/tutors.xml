@@ -15,6 +15,20 @@
     <Distance>100</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
+	<Tutor>
+		<Id>327517157</Id>
+		<FullName>Hodaya Cohen</FullName>
+		<CellNumber>055-6752677</CellNumber>
+		<Email>adminh@example.com</Email>
+		<Password>$2a$11$wjwJ4.Kt/IYWmffAvAG85OvwioB.BkocXNuwYbYFc0PpCeqvCt92G</Password>
+		<CurrentAddress>
+			הרב יהושע ברים, ירושלים
+		</CurrentAddress>
+		<Role>Manager</Role>
+		<Active>true</Active>
+		<Distance>60</Distance>
+		<DistanceType>Air</DistanceType>
+	</Tutor>
   <Tutor>
     <Id>355607433</Id>
     <FullName>Yair Amar</FullName>

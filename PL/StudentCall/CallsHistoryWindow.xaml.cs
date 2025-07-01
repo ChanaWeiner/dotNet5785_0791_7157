@@ -52,7 +52,9 @@ namespace PL.StudentCall
         public CallsHistoryWindow(int id)
         {
             TutorId = id;
+
             ClosedCallInLists = s_bl.StudentCall.GetClosedCallsForTutor(id).ToList();
+
             InitializeComponent();
         }
 

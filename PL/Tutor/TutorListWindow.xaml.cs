@@ -21,6 +21,8 @@ namespace PL.Tutor
     /// </summary>
     public partial class TutorListWindow : Window
     {
+        private static TutorListWindow? s_instance;
+
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         private volatile DispatcherOperation? _observerOperation = null; //stage 7
         public BO.TutorField? SelectedSearchOption { get; set; } = null;
@@ -37,8 +39,27 @@ namespace PL.Tutor
         public static readonly DependencyProperty TutorsListProperty =
             DependencyProperty.Register("TutorsList", typeof(IEnumerable<BO.TutorInList>), typeof(TutorListWindow), new PropertyMetadata(null));
 
-        public TutorListWindow()
+        public static void ShowWindow(Window owner)
         {
+            if (s_instance == null)
+            {
+                s_instance = new TutorListWindow();
+                s_instance.Owner = owner; // זה מה שמוודא שהבעלים הוא החלון הקורא
+                s_instance.Closed += (_, _) => s_instance = null;
+                s_instance.Show();
+            }
+            else
+            {
+                if (s_instance.WindowState == WindowState.Minimized)
+                    s_instance.WindowState = WindowState.Normal;
+
+                s_instance.Activate();
+            }
+        }
+
+        private TutorListWindow()
+        {
+
             QueryTutorList();
             InitializeComponent();
         }
@@ -50,6 +71,7 @@ namespace PL.Tutor
 
         private void TutorListObserver()
         {
+            
             if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
                 _observerOperation = Dispatcher.BeginInvoke(() =>
                 {

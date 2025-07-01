@@ -92,7 +92,16 @@ namespace PL.StudentCall
         public OpenCallsWindow(int id)
         {
             TutorId = id;
+            try
+            {
             OpenCalls = s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
+
+            }
+            catch (BlDoesNotExistException ex)
+            {
+                MessageBox.Show("The call does not exist or has already been processed.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
             InitializeComponent();
         }
 
@@ -116,13 +125,13 @@ namespace PL.StudentCall
 
         public void QueryOpenCall()
         {
-            if (SelectedSearchOption == null || string.IsNullOrEmpty(SearchValue?.ToString()))
-            {
-                OpenCalls = s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
-                return;
-            }
             try
             {
+                if (SelectedSearchOption == null || string.IsNullOrEmpty(SearchValue?.ToString()))
+                {
+                    OpenCalls = s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
+                    return;
+                }
                 OpenCalls = s_bl.StudentCall.FilterOpenCalls(TutorId, SelectedSearchOption.Value, SearchValue.ToString()).ToList();
             }
             catch (BO.BlDoesNotExistException ex)
@@ -130,12 +139,21 @@ namespace PL.StudentCall
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void FilterOpenCalls(object sender, SelectionChangedEventArgs e)
         {
-            OpenCalls = (FilterField == BO.OpenCallField.None) ?
-                s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList() :
-                s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
-        }
+            try
+            {
+                OpenCalls = (FilterField == BO.OpenCallField.None) ?
+                     s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList() :
+                     s_bl.StudentCall.GetOpenCallsForTutor(TutorId).ToList();
+            }
+            catch (BO.BlDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            }
 
         private void AssignCall_Click(object sender, RoutedEventArgs e)
         {
@@ -161,20 +179,48 @@ namespace PL.StudentCall
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
-=> OpenCalls = s_bl?.StudentCall.GetOpenCallsForTutor(TutorId).ToList()!;
+        {
+            try
+            {
+                OpenCalls = s_bl?.StudentCall.GetOpenCallsForTutor(TutorId).ToList()!;
+            }
+            catch (BO.BlDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
 
         private void SearchButton_Click(object sender, RoutedEventArgs e) => QueryOpenCall();
 
         private void SortButton_Click(object sender, RoutedEventArgs e)
-        => OpenCalls = s_bl.StudentCall.SortOpenCalls(TutorId, SelectedSortOption).ToList();
+        {
+            try
+            {
+
+                OpenCalls = s_bl.StudentCall.SortOpenCalls(TutorId, SelectedSortOption).ToList();
+            }
+            catch (BO.BlDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private async void InitializeAsync()
         {
+            try
+            {
             var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
             var tutor = s_bl.Tutor.Read(TutorId);
             string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
             //await MyWebView.EnsureCoreWebView2Async(null);
             MapView = new Uri(url);
+            }
+            catch (BO.BlDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
     }
 }
