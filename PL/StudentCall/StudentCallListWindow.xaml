@@ -60,7 +60,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Subject" Binding="{Binding Subject}" />
-                <DataGridTextColumn Header="Time Left" Binding="{Binding RemainingTime}" />
+                <DataGridTextColumn Header="Time Left"
+                    Binding="{Binding RemainingTime, Converter={StaticResource TimeSpanToTextConverter}}" />
                 <DataGridTextColumn Header="Treatment Time" Binding="{Binding CompletionTime}" />
                 <DataGridTextColumn Header="Last Tutor" Binding="{Binding LastTutorName}" />
                 <DataGridTextColumn Header="Assignments" Binding="{Binding TotalAssignments}" />

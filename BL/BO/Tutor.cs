@@ -9,8 +9,8 @@ public class Tutor
     public string Email { get; set; }
     public string? Password { get; set; }
     public string? CurrentAddress { get; set; }
-    public double Latitude { get; set; }
-    public double Longitude { get; set; }
+    public double? Latitude { get; set; }
+    public double? Longitude { get; set; }
     public Role Role { get; set; }
     public bool Active { get; set; }
     public double Distance { get; set; }

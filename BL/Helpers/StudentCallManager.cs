@@ -115,15 +115,7 @@ internal class StudentCallManager
         // Validate address and get coordinates
         if (string.IsNullOrWhiteSpace(call.FullAddress))
             throw new BO.BlValidationException("Address is required.");
-        try
-        {
-            (call.Latitude, call.Longitude) = Tools.GetCoordinates(call.FullAddress);
-
-        }
-        catch (Exception ex)
-        {
-            throw new BO.BlValidationException($"Failed to get coordinates for the address: {ex.Message}");
-        }
+        UpdateCoordinatesAsync(call);
 
         // Validate open/final time
         if (call.OpenTime >= call.FinalTime)
@@ -132,6 +124,36 @@ internal class StudentCallManager
         // Optional: validate description length if needed
         if (call.Description != null && call.Description.Length > 500)
             throw new BO.BlValidationException("Description is too long. Maximum 500 characters allowed.");
+    }
+
+    internal async static void UpdateCoordinatesAsync(BO.StudentCall call)
+    {
+        try
+        {
+            (call.Latitude, call.Longitude) = await Tools.GetCoordinatesAsync(call.FullAddress);
+            s_dal.StudentCall.Update(new DO.StudentCall
+            {
+                Id = call.Id,
+                Subject = (DO.Subjects)call.Subject,
+                FullName = call.FullName,
+                CellNumber = call.CellNumber,
+                Email = call.Email,
+                FullAddress = call.FullAddress,
+                Latitude = call.Latitude,
+                Longitude = call.Longitude,
+                OpenTime = call.OpenTime,
+                FinalTime = call.FinalTime,
+                Description = call.Description
+            });
+        }
+        catch(DO.DalDoesNotExistException ex)
+        {
+            throw new BO.BlDoesNotExistException($"Failed to update coordinates for the address '{call.FullAddress}': {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlValidationException($"Failed to get coordinates for the address: {ex.Message}");
+        }
     }
 
 

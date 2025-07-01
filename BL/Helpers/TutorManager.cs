@@ -108,14 +108,8 @@ internal class TutorManager
         // Validate address presence and get coordinates
         if (string.IsNullOrWhiteSpace(boTutor.CurrentAddress))
             throw new BO.BlValidationException("Current address is required.");
-        try
-        {
-            (boTutor.Latitude, boTutor.Longitude) = Tools.GetCoordinates(boTutor.CurrentAddress);
-        }
-        catch (Exception ex)
-        {
-            throw new BO.BlValidationException($"Failed to get coordinates for address: {ex.Message}");
-        }
+
+        UpdateCoordinatesAsync(boTutor);
 
         // Validate role (Enum)
         if (!Enum.IsDefined(typeof(BO.Role), boTutor.Role))
@@ -129,6 +123,41 @@ internal class TutorManager
         if (!Enum.IsDefined(typeof(BO.DistanceType), boTutor.DistanceType))
             throw new BO.BlValidationException($"DistanceType - This option: '{boTutor.DistanceType}' is not defined");
     }
+
+
+    internal async static void UpdateCoordinatesAsync(BO.Tutor boTutor)
+    {
+        if (string.IsNullOrWhiteSpace(boTutor.CurrentAddress))
+            throw new BO.BlValidationException("Current address is required.");
+        try
+        {
+            (boTutor.Latitude, boTutor.Longitude) = await Tools.GetCoordinatesAsync(boTutor.CurrentAddress);
+            s_dal.Tutor.Update(new DO.Tutor
+            {
+                Id = boTutor.Id,
+                FullName = boTutor.FullName,
+                CellNumber = boTutor.CellNumber,
+                Email = boTutor.Email,
+                Password = HashPassword(boTutor.Password),
+                CurrentAddress = boTutor.CurrentAddress,
+                Latitude = boTutor.Latitude,
+                Longitude = boTutor.Longitude,
+                Role = (DO.Role)boTutor.Role,
+                Active = boTutor.Active,
+                Distance = boTutor.Distance,
+                DistanceType = (DO.DistanceType)boTutor.DistanceType
+            });
+        }
+        catch (DO.DalDoesNotExistException)
+        {
+            throw new BO.BlDoesNotExistException($"Tutor with ID={boTutor.Id} does not exist.");
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlValidationException($"Failed to get coordinates for address: {ex.Message}");
+        } 
+    }
+
 
 
     /// <summary>
@@ -214,7 +243,7 @@ internal class TutorManager
                     var mostCommonSubject = StudentCallImpl.GetClosedCallsForTutor(tutor.Id)
                      .GroupBy(c => c.Subject)
                      .OrderByDescending(g => g.Count())
-                     .Select(g => (BO.Subjects?)g.Key)  
+                     .Select(g => (BO.Subjects?)g.Key)
                      .FirstOrDefault();
 
                     IEnumerable<BO.OpenCallInList> openCalls;
@@ -224,7 +253,7 @@ internal class TutorManager
                         openCalls = StudentCallImpl.FilterOpenCalls(tutor.Id);
 
                     openCalls.OrderBy(c => c.DistanceFromTutor);
-                    if(openCalls.Any())
+                    if (openCalls.Any())
                         StudentCallManager.AssignCallToTutor(tutor.Id, openCalls.FirstOrDefault().Id);
 
                 }
@@ -235,7 +264,7 @@ internal class TutorManager
                 int addTime = 7 + (int)Math.Floor(currentCallInProgress.Distance) / 2;
                 if (entryTime.AddDays(addTime) <= AdminManager.Now)
                 {
-                    StudentCallManager.UpdateTreatmentCompletion(tutor.Id,currentCallInProgress.Id);
+                    StudentCallManager.UpdateTreatmentCompletion(tutor.Id, currentCallInProgress.Id);
                 }
                 else
                 {
@@ -243,7 +272,7 @@ internal class TutorManager
                     if (toCancel == 1)
                         StudentCallManager.UpdateTreatmentCancellation(currentCallInProgress.Id, tutor.Id);
                 }
-                
+
 
             }
 

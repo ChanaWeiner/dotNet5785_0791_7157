@@ -94,8 +94,8 @@ namespace PL
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int callId= (int)value;
-            
+            int callId = (int)value;
+
             return !s_bl.StudentCall.hasAssignments(callId) ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -143,5 +143,41 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+
+    public class TimeSpanToTextConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is TimeSpan ts)
+            {
+                if (ts.TotalSeconds < 0)
+                    return "עבר הזמן";
+
+                var parts = new System.Collections.Generic.List<string>();
+
+                if (ts.Days > 0)
+                    parts.Add($"עוד {ts.Days} ימים");
+
+                if (ts.Hours > 0)
+                    parts.Add($"{ts.Hours} שעות");
+
+                if (ts.Minutes > 0)
+                    parts.Add($"{ts.Minutes} דקות");
+
+                if (parts.Count == 0)
+                    parts.Add("פחות מדקה");
+
+                return string.Join(", ", parts);
+            }
+
+            return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }
 

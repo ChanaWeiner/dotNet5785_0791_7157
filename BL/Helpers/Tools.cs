@@ -68,7 +68,7 @@ static internal class Tools
         if (tutor == null)
             throw new BO.BlDoesNotExistException($"Tutor with ID {volunteerId} not found");
 
-        return GetDistance(tutor.Latitude, tutor.Longitude, callLat, callLong);
+        return GetDistance((double)tutor.Latitude, (double)tutor.Longitude, callLat, callLong);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ static internal class Tools
     /// <param name="address">The address to get the coordinates for.</param>
     /// <returns>A tuple containing the latitude and longitude of the address.</returns>
     /// <exception cref="BO.BlValidationException">Thrown when the address is invalid.</exception>
-    public static (double Latitude, double Longitude) GetCoordinates(string address)
+    public static async Task<(double Latitude, double Longitude)> GetCoordinatesAsync(string address)
     {
         if (string.IsNullOrWhiteSpace(address))
         {
@@ -121,9 +121,9 @@ static internal class Tools
 
         try
         {
-            using (WebClient client = new WebClient())
+            using (HttpClient client = new HttpClient())
             {
-                string response = client.DownloadString(url);
+                string response = await client.GetStringAsync(url);
 
                 var result = JsonSerializer.Deserialize<GeocodeResponse[]>(response);
 
@@ -140,9 +140,10 @@ static internal class Tools
         }
         catch (Exception ex)
         {
-            throw new BO.BlValidationException("Error retrieving coordinates" + ex.Message);
+            throw new BO.BlValidationException("Error retrieving coordinates: " + ex.Message);
         }
     }
+
 
     /// <summary>
     /// Represents the structure of a geocoding response.

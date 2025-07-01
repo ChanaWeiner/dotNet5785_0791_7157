@@ -28,6 +28,19 @@ namespace PL
         private volatile DispatcherOperation? _observerOperation = null; //stage 7
 
 
+
+        public bool IsTutorActive
+        {
+            get { return (bool)GetValue(IsTutorActiveProperty); }
+            set { SetValue(IsTutorActiveProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsTutorActive.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsTutorActiveProperty =
+            DependencyProperty.Register("IsTutorActive", typeof(bool), typeof(TutorHomeWindow), new PropertyMetadata(false));
+
+
+
         public bool HasCallInProgress
         {
             get { return (bool)GetValue(HasCallInProgressProperty); }
@@ -70,7 +83,7 @@ namespace PL
                 NoCallInProgress = !HasCallInProgress;
                 HasCallsHistory = s_bl.StudentCall.FilterCallsInList().Count() != 0;
                 TutorId = id;
-
+                IsTutorActive= tutor.Active;
                 InitializeComponent();
                 if (HasCallInProgress)
                 {
@@ -91,6 +104,7 @@ namespace PL
                     var tutor = s_bl.Tutor.Read(TutorId);
                     HasCallInProgress = tutor.CurrentCallInProgress != null;
                     NoCallInProgress = !HasCallInProgress;
+                    IsTutorActive = tutor.Active;
                     if (HasCallInProgress)
                     {
                         CurrentPage = new CurrentCallPage(tutor.Id, tutor.CurrentCallInProgress!.CallId, tutor.CurrentCallInProgress.Id);

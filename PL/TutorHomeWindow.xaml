@@ -29,6 +29,7 @@
                     Visibility="{Binding NoCallInProgress, Converter={StaticResource ConvertBoolToVisibleKey}}"
                     Content="Choose Call"
                     HorizontalAlignment="Stretch"
+                    IsEnabled="{Binding IsTutorActive}"
                     Margin="0,0,0,20"
                     Click="BtnChooseCall_Click"/>
 

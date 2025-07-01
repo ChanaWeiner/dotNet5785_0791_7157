@@ -43,7 +43,7 @@ namespace PL.Tutor
         {
             ManagerId = managerId;
             ButtonText = id == 0 ? "Add" : "Update";
-            CurrentTutor = (id != 0) ? s_bl.Tutor.Read(id)! : new BO.Tutor() { Id = 0, FullName = null, CellNumber = null, Email = null, Password = null, CurrentAddress = null, Latitude = 0, Longitude = 0, Role = BO.Role.None, Active = false, Distance = 0, DistanceType = BO.DistanceType.Walking, TotalCallsHandled = 0, TotalCallsSelfCanceled = 0, TotalCallsExpired = 0 };
+            CurrentTutor = (id != 0) ? s_bl.Tutor.Read(id)! : new BO.Tutor() { Id = 0, FullName = null, CellNumber = null, Email = null, Password = null, CurrentAddress = null, Latitude = null, Longitude = null, Role = BO.Role.None, Active = false, Distance = 0, DistanceType = BO.DistanceType.Walking, TotalCallsHandled = 0, TotalCallsSelfCanceled = 0, TotalCallsExpired = 0 };
             IsFromTutorWindow = isFromTutorWindow;
             IdIsReadOnly = id == 0 ? false : true;
             NotHasCallInProgress = (CurrentTutor.CurrentCallInProgress == null) ? true : false;
