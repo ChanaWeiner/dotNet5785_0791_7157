@@ -326,12 +326,6 @@
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
-    <Id>2713</Id>
-    <StudentCallId>1005</StudentCallId>
-    <TutorId>355607433</TutorId>
-    <EntryTime>2025-07-15T09:23:19</EntryTime>
-  </Assignment>
-  <Assignment>
     <Id>2711</Id>
     <StudentCallId>1010</StudentCallId>
     <TutorId>383724705</TutorId>
@@ -640,12 +634,6 @@
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
-    <Id>2746</Id>
-    <StudentCallId>1000</StudentCallId>
-    <TutorId>220912992</TutorId>
-    <EntryTime>2025-07-24T18:23:19</EntryTime>
-  </Assignment>
-  <Assignment>
     <Id>2745</Id>
     <StudentCallId>1027</StudentCallId>
     <TutorId>388213498</TutorId>
@@ -670,29 +658,59 @@
     <EndOfTreatment>SelfCancel</EndOfTreatment>
   </Assignment>
   <Assignment>
-    <Id>2748</Id>
-    <StudentCallId>1013</StudentCallId>
-    <TutorId>388213498</TutorId>
-    <EntryTime>2025-07-25T17:43:19</EntryTime>
-  </Assignment>
-  <Assignment>
-    <Id>2749</Id>
-    <StudentCallId>1010</StudentCallId>
-    <TutorId>383724705</TutorId>
-    <EntryTime>2025-07-25T17:43:19</EntryTime>
-  </Assignment>
-  <Assignment>
-    <Id>2750</Id>
-    <StudentCallId>1027</StudentCallId>
-    <TutorId>253917702</TutorId>
-    <EntryTime>2025-07-25T21:03:19</EntryTime>
-  </Assignment>
-  <Assignment>
     <Id>2747</Id>
     <StudentCallId>1026</StudentCallId>
     <TutorId>327517157</TutorId>
     <EntryTime>2025-07-25T01:03:19</EntryTime>
     <EndTime>2025-07-26T00:23:19</EndTime>
     <EndOfTreatment>SelfCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>2746</Id>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>220912992</TutorId>
+    <EntryTime>2025-07-24T18:23:19</EntryTime>
+    <EndTime>2025-07-26T00:23:19</EndTime>
+    <EndOfTreatment>ManagerCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>2713</Id>
+    <StudentCallId>1005</StudentCallId>
+    <TutorId>355607433</TutorId>
+    <EntryTime>2025-07-15T09:23:19</EntryTime>
+    <EndTime>2025-07-26T00:23:19</EndTime>
+    <EndOfTreatment>ManagerCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>2751</Id>
+    <StudentCallId>1024</StudentCallId>
+    <TutorId>327517157</TutorId>
+    <EntryTime>2025-07-26T00:23:19</EntryTime>
+    <EndTime>2025-07-26T00:23:19</EndTime>
+    <EndOfTreatment>SelfCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>2750</Id>
+    <StudentCallId>1027</StudentCallId>
+    <TutorId>253917702</TutorId>
+    <EntryTime>2025-07-25T21:03:19</EntryTime>
+    <EndTime>2025-07-26T00:23:19</EndTime>
+    <EndOfTreatment>ManagerCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>2749</Id>
+    <StudentCallId>1010</StudentCallId>
+    <TutorId>383724705</TutorId>
+    <EntryTime>2025-07-25T17:43:19</EntryTime>
+    <EndTime>2025-07-26T00:23:19</EndTime>
+    <EndOfTreatment>ManagerCancel</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>2748</Id>
+    <StudentCallId>1013</StudentCallId>
+    <TutorId>388213498</TutorId>
+    <EntryTime>2025-07-25T17:43:19</EntryTime>
+    <EndTime>2025-07-26T00:23:19</EndTime>
+    <EndOfTreatment>ManagerCancel</EndOfTreatment>
   </Assignment>
 </assignments.xml>

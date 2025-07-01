@@ -223,7 +223,7 @@ namespace BlImplementation
                     DistanceFromTutor = Tools.CalculateDistance(tutorId, c.Latitude, c.Longitude)
                 });
 
-            return openCalls.OrderBy(item => item.GetType().GetProperty(sortField.ToString())?.GetValue(item));
+            return openCalls.Where(c => c.DistanceFromTutor <= tutor.Distance).OrderBy(item => item.GetType().GetProperty(sortField.ToString())?.GetValue(item));
         }
 
         public IEnumerable<BO.OpenCallInList> FilterOpenCalls(int tutorId, BO.OpenCallField? filterField = null, object? filterValue = null)
@@ -245,9 +245,10 @@ namespace BlImplementation
             {
                 openCalls = openCalls.Where(call =>
                 {
+
                     var prop = call.GetType().GetProperty(filterField.ToString());
                     var val = prop?.GetValue(call);
-                    return val?.ToString() == filterValue?.ToString();
+                    return val?.ToString() == filterValue?.ToString() && call.DistanceFromTutor<=tutor.Distance;
                 });
             }
 

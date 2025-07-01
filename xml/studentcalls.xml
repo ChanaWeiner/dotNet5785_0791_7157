@@ -326,19 +326,6 @@
     <FinalTime xsi:nil="true" />
   </StudentCall>
   <StudentCall>
-    <Id>1025</Id>
-    <Subject>Programming</Subject>
-    <Description>Help in Programming</Description>
-    <FullAddress>Ringelblum St 15, Be'er Sheva</FullAddress>
-    <FullName>Omer Peretz</FullName>
-    <CellNumber>054-2621134</CellNumber>
-    <Email>omer.peretz@example.com</Email>
-    <Latitude>31.244408</Latitude>
-    <Longitude>34.792498</Longitude>
-    <OpenTime>2025-06-26T01:48:35.59773+03:00</OpenTime>
-    <FinalTime xsi:nil="true" />
-  </StudentCall>
-  <StudentCall>
     <Id>1026</Id>
     <Subject>Math</Subject>
     <Description>Help in Math</Description>
@@ -649,5 +636,18 @@
     <Longitude>34.85519</Longitude>
     <OpenTime>2025-06-23T01:48:35.7850358+03:00</OpenTime>
     <FinalTime>2025-06-22T01:48:35.7850358+03:00</FinalTime>
+  </StudentCall>
+  <StudentCall>
+    <Id>1050</Id>
+    <Subject>English</Subject>
+    <Description>rrrrrrrrrrrrrrrrrrr</Description>
+    <FullAddress>western wall</FullAddress>
+    <FullName>grfgrfret</FullName>
+    <CellNumber>0556728345</CellNumber>
+    <Email>rtrt@gh.ghj</Email>
+    <Latitude>31.776734949999998</Latitude>
+    <Longitude>35.23446114230339</Longitude>
+    <OpenTime>2025-07-26T00:23:19</OpenTime>
+    <FinalTime>2028-07-08T16:15:32</FinalTime>
   </StudentCall>
 </ArrayOfStudentCall>
