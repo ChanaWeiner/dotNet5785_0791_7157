@@ -26,6 +26,18 @@ namespace PL
 
 
 
+        public object CallStatusSummaries
+        {
+            get { return (object)GetValue(CallStatusSummariesProperty); }
+            set { SetValue(CallStatusSummariesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CallStatusSummaries.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CallStatusSummariesProperty =
+            DependencyProperty.Register("CallStatusSummaries", typeof(object), typeof(AdminHomeWindow), new PropertyMetadata(null));
+
+
+
         public string ButtonText
         {
             get { return (string)GetValue(ButtonTextProperty); }
@@ -38,7 +50,7 @@ namespace PL
 
         public int Interval { get; set; }
 
-
+        public int SelectedStatus { get; set; }
 
         public bool IsSimulatorRunning
         {
@@ -79,6 +91,7 @@ namespace PL
             ManagerId = managerId;
             ButtonText = "Start Simulator";
             IsSimulatorRunning = false;
+            CallStatusSummaries = s_bl.StudentCall.GetCallStatusSummaries();
             InitializeComponent();
 
         }
@@ -267,6 +280,9 @@ namespace PL
             }
         }
 
-
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new StudentCallListWindow(ManagerId, (BO.CallStatus)SelectedStatus).Show();
+        }
     }
 }

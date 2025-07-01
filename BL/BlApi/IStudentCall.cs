@@ -6,7 +6,7 @@ public interface IStudentCall: IObservable
     /// Retrieves the number of calls by their status (grouped by subject).
     /// </summary>
     /// <returns>An array of integers representing the number of calls per subject.</returns>
-    public int[] GetCallsByStatus();
+    public IEnumerable<object> GetCallStatusSummaries();
     /// <summary>
     /// Retrieves detailed information about a specific student call.
     /// </summary>
@@ -24,7 +24,7 @@ public interface IStudentCall: IObservable
     /// Creates a new student call and validates it before storing.
     /// </summary>
     /// <param name="call">The student call object to be created.</param>
-    public void Delete(int callId);
+    public void Delete(int tutorId, int callId);
 
     /// <summary>
     /// Creates a new student call and validates it before storing.

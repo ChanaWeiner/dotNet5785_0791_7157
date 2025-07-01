@@ -43,10 +43,30 @@ public static class Initialization
         new { City = "Herzliya", Address = "Sokolov 50", Lat = 32.1656, Lon = 34.8490 },
     };
 
+        // יצירת מתנדב מנהל קבוע
+        int managerId = 328240791;
+        if (s_dal!.Tutor.Read(managerId) == null)
+        {
+            s_dal.Tutor.Create(new DO.Tutor(
+                managerId,
+                "Chana Weiner",
+                "058-3202711",
+                "admin@example.com",
+                BCrypt.Net.BCrypt.HashPassword("1"),
+                "הרב אברהם דוד רוזנטל, ירושלים\r\n",
+                31.789353,
+                35.171381,
+                DO.Role.Manager,
+                true,
+                100.0,
+                DO.DistanceType.Air));
+        }
+
+        // מתנדבים רנדומליים
         string[] firstNames = { "Dani", "Eli", "Yair", "Ariela", "Dina", "Shira", "Rivka", "David", "Moshe", "Tamar" };
         string[] lastNames = { "Levy", "Amar", "Cohen", "Levin", "Klein", "Israelof", "Mizrahi", "Peretz", "Azoulay", "Sharabi" };
 
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 15; i++)
         {
             var loc = locations[i % locations.Length];
             int id;
@@ -55,7 +75,7 @@ public static class Initialization
                 id = s_rand.Next(20000000, 40000000);
                 id = id * 10 + CalculateCheckDigit(id);
             }
-            while (s_dal!.Tutor.Read(id) != null);
+            while (s_dal.Tutor.Read(id) != null);
 
             string fullName = $"{firstNames[s_rand.Next(firstNames.Length)]} {lastNames[s_rand.Next(lastNames.Length)]}";
             string email = $"{fullName.Replace(" ", ".").ToLower()}@example.com";
@@ -65,24 +85,29 @@ public static class Initialization
             s_dal.Tutor.Create(new DO.Tutor(
                 id, fullName, cell, email, BCrypt.Net.BCrypt.HashPassword(pass),
                 $"{loc.Address}, {loc.City}", loc.Lat, loc.Lon,
-                i == 0 ? DO.Role.Manager : DO.Role.BeginnerTutor,
+                DO.Role.BeginnerTutor,
                 true,
                 30 + s_rand.NextDouble() * 100,
                 DO.DistanceType.Air));
         }
     }
 
+
     private static void CreateStudentCalls()
     {
         var locations = new[] {
-        new { City = "Tel Aviv", Address = "Rothschild Blvd 1", Lat = 32.0656, Lon = 34.7762 },
-        new { City = "Ramat Gan", Address = "Bialik St 10", Lat = 32.0809, Lon = 34.8147 },
-        new { City = "Petah Tikva", Address = "Arlozorov 3", Lat = 32.0889, Lon = 34.8864 },
-        new { City = "Herzliya", Address = "Ben Gurion St 25", Lat = 32.1635, Lon = 34.8442 },
-        new { City = "Bat Yam", Address = "Ben Gurion 67", Lat = 32.0195, Lon = 34.7459 },
-        new { City = "Holon", Address = "Sderot Yerushalayim 200", Lat = 32.0135, Lon = 34.7703 },
-        new { City = "Rishon LeZion", Address = "Rothschild St 7", Lat = 31.9638, Lon = 34.8044 }
-    };
+    new { City = "Tel Aviv", Address = "Dizengoff St 100",        Lat = 32.080094, Lon = 34.774478 },
+    new { City = "Jerusalem", Address = "Jaffa St 23",            Lat = 31.783391, Lon = 35.216024 },
+    new { City = "Haifa", Address = "Herzl St 50",                Lat = 32.812003, Lon = 35.003792 },
+    new { City = "Be'er Sheva", Address = "Ringelblum St 15",     Lat = 31.244408, Lon = 34.792498 },
+    new { City = "Netanya", Address = "Ussishkin St 10",          Lat = 32.329628, Lon = 34.855190 },
+    new { City = "Ashdod", Address = "Ha-Tikshoret St 3",         Lat = 31.807644, Lon = 34.652460 },
+    new { City = "Modi'in", Address = "Emek Zevulun 12",          Lat = 31.900967, Lon = 35.004367 },
+    new { City = "Rehovot", Address = "Herzl St 2",               Lat = 31.894722, Lon = 34.811333 },
+    new { City = "Kfar Saba", Address = "Weizmann St 77",         Lat = 32.175222, Lon = 34.910139 },
+    new { City = "Ashkelon", Address = "David Remez St 5",        Lat = 31.666612, Lon = 34.574732 }
+};
+
 
         string[] subjects = { "English", "Math", "Grammar", "Programming", "History" };
         string[] firstNames = { "Noa", "Itai", "Maya", "Amit", "Eden", "Omer", "Roni", "Tal", "Shai", "Yael" };

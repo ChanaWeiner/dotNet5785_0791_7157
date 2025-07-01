@@ -50,7 +50,16 @@
 >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding CallId}" />
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                <DataGridTemplateColumn Header="Status">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Status}"
+                       Background="{Binding Status, Converter={StaticResource StatusToColorConverterKey}}"
+                       Padding="5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Subject" Binding="{Binding Subject}" />
                 <DataGridTextColumn Header="Time Left" Binding="{Binding RemainingTime}" />
                 <DataGridTextColumn Header="Treatment Time" Binding="{Binding CompletionTime}" />
                 <DataGridTextColumn Header="Last Tutor" Binding="{Binding LastTutorName}" />

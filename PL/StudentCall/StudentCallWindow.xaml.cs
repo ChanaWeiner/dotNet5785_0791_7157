@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
 using PL.StudentCall;
 using PL.Tutor;
 
@@ -39,7 +40,7 @@ namespace PL.StudentCall
         public bool IsClosedOrExpired { get; set; }
         public bool IsTotalyReadOnly { get; set; }
         public bool IsFinalTimeReadOnly { get; set; }
-
+        private int ManagerId { get; set; } = 0; // For future use if needed
 
         private void btnAddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -102,7 +103,7 @@ namespace PL.StudentCall
             {
                 try
                 {
-                    s_bl.StudentCall.Delete(CurrentStudentCall.Id);
+                    s_bl.StudentCall.Delete(ManagerId, CurrentStudentCall.Id);
                     this.Close();
                 }
                 catch (BO.BlCanNotBeDeletedException ex)
@@ -112,6 +113,14 @@ namespace PL.StudentCall
                 catch (BO.BlDoesNotExistException ex)
                 {
                     MessageBox.Show(ex.Message, ex.InnerException?.ToString());
+                }
+                catch(BO.BlAccessDeniedException ex)
+                {
+                    MessageBox.Show("You do not have permission to delete this student call.\n\nDetails: " + ex.Message, "Access Denied", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An unexpected error occurred while trying to delete the student call.\n\nDetails: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -132,9 +141,9 @@ namespace PL.StudentCall
         private void Window_Closed(object sender, EventArgs e)
             => s_bl.StudentCall.RemoveObserver(StudentCallObserver);
     
-        public StudentCallWindow(int id=0,bool isFromTutor=false)
+        public StudentCallWindow(int id=0,bool isFromTutor=false,int managerId=0)
         {
-
+            ManagerId = managerId;
             IsFromTutor = isFromTutor;
             IsNotFromTutor = !isFromTutor;
 

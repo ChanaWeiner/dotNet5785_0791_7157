@@ -208,9 +208,9 @@ internal class TutorManager
             BO.CallInProgress currentCallInProgress = tutor.CurrentCallInProgress;
             if (currentCallInProgress == null)
             {
-                if (toAssign % 5 == 0)
+                toAssign = rnd.Next(1, 11);
+                if (toAssign == 1)
                 {
-                    toAssign+= rnd.Next(1, 6);
                     var mostCommonSubject = StudentCallImpl.GetClosedCallsForTutor(tutor.Id)
                      .GroupBy(c => c.Subject)
                      .OrderByDescending(g => g.Count())
@@ -231,16 +231,16 @@ internal class TutorManager
             }
             else
             {
-                DateTime openTime = currentCallInProgress.OpenTime;
+                DateTime entryTime = currentCallInProgress.EntryTime;
                 int addTime = 7 + (int)Math.Floor(currentCallInProgress.Distance) / 2;
-                if (openTime.AddDays(addTime) <= AdminManager.Now)
+                if (entryTime.AddDays(addTime) <= AdminManager.Now)
                 {
                     StudentCallManager.UpdateTreatmentCompletion(tutor.Id,currentCallInProgress.Id);
                 }
                 else
                 {
-                    toCancel+=rnd.Next(1, 6);
-                    if (toCancel % 10 == 0)
+                    toCancel = rnd.Next(1, 11);
+                    if (toCancel == 1)
                         StudentCallManager.UpdateTreatmentCancellation(currentCallInProgress.Id, tutor.Id);
                 }
                 

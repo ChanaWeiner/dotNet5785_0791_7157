@@ -45,6 +45,18 @@ namespace PL.StudentCall
 
 
 
+        public Uri MapView
+        {
+            get { return (Uri)GetValue(MapViewProperty); }
+            set { SetValue(MapViewProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MapView.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MapViewProperty =
+            DependencyProperty.Register("MapView", typeof(Uri), typeof(OpenCallsWindow), new PropertyMetadata(null));
+
+
+
         public List<BO.OpenCallInList> OpenCalls
         {
             get { return (List<BO.OpenCallInList>)GetValue(OpenCallsProperty); }
@@ -66,15 +78,6 @@ namespace PL.StudentCall
         // Using a DependencyProperty as the backing store for Description.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DescriptionProperty =
             DependencyProperty.Register("Description", typeof(string), typeof(OpenCallsWindow), new PropertyMetadata(""));
-
-        public string MapUrl
-        {
-            get { return (string)GetValue(MapUrlProperty); }
-            set { SetValue(MapUrlProperty, value); }
-        }
-
-        public static readonly DependencyProperty MapUrlProperty =
-            DependencyProperty.Register("MapUrl", typeof(string), typeof(OpenCallsWindow), new PropertyMetadata(null));
 
         public BO.OpenCallInList SelectedCall
         {
@@ -170,8 +173,8 @@ namespace PL.StudentCall
             var studentCall = s_bl.StudentCall.Read(SelectedCall.Id);
             var tutor = s_bl.Tutor.Read(TutorId);
             string url = $"https://www.google.com/maps/dir/?api=1&origin={tutor.Latitude},{tutor.Longitude}&destination={studentCall.Latitude},{studentCall.Longitude}&travelmode=driving";
-            await MyWebView.EnsureCoreWebView2Async(null);
-            MyWebView.Source = new Uri(url);
+            //await MyWebView.EnsureCoreWebView2Async(null);
+            MapView = new Uri(url);
         }
     }
 }

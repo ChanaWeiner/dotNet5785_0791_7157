@@ -18,7 +18,7 @@
         <local:BoolInverseConverter x:Key="BoolInverseConverterKey" />
         <local:InverseBooleanConverter x:Key="InverseBooleanConverterKey" />
         <local:NoAssignmentsToVisibilityConverter x:Key="NoAssignmentsToVisibilityConverterKey" />
-
+        <local:StatusToColorConverter x:Key="StatusToColorConverterKey" />
         <Style TargetType="Button">
             <Setter Property="Background" Value="#2196F3"/>
             <Setter Property="Foreground" Value="White"/>

@@ -47,13 +47,14 @@ namespace BlImplementation
             StudentCallManager.Observers.NotifyListUpdated();
         }
 
-        public void Delete(int callId)
+        public void Delete(int tutorId, int callId)
         {
             AdminManager.ThrowOnSimulatorIsRunning();
             var doCall = StudentCallManager.Read(callId) ?? throw new BO.BlDoesNotExistException($"Call with ID={callId} does not exist");
             var callAssignments = Tools.ReadAllAssignments(a => a.StudentCallId == callId);
             var statusCall = StudentCallManager.CalculateCallStatus(doCall);
-
+            if (!Tools.IsManagerId(tutorId))
+                throw new BO.BlAccessDeniedException("Only managers can delete calls.");
             if (statusCall != BO.CallStatus.Open && statusCall != BO.CallStatus.OpenInRisk)
                 throw new BO.BlCanNotBeDeletedException("Cannot delete the call because it is not open.");
 
@@ -64,10 +65,23 @@ namespace BlImplementation
             StudentCallManager.Observers.NotifyListUpdated();
         }
 
-        public int[] GetCallsByStatus()
+        public IEnumerable<object> GetCallStatusSummaries()
         {
             var calls = StudentCallManager.ReadAll();
-            return calls.GroupBy(c => c.Subject).Select(g => g.Count()).ToArray();
+
+            var grouped = calls
+                .GroupBy(c => StudentCallManager.CalculateCallStatus(c))
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            return Enum.GetValues(typeof(CallStatus))
+                .Cast<CallStatus>()
+                 .Where(c => c != BO.CallStatus.None)
+                .Select(status => new
+                {
+                    Status = status,
+                    Amount = grouped.ContainsKey(status) ? grouped[status] : 0
+                })
+                .ToList();
         }
 
         public IEnumerable<BO.ClosedCallInList> GetClosedCallsForTutor(int tutorId, Func<BO.ClosedCallInList, bool>? predicate = null)

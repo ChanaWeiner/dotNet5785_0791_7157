@@ -44,8 +44,13 @@ namespace PL.StudentCall
         public BO.StudentCallField? SelectedSortOption { get; set; }
 
         private int ManagerId { get; set; }
-        public StudentCallListWindow(int managerId)
+        public StudentCallListWindow(int managerId, BO.CallStatus status = BO.CallStatus.None)
         {
+            if (status != BO.CallStatus.None)
+            {
+                SearchValue = status;
+                SelectedSearchOption = BO.StudentCallField.Status;
+            }
             ManagerId = managerId;
             QueryCallsList();
             InitializeComponent();
@@ -55,7 +60,7 @@ namespace PL.StudentCall
         {
             try
             {
-                CallsList = (SelectedSearchOption==null) ?
+                CallsList = (SelectedSearchOption == null) ?
                             s_bl?.StudentCall.FilterCallsInList().ToList()! : s_bl?.StudentCall.FilterCallsInList(SelectedSearchOption, SearchValue)!;
             }
             catch (BO.BlValidationException ex)
@@ -75,7 +80,7 @@ namespace PL.StudentCall
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         => s_bl.StudentCall.AddObserver(CallsListObserver);
-        
+
 
         private void Window_Closed(object sender, EventArgs e)
             => s_bl.StudentCall.RemoveObserver(CallsListObserver);
@@ -84,7 +89,7 @@ namespace PL.StudentCall
         {
             if (SelectedCall != null)
             {
-                var studentCallWindow = new StudentCallWindow(SelectedCall.CallId);
+                var studentCallWindow = new StudentCallWindow(SelectedCall.CallId,false,ManagerId);
                 studentCallWindow.Owner = this;
                 studentCallWindow.Show();
             }
@@ -109,7 +114,7 @@ namespace PL.StudentCall
                 {
                     try
                     {
-                        s_bl.StudentCall.Delete(call.CallId);
+                        s_bl.StudentCall.Delete(ManagerId,call.CallId);
                     }
                     catch (Exception ex)
                     {
@@ -145,7 +150,11 @@ namespace PL.StudentCall
 
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
-=> CallsList = s_bl?.StudentCall.FilterCallsInList().ToList()!;
+        {
+            SelectedSearchOption = null;
+            SearchValue = string.Empty;
+            CallsList = s_bl?.StudentCall.FilterCallsInList().ToList()!;
+        }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e) => QueryCallsList();
 

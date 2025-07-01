@@ -83,8 +83,12 @@ namespace PL.Tutor
        
         
         private void ClearButton_Click(object sender, RoutedEventArgs e)
-        => TutorsList = s_bl?.Tutor.FilterTutorsInList().ToList()!;
-        
+        {
+            SelectedSearchOption = null;
+            SearchValue = string.Empty;
+            TutorsList = s_bl?.Tutor.FilterTutorsInList().ToList()!;
+        }
+
         private void SearchButton_Click(object sender, RoutedEventArgs e) => QueryTutorList();
 
         private void SortButton_Click(object sender, RoutedEventArgs e)

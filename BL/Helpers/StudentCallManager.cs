@@ -14,7 +14,7 @@ internal class StudentCallManager
 
     internal static BO.CallInList ConvertFromDoToBo(DO.StudentCall studentCall)
     {
-        var maxCompletionTime = AdminManager.Now - manager.GetRiskTimeRange();
+        //var maxCompletionTime = AdminManager.Now - manager.GetRiskTimeRange();
 
         var assignments = Tools.ReadAllAssignments(a => a.StudentCallId == studentCall.Id)
                                       .OrderBy(a => a.EntryTime)
@@ -34,7 +34,7 @@ internal class StudentCallManager
             OpeningTime = studentCall.OpenTime,
             RemainingTime = studentCall.FinalTime.HasValue
                 ? studentCall.FinalTime.Value - AdminManager.Now
-                : maxCompletionTime - AdminManager.Now,
+                : null,
             LastTutorName = lastAssignment != null
                 ? TutorManager.Read(lastAssignment.TutorId)?.FullName
                 : null,
@@ -159,6 +159,9 @@ internal class StudentCallManager
 
                 Tools.CreateAssignment(newAssignment);
                 Observers.NotifyItemUpdated(newAssignment.StudentCallId);
+                Observers.NotifyListUpdated();
+                TutorManager.Observers.NotifyListUpdated();
+                
             }
             else
             {
@@ -172,6 +175,9 @@ internal class StudentCallManager
 
                     Tools.UpdateAssignment(updated);
                     Observers.NotifyItemUpdated(updated.StudentCallId);
+                    TutorManager.Observers.NotifyItemUpdated(updated.TutorId);
+                    TutorManager.Observers.NotifyListUpdated();
+                    Observers.NotifyListUpdated();
                 }
             }
         }
@@ -201,6 +207,7 @@ internal class StudentCallManager
         TutorManager.Observers.NotifyItemUpdated(tutorId);
         StudentCallManager.Observers.NotifyListUpdated();
         TutorManager.Observers.NotifyListUpdated();
+        StudentCallManager.Observers.NotifyItemUpdated(assignment.StudentCallId);
     }
 
     internal static void UpdateTreatmentCompletion(int tutorId, int assignmentId)
@@ -221,7 +228,7 @@ internal class StudentCallManager
         TutorManager.Observers.NotifyItemUpdated(tutorId);
         StudentCallManager.Observers.NotifyListUpdated();
         TutorManager.Observers.NotifyListUpdated();
-
+        StudentCallManager.Observers.NotifyItemUpdated(assignment.StudentCallId);
     }
 
 
@@ -244,7 +251,7 @@ internal class StudentCallManager
         StudentCallManager.Observers.NotifyListUpdated();
         TutorManager.Observers.NotifyItemUpdated(tutorId);
         TutorManager.Observers.NotifyListUpdated();
-
+        StudentCallManager.Observers.NotifyItemUpdated(callId);
     }
 
     internal static void Create(DO.StudentCall item)

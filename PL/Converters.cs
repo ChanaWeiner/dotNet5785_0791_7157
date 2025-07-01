@@ -104,5 +104,44 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+
+    public class StatusToColorConverter : IValueConverter
+    {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is BO.CallStatus status)
+            {
+                switch (status)
+                {
+                    case BO.CallStatus.Open:
+                        return new SolidColorBrush(Color.FromRgb(173, 216, 230)); // LightBlue
+                    case BO.CallStatus.InProgress:
+                        return new SolidColorBrush(Color.FromRgb(144, 238, 144)); // LightGreen
+                    case BO.CallStatus.Closed:
+                        return new SolidColorBrush(Color.FromRgb(211, 211, 211)); // LightGray
+                    case BO.CallStatus.Expired:
+                        return new SolidColorBrush(Color.FromRgb(255, 182, 193)); // LightPink
+                    case BO.CallStatus.OpenInRisk:
+                        return new SolidColorBrush(Color.FromRgb(255, 228, 181)); // Moccasin
+                    case BO.CallStatus.InProgressAtRisk:
+                        return new SolidColorBrush(Color.FromRgb(221, 160, 221)); // Plum
+                    case BO.CallStatus.None:
+                        return Brushes.Transparent;
+                    default:
+                        return Brushes.Transparent;
+                }
+            }
+
+            return Brushes.Transparent;
+        }
+
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 

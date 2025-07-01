@@ -76,24 +76,25 @@
              Background="White" BorderBrush="#ccc" BorderThickness="1"
              FontSize="14" Padding="5" IsReadOnly="{Binding IsSimulatorRunning}"/>
             </StackPanel>
-            <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,30,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <ScrollViewer Grid.Column="0" Grid.Row="0"  Margin="10,10,10,0" VerticalScrollBarVisibility="Auto">
                 <DataGrid
-        ItemsSource="{Binding CallStatusSummaries}"
-        AutoGenerateColumns="False"
-        CanUserReorderColumns="False"
-        CanUserResizeRows="False"
-        CanUserSortColumns="False"
-        IsReadOnly="True"
-        SelectionMode="Single"
-        SelectionUnit="FullRow"
-        MouseDoubleClick="DataGrid_MouseDoubleClick"
-        Margin="10">
+                    ItemsSource="{Binding CallStatusSummaries}"
+                    SelectedIndex="{Binding SelectedStatus}"
+                    AutoGenerateColumns="False"
+                    CanUserReorderColumns="False"
+                    CanUserResizeRows="False"
+                    CanUserSortColumns="False"
+                    IsReadOnly="True"
+                    SelectionMode="Single"
+                    SelectionUnit="FullRow"
+                    MouseDoubleClick="DataGrid_MouseDoubleClick"
+                    Margin="10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="status" Binding="{Binding Status}" />
                         <DataGridTextColumn Header="amount" Binding="{Binding Amount}" />
                     </DataGrid.Columns>
                 </DataGrid>
-            </StackPanel>
+            </ScrollViewer>
 
         </Grid>
 
