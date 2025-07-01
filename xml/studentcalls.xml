@@ -365,6 +365,19 @@
     <FinalTime>2025-07-08T18:46:40.7129857+03:00</FinalTime>
   </StudentCall>
   <StudentCall>
+    <Id>1027</Id>
+    <Subject>Math</Subject>
+    <Description>Help in Math</Description>
+    <FullAddress>David Remez St 5, Ashkelon</FullAddress>
+    <FullName>Maya Hazan</FullName>
+    <CellNumber>054-2498744</CellNumber>
+    <Email>maya.hazan@example.com</Email>
+    <Latitude>31.666612</Latitude>
+    <Longitude>34.574732</Longitude>
+    <OpenTime>2025-06-19T18:56:29.8001259+03:00</OpenTime>
+    <FinalTime>2025-07-07T18:56:29.8001259+03:00</FinalTime>
+  </StudentCall>
+  <StudentCall>
     <Id>1028</Id>
     <Subject>English</Subject>
     <Description>Help in English</Description>

@@ -24,6 +24,7 @@ namespace PL
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         private volatile DispatcherOperation? _observerOperationClock = null; //stage 7
         private volatile DispatcherOperation? _observerOperationRiskTime = null; //stage 7
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
 
 
 
@@ -96,11 +97,25 @@ namespace PL
             InitializeComponent();
         }
 
+        private void CallStatusSummariesObserver()
+        {
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    CallStatusSummaries = s_bl.StudentCall.GetCallStatusSummaries();
+                });
+        }
+
         private void btnAddOneMinute_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 s_bl.Admin.AdvanceClock(BO.TimeUnit.Minute);
+            }
+            catch (BLTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -113,6 +128,11 @@ namespace PL
             {
                 s_bl.Admin.AdvanceClock(BO.TimeUnit.Year);
             }
+            catch (BLTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
             catch (ArgumentOutOfRangeException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -123,6 +143,11 @@ namespace PL
             try
             {
                 s_bl.Admin.AdvanceClock(BO.TimeUnit.Day);
+            }
+            catch (BLTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -136,6 +161,11 @@ namespace PL
             {
                 s_bl.Admin.AdvanceClock(BO.TimeUnit.Hour);
             }
+            catch (BLTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
             catch (ArgumentOutOfRangeException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -147,6 +177,11 @@ namespace PL
             try
             {
                 s_bl.Admin.AdvanceClock(BO.TimeUnit.Month);
+            }
+            catch (BLTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -191,6 +226,7 @@ namespace PL
             RiskTimeSpan = s_bl.Admin.GetRiskTimeRange();
             s_bl.Admin.AddClockObserver(ClockObserver);
             s_bl.Admin.AddConfigObserver(RiskTimeObserver);
+            s_bl.StudentCall.AddObserver(CallStatusSummariesObserver);
         }
 
         private async void Window_Closed(object sender, EventArgs e)
@@ -201,6 +237,7 @@ namespace PL
             }
             s_bl.Admin.RemoveClockObserver(ClockObserver);
             s_bl.Admin.RemoveConfigObserver(RiskTimeObserver);
+            s_bl.StudentCall.RemoveObserver(CallStatusSummariesObserver);
             CloseOwnedWindows(this);
 
 

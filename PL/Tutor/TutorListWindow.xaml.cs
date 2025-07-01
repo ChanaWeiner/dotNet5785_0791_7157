@@ -89,6 +89,9 @@ namespace PL.Tutor
 
         private void LsvTutorsList_MouseDoubleClickHandler(object sender, MouseButtonEventArgs e)
         {
+            if (SelectedTutor == null)
+                return;
+
             var tutorWindow = new TutorWindow(SelectedTutor!.Id,false, ManagerId);
             tutorWindow.Owner = this;
             tutorWindow.Show();

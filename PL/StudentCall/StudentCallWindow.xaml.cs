@@ -48,6 +48,8 @@ namespace PL.StudentCall
         {
             try
             {
+                FormatValidation(); 
+
                 if (ButtonText == "Add")
                 {
                     s_bl.StudentCall.Create(CurrentStudentCall);
@@ -59,6 +61,15 @@ namespace PL.StudentCall
                     this.Close();
                 }
             }
+            catch (PL.PlFormatException ex)
+            {
+                MessageBox.Show("Formatting Error: " + ex.Message, "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch(BLTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
             catch (BO.BlValidationException ex)
             {
                 MessageBox.Show(
@@ -68,6 +79,7 @@ namespace PL.StudentCall
                     MessageBoxImage.Warning
                 );
             }
+
             catch (BO.BlAlreadyExistsException ex)
             {
                 MessageBox.Show(
@@ -108,6 +120,11 @@ namespace PL.StudentCall
                     s_bl.StudentCall.Delete(ManagerId, CurrentStudentCall.Id);
                     this.Close();
                 }
+                catch (BLTemporaryNotAvailableException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                }
                 catch (BO.BlCanNotBeDeletedException ex)
                 {
                     MessageBox.Show(ex.Message, ex.InnerException?.ToString());
@@ -139,7 +156,6 @@ namespace PL.StudentCall
                         this.Close();
                     }
                 });
-
         }
 
 
@@ -198,5 +214,38 @@ namespace PL.StudentCall
             IsTotalyReadOnly  = (IsFromTutor || IsClosedOrExpired || IsInTreatment);
             InitializeComponent();
         }
+        private void FormatValidation()
+        {
+            if (string.IsNullOrWhiteSpace(CurrentStudentCall.FullName))
+                throw new PL.PlFormatException("Full name cannot be empty.");
+
+            if (CurrentStudentCall.FullName.Length < 2 || CurrentStudentCall.FullName.Length > 100)
+                throw new PL.PlFormatException($"Full name '{CurrentStudentCall.FullName}' must be between 2 and 100 characters.");
+
+            if (string.IsNullOrWhiteSpace(CurrentStudentCall.CellNumber))
+                throw new PL.PlFormatException("Cell number cannot be empty.");
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(CurrentStudentCall.CellNumber, @"^0\d{1,2}-?\d{6,7}$"))
+                throw new PL.PlFormatException("Cell number format is invalid. Expected: 050-1234567");
+
+            if (string.IsNullOrWhiteSpace(CurrentStudentCall.Email))
+                throw new PL.PlFormatException("Email cannot be empty.");
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(CurrentStudentCall.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                throw new PL.PlFormatException("Email format is invalid.");
+
+            if (CurrentStudentCall.Subject == BO.Subjects.None)
+                throw new PL.PlFormatException("You must choose a subject.");
+
+            if (string.IsNullOrWhiteSpace(CurrentStudentCall.Description))
+                throw new PL.PlFormatException("Description cannot be empty.");
+
+            if (string.IsNullOrWhiteSpace(CurrentStudentCall.FullAddress))
+                throw new PL.PlFormatException("Address cannot be empty.");
+
+            if (CurrentStudentCall.OpenTime > DateTime.Now)
+                throw new PL.PlFormatException("Open time cannot be in the future.");
+        }
+
     }
 }
