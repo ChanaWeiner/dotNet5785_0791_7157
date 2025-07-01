@@ -29,7 +29,7 @@ namespace PL.Tutor
         public object SearchValue { get; set; } = string.Empty;
         public BO.TutorInList? SelectedTutor { get; set; }
         public BO.TutorField? SelectedSortOption { get; set; }
-
+        private int ManagerId{get;set;}
         public IEnumerable<BO.TutorInList> TutorsList
         {
             get { return (IEnumerable<BO.TutorInList>)GetValue(TutorsListProperty); }
@@ -39,12 +39,12 @@ namespace PL.Tutor
         public static readonly DependencyProperty TutorsListProperty =
             DependencyProperty.Register("TutorsList", typeof(IEnumerable<BO.TutorInList>), typeof(TutorListWindow), new PropertyMetadata(null));
 
-        public static void ShowWindow(Window owner)
+        public static void ShowWindow(Window owner,int managerId)
         {
             if (s_instance == null)
             {
-                s_instance = new TutorListWindow();
-                s_instance.Owner = owner; // זה מה שמוודא שהבעלים הוא החלון הקורא
+                s_instance = new TutorListWindow(managerId);
+                s_instance.Owner = owner; 
                 s_instance.Closed += (_, _) => s_instance = null;
                 s_instance.Show();
             }
@@ -57,9 +57,9 @@ namespace PL.Tutor
             }
         }
 
-        private TutorListWindow()
+        private TutorListWindow(int managerId)
         {
-
+            ManagerId = managerId;
             QueryTutorList();
             InitializeComponent();
         }
@@ -89,7 +89,7 @@ namespace PL.Tutor
 
         private void LsvTutorsList_MouseDoubleClickHandler(object sender, MouseButtonEventArgs e)
         {
-            var tutorWindow = new TutorWindow(SelectedTutor!.Id);
+            var tutorWindow = new TutorWindow(SelectedTutor!.Id,false, ManagerId);
             tutorWindow.Owner = this;
             tutorWindow.Show();
 

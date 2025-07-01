@@ -15,20 +15,6 @@
     <Distance>100</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
-	<Tutor>
-		<Id>327517157</Id>
-		<FullName>Hodaya Cohen</FullName>
-		<CellNumber>055-6752677</CellNumber>
-		<Email>adminh@example.com</Email>
-		<Password>$2a$11$wjwJ4.Kt/IYWmffAvAG85OvwioB.BkocXNuwYbYFc0PpCeqvCt92G</Password>
-		<CurrentAddress>
-			הרב יהושע ברים, ירושלים
-		</CurrentAddress>
-		<Role>Manager</Role>
-		<Active>true</Active>
-		<Distance>60</Distance>
-		<DistanceType>Air</DistanceType>
-	</Tutor>
   <Tutor>
     <Id>355607433</Id>
     <FullName>Yair Amar</FullName>
@@ -83,20 +69,6 @@
     <Role>BeginnerTutor</Role>
     <Active>true</Active>
     <Distance>65.30403366039913</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
-    <Id>220912992</Id>
-    <FullName>David Klein</FullName>
-    <CellNumber>058-1706844</CellNumber>
-    <Email>david.klein@example.com</Email>
-    <Password>$2a$11$2F3wyHjp2q1lUv5s1ehzwewgfSv0wBfUUVTk/zyMta1srGpts5rFO</Password>
-    <CurrentAddress>Herzl 5, Rishon LeZion</CurrentAddress>
-    <Latitude>31.97</Latitude>
-    <Longitude>34.79</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>112.89901091314101</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
@@ -198,20 +170,6 @@
     <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>299661272</Id>
-    <FullName>David Amar</FullName>
-    <CellNumber>051-6704716</CellNumber>
-    <Email>david.amar@example.com</Email>
-    <Password>$2a$11$QSUloIOVsIoY03s8dDXQrebvglx7HzE25KyQHOfQBafoBKE7YiKIW</Password>
-    <CurrentAddress>Balfour 8, Bat Yam</CurrentAddress>
-    <Latitude>32.0163</Latitude>
-    <Longitude>34.748</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>51.243213817961845</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
     <Id>272303389</Id>
     <FullName>Eli Klein</FullName>
     <CellNumber>052-1701708</CellNumber>
@@ -237,6 +195,64 @@
     <Role>BeginnerTutor</Role>
     <Active>true</Active>
     <Distance>32.92486614140305</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>215553207</Id>
+    <FullName>werti</FullName>
+    <CellNumber>0556743762</CellNumber>
+    <Email>gh@gks.df</Email>
+    <Password>345!ghjksdD</Password>
+    <CurrentAddress>westen wall</CurrentAddress>
+    <Latitude>51.9222854</Latitude>
+    <Longitude>4.4682921</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>300</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>299661272</Id>
+    <FullName>David Amar</FullName>
+    <CellNumber>051-6704716</CellNumber>
+    <Email>david.amar@example.com</Email>
+    <Password>$2a$11$QSUloIOVsIoY03s8dDXQrebvglx7HzE25KyQHOfQBafoBKE7YiKIW</Password>
+    <CurrentAddress>Balfour 8, Bat Yam</CurrentAddress>
+    <Latitude>32.0272864</Latitude>
+    <Longitude>34.7452647</Longitude>
+    <Role>MasterTutor</Role>
+    <Active>true</Active>
+    <Distance>51.243213817961845</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>327517157</Id>
+    <FullName>Hodaya Cohen</FullName>
+    <CellNumber>055-6752677</CellNumber>
+    <Email>adminh@example.com</Email>
+    <Password>$2a$11$wjwJ4.Kt/IYWmffAvAG85OvwioB.BkocXNuwYbYFc0PpCeqvCt92G</Password>
+    <CurrentAddress>
+			הרב יהושע ברים, ירושלים
+		</CurrentAddress>
+    <Latitude>31.813185</Latitude>
+    <Longitude>35.2157554</Longitude>
+    <Role>Manager</Role>
+    <Active>true</Active>
+    <Distance>60</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>220912992</Id>
+    <FullName>David Klein</FullName>
+    <CellNumber>058-1706844</CellNumber>
+    <Email>david.klein@example.com</Email>
+    <Password>$2a$11$2F3wyHjp2q1lUv5s1ehzwewgfSv0wBfUUVTk/zyMta1srGpts5rFO</Password>
+    <CurrentAddress>Herzl 5, Rishon LeZion</CurrentAddress>
+    <Latitude>31.9730595</Latitude>
+    <Longitude>34.8068429</Longitude>
+    <Role>MasterTutor</Role>
+    <Active>true</Active>
+    <Distance>112.89901091314101</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
 </ArrayOfTutor>

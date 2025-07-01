@@ -94,7 +94,6 @@ namespace PL
             IsSimulatorRunning = false;
             CallStatusSummaries = s_bl.StudentCall.GetCallStatusSummaries();
             InitializeComponent();
-
         }
 
         private void btnAddOneMinute_Click(object sender, RoutedEventArgs e)
@@ -221,7 +220,7 @@ namespace PL
 
         private void btnTutors_Click(object sender, RoutedEventArgs e)
         {
-            TutorListWindow.ShowWindow(this);
+            TutorListWindow.ShowWindow(this, ManagerId);
         }
 
 
@@ -307,9 +306,7 @@ namespace PL
 
         private void btnCalls_Click(object sender, RoutedEventArgs e)
         {
-            var studentCallListWindow = new StudentCallListWindow(ManagerId);
-            studentCallListWindow.Owner = this;
-            studentCallListWindow.Show();
+            StudentCallListWindow.ShowWindow(this,ManagerId);
         }
 
         private async void btnStartOrStopSimulator_Click(object sender, RoutedEventArgs e)
@@ -331,7 +328,7 @@ namespace PL
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new StudentCallListWindow(ManagerId, (BO.CallStatus)SelectedStatus).Show();
+            StudentCallListWindow.ShowWindow(this, ManagerId, (BO.CallStatus)SelectedStatus);
         }
     }
 }

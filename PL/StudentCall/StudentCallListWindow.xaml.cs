@@ -47,8 +47,36 @@ namespace PL.StudentCall
 
         private int ManagerId { get; set; }
 
+        public static void ShowWindow(Window owner, int managerId, BO.CallStatus status = BO.CallStatus.None)
+        {
 
-        public StudentCallListWindow(int managerId, BO.CallStatus status = BO.CallStatus.None)
+            if (s_instance == null)
+            {
+                s_instance = new StudentCallListWindow(managerId, status);
+                s_instance.Owner = owner;
+                s_instance.Closed += (_, _) => s_instance = null;
+                s_instance.Show();
+            }
+            else
+            {
+                if (status != BO.CallStatus.None|| s_instance.SearchValue != string.Empty)
+                {
+                    s_instance.Close();
+                    s_instance = new StudentCallListWindow(managerId, status);
+                    s_instance.Owner = owner;
+                    s_instance.Closed += (_, _) => s_instance = null;
+                    s_instance.Show();
+                }
+                else
+                {
+                    if (s_instance.WindowState == WindowState.Minimized)
+                        s_instance.WindowState = WindowState.Normal;
+
+                    s_instance.Activate();
+                }
+            }
+        }
+        private StudentCallListWindow(int managerId, BO.CallStatus status = BO.CallStatus.None)
         {
             if (status != BO.CallStatus.None)
             {
@@ -133,7 +161,7 @@ namespace PL.StudentCall
                     {
                         MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-          
+
                 }
             }
         }

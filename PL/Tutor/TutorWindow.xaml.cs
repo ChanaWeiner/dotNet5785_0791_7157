@@ -23,7 +23,7 @@ namespace PL.Tutor
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         private volatile DispatcherOperation? _observerOperation = null; //stage 7
-
+        private int ManagerId { get; set; }
         public BO.Tutor CurrentTutor
         {
             get { return (BO.Tutor)GetValue(CurrentTutorProperty); }
@@ -39,13 +39,14 @@ namespace PL.Tutor
         public static bool NotHasCallInProgress { get; set; }
 
 
-        public TutorWindow(int id = 0,bool isFromTutorWindow=false)
+        public TutorWindow(int id = 0, bool isFromTutorWindow = false, int managerId = 0)
         {
+            ManagerId = managerId;
             ButtonText = id == 0 ? "Add" : "Update";
             CurrentTutor = (id != 0) ? s_bl.Tutor.Read(id)! : new BO.Tutor() { Id = 0, FullName = null, CellNumber = null, Email = null, Password = null, CurrentAddress = null, Latitude = 0, Longitude = 0, Role = BO.Role.None, Active = false, Distance = 0, DistanceType = BO.DistanceType.Walking, TotalCallsHandled = 0, TotalCallsSelfCanceled = 0, TotalCallsExpired = 0 };
             IsFromTutorWindow = isFromTutorWindow;
             IdIsReadOnly = id == 0 ? false : true;
-            NotHasCallInProgress = (CurrentTutor.CurrentCallInProgress==null)?true: false;
+            NotHasCallInProgress = (CurrentTutor.CurrentCallInProgress == null) ? true : false;
             InitializeComponent();
         }
 
@@ -58,9 +59,21 @@ namespace PL.Tutor
                 {
                     s_bl.Tutor.Create(CurrentTutor);
                 }
-
                 else
+                {
+                    if (ManagerId==0)
+                    {
                     s_bl.Tutor.Update(CurrentTutor.Id, CurrentTutor);
+
+                    }
+                    else
+                    {
+                        s_bl.Tutor.Update(ManagerId, CurrentTutor);
+
+                    }
+
+                }
+
                 this.Close();
 
             }
@@ -136,7 +149,7 @@ namespace PL.Tutor
                     CurrentTutor = null;
                     CurrentTutor = s_bl.Tutor.Read(id);
                 });
-                 
+
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -146,7 +159,7 @@ namespace PL.Tutor
         private void Window_Closed(object sender, EventArgs e)
         {
             if (CurrentTutor!.Id != 0)
-                s_bl.Tutor.RemoveObserver(CurrentTutor.Id,TutorObserver);
+                s_bl.Tutor.RemoveObserver(CurrentTutor.Id, TutorObserver);
         }
     }
 
