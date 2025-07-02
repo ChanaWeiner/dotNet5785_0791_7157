@@ -51,17 +51,7 @@ namespace PL.Tutor
             InitializeComponent();
         }
 
-        private async void UpdateCoordinatesAsync()
-        {
-            try
-            {
-                await s_bl.Tutor.UpdateCoordinates(CurrentTutor);
-            }
-            catch (BO.BlValidationException ex)
-            {
-                MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-            }
-        }
+
 
         private void BtnAddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -75,7 +65,6 @@ namespace PL.Tutor
                         s_bl.Tutor.Update(CurrentTutor.Id, CurrentTutor);
                     else
                         s_bl.Tutor.Update(ManagerId, CurrentTutor);
-                UpdateCoordinatesAsync();
                 this.Close();
             }
             catch (PL.PlFormatException ex)

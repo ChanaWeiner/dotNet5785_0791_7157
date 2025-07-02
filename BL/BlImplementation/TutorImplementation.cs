@@ -32,11 +32,13 @@ internal class TutorImplementation : BlApi.ITutor
         try
         {
             TutorManager.Create(doTutor);
+            TutorManager.Observers.NotifyListUpdated();
         }
         catch (DO.DalAlreadyExistsException ex)
         {
             throw new BO.BlAlreadyExistsException($"Tutor with ID={doTutor.Id} already exists", ex);
         }
+        _ = UpdateCoordinates(boTutor);
     }
 
     public void Delete(int id)
@@ -170,7 +172,7 @@ internal class TutorImplementation : BlApi.ITutor
         if (boTutor.CurrentCallInProgress != null && !boTutor.Active)
             throw new BO.BlValidationException("You cannot set the tutor to inactive while there is a call in progress.");
 
-        TutorManager.Validation( boTutor);
+        TutorManager.Validation(boTutor);
 
         DO.Tutor newDoTutor = new(boTutor.Id, boTutor.FullName, boTutor.CellNumber, boTutor.Email, boTutor.Password,
             boTutor.CurrentAddress, boTutor.Latitude, boTutor.Longitude, (DO.Role)boTutor.Role,
@@ -186,6 +188,7 @@ internal class TutorImplementation : BlApi.ITutor
         {
             throw new BO.BlDoesNotExistException($"Tutor with ID={boTutor.Id} does not exist", ex);
         }
+        _ = UpdateCoordinates(boTutor);
     }
 
     public IEnumerable<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null)
@@ -211,7 +214,7 @@ internal class TutorImplementation : BlApi.ITutor
                 FullName = boTutor.FullName,
                 CellNumber = boTutor.CellNumber,
                 Email = boTutor.Email,
-                Password = TutorManager.HashPassword(boTutor.Password),
+                Password = boTutor.Password,
                 CurrentAddress = boTutor.CurrentAddress,
                 Latitude = boTutor.Latitude,
                 Longitude = boTutor.Longitude,
@@ -228,9 +231,6 @@ internal class TutorImplementation : BlApi.ITutor
         }
         catch (BO.BlValidationException)
         {
-            TutorManager.Delete(boTutor.Id);
-            TutorManager.Observers.NotifyListUpdated();
-            throw;
         }
     }
 }

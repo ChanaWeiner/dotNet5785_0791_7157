@@ -2,79 +2,201 @@
 <assignments.xml>
   <Assignment>
     <Id>1000</Id>
-    <StudentCallId>1000</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1002</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1001</Id>
-    <StudentCallId>1003</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1005</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1002</Id>
-    <StudentCallId>1005</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1007</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1003</Id>
-    <StudentCallId>1015</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1013</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1004</Id>
-    <StudentCallId>1017</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1014</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1005</Id>
-    <StudentCallId>1028</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1018</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1006</Id>
-    <StudentCallId>1030</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1026</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1007</Id>
-    <StudentCallId>1034</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1027</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1008</Id>
-    <StudentCallId>1043</StudentCallId>
-    <EntryTime>2025-07-01T18:46:32</EntryTime>
-    <EndTime>2025-07-01T18:46:32</EndTime>
+    <StudentCallId>1028</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1009</Id>
-    <StudentCallId>1019</StudentCallId>
-    <EntryTime>2025-07-01T19:46:32</EntryTime>
-    <EndTime>2025-07-01T19:46:32</EndTime>
+    <StudentCallId>1030</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
   <Assignment>
     <Id>1010</Id>
-    <StudentCallId>1040</StudentCallId>
-    <EntryTime>2025-07-01T19:46:32</EntryTime>
-    <EndTime>2025-07-01T19:46:32</EndTime>
+    <StudentCallId>1032</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1011</Id>
+    <StudentCallId>1035</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1012</Id>
+    <StudentCallId>1036</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1013</Id>
+    <StudentCallId>1039</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1014</Id>
+    <StudentCallId>1044</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1015</Id>
+    <StudentCallId>1047</StudentCallId>
+    <EntryTime>2025-07-02T00:47:13</EntryTime>
+    <EndTime>2025-07-02T00:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1016</Id>
+    <StudentCallId>1025</StudentCallId>
+    <EntryTime>2025-07-04T02:47:13</EntryTime>
+    <EndTime>2025-07-04T02:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1017</Id>
+    <StudentCallId>1041</StudentCallId>
+    <EntryTime>2025-07-04T02:47:13</EntryTime>
+    <EndTime>2025-07-04T02:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1018</Id>
+    <StudentCallId>1000</StudentCallId>
+    <TutorId>298040049</TutorId>
+    <EntryTime>2025-07-04T02:47:13</EntryTime>
+  </Assignment>
+  <Assignment>
+    <Id>1019</Id>
+    <StudentCallId>1008</StudentCallId>
+    <EntryTime>2025-07-06T04:47:13</EntryTime>
+    <EndTime>2025-07-06T04:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1020</Id>
+    <StudentCallId>1024</StudentCallId>
+    <EntryTime>2025-07-06T04:47:13</EntryTime>
+    <EndTime>2025-07-06T04:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1021</Id>
+    <StudentCallId>1031</StudentCallId>
+    <EntryTime>2025-07-06T04:47:13</EntryTime>
+    <EndTime>2025-07-06T04:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1022</Id>
+    <StudentCallId>1037</StudentCallId>
+    <EntryTime>2025-07-06T04:47:13</EntryTime>
+    <EndTime>2025-07-06T04:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1023</Id>
+    <StudentCallId>1042</StudentCallId>
+    <EntryTime>2025-07-06T04:47:13</EntryTime>
+    <EndTime>2025-07-06T04:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1024</Id>
+    <StudentCallId>1001</StudentCallId>
+    <TutorId>327517157</TutorId>
+    <EntryTime>2025-07-06T04:47:13</EntryTime>
+  </Assignment>
+  <Assignment>
+    <Id>1025</Id>
+    <StudentCallId>1003</StudentCallId>
+    <TutorId>364667485</TutorId>
+    <EntryTime>2025-07-06T04:47:13</EntryTime>
+  </Assignment>
+  <Assignment>
+    <Id>1026</Id>
+    <StudentCallId>1015</StudentCallId>
+    <EntryTime>2025-07-08T06:47:13</EntryTime>
+    <EndTime>2025-07-08T06:47:13</EndTime>
+    <EndOfTreatment>Expired</EndOfTreatment>
+  </Assignment>
+  <Assignment>
+    <Id>1027</Id>
+    <StudentCallId>1004</StudentCallId>
+    <TutorId>344821954</TutorId>
+    <EntryTime>2025-07-08T06:47:13</EntryTime>
+  </Assignment>
+  <Assignment>
+    <Id>1028</Id>
+    <StudentCallId>1029</StudentCallId>
+    <EntryTime>2025-07-08T06:47:13</EntryTime>
+    <EndTime>2025-07-08T06:47:13</EndTime>
     <EndOfTreatment>Expired</EndOfTreatment>
   </Assignment>
 </assignments.xml>

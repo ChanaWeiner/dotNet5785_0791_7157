@@ -9,50 +9,90 @@
         Closed="Window_Closed"
         Title="TutorHome" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-
-        <!-- כפתורים -->
-        <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="400">
+    <Grid>
+        <Grid Visibility="{Binding HasCallInProgress, Converter={StaticResource InverseBooleanConverterKey}, ConverterParameter={x:Static Visibility.Visible}}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0"
-                    FontSize="20"
-                    Visibility="{Binding NoCallInProgress, Converter={StaticResource ConvertBoolToVisibleKey}}"
-                    Content="Choose Call"
-                    HorizontalAlignment="Stretch"
-                    IsEnabled="{Binding IsTutorActive}"
-                    Margin="0,0,0,20"
-                    Click="BtnChooseCall_Click"/>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="400">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0"
+FontSize="20"
+Visibility="{Binding NoCallInProgress, Converter={StaticResource ConvertBoolToVisibleKey}}"
+Content="Choose Call"
+HorizontalAlignment="Stretch"
+IsEnabled="{Binding IsTutorActive}"
+Margin="0,0,0,20"
+Click="BtnChooseCall_Click"/>
 
-            <Button Grid.Row="1"
-                    FontSize="20"
-                    Content="My Details"
-                    HorizontalAlignment="Stretch"
-                    Margin="0,0,0,20"
-                    Click="BtnMyDetails_Click"/>
+                <Button Grid.Row="1"
+FontSize="20"
+Content="My Details"
+HorizontalAlignment="Stretch"
+Margin="0,0,0,20"
+Click="BtnMyDetails_Click"/>
 
-            <Button Grid.Row="2"
-                    FontSize="20"
-                    Visibility="{Binding HasCallsHistory, Converter={StaticResource ConvertBoolToVisibleKey}}"
-                    Content="Calls History"
-                    HorizontalAlignment="Stretch"
-                    Click="BtnCallsHistory_Click"/>
+                <Button Grid.Row="2"
+FontSize="20"
+Visibility="{Binding HasCallsHistory, Converter={StaticResource ConvertBoolToVisibleKey}}"
+Content="Calls History"
+HorizontalAlignment="Stretch"
+Click="BtnCallsHistory_Click"/>
+                <!-- כפתורים -->
+                <!-- כמו שהיה קודם -->
+            </Grid>
         </Grid>
 
-        <!-- Frame -->
-        <Frame Grid.Row="1"
-               Height="200"
-               Content="{Binding CurrentPage}"
-               Visibility="{Binding HasCallInProgress, Converter={StaticResource ConvertBoolToVisibleKey}}"
-               NavigationUIVisibility="Hidden"/>
+        <!-- יש קריאה בטיפול – כפתורים + Frame -->
+        <Grid Visibility="{Binding HasCallInProgress, Converter={StaticResource ConvertBoolToVisibleKey}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="400">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- כפתורים -->
+                <Button Grid.Row="0"
+FontSize="20"
+Visibility="{Binding NoCallInProgress, Converter={StaticResource ConvertBoolToVisibleKey}}"
+Content="Choose Call"
+HorizontalAlignment="Stretch"
+IsEnabled="{Binding IsTutorActive}"
+Margin="0,0,0,20"
+Click="BtnChooseCall_Click"/>
+
+                <Button Grid.Row="1"
+FontSize="20"
+Content="My Details"
+HorizontalAlignment="Stretch"
+Margin="0,0,0,20"
+Click="BtnMyDetails_Click"/>
+
+                <Button Grid.Row="2"
+FontSize="20"
+Visibility="{Binding HasCallsHistory, Converter={StaticResource ConvertBoolToVisibleKey}}"
+Content="Calls History"
+HorizontalAlignment="Stretch"
+Click="BtnCallsHistory_Click"/>
+            </Grid>
+
+            <Frame Grid.Row="1"
+       Content="{Binding CurrentPage}"
+       NavigationUIVisibility="Hidden"/>
+        </Grid>
     </Grid>
+    
+
+
 </Window>

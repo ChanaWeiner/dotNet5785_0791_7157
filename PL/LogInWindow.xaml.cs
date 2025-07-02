@@ -47,5 +47,11 @@ namespace PL
             CurrentPage = new LogInPage((id) => NavigateToAdminButtonsPage(id));
         }
 
+        //תיצור לי פונקציה אירוע שהמסך נסגר
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
     }
 }

@@ -50,7 +50,7 @@ namespace PL
             DependencyProperty.Register("ButtonText", typeof(string), typeof(AdminHomeWindow), new PropertyMetadata(""));
 
 
-        public int Interval { get; set; }
+        public int Interval { get; set; } = 3000;
 
         public int SelectedStatus { get; set; }
 
@@ -194,8 +194,8 @@ namespace PL
         {
             try
             {
-                s_bl.Admin.SetRiskTimeRange(RiskTimeSpan);
-
+                s_bl.Admin.SetRiskTimeRange(RiskTimeSpan); 
+                MessageBox.Show("Success update risk time span");
             }
             catch (BLTemporaryNotAvailableException ex) { 
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);

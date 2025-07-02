@@ -44,23 +44,32 @@ public static class Initialization
     };
 
         // יצירת מתנדב מנהל קבוע
-        int managerId = 328240791;
-        if (s_dal!.Tutor.Read(managerId) == null)
-        {
-            s_dal.Tutor.Create(new DO.Tutor(
-                managerId,
-                "Chana Weiner",
-                "058-3202711",
-                "admin@example.com",
-                BCrypt.Net.BCrypt.HashPassword("1"),
-                "הרב אברהם דוד רוזנטל, ירושלים\r\n",
-                31.789353,
-                35.171381,
-                DO.Role.Manager,
-                true,
-                100.0,
-                DO.DistanceType.Air));
-        }
+        s_dal.Tutor.Create(new DO.Tutor(
+            328240791,
+            "Chana Weiner",
+            "058-3202711",
+            "admin@example.com",
+            BCrypt.Net.BCrypt.HashPassword("1"),
+            "הרב אברהם דוד רוזנטל, ירושלים\r\n",
+            31.789353,
+            35.171381,
+            DO.Role.Manager,
+            true,
+            100.0,
+            DO.DistanceType.Air));
+        s_dal.Tutor.Create(new DO.Tutor(
+            327517157,
+            "Hodaya Cohen",
+            "055-6752677",
+            "hc@example.com",
+            BCrypt.Net.BCrypt.HashPassword("2"),
+             "הרב אברהם דוד רוזנטל, ירושלים\r\n",
+            31.789353,
+            35.171381,
+            DO.Role.Manager,
+            true,
+            80.0,
+            DO.DistanceType.Air));
 
         // מתנדבים רנדומליים
         string[] firstNames = { "Dani", "Eli", "Yair", "Ariela", "Dina", "Shira", "Rivka", "David", "Moshe", "Tamar" };

@@ -77,6 +77,8 @@ internal class AdminImplementation : IAdmin
 
         AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
         AdminManager.InitializeDB(); //stage 7
+        TutorManager.Observers.NotifyListUpdated();
+        StudentCallManager.Observers.NotifyListUpdated();
     }
 
     /// <summary>
@@ -86,7 +88,8 @@ internal class AdminImplementation : IAdmin
     {
         AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
         AdminManager.ResetDB();
-
+        TutorManager.Observers.NotifyListUpdated();
+        StudentCallManager.Observers.NotifyListUpdated();
     }
 
     /// <summary>
