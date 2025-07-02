@@ -57,5 +57,5 @@ public interface ITutor: IObservable
     /// method.</remarks>
     /// <param name="currentTutor">The tutor whose coordinates need to be updated. Cannot be null.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public Task UpdateCoordinates(Tutor currentTutor);
+    public Task UpdateCoordinates(Tutor currentTutor, bool ToHashPassword = true);
 }

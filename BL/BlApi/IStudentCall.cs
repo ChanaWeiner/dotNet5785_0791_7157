@@ -91,6 +91,6 @@ public interface IStudentCall: IObservable
     /// </summary>
     /// <param name="currentStudentCall">The student call object containing the updated coordinates.  This parameter cannot be null.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public Task UpdateCoordinates(StudentCall currentStudentCall);
+    public void UpdateCoordinates(StudentCall currentStudentCall);
 }
 

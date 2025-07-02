@@ -62,13 +62,13 @@ static internal class Tools
     /// <param name="callLat">The latitude of the student call location.</param>
     /// <param name="callLong">The longitude of the student call location.</param>
     /// <returns>The distance in kilometers between the tutor and the student call location.</returns>
-    internal static double CalculateDistance(int volunteerId, double callLat, double callLong)
+    internal static double CalculateDistance(int volunteerId, double? callLat, double? callLong)
     {
         var tutor = TutorManager.Read(volunteerId);
         if (tutor == null)
             throw new BO.BlDoesNotExistException($"Tutor with ID {volunteerId} not found");
 
-        return GetDistance((double)tutor.Latitude, (double)tutor.Longitude, callLat, callLong);
+        return GetDistance(tutor.Latitude ?? 0, tutor.Longitude ?? 0, (double)callLat, (double)callLong);
     }
 
     /// <summary>
@@ -143,7 +143,45 @@ static internal class Tools
             throw new BO.BlValidationException("Error retrieving coordinates: " + ex.Message);
         }
     }
+    /// <summary>
+    /// Retrieves the geographical coordinates (latitude and longitude) for a given address.
+    /// </summary>
+    /// <param name="address">The address to get the coordinates for.</param>
+    /// <returns>A tuple containing the latitude and longitude of the address.</returns>
+    /// <exception cref="BO.BlValidationException">Thrown when the address is invalid.</exception>
+    public static (double Latitude, double Longitude) GetCoordinates(string address)
+    {
+        if (string.IsNullOrWhiteSpace(address))
+        {
+            throw new BO.BlValidationException("The address is invalid.");
+        }
 
+        string url = $"https://geocode.maps.co/search?q={Uri.EscapeDataString(address)}&api_key=679a8da6c01a6853187846vomb04142";
+
+        try
+        {
+            using (WebClient client = new WebClient())
+            {
+                string response = client.DownloadString(url);
+
+                var result = JsonSerializer.Deserialize<GeocodeResponse[]>(response);
+
+                if (result == null || result.Length == 0)
+                {
+                    throw new BO.BlValidationException("The address is invalid.");
+                }
+
+                double latitude = double.Parse(result[0].Latitude);
+                double longitude = double.Parse(result[0].Longitude);
+
+                return (latitude, longitude);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error retrieving coordinates" + ex.Message);
+        }
+    }
 
     /// <summary>
     /// Represents the structure of a geocoding response.

@@ -17,9 +17,10 @@
         <local:ConvertBoolToVisible x:Key="ConvertBoolToVisibleKey" />
         <local:BoolInverseConverter x:Key="BoolInverseConverterKey" />
         <local:InverseBooleanConverter x:Key="InverseBooleanConverterKey" />
-        <local:NoAssignmentsToVisibilityConverter x:Key="NoAssignmentsToVisibilityConverterKey" />
+        <local:NoAssignmentsToVisibilityConverter x:Key="NoAssignmentsToVisibilityConverterKey"/>
         <local:StatusToColorConverter x:Key="StatusToColorConverterKey" />
         <local:TimeSpanToTextConverter x:Key="TimeSpanToTextConverter" />
+        <local:ConvertAddToVisible x:Key="ConvertAddToVisibleKey" />
 
         <Style TargetType="Button">
             <Setter Property="Background" Value="#2196F3"/>

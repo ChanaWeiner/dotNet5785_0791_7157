@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTutor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Tutor>
-    <Id>327517157</Id>
-    <FullName>Hodaya Cohen</FullName>
-    <CellNumber>055-6752677</CellNumber>
-    <Email>hc@example.com</Email>
-    <Password>$2a$11$6b/pzSI4RiQ4kzwLYubRnOfeQYxeGrEyn4l7DpdTk9Zk6.CyB0a46</Password>
-    <CurrentAddress>הרב אברהם דוד רוזנטל, ירושלים
-</CurrentAddress>
-    <Latitude>31.789353</Latitude>
-    <Longitude>35.171381</Longitude>
-    <Role>Manager</Role>
-    <Active>true</Active>
-    <Distance>80</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
     <Id>327278479</Id>
     <FullName>Tamar Cohen</FullName>
     <CellNumber>056-3118451</CellNumber>
@@ -142,20 +127,6 @@
     <DistanceType>Air</DistanceType>
   </Tutor>
   <Tutor>
-    <Id>373598820</Id>
-    <FullName>Dina Levin</FullName>
-    <CellNumber>058-5695154</CellNumber>
-    <Email>dina.levin@example.com</Email>
-    <Password>$2a$11$2X1pBLHXkVl1TQ3vryxcOOvAKxb4U6GK8ydhp0H9ycpSDlQJoQvUu</Password>
-    <CurrentAddress>Bar Kochva 21, Petah Tikva</CurrentAddress>
-    <Latitude>32.0871</Latitude>
-    <Longitude>34.8878</Longitude>
-    <Role>BeginnerTutor</Role>
-    <Active>true</Active>
-    <Distance>127.26802797183618</Distance>
-    <DistanceType>Air</DistanceType>
-  </Tutor>
-  <Tutor>
     <Id>327529939</Id>
     <FullName>Moshe Peretz</FullName>
     <CellNumber>057-2499769</CellNumber>
@@ -238,6 +209,49 @@
     <Role>Manager</Role>
     <Active>true</Active>
     <Distance>100</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>328183934</Id>
+    <FullName>sadf</FullName>
+    <CellNumber>0556752677</CellNumber>
+    <Email>sds@dsf.df</Email>
+    <Password>$2a$11$dr8KylWuVIw844spBg8HeuI8KR4XE7h5SK95j0m85lDHrmTYFWCY.</Password>
+    <CurrentAddress>western wall</CurrentAddress>
+    <Latitude>31.776734949999998</Latitude>
+    <Longitude>35.23446114230339</Longitude>
+    <Role>MasterTutor</Role>
+    <Active>true</Active>
+    <Distance>100</Distance>
+    <DistanceType>Walking</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>373598820</Id>
+    <FullName>Dina Levin</FullName>
+    <CellNumber>058-5695154</CellNumber>
+    <Email>dina.levin@example.com</Email>
+    <Password>$2a$11$2X1pBLHXkVl1TQ3vryxcOOvAKxb4U6GK8ydhp0H9ycpSDlQJoQvUu</Password>
+    <CurrentAddress>Bar Kochva 21, Petah Tikv</CurrentAddress>
+    <Latitude>32.0871</Latitude>
+    <Longitude>34.8878</Longitude>
+    <Role>BeginnerTutor</Role>
+    <Active>true</Active>
+    <Distance>127.26802797183618</Distance>
+    <DistanceType>Air</DistanceType>
+  </Tutor>
+  <Tutor>
+    <Id>327517157</Id>
+    <FullName>Hodaya Cohen</FullName>
+    <CellNumber>055-6752677</CellNumber>
+    <Email>hc@example.com</Email>
+    <Password>$2a$11$5SB1gfuQxGMgAtoOKT7Qvuop/daOaKoDFoTYZwK5gC0D09DVJz3w.</Password>
+    <CurrentAddress>הרב אברהם דוד רוזנטל, ירושלים
+</CurrentAddress>
+    <Latitude>31.789889</Latitude>
+    <Longitude>35.172109</Longitude>
+    <Role>Manager</Role>
+    <Active>true</Active>
+    <Distance>80</Distance>
     <DistanceType>Air</DistanceType>
   </Tutor>
 </ArrayOfTutor>

@@ -560,19 +560,6 @@
     <FinalTime>2025-07-05T00:47:19.6516819+03:00</FinalTime>
   </StudentCall>
   <StudentCall>
-    <Id>1043</Id>
-    <Subject>Programming</Subject>
-    <Description>Help in Programming</Description>
-    <FullAddress>Ringelblum St 15, Be'er Sheva</FullAddress>
-    <FullName>Yael Peretz</FullName>
-    <CellNumber>050-2903935</CellNumber>
-    <Email>yael.peretz@example.com</Email>
-    <Latitude>31.244408</Latitude>
-    <Longitude>34.792498</Longitude>
-    <OpenTime>2025-06-19T00:47:19.6575378+03:00</OpenTime>
-    <FinalTime xsi:nil="true" />
-  </StudentCall>
-  <StudentCall>
     <Id>1044</Id>
     <Subject>Grammar</Subject>
     <Description>Help in Grammar</Description>
@@ -649,5 +636,31 @@
     <Longitude>34.792498</Longitude>
     <OpenTime>2025-06-28T00:47:19.6922226+03:00</OpenTime>
     <FinalTime>2025-07-12T00:47:19.6922226+03:00</FinalTime>
+  </StudentCall>
+  <StudentCall>
+    <Id>1050</Id>
+    <Subject>English</Subject>
+    <Description>ewqewd</Description>
+    <FullAddress>edsdf</FullAddress>
+    <FullName>fsdfads</FullName>
+    <CellNumber>0556752677</CellNumber>
+    <Email>wewq@wds.dsf</Email>
+    <Latitude>0</Latitude>
+    <Longitude>0</Longitude>
+    <OpenTime>2025-08-04T08:47:13</OpenTime>
+    <FinalTime xsi:nil="true" />
+  </StudentCall>
+  <StudentCall>
+    <Id>1051</Id>
+    <Subject>English</Subject>
+    <Description>dg</Description>
+    <FullAddress>dag</FullAddress>
+    <FullName>qwdwe</FullName>
+    <CellNumber>0556752677</CellNumber>
+    <Email>dafd@dag.shgfh</Email>
+    <Latitude>43</Latitude>
+    <Longitude>47</Longitude>
+    <OpenTime>2025-08-04T08:47:13</OpenTime>
+    <FinalTime xsi:nil="true" />
   </StudentCall>
 </ArrayOfStudentCall>

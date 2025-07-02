@@ -178,6 +178,19 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+    public class ConvertAddToVisible : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string str = value as string;
+            return str == "Add" ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }
 

@@ -258,11 +258,11 @@ namespace BlImplementation
 
         public bool hasAssignments(int callId) => Tools.ReadAllAssignments(a => a.StudentCallId == callId).Any();
 
-        public async Task UpdateCoordinates(BO.StudentCall boCall)
+        public  void UpdateCoordinates(BO.StudentCall boCall)
         {
             try
             {
-                (boCall.Latitude, boCall.Longitude) = await Tools.GetCoordinatesAsync(boCall.FullAddress);
+                (boCall.Latitude, boCall.Longitude) =  Tools.GetCoordinates(boCall.FullAddress);
                 StudentCallManager.Update(new DO.StudentCall()
                 {
                     Id = boCall.Id,

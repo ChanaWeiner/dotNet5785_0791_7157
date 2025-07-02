@@ -42,19 +42,9 @@ namespace PL.StudentCall
         public bool IsClosedOrExpired { get; set; }
         public bool IsTotalyReadOnly { get; set; }
         public bool IsFinalTimeReadOnly { get; set; }
-        private int ManagerId { get; set; } = 0; // For future use if needed
+        private int ManagerId { get; set; } = 0; 
 
-        private async void UpdateCoordinatesAsync()
-        {
-            try
-            {
-                await s_bl.StudentCall.UpdateCoordinates(CurrentStudentCall);
-            }
-            catch (BO.BlValidationException ex)
-            {
-                MessageBox.Show(ex.Message, ex.InnerException?.ToString());
-            }
-        }
+
         private void btnAddOrUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -71,7 +61,6 @@ namespace PL.StudentCall
                     s_bl.StudentCall.Update(CurrentStudentCall);
                     this.Close();
                 }
-                UpdateCoordinatesAsync();
             }
             catch (PL.PlFormatException ex)
             {

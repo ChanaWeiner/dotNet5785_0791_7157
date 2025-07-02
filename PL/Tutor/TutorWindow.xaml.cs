@@ -23,7 +23,7 @@ namespace PL.Tutor
     public partial class TutorWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        private volatile DispatcherOperation? _observerOperation = null; //stage 7
+        private volatile DispatcherOperation? _observerOperation = null; 
         private int ManagerId { get; set; }
         public BO.Tutor CurrentTutor
         {

@@ -188,7 +188,7 @@ internal class TutorImplementation : BlApi.ITutor
         {
             throw new BO.BlDoesNotExistException($"Tutor with ID={boTutor.Id} does not exist", ex);
         }
-        _ = UpdateCoordinates(boTutor);
+        _ = UpdateCoordinates(boTutor,false);
     }
 
     public IEnumerable<BO.TutorInList> FilterTutorsInList(BO.TutorField? tutorField = null, object? filterValue = null)
@@ -203,7 +203,7 @@ internal class TutorImplementation : BlApi.ITutor
         return tutorsInList;
     }
 
-    public async Task UpdateCoordinates(Tutor boTutor)
+    public async Task UpdateCoordinates(Tutor boTutor,bool ToHashPassword=true)
     {
         try
         {
@@ -214,7 +214,7 @@ internal class TutorImplementation : BlApi.ITutor
                 FullName = boTutor.FullName,
                 CellNumber = boTutor.CellNumber,
                 Email = boTutor.Email,
-                Password = boTutor.Password,
+                Password = ToHashPassword?TutorManager.HashPassword(boTutor.Password): boTutor.Password,
                 CurrentAddress = boTutor.CurrentAddress,
                 Latitude = boTutor.Latitude,
                 Longitude = boTutor.Longitude,
