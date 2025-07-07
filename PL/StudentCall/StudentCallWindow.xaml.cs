@@ -152,7 +152,7 @@ namespace PL.StudentCall
                     int id = CurrentStudentCall!.Id;
                     CurrentStudentCall = null;
                     CurrentStudentCall = s_bl.StudentCall.Read(id);
-                    if (CurrentStudentCall!.Status != BO.CallStatus.InProgress || CurrentStudentCall.Status != BO.CallStatus.InProgressAtRisk)
+                    if ((CurrentStudentCall!.Status != BO.CallStatus.InProgress || CurrentStudentCall.Status != BO.CallStatus.InProgressAtRisk) &&  IsFromTutor)
                     {
                         this.Close();
                     }

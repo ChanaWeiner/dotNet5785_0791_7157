@@ -49,6 +49,8 @@ static class XMLTools
     #endregion
 
     #region SaveLoadWithXElement
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public static void SaveListToXMLElement(XElement rootElem, string xmlFileName)
     {
         string xmlFilePath = s_xmlDir + xmlFileName;
@@ -62,6 +64,8 @@ static class XMLTools
             throw new DalXMLFileLoadCreateException($"fail to create xml file: {xmlFilePath}, {ex.Message}");
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public static XElement LoadListFromXMLElement(string xmlFileName)
     {
         string xmlFilePath = s_xmlDir + xmlFileName;

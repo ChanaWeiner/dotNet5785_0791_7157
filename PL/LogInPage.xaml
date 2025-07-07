@@ -24,6 +24,7 @@
            <TextBox Grid.Row="1" Margin="5" Text="{Binding Id}"/>
            <Label Grid.Row="2" Content="Password" FontSize="17"  VerticalAlignment="Bottom" Margin="5"/>
            <TextBox Grid.Row="3"  Margin="5" Text="{Binding Password}"/>
+
            <Button FontSize="20" Grid.Row="4"  Content="submit" Click="ButtonSubmit_Click"/>
        </Grid>
    </Grid>

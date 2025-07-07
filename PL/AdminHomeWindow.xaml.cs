@@ -88,6 +88,8 @@ namespace PL
             DependencyProperty.Register("RiskTimeSpan", typeof(TimeSpan), typeof(AdminHomeWindow), new PropertyMetadata(TimeSpan.Zero));
         private int ManagerId { get; set; }
 
+        public AdminHomeWindow() : this(0) { }
+
         public AdminHomeWindow(int managerId)
         {
             ManagerId = managerId;
@@ -194,10 +196,11 @@ namespace PL
         {
             try
             {
-                s_bl.Admin.SetRiskTimeRange(RiskTimeSpan); 
+                s_bl.Admin.SetRiskTimeRange(RiskTimeSpan);
                 MessageBox.Show("Success update risk time span");
             }
-            catch (BLTemporaryNotAvailableException ex) { 
+            catch (BLTemporaryNotAvailableException ex)
+            {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
@@ -272,6 +275,14 @@ namespace PL
             if (result == MessageBoxResult.Yes)
             {
                 Mouse.OverrideCursor = Cursors.Wait;
+                foreach (Window win in Application.Current.Windows)
+                {
+                    if (!(win is AdminHomeWindow || win is LogInWindow))
+                    {
+                        win.Close();
+                    }
+                }
+                Mouse.OverrideCursor = Cursors.Wait;
                 try
                 {
                     s_bl.Admin.ResetDatabase();
@@ -280,7 +291,8 @@ namespace PL
                         "Success",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
-                }catch(BLTemporaryNotAvailableException ex)
+                }
+                catch (BLTemporaryNotAvailableException ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
@@ -311,6 +323,13 @@ namespace PL
             if (result == MessageBoxResult.Yes)
             {
                 Mouse.OverrideCursor = Cursors.Wait;
+                foreach (Window win in Application.Current.Windows)
+                {
+                    if (!(win is AdminHomeWindow || win is LogInWindow))
+                    {
+                        win.Close();
+                    }
+                }
                 try
                 {
                     s_bl.Admin.InitializeDatabase();
@@ -343,7 +362,7 @@ namespace PL
 
         private void btnCalls_Click(object sender, RoutedEventArgs e)
         {
-            StudentCallListWindow.ShowWindow(this,ManagerId);
+            StudentCallListWindow.ShowWindow(this, ManagerId);
         }
 
         private async void btnStartOrStopSimulator_Click(object sender, RoutedEventArgs e)

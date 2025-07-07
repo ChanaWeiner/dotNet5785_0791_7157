@@ -19,11 +19,18 @@ internal static class AdminManager//stage 4
     /// </summary>
     internal static TimeSpan RiskTimeSpan
     {
-        get => s_dal.Config.RiskTimeSpan;
+        get
+        {
+            lock (BlMutex)
+                return s_dal.Config.RiskTimeSpan;
+        }
         set
         {
-            s_dal.Config.RiskTimeSpan = value;
+
+            lock (BlMutex) // Stage 7
+                s_dal.Config.RiskTimeSpan = value;
             ConfigUpdatedObservers?.Invoke(); // stage 5
+            StudentCallManager.Observers.NotifyListUpdated();
         }
     }
 
@@ -54,29 +61,20 @@ internal static class AdminManager//stage 4
     /// Method to perform application's clock from any BL class as may be required
     /// </summary>
     /// <param name="newClock">updated clock value</param>
-    //internal static void UpdateClock(DateTime newClock) //stage 4-7
-    //{
-
-    //    // new Thread(() => { // stage 7 - not sure - still under investigation - see stage 7 instructions after it will be released        
-    //    updateClock(newClock);//stage 4-6
-    //    // }).Start(); // stage 7 as above
-    //}
 
     public static void UpdateClock(DateTime newClock) // prepared for stage 7 as DRY to eliminate needless repetition
     {
-        var oldClock = s_dal.Config.Clock; //stage 4
-        s_dal.Config.Clock = newClock; //stage 4
-                                       // TO DO: periodic logic here
-                                       // if (periodicTask is null || periodicTask.IsCompleted)
-                                       //     periodicTask = Task.Run(() => StudentManager.PeriodicStudentsUpdates(oldClock, newClock));
+        DateTime oldClock;
+        lock (BlMutex)
+        {
+            oldClock = s_dal.Config.Clock; //stage 4
+            s_dal.Config.Clock = newClock; //stage 4
 
-
+        }
 
         if (periodicTask is null || periodicTask.IsCompleted) //stage 7
             periodicTask = Task.Run(() => StudentCallManager.PeriodicStudentcallStatusUpdates(oldClock, newClock));
-        //etc ...
 
-        //Calling all the observers of clock update
         ClockUpdatedObservers?.Invoke(); //prepared for stage 5
     }
 

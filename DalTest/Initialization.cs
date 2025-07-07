@@ -49,7 +49,7 @@ public static class Initialization
             "Chana Weiner",
             "058-3202711",
             "admin@example.com",
-            BCrypt.Net.BCrypt.HashPassword("1"),
+            BCrypt.Net.BCrypt.HashPassword("240791"),
             "הרב אברהם דוד רוזנטל, ירושלים\r\n",
             31.789353,
             35.171381,
@@ -62,13 +62,26 @@ public static class Initialization
             "Hodaya Cohen",
             "055-6752677",
             "hc@example.com",
-            BCrypt.Net.BCrypt.HashPassword("2"),
+            BCrypt.Net.BCrypt.HashPassword("517157"),
              "הרב אברהם דוד רוזנטל, ירושלים\r\n",
             31.789353,
             35.171381,
             DO.Role.Manager,
             true,
             80.0,
+            DO.DistanceType.Air));
+        s_dal.Tutor.Create(new DO.Tutor(
+            215553207,
+            "Tehila Levi",
+            "055-6752688",
+            "te@example.com",
+            BCrypt.Net.BCrypt.HashPassword("553207"),
+             "הרב אברהם דוד רוזנטל, ירושלים\r\n",
+            31.789353,
+            35.171381,
+            DO.Role.BeginnerTutor,
+            true,
+            90.0,
             DO.DistanceType.Air));
 
         // מתנדבים רנדומליים
@@ -133,7 +146,7 @@ public static class Initialization
             DateTime open = DateTime.Now.AddDays(-s_rand.Next(1, 20));
             DateTime? final = s_rand.Next(0, 8) == 0 ? open.AddDays(-1) : // פג תוקף
                               s_rand.Next(0, 3) == 0 ? null :
-                              open.AddDays(s_rand.Next(5, 25));
+                              open.AddDays(s_rand.Next(5, 60));
 
             s_dal!.StudentCall.Create(new DO.StudentCall(
                 0, (DO.Subjects)subjectIndex, $"Help in {subjects[subjectIndex]}",

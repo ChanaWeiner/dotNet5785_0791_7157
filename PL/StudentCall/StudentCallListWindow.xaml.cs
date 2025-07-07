@@ -191,6 +191,14 @@ namespace PL.StudentCall
                 {
                     MessageBox.Show(ex.Message);
                 }
+                catch (BO.BlAccessDeniedException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (BO.BLTemporaryNotAvailableException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
